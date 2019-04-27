@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${carDatetimeSeat.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">日期：</label>
+								<div class="col-sm-8">
+									<input id="bizDate" name="bizDate" th:value="${carDatetimeSeat.bizDate}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">时间：</label>
+								<div class="col-sm-8">
+									<input id="bizTime" name="bizTime" th:value="${carDatetimeSeat.bizTime}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">车型：</label>
+								<div class="col-sm-8">
+									<input id="carId" name="carId" th:value="${carDatetimeSeat.carId}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">路线：</label>
+								<div class="col-sm-8">
+									<input id="planId" name="planId" th:value="${carDatetimeSeat.planId}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">座位名称：</label>
+								<div class="col-sm-8">
+									<input id="name" name="name" th:value="${carDatetimeSeat.name}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">排数：</label>
+								<div class="col-sm-8">
+									<input id="rowIndex" name="rowIndex" th:value="${carDatetimeSeat.rowIndex}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第几个座位：</label>
+								<div class="col-sm-8">
+									<input id="colIndex" name="colIndex" th:value="${carDatetimeSeat.colIndex}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">座位类型（1正常2过道3爱心）：</label>
+								<div class="col-sm-8">
+									<input id="seatType" name="seatType" th:value="${carDatetimeSeat.seatType}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/biz/carDatetimeSeat/edit.js">
+	</script>
+</body>
+</html>
