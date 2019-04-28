@@ -1,0 +1,182 @@
+#top #bj{
+	width: 80%!important;
+	margin: 0px auto!important;
+}
+
+#top #info p{
+	font-size: 9px;
+} 
+#top #info .p1{
+	margin-left:10px; 
+}
+#top #info .p2{
+	margin-left: 15px;
+}
+#top #info form input{
+	/*display: none;*/
+}
+#top #info .p1{
+	margin-right: -13px;
+	position: relative;
+}
+#top #company {
+	margin: 23px 20px 5px 15px;
+}
+#top #company p{
+	font-size: 23px;
+}
+#top #logo{
+	width: 100px;
+}
+#top #logo img{
+	height: 94px;
+	width: 100%!important;
+}
+/*#top #info .p2{
+	margin-left: 40px;
+}*/
+#plan #content{
+	width: 100%;
+}
+#plan #content .plan{
+	width: 25%;
+}
+
+#product #img1_1{
+	height: 400px;
+}
+#product #img1_2{
+	height: 400px;
+}
+#product #img1_3{
+	height: 400px;
+}
+
+#technology #img2_1{
+	height: 450px;
+}
+#technology #img2_2{
+	height: 450px;
+}
+#technology #img2_3{
+	height: 450px;
+}
+
+
+#ome #img3_1{
+	height: 450px;
+}
+#ome #img3_2{
+	height: 450px;
+}
+#ome #img3_3{
+	height: 450px;
+}
+
+#car #img4_1{
+	height: 450px;
+}
+#car #img4_2{
+	height: 450px;
+}
+#car #img4_3{
+	height: 450px;
+}
+.main .products{
+	width: 610px;
+}
+.products .product li{
+	width: 180px;
+}
+.products .product li #comm img{
+	height: 180px;
+	width: 150px;
+}
+.products .cate li{
+	width: 80px;
+	font-size: 13px;
+}
+.wiki #entry img{
+	width: 130px;
+	height: 130px;
+}
+.wiki #entry a{
+	margin-top: 20px
+}
+.wiki #entry ul li{
+	height: 160px;
+}
+.wiki #entry p{
+	margin-top: 20px;
+}
+#top #info form{
+	float: right;
+	height: 23px;
+	margin-left:20px;
+	margin-top: 10px;
+	margin-right: -13px;
+}
+#top #info form div{
+	height: 23px;
+}
+#top #info form input{
+	height: 17px;
+	float: left;
+	outline:none;
+	width: 130px;
+}
+#top #info form button{
+	width: 23px;
+	height: 23px;
+	float: left;
+	border:none;
+}
+#top #info form button img{
+	width: 23px;
+	height: 23px;
+}
+
+#technology  .cover p{
+	font-size: 15px;
+}
+#technology .cover p:first-child{
+	font-size: 18px!important;
+	margin-bottom: 33px;
+	margin-top: 33px;
+}
+#product  .cover p{
+	font-size: 15px;
+}
+#product .cover p:first-child{
+	font-size: 18px!important;
+	margin-bottom: 33px;
+	margin-top: 33px;
+}
+#ome .cover p{
+	font-size: 15px;
+}
+#ome .cover p:first-child{
+	font-size: 18px!important;
+	margin-bottom: 33px;
+	margin-top: 33px;
+}
+#car  .cover p{
+	font-size: 15px;
+}
+#car .cover p:first-child{
+	font-size: 18px!important;
+	margin-bottom: 33px;
+	margin-top: 33px;
+}
+#technology .cover .first{
+	margin-top: 70px!important;
+}
+#product .cover .first{
+	margin-top: 70px!important;
+}
+#ome .cover .first{
+	margin-top: 70px!important;
+}
+#car .cover .first{
+	margin-top: 70px!important;
+}
