@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.biz.dao.SeatOrderDao">
+
+	<select id="get" resultType="com.bootdo.biz.domain.SeatOrderDO">
+		select `id`,`order_no`,`biz_date`,`biz_time`,`plan_id`,`info`,`price`,`num`,`amout`,`create_time`,`update_time`,`create_user`,`state`,`remark`,`from_station`,`to_station`,`user_name`,`user_mobile`,`route_Station`,`ckstate` from biz_seat_order where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.biz.domain.SeatOrderDO">
+		select `id`,`order_no`,`biz_date`,`biz_time`,`plan_id`,`info`,`price`,`num`,`amout`,`create_time`,`update_time`,`create_user`,`state`,`remark`,`from_station`,`to_station`,`user_name`,`user_mobile`,`route_Station`,`ckstate` from biz_seat_order
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="orderNo != null and orderNo != ''"> and order_no = #{orderNo} </if>
+		  		  <if test="bizDate != null and bizDate != ''"> and biz_date = #{bizDate} </if>
+		  		  <if test="bizTime != null and bizTime != ''"> and biz_time = #{bizTime} </if>
+		  		  <if test="planId != null and planId != ''"> and plan_id = #{planId} </if>
+		  		  <if test="info != null and info != ''"> and info = #{info} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="num != null and num != ''"> and num = #{num} </if>
+		  		  <if test="amout != null and amout != ''"> and amout = #{amout} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="fromStation != null and fromStation != ''"> and from_station = #{fromStation} </if>
+		  		  <if test="toStation != null and toStation != ''"> and to_station = #{toStation} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="userMobile != null and userMobile != ''"> and user_mobile = #{userMobile} </if>
+		  		  <if test="routeStation != null and routeStation != ''"> and route_Station = #{routeStation} </if>
+		  		  <if test="ckstate != null and ckstate != ''"> and ckstate = #{ckstate} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from biz_seat_order
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="orderNo != null and orderNo != ''"> and order_no = #{orderNo} </if>
+		  		  <if test="bizDate != null and bizDate != ''"> and biz_date = #{bizDate} </if>
+		  		  <if test="bizTime != null and bizTime != ''"> and biz_time = #{bizTime} </if>
+		  		  <if test="planId != null and planId != ''"> and plan_id = #{planId} </if>
+		  		  <if test="info != null and info != ''"> and info = #{info} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="num != null and num != ''"> and num = #{num} </if>
+		  		  <if test="amout != null and amout != ''"> and amout = #{amout} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="fromStation != null and fromStation != ''"> and from_station = #{fromStation} </if>
+		  		  <if test="toStation != null and toStation != ''"> and to_station = #{toStation} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="userMobile != null and userMobile != ''"> and user_mobile = #{userMobile} </if>
+		  		  <if test="routeStation != null and routeStation != ''"> and route_Station = #{routeStation} </if>
+		  		  <if test="ckstate != null and ckstate != ''"> and ckstate = #{ckstate} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.biz.domain.SeatOrderDO">
+		insert into biz_seat_order
+		(
+			`id`, 
+			`order_no`, 
+			`biz_date`, 
+			`biz_time`, 
+			`plan_id`, 
+			`info`, 
+			`price`, 
+			`num`, 
+			`amout`, 
+			`create_time`, 
+			`update_time`, 
+			`create_user`, 
+			`state`, 
+			`remark`, 
+			`from_station`, 
+			`to_station`, 
+			`user_name`, 
+			`user_mobile`, 
+			`route_Station`, 
+			`ckstate`
+		)
+		values
+		(
+			#{id}, 
+			#{orderNo}, 
+			#{bizDate}, 
+			#{bizTime}, 
+			#{planId}, 
+			#{info}, 
+			#{price}, 
+			#{num}, 
+			#{amout}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{createUser}, 
+			#{state}, 
+			#{remark}, 
+			#{fromStation}, 
+			#{toStation}, 
+			#{userName}, 
+			#{userMobile}, 
+			#{routeStation}, 
+			#{ckstate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.biz.domain.SeatOrderDO">
+		update biz_seat_order 
+		<set>
+			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="bizDate != null">`biz_date` = #{bizDate}, </if>
+			<if test="bizTime != null">`biz_time` = #{bizTime}, </if>
+			<if test="planId != null">`plan_id` = #{planId}, </if>
+			<if test="info != null">`info` = #{info}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="num != null">`num` = #{num}, </if>
+			<if test="amout != null">`amout` = #{amout}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="createUser != null">`create_user` = #{createUser}, </if>
+			<if test="state != null">`state` = #{state}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="fromStation != null">`from_station` = #{fromStation}, </if>
+			<if test="toStation != null">`to_station` = #{toStation}, </if>
+			<if test="userName != null">`user_name` = #{userName}, </if>
+			<if test="userMobile != null">`user_mobile` = #{userMobile}, </if>
+			<if test="routeStation != null">`route_Station` = #{routeStation}, </if>
+			<if test="ckstate != null">`ckstate` = #{ckstate}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from biz_seat_order where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from biz_seat_order where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

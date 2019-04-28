@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.biz.dao.CalendarDao">
+
+	<select id="get" resultType="com.bootdo.biz.domain.CalendarDO">
+		select `id`,`biz_date`,`holiday`,`year`,`quarter`,`month`,`week`,`day` from biz_calendar where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.biz.domain.CalendarDO">
+		select `id`,`biz_date`,`holiday`,`year`,`quarter`,`month`,`week`,`day` from biz_calendar
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bizDate != null and bizDate != ''"> and biz_date = #{bizDate} </if>
+		  		  <if test="holiday != null and holiday != ''"> and holiday = #{holiday} </if>
+		  		  <if test="year != null and year != ''"> and year = #{year} </if>
+		  		  <if test="quarter != null and quarter != ''"> and quarter = #{quarter} </if>
+		  		  <if test="month != null and month != ''"> and month = #{month} </if>
+		  		  <if test="week != null and week != ''"> and week = #{week} </if>
+		  		  <if test="day != null and day != ''"> and day = #{day} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from biz_calendar
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bizDate != null and bizDate != ''"> and biz_date = #{bizDate} </if>
+		  		  <if test="holiday != null and holiday != ''"> and holiday = #{holiday} </if>
+		  		  <if test="year != null and year != ''"> and year = #{year} </if>
+		  		  <if test="quarter != null and quarter != ''"> and quarter = #{quarter} </if>
+		  		  <if test="month != null and month != ''"> and month = #{month} </if>
+		  		  <if test="week != null and week != ''"> and week = #{week} </if>
+		  		  <if test="day != null and day != ''"> and day = #{day} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.biz.domain.CalendarDO" useGeneratedKeys="true" keyProperty="id">
+		insert into biz_calendar
+		(
+			`biz_date`, 
+			`holiday`, 
+			`year`, 
+			`quarter`, 
+			`month`, 
+			`week`, 
+			`day`
+		)
+		values
+		(
+			#{bizDate}, 
+			#{holiday}, 
+			#{year}, 
+			#{quarter}, 
+			#{month}, 
+			#{week}, 
+			#{day}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.biz.domain.CalendarDO">
+		update biz_calendar 
+		<set>
+			<if test="bizDate != null">`biz_date` = #{bizDate}, </if>
+			<if test="holiday != null">`holiday` = #{holiday}, </if>
+			<if test="year != null">`year` = #{year}, </if>
+			<if test="quarter != null">`quarter` = #{quarter}, </if>
+			<if test="month != null">`month` = #{month}, </if>
+			<if test="week != null">`week` = #{week}, </if>
+			<if test="day != null">`day` = #{day}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from biz_calendar where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from biz_calendar where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

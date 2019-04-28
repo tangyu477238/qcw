@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.biz.dao.CarDatetimeSeatDao">
+
+	<select id="get" resultType="com.bootdo.biz.domain.CarDatetimeSeatDO">
+		select `id`,`biz_date`,`biz_time`,`car_id`,`plan_id`,`name`,`row_Index`,`col_Index`,`seat_Type` from biz_car_datetime_seat where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.biz.domain.CarDatetimeSeatDO">
+		select `id`,`biz_date`,`biz_time`,`car_id`,`plan_id`,`name`,`row_Index`,`col_Index`,`seat_Type` from biz_car_datetime_seat
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bizDate != null and bizDate != ''"> and biz_date = #{bizDate} </if>
+		  		  <if test="bizTime != null and bizTime != ''"> and biz_time = #{bizTime} </if>
+		  		  <if test="carId != null and carId != ''"> and car_id = #{carId} </if>
+		  		  <if test="planId != null and planId != ''"> and plan_id = #{planId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="rowIndex != null and rowIndex != ''"> and row_Index = #{rowIndex} </if>
+		  		  <if test="colIndex != null and colIndex != ''"> and col_Index = #{colIndex} </if>
+		  		  <if test="seatType != null and seatType != ''"> and seat_Type = #{seatType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from biz_car_datetime_seat
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bizDate != null and bizDate != ''"> and biz_date = #{bizDate} </if>
+		  		  <if test="bizTime != null and bizTime != ''"> and biz_time = #{bizTime} </if>
+		  		  <if test="carId != null and carId != ''"> and car_id = #{carId} </if>
+		  		  <if test="planId != null and planId != ''"> and plan_id = #{planId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="rowIndex != null and rowIndex != ''"> and row_Index = #{rowIndex} </if>
+		  		  <if test="colIndex != null and colIndex != ''"> and col_Index = #{colIndex} </if>
+		  		  <if test="seatType != null and seatType != ''"> and seat_Type = #{seatType} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.biz.domain.CarDatetimeSeatDO" useGeneratedKeys="true" keyProperty="id">
+		insert into biz_car_datetime_seat
+		(
+			`biz_date`, 
+			`biz_time`, 
+			`car_id`, 
+			`plan_id`, 
+			`name`, 
+			`row_Index`, 
+			`col_Index`, 
+			`seat_Type`
+		)
+		values
+		(
+			#{bizDate}, 
+			#{bizTime}, 
+			#{carId}, 
+			#{planId}, 
+			#{name}, 
+			#{rowIndex}, 
+			#{colIndex}, 
+			#{seatType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.biz.domain.CarDatetimeSeatDO">
+		update biz_car_datetime_seat 
+		<set>
+			<if test="bizDate != null">`biz_date` = #{bizDate}, </if>
+			<if test="bizTime != null">`biz_time` = #{bizTime}, </if>
+			<if test="carId != null">`car_id` = #{carId}, </if>
+			<if test="planId != null">`plan_id` = #{planId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="rowIndex != null">`row_Index` = #{rowIndex}, </if>
+			<if test="colIndex != null">`col_Index` = #{colIndex}, </if>
+			<if test="seatType != null">`seat_Type` = #{seatType}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from biz_car_datetime_seat where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from biz_car_datetime_seat where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.biz.dao.BrandProductDao">
+
+	<select id="get" resultType="com.bootdo.biz.domain.BrandProductDO">
+		select `id`,`pid`,`prod_id` from qc_brand_product where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.biz.domain.BrandProductDO">
+		select `id`,`pid`,`prod_id` from qc_brand_product
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="prodId != null and prodId != ''"> and prod_id = #{prodId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from qc_brand_product
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="prodId != null and prodId != ''"> and prod_id = #{prodId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.biz.domain.BrandProductDO" useGeneratedKeys="true" keyProperty="id">
+		insert into qc_brand_product
+		(
+			`pid`, 
+			`prod_id`
+		)
+		values
+		(
+			#{pid}, 
+			#{prodId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.biz.domain.BrandProductDO">
+		update qc_brand_product 
+		<set>
+			<if test="pid != null">`pid` = #{pid}, </if>
+			<if test="prodId != null">`prod_id` = #{prodId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from qc_brand_product where id = #{value}
+	</delete>
+
+
+	<delete id="delBrandProduct">
+		delete from qc_brand_product
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="pid != null and pid != ''"> and pid = #{pid} </if>
+			<if test="prodId != null and prodId != ''"> and prod_id = #{prodId} </if>
+		</where>
+	</delete>
+
+
+
+	<delete id="batchRemove">
+		delete from qc_brand_product where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+
+
+
+
+	<select id="queryList" resultType="com.bootdo.biz.domain.BrandProductDO">
+
+
+		select
+		qp.id,qp.pid,qp.prod_id,p.display_name as prod_name
+		from qc_product p
+		inner join qc_brand_product qp on p.id = qp.prod_id
+		inner join qc_brand_model_year y on y.id = qp.pid
+		inner join qc_brand_model_pailiang pl on pl.id=y.pid
+		inner join qc_brand_model bm on bm.id = pl.pid
+		inner join qc_brand b on bm.pid = b.id
+
+		<where>
+			<if test="id != null and id != ''"> and qp.id = #{id} </if>
+			<if test="pid != null and pid != ''"> and qp.pid = #{pid} </if>
+			<if test="prodId != null and prodId != ''"> and qp.prod_id = #{prodId} </if>
+			<if test="prodName != null and prodName != ''"> and p.display_name like  '%${prodName}%'  </if>
+		</where>
+
+	</select>
+
+</mapper>

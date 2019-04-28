@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.biz.dao.BrandModelDao">
+
+	<select id="get" resultType="com.bootdo.biz.domain.BrandModelDO">
+		select `id`,`pid`,`vehicle`,`productID`,`brandType`,`brand`,`url`,`src`,`isbaoyang`,`carname`,`appsrc`,`image`,`imageurl`,`tires`,`specialtiresize`,`originallsbaoyang`,`priority2`,`priority3`,`vehicleseries` from qc_brand_model where id = #{value}
+	</select>
+	<select id="getBrandModel" resultType="com.bootdo.biz.domain.BrandModelDO">
+		select `id`,`pid`,`vehicle`,`productID`,`brandType`,`brand`,`url`,`src`,`isbaoyang`,`carname`,`appsrc`,`image`,`imageurl`,`tires`,`specialtiresize`,`originallsbaoyang`,`priority2`,`priority3`,`vehicleseries` from qc_brand_model
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="pid != null and pid != ''"> and pid = #{pid} </if>
+			<if test="vehicle != null and vehicle != ''"> and vehicle = #{vehicle} </if>
+			<if test="productid != null and productid != ''"> and productID = #{productid} </if>
+			<if test="brandtype != null and brandtype != ''"> and brandType = #{brandtype} </if>
+			<if test="brand != null and brand != ''"> and brand = #{brand} </if>
+			<if test="url != null and url != ''"> and url = #{url} </if>
+			<if test="src != null and src != ''"> and src = #{src} </if>
+			<if test="isbaoyang != null and isbaoyang != ''"> and isbaoyang = #{isbaoyang} </if>
+			<if test="carname != null and carname != ''"> and carname = #{carname} </if>
+			<if test="appsrc != null and appsrc != ''"> and appsrc = #{appsrc} </if>
+			<if test="image != null and image != ''"> and image = #{image} </if>
+			<if test="imageurl != null and imageurl != ''"> and imageurl = #{imageurl} </if>
+			<if test="tires != null and tires != ''"> and tires = #{tires} </if>
+			<if test="specialtiresize != null and specialtiresize != ''"> and specialtiresize = #{specialtiresize} </if>
+			<if test="originallsbaoyang != null and originallsbaoyang != ''"> and originallsbaoyang = #{originallsbaoyang} </if>
+			<if test="priority2 != null and priority2 != ''"> and priority2 = #{priority2} </if>
+			<if test="priority3 != null and priority3 != ''"> and priority3 = #{priority3} </if>
+			<if test="vehicleseries != null and vehicleseries != ''"> and vehicleseries = #{vehicleseries} </if>
+		</where>
+
+
+	</select>
+
+
+	<select id="list" resultType="com.bootdo.biz.domain.BrandModelDO">
+		select
+		       `id`,`pid`,`vehicle`,`productID`,`brandType`,`brand`,`url`,`src`,`isbaoyang`,`carname`,`appsrc`,`image`,`imageurl`,`tires`,`specialtiresize`,`originallsbaoyang`,`priority2`,`priority3`,`vehicleseries`
+				from qc_brand_model
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="vehicle != null and vehicle != ''"> and vehicle = #{vehicle} </if>
+		  		  <if test="productid != null and productid != ''"> and productID = #{productid} </if>
+		  		  <if test="brandtype != null and brandtype != ''"> and brandType = #{brandtype} </if>
+		  		  <if test="brand != null and brand != ''"> and brand = #{brand} </if>
+		  		  <if test="url != null and url != ''"> and url = #{url} </if>
+		  		  <if test="src != null and src != ''"> and src = #{src} </if>
+		  		  <if test="isbaoyang != null and isbaoyang != ''"> and isbaoyang = #{isbaoyang} </if>
+		  		  <if test="carname != null and carname != ''"> and carname = #{carname} </if>
+		  		  <if test="appsrc != null and appsrc != ''"> and appsrc = #{appsrc} </if>
+		  		  <if test="image != null and image != ''"> and image = #{image} </if>
+		  		  <if test="imageurl != null and imageurl != ''"> and imageurl = #{imageurl} </if>
+		  		  <if test="tires != null and tires != ''"> and tires = #{tires} </if>
+		  		  <if test="specialtiresize != null and specialtiresize != ''"> and specialtiresize = #{specialtiresize} </if>
+		  		  <if test="originallsbaoyang != null and originallsbaoyang != ''"> and originallsbaoyang = #{originallsbaoyang} </if>
+		  		  <if test="priority2 != null and priority2 != ''"> and priority2 = #{priority2} </if>
+		  		  <if test="priority3 != null and priority3 != ''"> and priority3 = #{priority3} </if>
+		  		  <if test="vehicleseries != null and vehicleseries != ''"> and vehicleseries = #{vehicleseries} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from qc_brand_model
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="vehicle != null and vehicle != ''"> and vehicle = #{vehicle} </if>
+		  		  <if test="productid != null and productid != ''"> and productID = #{productid} </if>
+		  		  <if test="brandtype != null and brandtype != ''"> and brandType = #{brandtype} </if>
+		  		  <if test="brand != null and brand != ''"> and brand = #{brand} </if>
+		  		  <if test="url != null and url != ''"> and url = #{url} </if>
+		  		  <if test="src != null and src != ''"> and src = #{src} </if>
+		  		  <if test="isbaoyang != null and isbaoyang != ''"> and isbaoyang = #{isbaoyang} </if>
+		  		  <if test="carname != null and carname != ''"> and carname = #{carname} </if>
+		  		  <if test="appsrc != null and appsrc != ''"> and appsrc = #{appsrc} </if>
+		  		  <if test="image != null and image != ''"> and image = #{image} </if>
+		  		  <if test="imageurl != null and imageurl != ''"> and imageurl = #{imageurl} </if>
+		  		  <if test="tires != null and tires != ''"> and tires = #{tires} </if>
+		  		  <if test="specialtiresize != null and specialtiresize != ''"> and specialtiresize = #{specialtiresize} </if>
+		  		  <if test="originallsbaoyang != null and originallsbaoyang != ''"> and originallsbaoyang = #{originallsbaoyang} </if>
+		  		  <if test="priority2 != null and priority2 != ''"> and priority2 = #{priority2} </if>
+		  		  <if test="priority3 != null and priority3 != ''"> and priority3 = #{priority3} </if>
+		  		  <if test="vehicleseries != null and vehicleseries != ''"> and vehicleseries = #{vehicleseries} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.biz.domain.BrandModelDO">
+		insert into qc_brand_model
+		(
+			`id`, 
+			`pid`, 
+			`vehicle`, 
+			`productID`, 
+			`brandType`, 
+			`brand`, 
+			`url`, 
+			`src`, 
+			`isbaoyang`, 
+			`carname`, 
+			`appsrc`, 
+			`image`, 
+			`imageurl`, 
+			`tires`, 
+			`specialtiresize`, 
+			`originallsbaoyang`, 
+			`priority2`, 
+			`priority3`, 
+			`vehicleseries`
+		)
+		values
+		(
+			#{id}, 
+			#{pid}, 
+			#{vehicle}, 
+			#{productid}, 
+			#{brandtype}, 
+			#{brand}, 
+			#{url}, 
+			#{src}, 
+			#{isbaoyang}, 
+			#{carname}, 
+			#{appsrc}, 
+			#{image}, 
+			#{imageurl}, 
+			#{tires}, 
+			#{specialtiresize}, 
+			#{originallsbaoyang}, 
+			#{priority2}, 
+			#{priority3}, 
+			#{vehicleseries}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.biz.domain.BrandModelDO">
+		update qc_brand_model 
+		<set>
+			<if test="pid != null">`pid` = #{pid}, </if>
+			<if test="vehicle != null">`vehicle` = #{vehicle}, </if>
+			<if test="productid != null">`productID` = #{productid}, </if>
+			<if test="brandtype != null">`brandType` = #{brandtype}, </if>
+			<if test="brand != null">`brand` = #{brand}, </if>
+			<if test="url != null">`url` = #{url}, </if>
+			<if test="src != null">`src` = #{src}, </if>
+			<if test="isbaoyang != null">`isbaoyang` = #{isbaoyang}, </if>
+			<if test="carname != null">`carname` = #{carname}, </if>
+			<if test="appsrc != null">`appsrc` = #{appsrc}, </if>
+			<if test="image != null">`image` = #{image}, </if>
+			<if test="imageurl != null">`imageurl` = #{imageurl}, </if>
+			<if test="tires != null">`tires` = #{tires}, </if>
+			<if test="specialtiresize != null">`specialtiresize` = #{specialtiresize}, </if>
+			<if test="originallsbaoyang != null">`originallsbaoyang` = #{originallsbaoyang}, </if>
+			<if test="priority2 != null">`priority2` = #{priority2}, </if>
+			<if test="priority3 != null">`priority3` = #{priority3}, </if>
+			<if test="vehicleseries != null">`vehicleseries` = #{vehicleseries}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from qc_brand_model where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from qc_brand_model where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
