@@ -1,0 +1,460 @@
+
+/*头部轮播图设置*/
+#top #bj{
+	width: 84%!important;
+	margin: 0px auto!important;
+	margin-bottom: 40px;
+}
+
+#top #info{
+	display: none;
+}
+#top #info p{
+	font-size: 9px;
+} 
+#top #info .p1{
+	margin-left:10px; 
+}
+#top #info .p2{
+	margin-left: 15px;
+}
+#top #info form {
+	/*display: none;*/
+	margin-left:0px; 
+	margin-right: -17px;
+}
+#top #info .p1{
+	margin-right: 0px;
+	position: relative;
+}
+#top #company {
+	margin: 25px 10px 5px 15px;
+}
+#top #company p{
+	font-size: 20px;
+}
+#top #logo{
+	width: 80px;
+}
+#top #logo img{
+	height: 75px;
+	width: 100%!important;
+}
+#right{
+	width: 70%;
+}
+
+
+
+.nav-top{
+	display: none;
+}
+.nav-bot ul {
+	background: #000!important;
+}
+.nav-bot ul li{
+	background: #000!important;
+}
+.nav-bot ul li a{
+	color: #fff;
+}
+.theme-default #slider{
+	width: 100%;
+	height: 200px!important;
+}
+.theme-default #slider img{
+	width: 100%;
+	height: 100%;
+	object-fit:cover;
+}
+.nivoSlider1{
+	display: none;
+}
+.nivoSlider2{
+	display: block;
+}
+
+/*首页四张导航图*/
+#plan #content{
+	width: 100%;
+	height: 120px;
+}
+#plan #content .plan{
+	width: 25%;
+}
+#plan #content .plan img{
+	width: 100%;
+	height: 100%;
+}
+#plan #content .plan p{
+	font-size: 0.2rem;
+}
+#plan #content .img2{
+	width: 100%;
+	height: 200px;
+}
+#plan #title span{
+	font-size: 20px;
+}
+
+#product{
+	display: none;
+}
+#technology{
+	display: none;
+}
+#ome{
+	display: none;
+}
+#car{
+	display: none;
+}
+
+/*首页内容*/
+#mobile{
+	margin-top: 20px;
+	display: block;
+}
+#img1{
+	width: 100%;
+	height: 200px;
+	text-align: center;
+}
+#img1 .imgList{
+	width: 100%;
+	height: 170px;
+}
+#mobile p{
+	margin: 0px;
+	height: 30px;
+	line-height: 30px;
+	background: #dcdddd;
+}
+#mobile .oil{
+	width: 50%;
+	height: 130px;
+	float: left;
+	text-align: center;
+}
+#mobile .oil .imgList{
+	width: 100%;
+	height: 100px;
+}
+#mobile .sanjiao img{
+	width: 20px;
+	height: 15px;
+	margin-left: 10px;
+
+}
+#goTop{
+	bottom: 150px;
+	right: 30px;
+}
+#goTop img{
+	width: 50px;
+	height: 80px;
+}
+/*下方导航栏*/
+#menu{
+	display: none;
+}
+.aside{
+	height: auto;
+}
+.aside #contact{
+	width: 100%;
+	height: auto;
+}
+.aside #contact .contacts table{
+	margin: 30px auto;
+	font-size: 14px;
+}
+.aside #contact .contacts table tr td:first-child{
+	width: 80px;
+}
+.aside .clear{
+	clear: both;
+}
+.aside #contact .contacts #erweima{
+	margin: 0px auto;
+	float: none;
+	width: 60%;
+}
+#footer{
+	height: auto;
+	line-height: 2;
+	padding: 10px 0px;
+	margin-bottom: 95px;
+}
+
+#caidan{
+	display: block;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	z-index: 10000;
+	width: 100%;
+	height: 90px;
+	background: #000;
+}
+#caidan ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	margin-top: 15px;
+}
+#caidan ul li{
+	display: inline-block;
+	width: 24%;
+	color: #fff;
+	background: #000;
+	margin: 0px;
+	padding: 0px;
+	height: 90px;
+	text-align: center;	
+	float: left;
+}
+#caidan ul li a{
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	margin: 0px;
+	padding: 0px;
+	height: 90px;
+	text-align: center;
+	width: 100%;
+}
+#caidan img{
+	display: block;
+	margin: 0px auto;
+	margin-bottom: 10px;
+}
+#caidan  span{
+	display: block;
+}
+.nav-bot{
+	display: block;
+	height: 40px;
+}
+.nav-bot ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	background: #e8e8e8;
+}
+.nav-bot ul li{
+	display: inline-block;
+	width: 24%;
+	background: #e8e8e8;
+	float: left;
+}
+.nav-bot ul li a{
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: #fff;
+	text-align: center;
+	padding: 10px 0px;
+}
+
+/*旗下产品响应式布局*/
+.main .products{
+	width: 100%;
+}
+.products .cate{
+	position: static;
+	margin: 0px;
+	padding: 0px;
+	height: 160px;
+	background: #333;
+}
+.products .cate li{
+	transform:none;
+	width: 50%;
+	opacity: 1;
+	background: #333;
+}
+.products .cate li a{
+	transform:none;
+	position: static;
+}
+
+.products .product{
+	margin: 0px auto;
+	width: 375px;
+}
+.products .product li{
+	width: 100%;
+	margin: 0px;
+}
+.products .product li #title{
+	border: none;
+	float: right;
+	width: 50%;
+	margin-top: 30px;
+	text-align: left;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+/*.products .product li #comm #com{
+	margin-top: 30px;
+}*/
+.products .product li #comm img{
+	width: 125px;
+	height: 150px;
+	margin-top: -20px;
+}
+.products .product li #comm p{
+	font-size: 10px;
+	/*margin-top: 10px;*/
+	width: 50%;
+	color: #888;
+}
+.products .product li #comm .p1{
+	margin-top: 30px;
+}
+.products .product #comm #com{
+	margin-top: 30px;
+}
+.products .product li #comm p:first-child{
+	float: left;
+}
+.products .product li #comm p span{
+	/*float: right;*/	
+}
+
+#paging p{
+	font-size: 10px;
+	border: 1px solid rgb(216,216,216);
+	color: #999;
+}
+.zhaoshang{
+	width: 98%;
+}
+.zhaoshang #cate{
+	position: static;
+	width: 100%!important;
+	margin-bottom: 20px;
+	height: 40px;
+}
+.zhaoshang #cate ul{
+	padding: 0px;
+	height: 40px;
+}
+.zhaoshang #cate ul li{
+	transform:none;
+	width: 50%;
+}
+.zhaoshang #cate ul li a{
+	transform:none;
+	position: static;
+}
+.main .content{
+	width: 100%;
+	margin: 0px;
+}
+.main .content img{
+	width: 100%;
+	max-height: 300px;
+}
+.wiki{
+	width: 98%;
+}
+
+.wiki #cate{
+	position: static;
+	height: 40px;
+}
+.wiki #cate ul{
+	padding: 0px;
+}
+.wiki #cate ul li{
+	width: 50%;
+	transform:none;
+}
+.wiki #cate ul li a{
+	transform:none;
+	position: static; 
+}
+.wiki #entry ul{
+	padding: 0px;
+}
+.wiki #entry ul li{
+	height: 140px;
+}
+.wiki #entry a{
+	margin-top: 30px;
+}
+.wiki #entry p{
+	margin-top: 10px;
+}
+.wiki #entry img{
+	width: 100px;
+	height: 100px;
+	right: 0px;
+}
+
+#information{
+	width: 96%;
+	margin: 0px auto;
+}
+#information .top .title{
+	padding: 20px 0px;
+}
+#information .entry img{
+	margin: 0px auto;
+	height: 360px;
+	width: 300px;
+}
+#information .entry p{
+	color: #888;
+}
+.theme-default a.nivo-prevNav{
+	top: 60px!important;
+	right: 0px!important;
+}
+.theme-default a.nivo-nextNav{
+	top: 60px!important;
+	right: 0px!important;
+}
+#mobile a{
+	text-decoration: none;
+	color: #000;
+}
+
+.aside #contact .contacts{
+	width: 300px;
+	margin: 0px auto;
+	float: none;
+}
+.aside #contact #erweima{
+	float: none;
+	width: 150px;
+	height: 150px;
+	margin: 0px auto;
+}
+.products .cate1{
+	display: block;
+	width: 100%;
+	list-style: none;
+	text-align: center;
+	height: 40px;
+}
+.products .cate1 ul{
+	list-style: none;
+}
+.products .cate1 li{
+	width: 50%;
+	background: #000;
+	float: left;
+	color: #fff;
+	height: 40px;
+	line-height: 40px;
+	
+}
+.products .cate1 li a{
+	text-decoration: none;
+	color: #fff;
+}

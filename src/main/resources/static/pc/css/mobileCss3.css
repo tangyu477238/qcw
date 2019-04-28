@@ -1,0 +1,167 @@
+#top #info p{
+	font-size: 12px;
+} 
+#top #company {
+	margin: 
+	38px 20px 10px 30px;
+}
+#top #company p{
+	font-size: 30px;
+}
+#top #logo{
+	width: 130px;
+}
+#top #logo img{
+	height: 123px;
+	width: 100%!important;
+}
+/*#top #info .p2{
+	margin-left: 40px;
+}*/
+#plan #content{
+	width: 100%;
+}
+#plan #content .plan{
+	width: 25%;
+}
+
+#product #img1_1{
+	height: 560px;
+}
+#product #img1_2{
+	height: 560px;
+}
+#product #img1_3{
+	height: 560px;
+}
+
+#technology #img2_1{
+	height: 540px;
+}
+#technology #img2_2{
+	height: 540px;
+}
+#technology #img2_3{
+	height: 540px;
+}
+
+#ome #img3_1{
+	height: 540px;
+}
+#ome #img3_2{
+	height: 540px;
+}
+#ome #img3_3{
+	height: 540px;
+}
+
+#car #img4_1{
+	height: 540px;
+}
+#car #img4_2{
+	height: 540px;
+}
+#car #img4_3{
+	height: 540px;
+}
+
+.main .products{
+	width: 700px;
+}
+.products .product li{
+	width: 210px;
+}
+.products .product li #comm img{
+	height: 200px;
+	width: 167px;
+}
+.products .cate li{
+	width: 80px;
+	font-size: 13px;
+}
+.wiki #entry img{
+	width: 130px;
+	height: 130px;
+}
+.wiki #entry a{
+	margin-top: 20px!important;
+}
+.wiki #entry ul li{
+	height: 160px;
+}
+.wiki #entry p{
+	margin-top: 20px;
+}
+#mose{
+	display: none;
+}
+#top #info form{
+	float: right;
+	height: 25px;
+	margin-left:20px;
+	margin-top: 10px;
+	margin-right: -40px;
+}
+#top #info form div{
+	height: 25px;
+}
+#top #info form input{
+	height: 19px;
+	float: left;
+	outline:none;
+}
+#top #info form button{
+	width: 25px;
+	height: 25px;
+	float: left;
+	border:none;
+}
+#top #info form button img{
+	width: 25px;
+	height: 25px;
+}
+
+#technology  .cover p{
+	font-size: 16px;
+}
+#technology .cover p:first-child{
+	font-size: 21px!important;
+	margin-bottom: 36px;
+	margin-top: 36px;
+}
+#product  .cover p{
+	font-size: 16px;
+}
+#product .cover p:first-child{
+	font-size: 21px!important;
+	margin-bottom: 36px;
+	margin-top: 36px;
+}
+#ome .cover p{
+	font-size: 16px;
+}
+#ome .cover p:first-child{
+	font-size: 21px!important;
+	margin-bottom: 36px;
+	margin-top: 36px;
+}
+#car  .cover p{
+	font-size: 16px;
+}
+#car .cover p:first-child{
+	font-size: 21px!important;
+	margin-bottom: 36px;
+	margin-top: 36px;
+}
+#technology .cover .first{
+	margin-top: 80px!important;
+}
+#product .cover .first{
+	margin-top: 80px!important;
+}
+#ome .cover .first{
+	margin-top: 80px!important;
+}
+#car .cover .first{
+	margin-top: 80px!important;
+}

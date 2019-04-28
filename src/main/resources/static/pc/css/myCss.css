@@ -1,0 +1,1270 @@
+*{ margin: 0px;
+	padding:0px;
+	font-family: 'Microsoft YaHei'
+}
+/*.bdmapwindow{
+	color:gray;
+	width: auto;
+	height: auto;
+}
+.box-sizing{
+	height: 100px!important;
+}
+.BMap_center{
+	height: 100px!important;
+}
+.BMap_pop{
+	top:200px!important;
+}
+.BMap_pop div:first-child{
+	height: 200px!important
+}*/
+#mose{
+	display: none;
+}
+#top{
+	background: #000;
+	color: #fff;
+}
+#top #info{
+	width: 100%;
+	margin:0px auto;
+	text-align: right;
+	height: 32px;
+	line-height: 32px;
+}
+#top #info p{
+	float: right;
+	margin-left: 30px;
+	margin-top: 10px;
+	font-size: 18px;
+}
+#top #info .p1{
+	float: right;
+}
+#top #info .p2{
+	float: left;
+}
+#top #info .color{
+	color: #ed1c24;
+	margin-left: 5px;
+}
+#top #info form{
+	float: right;
+	height: 30px;
+	margin-left:20px;
+	margin-top: 10px;
+	margin-right: -40px;
+}
+#top #info form div{
+	height: 30px;
+}
+#top #info form input{
+	height: 24px;
+	float: left;
+	outline:none;
+}
+#top #info form button{
+	width: 30px;
+	height: 30px;
+	float: left;
+	border:none;
+}
+#top #info form button img{
+	width: 30px;
+	height: 30px;
+}
+#top #bj{
+	width: 70.8%;
+	margin: 0px auto;
+	padding: 10px 0px;
+	font-size: 30px;
+}
+#top #logo{
+	float: left;
+	width: 210px;
+	margin-bottom: 10px;
+}
+#top #logo img{
+	float: left;
+	width: 100%;
+	height: 200px;
+
+}
+
+#top #company{
+	margin: 95px 20px 13px 20px; 
+}
+#top #company p{
+	font-size: 40px;
+}
+
+#nav .nav-top{
+	background: #000;
+	width: 100%;
+	height: 80px;
+	line-height: 80px;
+}
+#nav .nav-top ul{
+	list-style: none;
+	width: 80%;
+	margin: 0px auto;
+	border-top: 1px solid #f2f2f2;
+	padding: 0px;
+}
+#nav .nav-top ul li{
+	display: inline-block;
+	width: 14.2857%;
+	text-align: center;
+	float: left;
+}
+#nav .nav-top ul li a:hover{
+	color:#ed1c24;
+}
+#nav .nav-top ul li a{
+	text-decoration: none;
+	color: #fff;
+	width: 100%;
+	height: 100%;
+	display: block;
+	font-weight: bold;
+}
+.menu-item-has-children{
+	height: 80px;
+	position: relative;
+}
+.sub-menu{
+	width: 100%!important;
+	height: 160px;
+	border: none;
+	position: absolute;
+	top: 80px;
+	left: 0px;
+	z-index: 100000;
+	display: none;
+}
+.sub-menu li{
+	width: 100%!important;
+	color: #fff;
+	background: #000;
+	height: 50px;
+	line-height: 50px;
+}
+.sub-menu li a{
+	color: #fff;
+}
+.nav-bot{
+	display: none;
+	height: 20px;
+	width: 100%；
+}
+#right{
+	float: left;
+	width: 80%;
+}
+
+/*解决方案样式*/
+#plan{
+	text-align: center;
+
+}
+#plan #title{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+#plan #title p{
+	font-size: 23px;
+	margin-bottom: 30px;
+}
+#plan #atr{
+	font-size: 14px;
+}
+#plan #title span{
+	font-size: 25px;
+}
+#plan #content{
+	width: 1200px;
+	margin: 0px auto;
+	height: 220px;
+}
+#plan #content .img2{
+	width: 200px;
+	height: 220px;
+}
+#plan #content .plan{
+	float: left;
+	width: 300px;
+	text-align: center;
+}
+#plan #content .img2{
+	display: none;
+}
+#clear{
+	clear:both;
+}
+
+
+/*高端润滑产品制造*/
+#product{
+	width: 100%;
+	text-align: center;
+	margin-top: 110px;
+}
+#product #first{
+	font-size: 23px;
+	margin-bottom: 90px;
+}
+#product #img1_1{
+	width: 40%;
+	float: left;
+	height: 720px;
+}
+#product #img1_1 img{
+	width: 100%;
+	height: 100%;
+}
+#product .holder1{
+	position: relative;
+	width: 48%;
+	height: 48%;
+	float: left;
+	margin-right: 2%;
+	margin-bottom: 2%;
+}
+#product  .cover{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	display: none;
+	opacity: 0.8;
+}
+#product  .cover p{
+	color: #fff;
+	font-size: 20px;
+}
+#product .cover p:first-child{
+	font-size: 25px;
+	margin-bottom: 50px;
+	margin-top: 50px;
+}
+#product #img1_2{
+	width: 40%;
+	float: left;
+	height: 720px;
+	margin-right: 1%;
+}
+#product #img1_2 img{
+	width: 100%;
+	height: 100%;
+	
+}
+#product .holder2{
+	position: relative;
+	width: 100%;
+	height: 98%;
+	float: left;
+	margin-right: 2%;
+	margin-bottom: 2%;
+}
+#product #img1_3{
+	width: 19%;
+	float: left;
+	height: 720px;
+}
+#product #img1_3 img{
+	width: 100%;
+	float: left;
+	height: 100%;
+}
+#product .holder3{
+	position: relative;
+	width: 100%;
+	height: 48.5%;
+	float: left;
+	margin-bottom: 2%;
+}
+#clear{
+	clear: both;
+}
+
+/*润滑技术创新研究*/	
+#technology{
+	width: 100%;
+	text-align: center;
+	margin-top: 110px;
+}
+#technology #first{
+	font-size: 23px;
+	margin-bottom: 90px;
+}
+#technology #img2_1{
+	float: left;
+	height: 660px;
+	width: 33%;
+	margin-right: 1%;
+}
+#technology #img2_1 .holder1:first-child{
+	width: 100%;
+	height: 65%;
+	position: relative;
+}
+#technology #img2_1 .holder1:last-child{
+	width: 100%;
+	height: 35%;
+	position: relative;
+}
+#technology #img2_1 .holder1:last-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#technology #img2_1 .holder1:last-child span{
+	float: left;
+	/*margin-left: 15%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#technology #img2_1 img{
+	width: 100%;
+	height: 100%;
+}
+#technology #img2_2{
+	float: left;
+	height: 660px;
+	width: 33%;
+	margin-right: 1%;
+}
+#technology #img2_2 .holder2:first-child{
+	width: 100%;
+	height: 35%;
+	position: relative;
+}
+#technology #img2_2 .holder2:last-child{
+	width: 100%;
+	height: 65%;
+	position: relative;
+}
+#technology #img2_2 .holder2:first-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#technology #img2_2 .holder2:first-child span{
+	float: left;
+	/*margin-left: 15%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	width: 50%;
+}
+#technology #img2_2 img{
+	width: 100%;
+	height: 100%;
+}
+
+
+#technology #img2_3{
+	float: left;
+	height: 660px;
+	width: 31%;
+	margin-right: 1%;
+}
+#technology #img2_3 .holder3:first-child{
+	width: 100%;
+	height: 66%;
+	position: relative;
+}
+#technology #img2_3 .holder3:last-child{
+	width: 100%;
+	height: 34%;
+	position: relative;
+}
+#technology #img2_3 .holder3:first-child img{
+	width: 100%;
+	height: 100%;
+}
+#technology #img2_3 .holder3:last-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#technology #img2_3 .holder3:last-child span{
+	float: left;
+	/*margin-left: 9%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#technology  .cover{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	display: none;
+	opacity: 0.8;
+}
+#technology  .cover p{
+	color: #fff;
+	font-size: 20px;
+}
+#technology .cover p:first-child{
+	font-size: 25px;
+	margin-bottom: 50px;
+	margin-top: 50px;
+}
+/*#technology .cover p:last-child{
+	font-size: 20px;
+}*/
+#technology .cover .first{
+	margin-top: 110px!important;
+}
+#product .cover .first{
+	margin-top: 110px!important;
+}
+#ome .cover .first{
+	margin-top: 110px!important;
+}
+#car .cover .first{
+	margin-top: 110px!important;
+}
+
+/*ome代加工*/
+#ome{
+	width: 100%;
+	text-align: center;
+	margin-top: 110px;
+}
+#ome #first{
+	font-size: 23px;
+	margin-bottom: 90px;
+}
+#ome #img3_1{
+	float: left;
+	height: 660px;
+	width: 33%;
+	margin-right: 1%;
+}
+#ome #img3_1 .holder1:first-child{
+	width: 100%;
+	height: 65%;
+	position: relative;
+}
+#ome #img3_1 .holder1:last-child{
+	width: 100%;
+	height: 35%;
+	position: relative;
+}
+#ome #img3_1 .holder1:last-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#ome #img3_1 .holder1:last-child span{
+	float: left;
+	/*margin-left: 11%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#ome #img3_1 img{
+	width: 100%;
+	height: 100%;
+}
+#ome #img3_2{
+	float: left;
+	height: 660px;
+	width: 33%;
+	margin-right: 1%;
+}
+#ome #img3_2 .holder2:first-child{
+	width: 100%;
+	height: 35%;
+	position: relative;
+}
+#ome #img3_2 .holder2:last-child{
+	width: 100%;
+	height: 65%;
+	position: relative;
+}
+#ome #img3_2 .holder2:first-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#ome #img3_2 .holder2:first-child span{
+	float: left;
+	/*margin-left: 15%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#ome #img3_2 img{
+	width: 100%;
+	height: 100%;
+}
+
+
+#ome #img3_3{
+	float: left;
+	height: 660px;
+	width: 31%;
+	margin-right: 1%;
+}
+#ome #img3_3 .holder3:first-child{
+	width: 100%;
+	height: 66%;
+	position: relative;
+}
+#ome #img3_3 .holder3:last-child{
+	width: 100%;
+	height: 34%;
+	position: relative;
+}
+#ome #img3_3 .holder3:first-child img{
+	width: 100%;
+	height: 100%;
+}
+#ome #img3_3 .holder3:last-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#ome #img3_3 .holder3:last-child span{
+	float: left;
+	/*margin-left: 9%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#ome  .cover{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	display: none;
+	opacity: 0.8;
+}
+#ome  .cover p{
+	color: #fff;
+	font-size: 20px;
+}
+#ome .cover p:first-child{
+	font-size: 25px;
+	margin-bottom: 50px;
+	margin-top: 50px;
+}
+/*#ome .cover p:last-child{
+	font-size: 20px;
+}*/
+
+
+/*汽车服务连锁加盟*/
+#car{
+	width: 100%;
+	text-align: center;
+	margin-top: 110px;
+	margin-bottom: 100px;
+}
+#car #first{
+	font-size: 23px;
+	margin-bottom: 90px;
+}
+#car #img4_1{
+	float: left;
+	height: 660px;
+	width: 33%;
+	margin-right: 1%;
+}
+#car #img4_1 .holder1:first-child{
+	width: 100%;
+	height: 65%;
+	position: relative;
+}
+#car #img4_1 .holder1:last-child{
+	width: 100%;
+	height: 35%;
+	position: relative;
+}
+#car #img4_1 .holder1:last-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#car #img4_1 .holder1:last-child span{
+	float: left;
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#car #img4_1 img{
+	width: 100%;
+	height: 100%;
+}
+#car #img4_2{
+	float: left;
+	height: 660px;
+	width: 33%;
+	margin-right: 1%;
+}
+#car #img4_2 .holder2:first-child{
+	width: 100%;
+	height: 35%;
+	position: relative;
+}
+#car #img4_2 .holder2:last-child{
+	width: 100%;
+	height: 65%;
+	position: relative;
+}
+#car #img4_2 .holder2:first-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#car #img4_2 .holder2:first-child span{
+	float: left;
+	/*margin-left: 10%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#car #img4_2 img{
+	width: 100%;
+	height: 100%;
+}
+
+
+#car #img4_3{
+	float: left;
+	height: 660px;
+	width: 31%;
+	margin-right: 1%;
+}
+#car #img4_3 .holder3:first-child{
+	width: 100%;
+	height: 66%;
+	position: relative;
+}
+#car #img4_3 .holder3:last-child{
+	width: 100%;
+	height: 34%;
+	position: relative;
+}
+#car #img4_3 .holder3:first-child img{
+	width: 100%;
+	height: 100%;
+}
+#car #img4_3 .holder3:last-child img{
+	float: right;
+	width: 50%;
+	height: 100%;
+}
+#car #img4_3 .holder3:last-child span{
+	float: left;
+	/*margin-left: 9%;*/
+	margin-top: 20%;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+	text-align: center;
+}
+#car  .cover{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	display: none;
+	opacity: 0.8;
+}
+#car  .cover p{
+	color: #fff;
+	font-size: 20px;
+}
+#car .cover p:first-child{
+	font-size: 25px;
+	margin-bottom: 50px;
+	margin-top: 50px;
+}
+/*#car .cover p:last-child{
+	font-size: 20px;
+}*/
+
+
+
+/*网站下方导航*/
+#menu{
+	width: 100%;
+	height: 400px;
+	border-top: 4px solid #888;
+	text-align: center;
+}
+#menu a{
+	text-decoration: none;
+	color: #000;
+	font-size: 18px;
+}
+#menu ul{
+	list-style: none;
+}
+#menu ul .menu-item-has-children{
+	position: relative;
+}
+#menu ul li{
+	display: inline-block;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+}
+#menu ul .menu-item .sub-menu{
+	position: absolute;
+	top: 30px;
+	left: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+#menu ul .menu-item .sub-menu li {
+	display: block;
+	width: 120px;
+} 
+#menu ul .menu-item .sub-menu li a{
+	color: #888;
+}
+
+
+/*网站下方信息*/
+.aside{
+	width: 100%;
+	background: #000;
+	color:#fff;
+}
+.aside #contact{
+	width: 530px;
+	margin: 0px auto;
+}
+.aside #contact a{ 
+	color:#fff; 
+}
+.aside #contact .contacts {
+	padding-top: 50px;
+	float: left;
+	margin-left: 26px;
+}
+.aside #contact .contacts p{
+	line-height: 2;
+	width:300px;
+	font-size: 22px;
+}
+.aside #contact .contacts .info2 p{
+	font-size: 13px!important;
+	line-height: 18px!important;
+}
+
+.aside #contact  #erweima{
+	float: left;
+	margin-top: 50px;
+	margin-left: 50px;
+}
+.aside #contact  #erweima img{
+	width: 150px;
+	height: 150px;
+}
+.clear{
+	clear: both;
+}
+
+#footer{
+	width: 100%;
+	height: 100px;
+	line-height: 100px;
+	background: #f3f3f3;
+	text-align: center;
+	background: #000;
+	color:#fff;
+}
+
+/*关于我们*/
+.main{
+	width: 100%;
+}
+.main .content{
+	width: 80%;
+	margin: 30px auto;
+	color: #888;
+}
+
+
+
+/*旗下产品*/
+.main .products{
+	width: 1100px;
+	position: relative;
+	margin: 0px auto;
+}
+.products .product{
+	list-style: none;
+	padding: 0px;
+	/*padding:30px 0px; */
+	margin-top: 50px;
+}
+.products .product li{
+	display: inline-block;
+	width: 330px;
+	padding: 0px;
+	margin: 0px;
+	position: relative;
+	margin-right: 20px;
+	margin-bottom: 30px;
+}
+.products .product li:hover #cover{
+	display: block;
+}
+.products .cate{
+	list-style: none; 
+	margin: 50px 10px;
+	position: absolute;
+	top: -140px;
+	left: 0px;
+	z-index: 100;
+}
+.products .cate li:hover{
+	background: #4876ff;
+}
+.products .cate li{
+	float: left;
+	display: block;
+	transform: skew(-25deg,0deg);
+    -ms-transform: skew(-25deg,0deg);
+    -moz-transform: skew(-25deg,0deg);
+    -webkit-transform: skew(-25deg,0deg);
+    -o-transform: skew(-25deg,0deg);
+    background: #000;
+    opacity: 0.8;
+    height: 40px;
+    width: 100px;
+    content: '';	
+
+}
+.products .cate li a{
+	display: block;
+    padding: 10px;
+    /* border: 1px solid #000; */
+    text-decoration: none;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    left: 8px;
+    margin: 0px auto;
+    text-align: center;
+    transform: skew(25deg,0deg);
+    -ms-transform: skew(25deg,0deg);
+    -moz-transform: skew(25deg,0deg);
+    -webkit-transform: skew(25deg,0deg);
+    -o-transform: skew(25deg,0deg);
+}
+.products .product li a{
+	text-decoration: none;
+	color: #000;
+}
+.products .product li #title{
+	text-align: center;
+	border-bottom:1px dashed #999;
+	width: 70%;
+	margin: 0px auto;
+	padding: 10px; 
+	font-size: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.products .product li #time{	
+	text-align: right;
+	margin-right: 40px;
+	font-size: 13px;
+	padding: 10px
+}
+.products .product li #comm {
+	position: relative;
+}
+.products .product li #comm .maonimen{
+	position: absolute;
+	width: 250px;
+	height: 300px;
+	font-size: 40px;
+	top: 0px;
+	left: 30px;
+}
+.products .product li #comm .maonimen  p{
+	width: 50px;
+	height: 100px;
+	margin: 0px;
+	padding: 0px;
+	display: inline-block;
+}
+.products .product li #comm .maonimen .fei p{
+	opacity: 0;
+	
+}
+
+.products .product li #comm img{
+	margin: 0px auto;
+	padding: 10px;
+	width: 250px;
+	height:300px;
+	padding-top: 0px;
+}
+.products .product li #comm p{
+	width: 80%;
+	margin: 0px auto;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	font-size: 14px;
+	color: #444;
+	line-height: 24px;
+}
+.products .product li #cover{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: #000;
+	opacity: 0.3;
+	text-align: center;
+	display: none;
+}
+.products .product li #cover img{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: -20px;
+
+}
+#information{
+	width: 40%;
+	margin: 0px auto;
+	margin: 100px auto;
+}
+#information .top .title{
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+	padding: 30px;
+	border-bottom: 1px dashed #888;
+}
+#information .entry  img{
+	max-width: 100%;
+	/*width: 100%;*/
+	/*max-height: 500px;*/
+	margin: 0px auto;
+	display: block;
+}
+#information .entry p{
+	font-size: 14px;
+	margin-top: 30px;
+	line-height: 2;
+	color: #888;
+}
+#information .entry div{
+	font-size: 14px;
+	margin-top: 30px;
+	line-height: 2;
+}
+#information .entry table {
+	border: 1px dashed #888;
+	/* display: block; */
+	width: 100%;
+	height: auto!important;
+}
+#information .entry table p{
+	margin: 0px;
+}
+#information .entry table tr td{
+	border-bottom: 1px dashed #888;
+	border-right: 1px dashed #888;
+	width: 25%;
+	height: 43px;
+	line-height: 43px;
+	font-size: 14px;
+	color: #888;
+}
+
+.wiki{
+	width: 60%;
+	margin: 0px auto;
+	position: relative;
+}
+.wiki #title{
+	border: 1px solid #888;
+	padding: 10px;
+	margin-top: 40px;
+	display: inline-block;
+}
+.wiki #entry ul{
+	list-style: none;
+	border-bottom: 1px solid #f2f2f2;
+}
+.wiki #entry ul li{ 
+	height: 250px;
+	position: relative;
+	padding: auto 0px;
+	border-top: 1px solid #f2f2f2;
+}
+.wiki #entry p{
+	width: 70%;
+	color: #777;
+	font-size: 12px;
+	line-height: 2;
+	margin-top: 30px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	
+}
+.wiki #entry ul li .titleLink{
+	display: block;
+	margin-top: 80px;
+	text-decoration: none;
+	color: #444;
+	font-size: 16px;
+}
+.wiki #entry a:hover{
+	color: orange;
+}
+.wiki #entry img{
+	width: 200px;
+	height: 200px;
+	position: absolute;
+	top: 0px;
+	right: 20px;
+	margin-top: 20px;
+}
+.wiki #cate{
+	position: absolute;
+	top:-40px;
+	left: 0px;
+	z-index: 100;
+}
+.wiki #cate a{
+	display: block;
+    padding: 10px;
+    /* border: 1px solid #000; */
+    text-decoration: none;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    left: 8px;
+    margin: 0px auto;
+    text-align: center;
+    transform: skew(25deg,0deg);
+    -ms-transform: skew(25deg,0deg);
+    -moz-transform: skew(25deg,0deg);
+    -webkit-transform: skew(25deg,0deg);
+    -o-transform: skew(25deg,0deg);
+}
+.wiki #cate ul{
+	list-style: none;
+}
+.wiki #cate ul li{
+	float: left;
+	display: block;
+	transform: skew(-25deg,0deg);
+    -ms-transform: skew(-25deg,0deg);
+    -moz-transform: skew(-25deg,0deg);
+    -webkit-transform: skew(-25deg,0deg);
+    -o-transform: skew(-25deg,0deg);
+    background: #000;
+    opacity: 0.8;
+    height: 40px;
+    width: 100px;
+    content: '';
+} 
+.wiki #cate ul li:hover{
+	background: #4876ff;
+}
+.zhaoshang{
+	width: 70%;
+	margin: 0px auto;
+	position: relative;
+}
+.zhaoshang #cate{
+	position: absolute;
+	top: -70px;
+	left: 0px;
+	z-index: 100;
+}
+.zhaoshang #cate a{
+	display: block;
+    padding: 10px;
+    /* border: 1px solid #000; */
+    text-decoration: none;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    left: 8px;
+    margin: 0px auto;
+    text-align: center;
+    transform: skew(25deg,0deg);
+    -ms-transform: skew(25deg,0deg);
+    -moz-transform: skew(25deg,0deg);
+    -webkit-transform: skew(25deg,0deg);
+    -o-transform: skew(25deg,0deg);
+    }
+
+
+.zhaoshang #cate ul{
+	list-style: none;
+}
+/*.zhaoshang #cate ul li{
+    position: relative;
+	display: inline-block;
+	text-align: center;
+}*/
+.zhaoshang #cate ul li{
+	float: left;
+	display: block;
+	transform: skew(-25deg,0deg);
+    -ms-transform: skew(-25deg,0deg);
+    -moz-transform: skew(-25deg,0deg);
+    -webkit-transform: skew(-25deg,0deg);
+    -o-transform: skew(-25deg,0deg);
+    background: #000;
+    opacity: 0.8;
+    height: 40px;
+    width: 100px;
+    content: '';	
+}
+.zhaoshang #cate ul li:hover{
+	background: #4876ff;
+}
+.zhaoshang .entry p{
+	color: #888;
+	margin-bottom: 30px;
+	line-height: 2;
+	font-size: 14px;
+}
+.map div:first-child{
+	/*height: 700px!important;*/
+}
+#map{
+	height: 700px!important;
+}
+#paging{
+	float: right;
+	padding: 20px;
+}
+#paging .paging{
+	float: left;
+	margin: 0px;
+	margin-right: 10px;
+	font-size: 10px;
+	border: 1px solid rgb(216,216,216);
+	color: #999;
+}
+#paging input{
+	float: left;
+}
+.nivoSlider1{
+	display: block;
+}
+.nivoSlider2{
+	display: none;
+}
+
+
+#caidan{
+	display: none;
+}
+#mobile{
+	display: none;
+}
+
+#goTop{
+	width: 30px;
+	height: 60px;
+	position: fixed;
+	bottom: 100px;
+	right: 100px;
+	z-index: 200;
+}
+#goTop img{
+	width: 60px;
+	height: 120px;
+}
+#product a{
+	text-decoration: none;
+}
+#technology a{
+	text-decoration: none;
+}
+#ome a{
+	text-decoration: none;
+}
+#car a{
+	text-decoration: none;
+}
+.zhaoshang .content div{
+	margin-bottom: 20px;
+}
+.zhaoshang .content div a{
+	text-decoration: none;
+	color: #000;
+	font-size: 18px;
+	font-weight: bold;
+}
+.zhaoshang .content div p{
+	margin-top: 30px;
+}
+.products .cate1{
+	display: none;
+}
+
+.master-slider-parent{
+	border: none!important;
+	margin-top: 0px!important;
+	padding: 0px!important
+}
+.master-slider-parent div{
+	border: none!important;
+	margin-top: 0px!important;
+	padding: 0px!important
+}
+.master-slider-parent img{
+	border: none!important;
+	margin-top: 0px!important;
+	padding: 0px!important
+}
+#entry .serif{
+	display: none!important;
+}
+.product .serif{
+	display: none!important;	
+}
