@@ -4,11 +4,16 @@
 <mapper namespace="com.bootdo.biz.dao.ProductDao">
 
 	<select id="get" resultType="com.bootdo.biz.domain.ProductDO">
-		select `id`,`Product_Id`,`Variant_Id`,`Display_Name`,`Primary_Parent_Category`,`Image`,`Price`,`Unit`,`Marketing_Price` from qc_product where id = #{value}
+		select `id`,`Product_Id`,`Variant_Id`,prod as `Display_Name`,`Primary_Parent_Category`,
+		       `Image`,`Price`,`Unit`,`Marketing_Price`  ,brand,xinghao1
+		from qc_product where id = #{value}
 	</select>
 
 	<select id="getProduct" resultType="com.bootdo.biz.domain.ProductDO">
-		select `id`,`Product_Id`,`Variant_Id`,`Display_Name`,`Primary_Parent_Category`,`Image`,`Price`,`Unit`,`Marketing_Price` from qc_product
+		select `id`,`Product_Id`,`Variant_Id`,`Display_Name`,
+		       `Primary_Parent_Category`,`Image`,`Price`,`Unit`,
+		       `Marketing_Price` ,brand,xinghao1
+		from qc_product
 		<where>
 			<if test="id != null and id != ''"> and id = #{id} </if>
 			<if test="productId != null and productId != ''"> and Product_Id = #{productId} </if>
@@ -23,26 +28,13 @@
 	</select>
 
 	<select id="list" resultType="com.bootdo.biz.domain.ProductDO">
-		select `id`,`Product_Id`,`Variant_Id`,`Display_Name`,`Primary_Parent_Category`,`Image`,`Price`,`Unit`,`Marketing_Price` from qc_product
-        <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="productId != null and productId != ''"> and Product_Id = #{productId} </if>
-		  		  <if test="variantId != null and variantId != ''"> and Variant_Id = #{variantId} </if>
-		  		  <if test="displayName != null and displayName != ''"> and Display_Name = #{displayName} </if>
-		  		  <if test="primaryParentCategory != null and primaryParentCategory != ''"> and Primary_Parent_Category = #{primaryParentCategory} </if>
-		  		  <if test="image != null and image != ''"> and Image = #{image} </if>
-		  		  <if test="price != null and price != ''"> and Price = #{price} </if>
-		  		  <if test="unit != null and unit != ''"> and Unit = #{unit} </if>
-		  		  <if test="marketingPrice != null and marketingPrice != ''"> and Marketing_Price = #{marketingPrice} </if>
-		  		</where>
-        <choose>
-            <when test="sort != null and sort.trim() != ''">
-                order by ${sort} ${order}
-            </when>
-			<otherwise>
-                order by id desc
-			</otherwise>
-        </choose>
+		select  distinct  prod as `Display_Name`,  img as `Image`
+		from qc_product p
+		inner join qc_brand_product qp on qp.prod_id = p.id
+		where qp.pid = #{pid}
+		order by p.id asc
+
+
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -54,7 +46,7 @@
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="productId != null and productId != ''"> and Product_Id = #{productId} </if>
 		  		  <if test="variantId != null and variantId != ''"> and Variant_Id = #{variantId} </if>
-		  		  <if test="displayName != null and displayName != ''"> and Display_Name = #{displayName} </if>
+		  		  <if test="displayName != null and displayName != ''"> and prod = #{displayName} </if>
 		  		  <if test="primaryParentCategory != null and primaryParentCategory != ''"> and Primary_Parent_Category = #{primaryParentCategory} </if>
 		  		  <if test="image != null and image != ''"> and Image = #{image} </if>
 		  		  <if test="price != null and price != ''"> and Price = #{price} </if>
@@ -73,7 +65,9 @@
 			`Image`, 
 			`Price`, 
 			`Unit`, 
-			`Marketing_Price`
+			`Marketing_Price`,
+		 	brand,
+		 	xinghao1
 		)
 		values
 		(
@@ -84,7 +78,9 @@
 			#{image}, 
 			#{price}, 
 			#{unit}, 
-			#{marketingPrice}
+			#{marketingPrice},
+		 	#{brand},
+		 	#{xinghao1}
 		)
 	</insert>
 	 

@@ -27,13 +27,34 @@ public class ProductDO implements Serializable {
 	//
 	private String primaryParentCategory;
 	//
-	private String image;
+	private String Image;
 	//
 	private BigDecimal price;
 	//
 	private String unit;
 	//
 	private BigDecimal marketingPrice;
+
+
+	private String brand;
+
+	private String xinghao1;
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getXinghao1() {
+		return xinghao1;
+	}
+
+	public void setXinghao1(String xinghao1) {
+		this.xinghao1 = xinghao1;
+	}
 
 	/**
 	 * 设置：
@@ -95,18 +116,16 @@ public class ProductDO implements Serializable {
 	public String getPrimaryParentCategory() {
 		return primaryParentCategory;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setImage(String image) {
-		this.image = image;
-	}
-	/**
-	 * 获取：
-	 */
+
+
 	public String getImage() {
-		return image;
+		return Image;
 	}
+
+	public void setImage(String image) {
+		Image = image;
+	}
+
 	/**
 	 * 设置：
 	 */

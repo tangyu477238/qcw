@@ -136,40 +136,40 @@ public class ProdJobServiceImpl implements Job {
 		//机油下的产品
 		JSONArray prodArr4 = JSONArray.parseArray(prodObj3.getString("Products"));
 
-		//清除历史品牌与产品记录
-		map = new HashMap<String, Object>();
-		map.put("pid", bmyd.getId());
-		brandProductDao.delBrandProduct(map);
-
-		for (int m = 0; prodArr4 != null && m < prodArr4.size(); m++) {
-			JSONObject prodObj4 = prodArr4.getJSONObject(m);
-			JSONObject prodObj = prodObj4.getJSONObject("Product");
-
-			map = new HashMap<String, Object>();
-			map.put("productId", prodObj.getString("Pid"));
-			pd = productService.getProduct(map);
-			if (pd == null){
-				pd = new ProductDO();
-				pd.setDisplayName(prodObj.getString("DisplayName"));
-				pd.setImage(prodObj.getString("Image"));
-				pd.setPrice(prodObj.getBigDecimal("Price"));
-				pd.setMarketingPrice(prodObj.getBigDecimal("MarketingPrice"));
-				pd.setPrimaryParentCategory(prodObj.getString("PrimaryParentCategory"));
-				pd.setProductId(prodObj.getString("Pid"));
-				pd.setUnit(prodObj.getString("Unit"));
-				pd.setVariantId(prodObj.getString("VariantId"));
-				productService.save(pd);
-			}
-			if(pd.getId()==null){
-				pd = productService.getProduct(map);
-			}
-
-			bpd = new BrandProductDO();
-			bpd.setPid(bmyd.getId());
-			bpd.setProdId(pd.getId());
-			brandProductDao.save(bpd);
-
-		}
+//		//清除历史品牌与产品记录
+//		map = new HashMap<String, Object>();
+//		map.put("pid", bmyd.getId());
+//		brandProductDao.delBrandProduct(map);
+//
+//		for (int m = 0; prodArr4 != null && m < prodArr4.size(); m++) {
+//			JSONObject prodObj4 = prodArr4.getJSONObject(m);
+//			JSONObject prodObj = prodObj4.getJSONObject("Product");
+//
+//			map = new HashMap<String, Object>();
+//			map.put("productId", prodObj.getString("Pid"));
+//			pd = productService.getProduct(map);
+//			if (pd == null){
+//				pd = new ProductDO();
+//				pd.setDisplayName(prodObj.getString("DisplayName"));
+//				pd.setImage(prodObj.getString("Image"));
+//				pd.setPrice(prodObj.getBigDecimal("Price"));
+//				pd.setMarketingPrice(prodObj.getBigDecimal("MarketingPrice"));
+//				pd.setPrimaryParentCategory(prodObj.getString("PrimaryParentCategory"));
+//				pd.setProductId(prodObj.getString("Pid"));
+//				pd.setUnit(prodObj.getString("Unit"));
+//				pd.setVariantId(prodObj.getString("VariantId"));
+//				productService.save(pd);
+//			}
+//			if(pd.getId()==null){
+//				pd = productService.getProduct(map);
+//			}
+//
+//			bpd = new BrandProductDO();
+//			bpd.setPid(bmyd.getId());
+//			bpd.setProdId(pd.getId());
+//			brandProductDao.save(bpd);
+//
+//		}
 	}
 
 

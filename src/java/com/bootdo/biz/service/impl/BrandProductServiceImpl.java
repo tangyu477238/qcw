@@ -1,7 +1,7 @@
 package com.bootdo.biz.service.impl;
 
-import com.bootdo.biz.dao.BrandProductDao;
-import com.bootdo.biz.domain.BrandProductDO;
+import com.bootdo.biz.dao.ProductDao;
+import com.bootdo.biz.domain.ProductDO;
 import com.bootdo.biz.service.BrandProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ import java.util.Map;
 @Service
 public class BrandProductServiceImpl implements BrandProductService {
 	@Autowired
-	private BrandProductDao brandProductDao;
+	private ProductDao productDao;
 
 
 	@Override
-	public List<BrandProductDO> queryList(Map<String, Object> map){
-		return brandProductDao.queryList(map);
+	public List<ProductDO> queryList(Map<String, Object> map){
+		return productDao.list(map);
 	}
 
 

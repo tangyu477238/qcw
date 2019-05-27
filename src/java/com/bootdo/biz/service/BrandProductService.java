@@ -1,6 +1,6 @@
 package com.bootdo.biz.service;
 
-import com.bootdo.biz.domain.BrandProductDO;
+import com.bootdo.biz.domain.ProductDO;
 
 import java.util.List;
 import java.util.Map;
@@ -28,5 +28,5 @@ public interface BrandProductService {
 //
 //	int batchRemove(Long[] ids);
 
-    List<BrandProductDO> queryList(Map<String, Object> map);
+    List<ProductDO> queryList(Map<String, Object> map);
 }

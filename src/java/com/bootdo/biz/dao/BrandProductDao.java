@@ -1,6 +1,7 @@
 package com.bootdo.biz.dao;
 
-import com.bootdo.biz.domain.BrandProductDO;
+import com.bootdo.biz.domain.ProductDO;
+import com.bootdo.biz.domain.ProductDO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,19 +18,19 @@ public interface BrandProductDao {
 
 
 
-	BrandProductDO get(Long id);
+	ProductDO get(Long id);
 	
-	List<BrandProductDO> list(Map<String, Object> map);
+	List<ProductDO> list(Map<String, Object> map);
 
-	List<BrandProductDO> queryList(Map<String, Object> map);
+	List<ProductDO> queryList(Map<String, Object> map);
 
 
 
 	int count(Map<String, Object> map);
 	
-	int save(BrandProductDO brandProduct);
+	int save(ProductDO brandProduct);
 	
-	int update(BrandProductDO brandProduct);
+	int update(ProductDO brandProduct);
 
 	int remove(Long id);
 

@@ -24,6 +24,26 @@ public class BrandProductDO implements Serializable {
 
 	private String prodName;
 
+	private String Image;
+
+	private String xinghao1;
+
+
+	public String getImage() {
+		return Image;
+	}
+
+	public void setImage(String image) {
+		Image = image;
+	}
+
+	public String getXinghao1() {
+		return xinghao1;
+	}
+
+	public void setXinghao1(String xinghao1) {
+		this.xinghao1 = xinghao1;
+	}
 
 	public String getProdName() {
 		return prodName;

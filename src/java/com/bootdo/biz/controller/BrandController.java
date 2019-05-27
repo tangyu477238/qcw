@@ -45,7 +45,7 @@ public class BrandController {
 	private BrandModelYearService brandModelYearService;
 
 	@Autowired
-	private BrandProductService brandProductService;
+	private ProductService ProductService;
 
 
 
@@ -98,14 +98,14 @@ public class BrandController {
 
 	@ResponseBody
 	@GetMapping("/getProduct")
-	public List<BrandProductDO> getProduct(String pid, String prodName){
+	public List<ProductDO> getProduct(String pid, String prodName){
 
 		Map<String, Object> params = new HashMap();
 		params.put("pid",pid);
 		params.put("prodName",prodName);
 
 		//查询列表数据
-		List<BrandProductDO> brandList = brandProductService.queryList(params);
+		List<ProductDO> brandList = ProductService.list(params);
 		return brandList;
 	}
 
