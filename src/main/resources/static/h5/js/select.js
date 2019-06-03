@@ -32,17 +32,17 @@ function showList(pid,cInfo){
 				var html = "";
 				html += '<div class="bytitle">'+cInfo+'</div>';
 				for(var i=0;i<data.length;i++){
-					
+
 					html += "<ul class='bytitleUl'>"
 				html += "<li class='clearfix'>"
 				html +=	
 						"<div class='time1 clearfix'>"+
 							'<div data-v-59f76ae0="" class="proItem">'+ 
 							'<div data-v-6dfbde68="" data-v-59f76ae0="">'+
-							'<div data-v-6dfbde68="" class="itemdes"><span data-v-6dfbde68="" class="imgBg"><img data-v-6dfbde68="" src="https://img4.tuhu.org/Images/Products/6c00/99ba/c29ebfce10dd8f542b59e716_w820_h820.png@163w_163h_100Q.png"></span>' +
+							'<div data-v-6dfbde68="" class="itemdes"><span data-v-6dfbde68="" class="imgBg"><img  style="width:80px;height:80px;" data-v-6dfbde68="" src="'+data[i].image+'"></span>' +
 							'<div data-v-6dfbde68="" class="rightInfo">'+
 							'<div data-v-6dfbde68="" class="titletxt">'+
-							'<p data-v-6dfbde68="">'+data[i].prodName+' </p>'+
+							'<p data-v-6dfbde68="">'+data[i].displayName+' </p>'+
 							
 							'</div></div></div></div></div></div>'+
 		
