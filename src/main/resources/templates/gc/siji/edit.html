@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${siji.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">日期：</label>
+								<div class="col-sm-8">
+									<input id="bizdate" name="bizdate" th:value="${siji.bizdate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发货单位：</label>
+								<div class="col-sm-8">
+									<input id="forwunit" name="forwunit" th:value="${siji.forwunit}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">车号：</label>
+								<div class="col-sm-8">
+									<input id="carnum" name="carnum" th:value="${siji.carnum}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">钢号：</label>
+								<div class="col-sm-8">
+									<input id="steelnum" name="steelnum" th:value="${siji.steelnum}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">规格：</label>
+								<div class="col-sm-8">
+									<input id="specs" name="specs" th:value="${siji.specs}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">件数：</label>
+								<div class="col-sm-8">
+									<input id="packnum" name="packnum" th:value="${siji.packnum}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">吨数：</label>
+								<div class="col-sm-8">
+									<input id="tonnage" name="tonnage" th:value="${siji.tonnage}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">基价：</label>
+								<div class="col-sm-8">
+									<input id="baseprice" name="baseprice" th:value="${siji.baseprice}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">系数：</label>
+								<div class="col-sm-8">
+									<input id="coefficient" name="coefficient" th:value="${siji.coefficient}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运率：</label>
+								<div class="col-sm-8">
+									<input id="tranrate" name="tranrate" th:value="${siji.tranrate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运费：</label>
+								<div class="col-sm-8">
+									<input id="trancost" name="trancost" th:value="${siji.trancost}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">到站：</label>
+								<div class="col-sm-8">
+									<input id="arrivstation" name="arrivstation" th:value="${siji.arrivstation}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">付款单位：</label>
+								<div class="col-sm-8">
+									<input id="payer" name="payer" th:value="${siji.payer}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收货单位：</label>
+								<div class="col-sm-8">
+									<input id="inforfee" name="inforfee" th:value="${siji.inforfee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="remark" name="remark" th:value="${siji.remark}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">开票单位及日期：</label>
+								<div class="col-sm-8">
+									<input id="issueoffice" name="issueoffice" th:value="${siji.issueoffice}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">开票金额：</label>
+								<div class="col-sm-8">
+									<input id="aminvoice" name="aminvoice" th:value="${siji.aminvoice}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">客户付款及日期：</label>
+								<div class="col-sm-8">
+									<input id="custompay" name="custompay" th:value="${siji.custompay}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">付景耀税款日期及方式：</label>
+								<div class="col-sm-8">
+									<input id="taxdatepay" name="taxdatepay" th:value="${siji.taxdatepay}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/gc/siji/edit.js">
+	</script>
+</body>
+</html>

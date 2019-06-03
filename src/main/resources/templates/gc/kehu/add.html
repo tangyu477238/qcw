@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm">
+
+						<div class="form-group">
+								<label class="col-sm-1 control-label">订单号：</label>
+								<div class="col-sm-4">
+									<input id="orderNo" name="orderNo" class="form-control"
+										   type="text" onblur="getOrder(this.value)">
+								</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">日期：</label>
+							<div class="col-sm-4">
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="bizdate" name="bizdate" placeholder="日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+							</div>
+
+							<!--<label class="col-sm-1 control-label">发货单位：</label>-->
+							<!--<div class="col-sm-4">-->
+								<!--<input id="forwunit" name="forwunit" class="form-control" type="text">-->
+							<!--</div>-->
+
+							<label class="col-sm-1 control-label">车号：</label>
+							<div class="col-sm-4">
+								<input id="carnum" name="carnum" class="form-control" type="text">
+							</div>
+
+
+						</div>
+
+
+
+						<div class="form-group">
+
+
+
+							<label class="col-sm-1 control-label">到站：</label>
+							<div class="col-sm-4">
+								<input id="station" name="station" class="form-control" type="text">
+							</div>
+
+							<label class="col-sm-1 control-label">吨位：</label>
+							<div class="col-sm-4">
+								<input id="tonnage" name="tonnage" class="form-control" type="text">
+							</div>
+
+						</div>
+						<!--<div class="form-group">-->
+
+
+							<!--<label class="col-sm-1 control-label">结算吨位：</label>-->
+							<!--<div class="col-sm-4">-->
+								<!--<input id="settletonnage" name="settletonnage" class="form-control" type="text">-->
+							<!--</div>-->
+
+							<!--<label class="col-sm-1 control-label">调整吨位：</label>-->
+							<!--<div class="col-sm-4">-->
+								<!--<input id="adjusttonnage" name="adjusttonnage" class="form-control" type="text">-->
+							<!--</div>-->
+
+						<!--</div>-->
+
+						<div class="form-group">
+
+							<label class="col-sm-1 control-label">运价：</label>
+							<div class="col-sm-4">
+								<input id="transcost" name="transcost" class="form-control" type="text">
+							</div>
+
+							<label class="col-sm-1 control-label">信息费：</label>
+							<div class="col-sm-4">
+								<input id="inforfee" name="inforfee" class="form-control" type="text">
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+
+							<label class="col-sm-1 control-label">收取方式：</label>
+							<div class="col-sm-4">
+								<input id="colmethod" name="colmethod" class="form-control" type="text">
+							</div>
+
+
+							<label class="col-sm-1 control-label">运费：</label>
+							<div class="col-sm-4">
+								<input id="transfee" name="transfee" class="form-control" type="text">
+							</div>
+
+
+						</div>
+						<div class="form-group">
+
+							<label class="col-sm-1 control-label">付款方式：</label>
+							<div class="col-sm-4">
+								<input id="riskcues" name="riskcues" class="form-control" type="text">
+							</div>
+
+
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-1 control-label">运满满：</label>
+							<div class="col-sm-4">
+								<input id="fulltrans" name="fulltrans" class="form-control" type="text">
+							</div>
+
+							<label class="col-sm-1 control-label">运满满付款日期：</label>
+							<div class="col-sm-4">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="fulpaydate" name="fulpaydate" placeholder="日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+							</div>
+
+
+
+						</div>
+
+						<div class="form-group">
+
+
+							<label class="col-sm-1 control-label">银行卡：</label>
+							<div class="col-sm-4">
+								<input id="bankcard" name="bankcard" class="form-control" type="text">
+							</div>
+
+							<label class="col-sm-1 control-label">银行卡付款日期：</label>
+							<div class="col-sm-4">
+
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="bankpaydate" name="bankpaydate" placeholder="日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+							</div>
+
+
+
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-1 control-label">农行卡二次付款：</label>
+							<div class="col-sm-4">
+								<input id="bankcardtwo" name="bankcardtwo" class="form-control" type="text">
+							</div>
+
+
+							<label class="col-sm-1 control-label">银行卡二次付款日期：</label>
+							<div class="col-sm-4">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="bankpaytwodate" name="bankpaytwodate" placeholder="日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+							</div>
+
+
+
+
+						</div>
+						<div class="form-group">
+							<label class="col-sm-1 control-label">运满满二次付款：</label>
+							<div class="col-sm-4">
+								<input id="fultranstwo" name="fultranstwo" class="form-control" type="text">
+							</div>
+
+							<label class="col-sm-1 control-label">运满满二次付款日期：</label>
+							<div class="col-sm-4">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="fulpaytwodate" name="fulpaytwodate" placeholder="日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">余额：</label>
+							<div class="col-sm-4">
+								<input id="acbalance" name="acbalance" class="form-control" type="text">
+							</div>
+
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">回单：</label>
+							<div class="col-sm-4">
+								<!--<input id="receipt" name="receipt" class="form-control" type="text">-->
+								<select class="form-control" name="receipt" id="receipt">
+									<option value="无">无</option>
+									<option value="有">有</option>
+								</select>
+							</div>
+
+							<label class="col-sm-1 control-label">回单日期：</label>
+							<div class="col-sm-4">
+
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="receiptdate" name="receiptdate" placeholder="日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+
+
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">承运人：</label>
+							<div class="col-sm-4">
+								<input id="carrier" name="carrier" class="form-control" type="text">
+							</div>
+
+							<label class="col-sm-1 control-label">备注：</label>
+							<div class="col-sm-4">
+								<input id="remark" name="remark" class="form-control" type="text">
+							</div>
+
+						</div>
+
+
+
+
+
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:include="gc/include::footer"></div>
+<script type="text/javascript" src="/js/appjs/gc/kehu/add.js?v=21">
+</script>
+</body>
+</html>

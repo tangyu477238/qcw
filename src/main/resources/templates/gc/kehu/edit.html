@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${kehu.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">日期：</label>
+								<div class="col-sm-8">
+									<input id="bizdate" name="bizdate" th:value="${kehu.bizdate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发货单位：</label>
+								<div class="col-sm-8">
+									<input id="forwunit" name="forwunit" th:value="${kehu.forwunit}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">车号：</label>
+								<div class="col-sm-8">
+									<input id="carnum" name="carnum" th:value="${kehu.carnum}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">到站：</label>
+								<div class="col-sm-8">
+									<input id="station" name="station" th:value="${kehu.station}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">吨位：</label>
+								<div class="col-sm-8">
+									<input id="tonnage" name="tonnage" th:value="${kehu.tonnage}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">结算吨位：</label>
+								<div class="col-sm-8">
+									<input id="settletonnage" name="settletonnage" th:value="${kehu.settletonnage}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">调整吨位：</label>
+								<div class="col-sm-8">
+									<input id="adjusttonnage" name="adjusttonnage" th:value="${kehu.adjusttonnage}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运价：</label>
+								<div class="col-sm-8">
+									<input id="transcost" name="transcost" th:value="${kehu.transcost}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">信息费：</label>
+								<div class="col-sm-8">
+									<input id="inforfee" name="inforfee" th:value="${kehu.inforfee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">收取方式：</label>
+								<div class="col-sm-8">
+									<input id="colmethod" name="colmethod" th:value="${kehu.colmethod}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运费：</label>
+								<div class="col-sm-8">
+									<input id="transfee" name="transfee" th:value="${kehu.transfee}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">风险提示：</label>
+								<div class="col-sm-8">
+									<input id="riskcues" name="riskcues" th:value="${kehu.riskcues}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运满满：</label>
+								<div class="col-sm-8">
+									<input id="fulltrans" name="fulltrans" th:value="${kehu.fulltrans}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运满满付款时间：</label>
+								<div class="col-sm-8">
+									<input id="fulpaydate" name="fulpaydate" th:value="${kehu.fulpaydate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行卡：</label>
+								<div class="col-sm-8">
+									<input id="bankcard" name="bankcard" th:value="${kehu.bankcard}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行卡付款日期：</label>
+								<div class="col-sm-8">
+									<input id="bankpaydate" name="bankpaydate" th:value="${kehu.bankpaydate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">农行卡二次付款：</label>
+								<div class="col-sm-8">
+									<input id="bankcardtwo" name="bankcardtwo" th:value="${kehu.bankcardtwo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">银行卡二次付款日期：</label>
+								<div class="col-sm-8">
+									<input id="bankpaytwodate" name="bankpaytwodate" th:value="${kehu.bankpaytwodate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运满满二次付款：</label>
+								<div class="col-sm-8">
+									<input id="fultranstwo" name="fultranstwo" th:value="${kehu.fultranstwo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">运满满二次付款日期：</label>
+								<div class="col-sm-8">
+									<input id="fulpaytwodate" name="fulpaytwodate" th:value="${kehu.fulpaytwodate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">余额：</label>
+								<div class="col-sm-8">
+									<input id="acbalance" name="acbalance" th:value="${kehu.acbalance}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">回单：</label>
+								<div class="col-sm-8">
+									<input id="receipt" name="receipt" th:value="${kehu.receipt}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">回单日期：</label>
+								<div class="col-sm-8">
+									<input id="receiptdate" name="receiptdate" th:value="${kehu.receiptdate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">承运人：</label>
+								<div class="col-sm-8">
+									<input id="carrier" name="carrier" th:value="${kehu.carrier}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="remark" name="remark" th:value="${kehu.remark}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/gc/kehu/edit.js">
+	</script>
+</body>
+</html>
