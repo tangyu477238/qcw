@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+
+
+
+
+			<h2>钢材明细 </h2>
+			<table class="table table-striped table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th> 钢号 </th>
+						<th> 规格 </th>
+						<th> 件数 </th>
+						<th> 支数 </th>
+						<th> 吨位 </th>
+						<th> 基价 </th>
+						<th> 系数 </th>
+						<th> 运率 </th>
+						<th> 运费 </th>
+					</tr>
+				</thead>
+
+				<tbody id = "tdata">
+				</tbody>
+			</table>
+
+
+
+
+	</div>
+	<div th:include="include::footer"></div>
+
+
+
+
+<script type="text/javascript">
+    $(function() {
+        showTable();
+    });
+
+	function showTable() {
+
+        var pid = '[[${pid}]]';
+
+		//var pid = $("#pid").val();
+
+		$.ajax({
+			url : "/gc/sijiItem/itemList",
+			type : "GET",
+			data : {
+				'pid' : pid
+			},
+			success : function(list) {
+				$("#tdata").html("");
+				for(var i = 0;i < list.length;i++){
+					var siItem = list[i];
+					var td = tdtemplate.replace('[tNum]',i+1);
+					td = td.replace('[steelnum]',siItem.steelnum);
+					td = td.replace('[specs]',siItem.specs);
+					td = td.replace('[packnum]',siItem.packnum);
+                    td = td.replace('[zhinum]',siItem.zhinum);
+					td = td.replace('[tonnage]',siItem.tonnage);
+					td = td.replace('[baseprice]',siItem.baseprice);
+					td = td.replace('[coefficient]',siItem.coefficient);
+					td = td.replace('[tranrate]',siItem.tranrate);
+					td = td.replace('[trancost]',siItem.trancost);
+
+					td = td.replace('[siItem]',siItem);
+					td = td.replace('[id]',siItem.id);
+					$("#tdata").append(td);
+				}
+			}
+		});
+
+
+
+
+
+	}
+
+
+
+
+
+	var tdtemplate =
+		'<tr>' +
+		'<td>' + '[tNum]' + '</td>' +
+		'<td>' + '[steelnum]' + '</td>' +
+		'<td>' + '[specs]' + '</td>' +
+		'<td>' + '[packnum]' + '</td>' +
+        '<td>' + '[zhinum]' + '</td>' +
+		'<td>' + '[tonnage]' + '</td>' +
+		'<td>' + '[baseprice]' + '</td>' +
+		'<td>' + '[coefficient]' + '</td>' +
+
+		'<td>' + '[tranrate]' + '</td>' +
+		'<td>' + '[trancost]' + '</td>' +
+
+		//'<td>' +
+		//'<button type="button" class="btn btn-primary" onclick = modifystudent(' + '[siItem]' + ')>修改</button>&nbsp;&nbsp;' +
+		//'<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
+		//'</td>' +
+
+		'</tr>';
+
+
+</script>
+
+
+</body>
+</html>

@@ -9,160 +9,327 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-						<input id="id" name="id" th:value="${kehu.id}"  type="hidden">
-							<div class="form-group">	
-								<label class="col-sm-3 control-label">日期：</label>
-								<div class="col-sm-8">
-									<input id="bizdate" name="bizdate" th:value="${kehu.bizdate}" class="form-control" type="text">
+
+							<input id="id" name="id" th:value="${kehu.id}"  type="hidden">
+							<input id="kpid" name="kpid" th:value="${kehu.kpid}"  type="hidden">
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">日期：</label>
+								<div class="col-sm-3">
+									<input type="text" th:value = "${kehu.bizdate}" class="form-control"
+										   id="bizdate" name="bizdate"   readonly="readonly"/>
+								</div>
+
+								<!--<label class="col-sm-2 control-label">发货单位：</label>-->
+								<!--<div class="col-sm-3">-->
+								<!--<input id="forwunit" name="forwunit" class="form-control" type="text">-->
+								<!--</div>-->
+
+								<label class="col-sm-2 control-label">车号：</label>
+								<div class="col-sm-3">
+									<input id="carnum" th:value = "${kehu.carnum}"  name="carnum" class="form-control" type="text" readonly="readonly">
+								</div>
+
+
+							</div>
+
+
+
+							<div class="form-group">
+
+
+
+								<label class="col-sm-2 control-label">到站：</label>
+								<div class="col-sm-3">
+									<input id="station" th:value = "${kehu.station}" name="station" class="form-control" type="text" readonly>
+								</div>
+
+								<label class="col-sm-2 control-label">吨位：</label>
+								<div class="col-sm-3">
+									<input id="tonnage" th:value = "${kehu.tonnage}"  name="tonnage" class="form-control" type="text" readonly>
+								</div>
+
+							</div>
+							<div class="form-group">
+
+
+								<label class="col-sm-2 control-label">结算吨位：</label>
+								<div class="col-sm-3">
+									<input id="settletonnage" th:value = "${kehu.settletonnage}" name="settletonnage" class="form-control" type="text" readonly>
+								</div>
+
+								<label class="col-sm-2 control-label">调整吨位：</label>
+								<div class="col-sm-3">
+									<input id="adjusttonnage" th:value = "${kehu.adjusttonnage}"  name="adjusttonnage" class="form-control" type="text" onkeyup="getYunjia()">
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">运价：</label>
+								<div class="col-sm-3">
+									<input id="transcost" th:value = "${kehu.transcost}" name="transcost" class="form-control" type="text" onkeyup="getYunjia()">
+								</div>
+
+								<label class="col-sm-2 control-label">信息费：</label>
+								<div class="col-sm-3">
+									<input id="inforfee"  th:value = "${kehu.inforfee}" name="inforfee" class="form-control" type="text" onkeyup="getYunjia()">
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+
+								<label class="col-sm-2 control-label">收取方式：</label>
+								<div class="col-sm-3">
+									<input id="colmethod" th:value = "${kehu.colmethod}" name="colmethod" class="form-control" type="text">
+								</div>
+
+
+								<label class="col-sm-2 control-label">运费：</label>
+								<div class="col-sm-3">
+									<input id="transfee" th:value = "${kehu.transfee}" name="transfee" class="form-control" type="text" readonly>
+								</div>
+
+
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">付款约定：</label>
+								<div class="col-sm-3">
+
+									<input type="text" class="form-control"
+										   id="bankpaytwodate"  th:value = "${kehu.bankpaytwodate}"  name="bankpaytwodate"  />
+								</div>
+
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">回单：</label>
+								<div class="col-sm-3">
+									<!--<input id="receipt" name="receipt" class="form-control" type="text">-->
+									<select class="form-control" name="receipt" id="receipt"  onchange="setPayDateRead(0)" disabled="true">
+
+										<option th:value="${kehu.receipt}">[[${kehu.receipt}]]</option>
+										<option value="无">无</option>
+										<option value="预有">预有</option>
+										<option value="有">有</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">回单日期：</label>
+								<div class="col-sm-3">
+
+
+									<input type="text" th:value = "${kehu.receiptdate}" class=" form-control"
+										   id="receiptdate" name="receiptdate"  readonly="readonly"/>
+								</div>
+
+
+							</div>
+
+
+
+							<div class="form-group" id="pay1">
+
+								<label class="col-sm-2 control-label">付款方式⑴：</label>
+								<div class="col-sm-3">
+									<!--<input id="payType" name="payType" class="form-control" type="text">-->
+
+									<select class="form-control" name="payType" id="payType" onchange="setPayDate(0)">
+										<option th:value = "${kehu.payType}">[[${kehu.payType}]]</option>
+										<option value="">--不付--</option>
+
+										<option value="运满满">--运满满--</option>
+										<option value="现金">--现金--</option>
+										<option value="农行卡">--农行卡--</option>
+										<option value="百通石化">--百通石化--</option>
+										<option value="百通石油">--百通石油--</option>
+										<option value="百通京博">--百通京博--</option>
+									</select>
+
+								</div>
+
+
+							</div>
+
+
+							<div class="form-group" id="pay2">
+								<label class="col-sm-2 control-label" >付款金额⑴：</label>
+								<div class="col-sm-3">
+									<input id="fulltrans"  th:value = "${kehu.fulltrans}"  onkeyup="getYunjia()" name="fulltrans" class="form-control" type="text" readonly="readonly"/>
+								</div>
+
+								<label class="col-sm-2 control-label">付款日期⑴：</label>
+								<div class="col-sm-3">
+
+									<input  id="fulpaydate"  th:value = "${kehu.fulpaydate}" name="fulpaydate" class="form-control" type="text" readonly="readonly"/>
+								</div>
+
+							</div>
+
+
+
+
+
+
+							<div class="form-group" id="pay3">
+
+								<label class="col-sm-2 control-label">付款方式⑵：</label>
+								<div class="col-sm-3">
+
+									<select class="form-control" name="forwunit" id="forwunit" onchange="setPayDate2(0)">
+
+										<option th:value = "${kehu.forwunit}">[[${kehu.forwunit}]]</option>
+										<option value="">--不付--</option>
+										<option value="运满满">--运满满--</option>
+										<option value="现金">--现金--</option>
+										<option value="农行卡">--农行卡--</option>
+										<option value="百通石化">--百通石化--</option>
+										<option value="百通石油">--百通石油--</option>
+										<option value="百通京博">--百通京博--</option>
+									</select>
+
+								</div>
+
+
+
+
+							</div>
+
+							<div class="form-group" id="pay4">
+
+
+								<label class="col-sm-2 control-label">付款金额⑵：</label>
+								<div class="col-sm-3">
+									<input id="bankcard"  th:value = "${kehu.bankcard}"  onkeyup="getYunjia()" name="bankcard" class="form-control" type="text" readonly="readonly"/>
+								</div>
+
+								<label class="col-sm-2 control-label">付款日期⑵：</label>
+								<div class="col-sm-3">
+
+
+									<input  id="bankpaydate" th:value = "${kehu.bankpaydate}" name="bankpaydate" class="form-control" type="text" readonly="readonly"/>
+								</div>
+
+							</div>
+
+
+
+
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">余额：</label>
+								<div class="col-sm-3">
+									<input id="acbalance" th:value = "${kehu.acbalance}" name="acbalance" class="form-control" type="text" readonly>
+								</div>
+
+								<label class="col-sm-2 control-label">风险提示：</label>
+								<div class="col-sm-3">
+									<input id="riskcues" th:value = "${kehu.riskcues}" name="riskcues" class="form-control" type="text">
+								</div>
+
+							</div>
+
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">承运人：</label>
+								<div class="col-sm-3">
+									<input id="carrier" th:value = "${kehu.carrier}" name="carrier" class="form-control" type="text">
+								</div>
+
+								<label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-3">
+									<input id="remark" th:value = "${kehu.remark}" name="remark" class="form-control" type="text">
+								</div>
+
+							</div>
+
+
+
+
+
+
+
+
+							<div class="portlet light portlet-fit ">
+								<div class="portlet-title">
+									<div class="caption">
+										<span class="caption-subject uppercase">钢材规格明细</span>
+									</div>
+								</div>
+
+								<div class="portlet-body">
+
+									<table class="table table-striped table-hover table-bordered" id="detail_editable_1">
+										<thead>
+										<tr>
+											<th>序号</th>
+											<th> 钢号 </th>
+											<th> 规格 </th>
+											<th> 件数 </th>
+											<th> 支数 </th>
+											<th> 吨位 </th>
+											<th> 基价 </th>
+											<th> 系数 </th>
+											<th> 运率 </th>
+											<th> 运费 </th>
+											<th> 核对操作 </th>
+
+										</tr>
+										</thead>
+										<tbody id="tdata">
+										<!--<tr>-->
+										<!--<td> 1 </td>-->
+										<!--<td> B2319 </td>-->
+										<!--<td> 78*12*1 </td>-->
+										<!--<td> 10 </td>-->
+										<!--<td> 200 </td>-->
+										<!--<td> 200 </td>-->
+										<!--<td> 2 </td>-->
+										<!--<td> 200 </td>-->
+										<!--<td> 200 </td>-->
+										<!--<td>-->
+										<!--编辑-->
+										<!--&lt;!&ndash;<a class="edit" href="javascript:;" &ndash;&gt;-->
+										<!--&lt;!&ndash;rel="external nofollow" rel="external nofollow" > 编辑 </a>&ndash;&gt;-->
+										<!--</td>-->
+										<!--<td>-->
+										<!--<a class="delete" href="" rel="external nofollow"  rel="external nofollow" > 删除 </a>-->
+										<!--删除-->
+										<!--</td>-->
+										<!--</tr>-->
+
+
+										</tbody>
+									</table>
+
+
+
+
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">发货单位：</label>
-								<div class="col-sm-8">
-									<input id="forwunit" name="forwunit" th:value="${kehu.forwunit}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">车号：</label>
-								<div class="col-sm-8">
-									<input id="carnum" name="carnum" th:value="${kehu.carnum}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">到站：</label>
-								<div class="col-sm-8">
-									<input id="station" name="station" th:value="${kehu.station}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">吨位：</label>
-								<div class="col-sm-8">
-									<input id="tonnage" name="tonnage" th:value="${kehu.tonnage}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">结算吨位：</label>
-								<div class="col-sm-8">
-									<input id="settletonnage" name="settletonnage" th:value="${kehu.settletonnage}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">调整吨位：</label>
-								<div class="col-sm-8">
-									<input id="adjusttonnage" name="adjusttonnage" th:value="${kehu.adjusttonnage}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运价：</label>
-								<div class="col-sm-8">
-									<input id="transcost" name="transcost" th:value="${kehu.transcost}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">信息费：</label>
-								<div class="col-sm-8">
-									<input id="inforfee" name="inforfee" th:value="${kehu.inforfee}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">收取方式：</label>
-								<div class="col-sm-8">
-									<input id="colmethod" name="colmethod" th:value="${kehu.colmethod}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运费：</label>
-								<div class="col-sm-8">
-									<input id="transfee" name="transfee" th:value="${kehu.transfee}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">风险提示：</label>
-								<div class="col-sm-8">
-									<input id="riskcues" name="riskcues" th:value="${kehu.riskcues}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运满满：</label>
-								<div class="col-sm-8">
-									<input id="fulltrans" name="fulltrans" th:value="${kehu.fulltrans}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运满满付款时间：</label>
-								<div class="col-sm-8">
-									<input id="fulpaydate" name="fulpaydate" th:value="${kehu.fulpaydate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">银行卡：</label>
-								<div class="col-sm-8">
-									<input id="bankcard" name="bankcard" th:value="${kehu.bankcard}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">银行卡付款日期：</label>
-								<div class="col-sm-8">
-									<input id="bankpaydate" name="bankpaydate" th:value="${kehu.bankpaydate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">农行卡二次付款：</label>
-								<div class="col-sm-8">
-									<input id="bankcardtwo" name="bankcardtwo" th:value="${kehu.bankcardtwo}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">银行卡二次付款日期：</label>
-								<div class="col-sm-8">
-									<input id="bankpaytwodate" name="bankpaytwodate" th:value="${kehu.bankpaytwodate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运满满二次付款：</label>
-								<div class="col-sm-8">
-									<input id="fultranstwo" name="fultranstwo" th:value="${kehu.fultranstwo}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运满满二次付款日期：</label>
-								<div class="col-sm-8">
-									<input id="fulpaytwodate" name="fulpaytwodate" th:value="${kehu.fulpaytwodate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">余额：</label>
-								<div class="col-sm-8">
-									<input id="acbalance" name="acbalance" th:value="${kehu.acbalance}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">回单：</label>
-								<div class="col-sm-8">
-									<input id="receipt" name="receipt" th:value="${kehu.receipt}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">回单日期：</label>
-								<div class="col-sm-8">
-									<input id="receiptdate" name="receiptdate" th:value="${kehu.receiptdate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">承运人：</label>
-								<div class="col-sm-8">
-									<input id="carrier" name="carrier" th:value="${kehu.carrier}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">备注：</label>
-								<div class="col-sm-8">
-									<input id="remark" name="remark" th:value="${kehu.remark}" class="form-control" type="text">
-								</div>
-							</div>
-																					<div class="form-group">
+
+
+
+
+
+
+							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
-									<button type="submit" class="btn btn-primary">提交</button>
+									<!--<button type="submit" class="btn btn-primary" onclick="queryMx()">核对发货明细</button>-->
+									<button type="submit" class="btn btn-primary" onclick="update()">提交</button>
 								</div>
 							</div>
 						</form>
@@ -171,8 +338,290 @@
 			</div>
 	</div>
 	</div>
-	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/kehu/edit.js">
-	</script>
+	<div th:include="gc/include::footer"></div>
+
+
+
+
+<script type="text/javascript"  >
+
+	var subFlag = 1 ;
+
+
+	$().ready(function() {
+		setPayDateRead(1);
+		showTable();
+	});
+
+
+
+
+	function queryMx() {
+
+
+	}
+
+
+
+
+
+	function update() {
+		$.ajax({
+			cache : true,
+			type : "POST",
+			url : "/gc/kehu/update",
+			data : $('#signupForm').serialize(),// 你的formid
+			async : false,
+			error : function(request) {
+				parent.layer.alert("Connection error");
+			},
+			success : function(data) {
+				if (data.code == 0) {
+					parent.layer.msg("操作成功");
+					parent.reLoad();
+					var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+					parent.layer.close(index);
+
+				} else {
+					parent.layer.alert(data.msg)
+				}
+
+			}
+		});
+
+	}
+
+
+
+
+
+
+	function getYunjia() {
+		var settletonnage = $("#settletonnage").val();//结算吨位
+		var adjusttonnage = $("#adjusttonnage").val();//调整吨位
+		var transcost = $("#transcost").val();//运价
+		var inforfee = $("#inforfee").val();//信息费
+		var transfee = ((settletonnage-adjusttonnage)*transcost)-inforfee; //运费
+		$("#transfee").val(transfee.toFixed(2));
+
+
+		var fulltrans = $("#fulltrans").val();//运满满
+		var bankcard = $("#bankcard").val();//银行卡
+		//var bankcardtwo = $("#bankcardtwo").val();//银行卡2
+		//var fultranstwo = $("#fultranstwo").val();//运满满2
+
+
+		var acbalance = transfee - fulltrans - bankcard ;
+		$("#acbalance").val(acbalance.toFixed(2));
+
+
+	}
+
+
+	function setPayDate(flag) {
+		var payType = $("#payType").val();
+		if (payType!=''){
+			$("#pay2").show();
+
+			if (flag==0 || $("#fulpaydate").val()==getNowFormatDate()) {
+				$("#fulpaydate").val(getNowFormatDate());
+				$("#fulltrans").attr("readonly",false);
+			} else {
+				$("#payType").attr("disabled",true);
+			}
+		} else {
+			$("#fulltrans").attr("readonly",true);
+			$("#fulltrans").val('');
+			$("#fulpaydate").val('');
+			$("#pay2").hide();
+		}
+		getYunjia();
+	}
+
+	function setPayDate2(flag) {
+		var forwunit = $("#forwunit").val();
+
+		if (forwunit!=''){
+			$("#pay4").show();
+
+			if (flag==0 || $("#bankpaydate").val()==getNowFormatDate()) {
+				$("#bankcard").attr("readonly",false);
+				$("#bankpaydate").val(getNowFormatDate());
+			} else {
+				$("#forwunit").attr("disabled",true);
+			}
+
+		} else {
+			$("#bankcard").attr("readonly",true);
+			$("#bankcard").val('');
+			$("#bankpaydate").val('');
+			$("#pay4").hide();
+		}
+		getYunjia();
+	}
+
+	//获取当前时间，格式YYYY-MM-DD
+	function getNowFormatDate() {
+		var date = new Date();
+		var seperator1 = "-";
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		if (month >= 1 && month <= 9) {
+			month = "0" + month;
+		}
+		if (strDate >= 0 && strDate <= 9) {
+			strDate = "0" + strDate;
+		}
+		var currentdate = year + seperator1 + month + seperator1 + strDate;
+		return currentdate;
+	}
+
+
+
+	function setPayDateRead(flag){
+		var receipt = $("#receipt").val();
+		if (receipt=='无'||receipt=='') {
+
+			$("#payType").attr("readonly",true);
+			$("#forwunit").attr("readonly",true);
+
+			$("#payType").val('');
+			$("#forwunit").val('');
+
+			$("#receiptdate").val('');
+
+			$("#pay1").hide();
+			$("#pay3").hide();
+
+		} else {
+
+
+			$("#pay1").show();
+			$("#pay3").show();
+			if (flag==0 || $("#receiptdate").val()==getNowFormatDate()) {
+				$("#payType").attr("readonly",false);
+				$("#forwunit").attr("readonly",false);
+				$("#receiptdate").val(getNowFormatDate());
+			} else {
+				$("#receipt").attr("disabled",true);
+				$("#adjusttonnage").attr("readonly",true);
+				$("#transcost").attr("readonly",true);
+				$("#inforfee").attr("readonly",true);
+			}
+
+		}
+
+		setPayDate(flag);
+		setPayDate2(flag);
+	}
+
+
+
+
+
+	function heDui(id) {
+        //parent.layer.msg("操作成功");
+
+        $.ajax({
+            url : "/gc/sijiItem/heDui",
+            type : "post",
+            data : {
+                'id' : id
+            },
+            success : function(r) {
+                if (r.code==0) {
+                    layer.msg(r.msg);
+                    showTable();
+                }else{
+                    layer.msg(r.msg);
+                }
+            }
+        });
+
+
+	}
+
+
+	function showTable() {
+        subFlag = 1 ;
+		var pid = $("#kpid").val();
+
+		$.ajax({
+			url : "/gc/sijiItem/itemList",
+			type : "GET",
+			data : {
+				'pid' : pid
+			},
+			success : function(list) {
+				$("#tdata").html("");
+				for(var i = 0;i < list.length;i++){
+					var siItem = list[i];
+
+
+                    var td = tdtemplate.replace('[tNum]',i+1);
+					td = td.replace('[steelnum]',siItem.steelnum);
+					td = td.replace('[specs]',siItem.specs);
+					td = td.replace('[packnum]',siItem.packnum);
+					td = td.replace('[zhinum]',siItem.zhinum);
+					td = td.replace('[tonnage]',siItem.tonnage);
+					td = td.replace('[baseprice]',siItem.baseprice);
+					td = td.replace('[coefficient]',siItem.coefficient);
+					td = td.replace('[tranrate]',siItem.tranrate);
+					td = td.replace('[trancost]',siItem.trancost);
+
+					td = td.replace('[siItem]',siItem);
+
+                    if (siItem.payer!=1) {
+
+						subFlag = 0; //有数据未核对
+
+                        td = td.replace('[but]','<button type="button" class="btn btn-primary" onclick = heDui(\'' + '[id]' + '\')>核对正确</button>&nbsp;&nbsp;');
+                    } else {
+                        td = td.replace('[but]','已核对');
+                    }
+
+                    td = td.replace('[id]',siItem.id);
+					$("#tdata").append(td);
+
+
+                    if (subFlag != 1) {
+                        $("#receipt").attr("disabled",true);
+                    } else {
+                        $("#receipt").attr("disabled",false);
+                    }
+
+				}
+			}
+		});
+
+
+
+
+
+	}
+
+	var tdtemplate =
+	'<tr>' +
+	'<td>' + '[tNum]' + '</td>' +
+	'<td>' + '[steelnum]' + '</td>' +
+	'<td>' + '[specs]' + '</td>' +
+	'<td>' + '[packnum]' + '</td>' +
+	'<td>' + '[zhinum]' + '</td>' +
+	'<td>' + '[tonnage]' + '</td>' +
+	'<td>' + '[baseprice]' + '</td>' +
+	'<td>' + '[coefficient]' + '</td>' +
+
+	'<td>' + '[tranrate]' + '</td>' +
+	'<td>' + '[trancost]' + '</td>' +
+
+	'<td>' + '[but]' +
+	// '<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
+	'</td>' +
+
+	'</tr>';
+
+</script>
+
 </body>
 </html>

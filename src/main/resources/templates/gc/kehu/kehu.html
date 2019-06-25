@@ -2,139 +2,192 @@
 <html>
 <meta charset="utf-8">
 <head th:include="gc/include :: header"></head>
+<style>
+	.common-search-form{
+		margin-bottom:10px;
+		padding:20px 20px 0px!important;
+	}
+	.form-control{
+		border-radius: 4px!important;
+	}
+	.form-horizontal .control-label{
+		text-align: center;
+	}
+</style>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
-		<div class="col-sm-12">
-			<div class="ibox">
-				<div class="ibox-body">
-					<div class="fixed-table-toolbar">
-
-
-						<div class="container">
-							<div class="row">
-								<div class="table-responsive">
-									<div id="toolbar">
-										<form class="form-inline">
-
-
-
-											<div class="form-group">
-
-												<div class="input-group">
-													<div class="input-group-addon">业务日期</div>
-
-													<input type="text" class="laydate-icon layer-date form-control"
-														   id="startDate" name="startDate" placeholder="开始日期"
-														   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-														   size="13"
-														   style="background-color: #fff;" readonly="readonly"/>
-
-												</div>
-											</div>
-
-
-											<div class="form-group">
-												<div class="input-group">
-													<div class="input-group-addon">至</div>
-													<input type="text" class="laydate-icon layer-date form-control"
-														   id="endDate" name="endDate" placeholder="结束日期"
-														   size="13"
-														   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-														   style="background-color: #fff;" readonly="readonly"/>
-												</div>
-											</div>
+<div class="wrapper wrapper-content ">
 
 
 
 
-											<div class="form-group">
-												<div class="input-group">
-													<input id="carnum" type="text" class="form-control" size="10"
-														   placeholder="车牌号">
-												</div>
-												<div class="input-group">
-													<input type="text" class="form-control" name="carrier" size="10"
-														   id="carrier" placeholder="承运人">
-												</div>
-											</div>
+
+	<div class="portlet light common-search-form">
+		<div class="portlet-body">
+			<form class="form-horizontal" action="#" id="searchUserFormId">
 
 
-											<div class="form-group">
-												<div class="input-group">
 
-													<select class="form-control" name="receipt" id="receipt">
-														<option value="">是否回单</option>
-														<option value="无">--无--</option>
-														<option value="有">--有--</option>
-													</select>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-md-2">业务</label>
+							<div class="col-md-5 ">
 
-												</div>
-											</div>
-
-
-											<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>
-										</form>
-									</div>
-									<table id="table" >
-
-
-										<div class="columns pull-left">
-											<button shiro:hasPermission="gc:kehu:add" type="button" class="btn  btn-primary" onclick="add()">
-												<i class="fa fa-plus" aria-hidden="true"></i>添加
-											</button>
-											<button shiro:hasPermission="gc:kehu:batchRemove" type="button" class="btn  btn-danger"
-													onclick="batchRemove()">
-												<i class="fa fa-trash" aria-hidden="true"></i>删除
-											</button>
-											<button  type="button" class="btn  btn-success" onclick="excel()">
-												导出
-											</button>
-
-											<!--<button class="btn btn-success" onclick="reLoad()">查询</button>-->
-										</div>
-									</table>
-								</div>
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="startDate" name="startDate" placeholder="开始日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   size="13"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+							<div class="col-md-5 ">
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="endDate" name="endDate" placeholder="结束日期"
+									   size="13"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   style="background-color: #fff;" readonly="readonly"/>
 							</div>
 						</div>
+					</div>
 
 
+					<div class="col-md-2">
+						<div class="form-group">
 
+							<input id="carnum" name="carnum" type="text" class="form-control" size="10"
+								   placeholder="车牌号">
+
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<input type="text" class="form-control" name="carrier" size="10"
+								   id="carrier" placeholder="承运人">
+						</div>
 					</div>
 
 
 
 
-					<table id="exampleTable" data-mobile-responsive="true">
-					</table>
 				</div>
-			</div>
+
+
+
+
+				<div class="row">
+
+
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-md-2">回单</label>
+							<div class="col-md-5 ">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="tstartDate" name="tstartDate" placeholder="开始日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   size="13"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+							<div class="col-md-5 ">
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="tendDate" name="tendDate" placeholder="结束日期"
+									   size="13"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<select class="form-control" name="receipt" id="receipt">
+								<option value="">是否回单</option>
+								<option value="无">--无--</option>
+								<option value="预有">--预有--</option>
+								<option value="有">--有--</option>
+								<option value="有或预有">--有或预有--</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>
+						</div>
+					</div>
+
+				</div>
+
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="actions pull-left">
+							<div class="columns pull-left">
+
+
+								<button shiro:hasPermission="gc:siji:add" type="button" class="btn  btn-primary" onclick="add()">
+									<i class="fa fa-plus" aria-hidden="true"></i>添加
+								</button>
+								<button shiro:hasPermission="gc:siji:batchRemove" type="button" class="btn  btn-danger"
+										onclick="batchRemove()">
+									<i class="fa fa-trash" aria-hidden="true"></i>删除
+								</button>
+								<button  type="button" class="btn  btn-success" onclick="excel()">
+									导出
+								</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<table id="exampleTable" data-mobile-responsive="true">
+				</table>
+
+			</form>
 		</div>
 	</div>
-	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
-			<script type="text/javascript">
-				var s_edit_h = 'hidden';
-				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
-			</script>
-		</div>
-		<div shiro:hasPermission="gc:kehu:edit">
-			<script type="text/javascript">
-				s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="gc:kehu:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="gc:kehu:resetPwd">
-			<script type="text/javascript">
-				var s_resetPwd_h = '';
-			</script>
-		</div>
-	</div>
-	<div th:include="gc/include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/kehu/kehu.js?v=9"></script>
+
+
+
+
+
+
+
+
+
+</div>
+<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+<div>
+	<script type="text/javascript">
+        var s_edit_h = 'hidden';
+        var s_remove_h = 'hidden';
+        var s_resetPwd_h = 'hidden';
+	</script>
+</div>
+<div shiro:hasPermission="gc:kehu:edit">
+	<script type="text/javascript">
+        s_edit_h = '';
+	</script>
+</div>
+<div shiro:hasPermission="gc:kehu:remove">
+	<script type="text/javascript">
+        var s_remove_h = '';
+	</script>
+</div>
+<div shiro:hasPermission="gc:kehu:resetPwd">
+	<script type="text/javascript">
+        var s_resetPwd_h = '';
+	</script>
+</div>
+</div>
+<div th:include="gc/include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/gc/kehu/kehu.js?v=111111111"></script>
 </body>
 </html>

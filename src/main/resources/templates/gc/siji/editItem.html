@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="id" name="id" th:value="${siji.id}"  type="hidden">
+							<input id="pid" name="pid" th:value="${siji.pid}"  type="hidden" >
+
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-1 control-label">日期：</label>-->
+								<!--<div class="col-sm-4">-->
+									<!--<input type="text" class="laydate-icon layer-date form-control"-->
+										   <!--id="bizdate"   th:value="${siji.bizdate}" name="bizdate" placeholder="日期"-->
+										   <!--onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"-->
+										   <!--style="background-color: #fff;" readonly="readonly" required/>-->
+								<!--</div>-->
+
+								<!--<label class="col-sm-1 control-label">发货单位：</label>-->
+								<!--<div class="col-sm-4">-->
+									<!--<input id="forwunit"  th:value="${siji.forwunit}"  name="forwunit" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">车号：</label>
+								<div class="col-sm-3">
+									<input id="carnum"  th:value="${siji.carnum}"  name="carnum"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+								<label class="col-sm-2 control-label">到站：</label>
+								<div class="col-sm-3">
+									<input id="arrivstation" th:value="${siji.arrivstation}" name="arrivstation"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">吨位：</label>
+								<div class="col-sm-3">
+									<input id="tonnage"  th:value="${siji.tonnage}" name="tonnage"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+								<label class="col-sm-2 control-label">运率：</label>
+								<div class="col-sm-3">
+									<input id="tranrate"  th:value="${siji.tranrate}" name="tranrate"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">运费：</label>
+								<div class="col-sm-3">
+									<input id="trancost"  th:value="${siji.trancost}" name="trancost"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+								<!--<label class="col-sm-2 control-label">运率：</label>-->
+								<!--<div class="col-sm-3">-->
+									<!--<input id="tranrate"  th:value="${siji.tranrate}" name="tranrate"-->
+										   <!--class="form-control" type="text" readonly="readonly" required>-->
+								<!--</div>-->
+							</div>
+
+
+
+							<!--<div class="form-group">-->
+
+								<!--<label class="col-sm-1 control-label">备注：</label>-->
+								<!--<div class="col-sm-9">-->
+									<!--<textarea id="remark"  th:value="${siji.remark}" name="remark" class="form-control" ></textarea>-->
+								<!--</div>-->
+
+							<!--</div>-->
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">交单日期：</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"
+										   id="billdate"   th:value="${siji.billdate}" name="billdate"
+										     readonly="readonly" required/>
+								</div>
+
+								<label class="col-sm-2 control-label">结算金额：</label>
+								<div class="col-sm-3">
+									<input id="aminvoice"  th:value="${siji.aminvoice}"  name="aminvoice" class="form-control" type="text">
+								</div>
+							</div>
+
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">开票单位：</label>
+								<div class="col-sm-3">
+									<input id="issueoffice"  th:value="${siji.issueoffice}" name="issueoffice"
+										   class="form-control" type="text">
+								</div>
+
+
+								<label class="col-sm-2 control-label">开票日期：</label>
+								<div class="col-sm-3">
+
+									<input type="text"  id="issueofficedate"   th:value="${siji.issueofficedate}" name="issueofficedate"
+										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   style="background-color: #fff;" readonly="readonly" required/>
+								</div>
+
+							</div>
+
+
+
+							<div class="form-group">
+
+								<!--<label class="col-sm-2 control-label">收款单位：</label>-->
+								<!--<div class="col-sm-3">-->
+									<!--<input id="inforfee"  th:value="${siji.inforfee}" name="inforfee" class="form-control" type="text">-->
+								<!--</div>-->
+
+								<label class="col-sm-2 control-label">收款方式：</label>
+								<div class="col-sm-3">
+									<input onkeypress="setPayDate();" onchange="setPayDate();" id="taxdatepay" th:value="${siji.taxdatepay}" name="taxdatepay" class="form-control" type="text">
+								</div>
+
+
+								<label class="col-sm-2 control-label">收款日期：</label>
+								<div class="col-sm-3">
+									<input id="custompay"  th:value="${siji.custompay}" name="custompay" type="text"  class="form-control"
+										   readonly="readonly" >
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+
+
+
+
+								<label class="col-sm-2 control-label">付税款日期：</label>
+								<div class="col-sm-3">
+									<input id="paydate" th:value="${siji.paydate}" name="paydate"  type="text" placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   style="background-color: #fff;" readonly="readonly" required>
+								</div>
+							</div>
+
+
+
+							<div class="form-group">
+								<div class="col-sm-12 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary" onclick="update()">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+
+
+
+
+
+
+
+<div th:include="gc/include::footer"></div>
+
+
+
+<script type="text/javascript">
+
+    $().ready(function() {
+        setPayDateRead();
+    });
+
+
+    function update() {
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/gc/sijiItem/updateItem",
+            data : $('#signupForm').serialize(),// 你的formid
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    parent.reLoad();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+
+    }
+
+
+
+
+
+	//
+    // function getYunjia() {
+    //     var settletonnage = $("#settletonnage").val();//结算吨位
+    //     var adjusttonnage = $("#adjusttonnage").val();//调整吨位
+    //     var transcost = $("#transcost").val();//运价
+    //     var inforfee = $("#inforfee").val();//信息费
+    //     var transfee = ((settletonnage-adjusttonnage)*transcost)-inforfee; //运费
+    //     $("#transfee").val(transfee.toFixed(2));
+	//
+	//
+    //     var fulltrans = $("#fulltrans").val();//运满满
+    //     var bankcard = $("#bankcard").val();//银行卡
+    //     //var bankcardtwo = $("#bankcardtwo").val();//银行卡2
+    //     //var fultranstwo = $("#fultranstwo").val();//运满满2
+	//
+	//
+    //     var acbalance = transfee - fulltrans - bankcard ;
+    //     $("#acbalance").val(acbalance.toFixed(2));
+	//
+	//
+    // }
+	//
+	//
+
+
+
+    function setPayDate() {
+        var taxdatepay = $("#taxdatepay").val();
+        if (taxdatepay!=''){
+            $("#custompay").val(getNowFormatDate());
+        } else {
+            $("#custompay").val('');
+
+        }
+    }
+
+
+	//
+    // function setPayDate2(flag) {
+    //     var forwunit = $("#forwunit").val();
+	//
+    //     if (forwunit!=''){
+    //         $("#pay4").show();
+	//
+    //         if (flag==0 || $("#bankpaydate").val()==getNowFormatDate()) {
+    //             $("#bankcard").attr("readonly",false);
+    //             $("#bankpaydate").val(getNowFormatDate());
+    //         } else {
+    //             $("#forwunit").attr("disabled",true);
+    //         }
+	//
+    //     } else {
+    //         $("#bankcard").attr("readonly",true);
+    //         $("#bankcard").val('');
+    //         $("#bankpaydate").val('');
+    //         $("#pay4").hide();
+    //     }
+    //     getYunjia();
+    // }
+	//
+
+    //获取当前时间，格式YYYY-MM-DD
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+
+
+
+    function setPayDateRead(){
+        var billdate = $("#billdate").val();
+        if (billdate=='无'||billdate=='') {
+            $("#billdate").val(getNowFormatDate());
+        }
+    }
+
+</script>
+</body>
+</html>

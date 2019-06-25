@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+
+
+
+
+
+
+<div class="wrapper wrapper-content ">
+
+
+
+
+
+	<div class="portlet light common-search-form">
+		<div class="portlet-body">
+			<form class="form-horizontal" action="#" id="searchUserFormId">
+
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-md-2">日期</label>
+							<div class="col-md-5 ">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="startDate" name="startDate" placeholder="开始日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   size="13"
+									   style="background-color: #fff;" readonly="readonly" required/>
+							</div>
+
+							<div class="col-md-5 ">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="endDate" name="endDate" placeholder="结束日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   size="13"
+									   style="background-color: #fff;" readonly="readonly" required/>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-1 ">
+						<button type="button" onclick="showTable()" class="btn btn-primary queryButton">查询</button>
+					</div>
+
+
+				</div>
+
+
+
+
+
+
+
+				<h2>结算明细 </h2>
+				<table class="table table-striped table-bordered table-hover table-condensed">
+					<thead>
+					<tr>
+
+						<th>序号</th>
+						<th> 回单金额</th>
+						<th> 运满满 </th>
+						<th> 银行卡 </th>
+						<th> 现金 </th>
+						<th> 百通石油</th>
+						<th> 百通石化</th>
+						<th> 百通京博</th>
+						<th> 差额 </th>
+					</tr>
+					</thead>
+
+					<tbody id = "tdata">
+					</tbody>
+				</table>
+
+			</form>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div th:include="gc/include::footer"></div>
+
+
+
+
+<script type="text/javascript">
+    $(function() {
+        $("#startDate").val(getNowFirstDate());
+        $("#endDate").val(getNowFormatDate());
+
+        showTable();
+    });
+
+
+
+    //获取当前时间，格式YYYY-MM-DD
+    function getNowFirstDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + '01';
+        return currentdate;
+    }
+
+
+    //获取当前时间，格式YYYY-MM-DD
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+
+
+    function showTable() {
+
+		var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+
+
+        $.ajax({
+            url : "/gc/kehu/queryKehu1?startDate="+startDate+"&endDate="+endDate,
+            type : "GET",
+            data : {
+            },
+            success : function(list) {
+                $("#tdata").html("");
+                for(var i = 0;i < list.length;i++){
+                    var siItem = list[i];
+                    var td = tdtemplate.replace('[tNum]',i+1);
+                    //td = td.replace('[coefficient]',siItem.qichu);
+                    td = td.replace('[steelnum]',siItem.acbalance);
+                    td = td.replace('[specs]',siItem.fulltrans);
+                    td = td.replace('[packnum]',siItem.bankcard);
+                    td = td.replace('[xianjin]',siItem.xianjin);
+                    td = td.replace('[shiyou]',siItem.shiyou);
+                    td = td.replace('[shihua]',siItem.shihua);
+                    td = td.replace('[jingbo]',siItem.jingbo);
+                    var total =  siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo;
+                    td = td.replace('[total]',total.toFixed(2));
+
+                    $("#tdata").append(td);
+                }
+            }
+        });
+
+
+
+
+
+    }
+
+
+
+
+
+    var tdtemplate =
+        '<tr>' +
+        '<td>' + '[tNum]' + '</td>' +
+        //'<td>' + '[coefficient]' + '</td>' +
+        '<td>' + '[steelnum]' + '</td>' +
+        '<td>' + '[specs]' + '</td>' +
+        '<td>' + '[packnum]' + '</td>' +
+        '<td>' + '[xianjin]' + '</td>' +
+        '<td>' + '[shiyou]' + '</td>' +
+        '<td>' + '[shihua]' + '</td>' +
+        '<td>' + '[jingbo]' + '</td>' +
+        '<td>' + '[total]' + '</td>' +
+        '</tr>';
+
+
+</script>
+
+
+</body>
+</html>

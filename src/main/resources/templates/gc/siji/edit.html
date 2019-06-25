@@ -9,122 +9,160 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-						<input id="id" name="id" th:value="${siji.id}"  type="hidden">
-							<div class="form-group">	
-								<label class="col-sm-3 control-label">日期：</label>
-								<div class="col-sm-8">
-									<input id="bizdate" name="bizdate" th:value="${siji.bizdate}" class="form-control" type="text">
+							<input id="id" name="id" th:value="${siji.id}"  type="hidden">
+							<input id="pid" name="pid" th:value="${siji.pid}"  type="hidden" >
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">日期：</label>
+								<div class="col-sm-4">
+									<input type="text" class="laydate-icon layer-date form-control"
+										   id="bizdate"   th:value="${siji.bizdate}" name="bizdate" placeholder="日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   style="background-color: #fff;" readonly="readonly" required/>
+								</div>
+
+								<label class="col-sm-1 control-label">发货单位：</label>
+								<div class="col-sm-4">
+									<input id="forwunit"  th:value="${siji.forwunit}"  name="forwunit" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">发货单位：</label>
-								<div class="col-sm-8">
-									<input id="forwunit" name="forwunit" th:value="${siji.forwunit}" class="form-control" type="text">
+
+
+
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">车号：</label>
+								<div class="col-sm-4">
+									<input id="carnum"  th:value="${siji.carnum}"  name="carnum" class="form-control" type="text" required>
+								</div>
+
+								<label class="col-sm-1 control-label">到站：</label>
+								<div class="col-sm-4">
+									<input id="arrivstation"  th:value="${siji.arrivstation}" name="arrivstation" class="form-control" type="text">
+								</div>
+
+
+							</div>
+
+
+
+
+
+
+
+
+							<div class="form-group">
+
+
+								<label class="col-sm-1 control-label">付款单位：</label>
+								<div class="col-sm-4">
+									<input id="inforfee" th:value="${siji.inforfee}"  name="inforfee" class="form-control" type="text">
+								</div>
+
+								<label class="col-sm-1 control-label">业务员：</label>
+								<div class="col-sm-4">
+									<input id="custompay"  th:value="${siji.custompay}" name="custompay" class="form-control" type="text">
+								</div>
+
+
+							</div>
+
+
+
+							<div class="form-group">
+
+								<label class="col-sm-1 control-label">备注：</label>
+								<div class="col-sm-9">
+									<textarea id="remark"  th:value="${siji.remark}" name="remark" class="form-control" ></textarea>
+								</div>
+
+							</div>
+
+
+
+							<!--<label class="col-sm-1 control-label">付款单位：</label>-->
+							<!--<div class="col-sm-4">-->
+								<!--<input id="payer"  th:value="${siji.payer}" name="payer" class="form-control" type="text">-->
+							<!--</div>-->
+
+
+							<!--<div class="form-group">-->
+
+								<!--<label class="col-sm-1 control-label">开票单位及日期：</label>-->
+								<!--<div class="col-sm-4">-->
+									<!--<input id="issueoffice"  th:value="${siji.issueoffice}" name="issueoffice" class="form-control" type="text">-->
+								<!--</div>-->
+
+
+								<!--<label class="col-sm-1 control-label">开票金额：</label>-->
+								<!--<div class="col-sm-4">-->
+									<!--<input id="aminvoice"   th:value="${siji.aminvoice}" name="aminvoice" class="form-control" type="text">-->
+								<!--</div>-->
+
+
+
+							<!--</div>-->
+
+							<!--<div class="form-group">-->
+
+								<!--<label class="col-sm-1 control-label">客户付款及日期：</label>-->
+								<!--<div class="col-sm-4">-->
+									<!--<input id="custompay"  th:value="${siji.custompay}" name="custompay" class="form-control" type="text">-->
+								<!--</div>-->
+
+								<!--<label class="col-sm-1 control-label">付景耀税款日期及方式：</label>-->
+								<!--<div class="col-sm-4">-->
+									<!--<input id="taxdatepay" th:value="${siji.taxdatepay}" name="taxdatepay" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+
+
+
+							<div class="portlet light portlet-fit ">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="fa fa-plus" onclick="addDetail()"></i>
+										<span onclick="addDetail()"
+											  class="caption-subject uppercase">新增钢材规格</span>
+									</div>
+								</div>
+
+								<div class="portlet-body">
+
+
+									<table class="table table-striped table-hover table-bordered" id="detail_editable_1">
+										<thead>
+										<tr>
+											<th>序号</th>
+											<th> 钢号 </th>
+											<th> 规格 </th>
+											<th> 件数 </th>
+											<th> 支数 </th>
+											<th> 吨位 </th>
+											<th> 基价 </th>
+											<th> 系数 </th>
+											<th> 运率 </th>
+											<th> 运费 </th>
+											<th> 编辑/删除 </th>
+
+										</tr>
+										</thead>
+										<tbody id="tdata">
+
+
+
+										</tbody>
+									</table>
+
+
+
+
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">车号：</label>
-								<div class="col-sm-8">
-									<input id="carnum" name="carnum" th:value="${siji.carnum}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">钢号：</label>
-								<div class="col-sm-8">
-									<input id="steelnum" name="steelnum" th:value="${siji.steelnum}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">规格：</label>
-								<div class="col-sm-8">
-									<input id="specs" name="specs" th:value="${siji.specs}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">件数：</label>
-								<div class="col-sm-8">
-									<input id="packnum" name="packnum" th:value="${siji.packnum}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">吨数：</label>
-								<div class="col-sm-8">
-									<input id="tonnage" name="tonnage" th:value="${siji.tonnage}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">基价：</label>
-								<div class="col-sm-8">
-									<input id="baseprice" name="baseprice" th:value="${siji.baseprice}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">系数：</label>
-								<div class="col-sm-8">
-									<input id="coefficient" name="coefficient" th:value="${siji.coefficient}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运率：</label>
-								<div class="col-sm-8">
-									<input id="tranrate" name="tranrate" th:value="${siji.tranrate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">运费：</label>
-								<div class="col-sm-8">
-									<input id="trancost" name="trancost" th:value="${siji.trancost}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">到站：</label>
-								<div class="col-sm-8">
-									<input id="arrivstation" name="arrivstation" th:value="${siji.arrivstation}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">付款单位：</label>
-								<div class="col-sm-8">
-									<input id="payer" name="payer" th:value="${siji.payer}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">收货单位：</label>
-								<div class="col-sm-8">
-									<input id="inforfee" name="inforfee" th:value="${siji.inforfee}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">备注：</label>
-								<div class="col-sm-8">
-									<input id="remark" name="remark" th:value="${siji.remark}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">开票单位及日期：</label>
-								<div class="col-sm-8">
-									<input id="issueoffice" name="issueoffice" th:value="${siji.issueoffice}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">开票金额：</label>
-								<div class="col-sm-8">
-									<input id="aminvoice" name="aminvoice" th:value="${siji.aminvoice}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">客户付款及日期：</label>
-								<div class="col-sm-8">
-									<input id="custompay" name="custompay" th:value="${siji.custompay}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">付景耀税款日期及方式：</label>
-								<div class="col-sm-8">
-									<input id="taxdatepay" name="taxdatepay" th:value="${siji.taxdatepay}" class="form-control" type="text">
-								</div>
-							</div>
-																					<div class="form-group">
+
+
+
+							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<button type="submit" class="btn btn-primary">提交</button>
 								</div>
@@ -135,8 +173,211 @@
 			</div>
 	</div>
 	</div>
-	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/siji/edit.js">
-	</script>
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 添加(模态框)（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						添加产品明细
+					</h4>
+				</div>
+				<div class="modal-body">
+
+
+					<p>钢&nbsp;&nbsp;号&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="text" id="steelnum" name="steelnum"	placeholder="请输入钢号..." size="20"/></p>
+					<p>规&nbsp;&nbsp;格&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="text" id="specs" 	name="specs" placeholder="请输入规格..."  size="20"/></p>
+					<p>件&nbsp;&nbsp;数&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="text" id="packnum" name="packnum"	placeholder="请输入件数..." size="20" /></p>
+					</p>
+					<p>支&nbsp;&nbsp;数&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="text" id="zhinum" name="zhinum"	placeholder="请输入支数..." size="20" /></p>
+					</p>
+					<p>吨&nbsp;&nbsp;位&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="number" id="tonnage" name="tonnage"	placeholder="请输入吨位..." size="20"/></p>
+					<p>基&nbsp;&nbsp;价&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="number" id="baseprice" 	name="baseprice"	placeholder="请输入基价..." size="20"/></p>
+					<p>系&nbsp;&nbsp;数&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="number" id="coefficient" name="coefficient"	placeholder="请输入系数..." size="20"/></p>
+					<!--<p>运&nbsp;&nbsp;率&nbsp;&nbsp;:&nbsp;&nbsp;-->
+					<!--<input type="number" id="tranrate" name="tranrate"  size="20" readonly/></p>-->
+					<!--<p>运&nbsp;&nbsp;费&nbsp;&nbsp;:&nbsp;&nbsp;-->
+					<!--<input type="number" id="trancost"  name="trancost"  size="20" readonly/></p>-->
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						关闭
+					</button>
+					<button type="button" class="btn btn-primary" onclick="addeasypoi()">
+						提交
+					</button>
+				</div>
+
+
+			</div><!-- /.modal-content -->
+		</div>
+	</div>
+	<!-- /.modal -->
+
+
+
+
+
+<div th:include="gc/include::footer"></div>
+<script type="text/javascript" src="/js/appjs/gc/siji/edit.js?v=1">
+</script>
+
+
+<script type="text/javascript">
+
+function addDetail() {
+	$('#myModal').modal('show');
+}
+
+
+
+
+// 添加表格数据
+function addeasypoi() {
+    var url = "/gc/sijiItem/save";
+    var pid = $("#pid").val();
+    var data = {
+        "pid": pid,
+        "steelnum":$("#steelnum").val(),
+        "specs":$("#specs").val(),
+        "packnum":$("#packnum").val(),
+        "zhinum":$("#zhinum").val(),
+        "tonnage":$("#tonnage").val(),
+        "baseprice":$("#baseprice").val(),
+        "coefficient":$("#coefficient").val()
+    };
+    if($("#steelnum").val().trim() == ""
+        || $("#specs").val().trim() == ""){
+        alert("信息补充完整哟!");
+    }else{
+
+        $('#myModal').modal('hide');
+
+        $.post(url,data,function(result){
+            //alert("添加成功!!!");
+            //初始化表格
+            showTable();
+        });
+
+
+    }
+}
+
+
+
+function deleteItem(id) {
+    layer.confirm('确定要删除选中的记录？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+        $.ajax({
+            url : "/gc/sijiItem/remove",
+            type : "post",
+            data : {
+                'id' : id
+            },
+            success : function(r) {
+                if (r.code==0) {
+                    layer.msg(r.msg);
+                    showTable();
+                }else{
+                    layer.msg(r.msg);
+                }
+            }
+        });
+    })
+}
+
+
+
+function showTable() {
+
+	var pid = $("#pid").val();
+
+	$.ajax({
+		url : "/gc/sijiItem/itemList",
+		type : "GET",
+		data : {
+			'pid' : pid
+		},
+		success : function(list) {
+			$("#tdata").html("");
+			for(var i = 0;i < list.length;i++){
+				var siItem = list[i];
+				var td = tdtemplate.replace('[tNum]',i+1);
+				td = td.replace('[steelnum]',siItem.steelnum);
+				td = td.replace('[specs]',siItem.specs);
+				td = td.replace('[packnum]',siItem.packnum);
+                td = td.replace('[zhinum]',siItem.zhinum);
+				td = td.replace('[tonnage]',siItem.tonnage);
+				td = td.replace('[baseprice]',siItem.baseprice);
+				td = td.replace('[coefficient]',siItem.coefficient);
+				td = td.replace('[tranrate]',siItem.tranrate);
+				td = td.replace('[trancost]',siItem.trancost);
+
+				td = td.replace('[siItem]',siItem);
+				td = td.replace('[id]',siItem.id);
+				$("#tdata").append(td);
+			}
+		}
+	});
+
+
+
+
+
+}
+
+
+
+
+
+var tdtemplate =
+	'<tr>' +
+	'<td>' + '[tNum]' + '</td>' +
+	'<td>' + '[steelnum]' + '</td>' +
+	'<td>' + '[specs]' + '</td>' +
+	'<td>' + '[packnum]' + '</td>' +
+    '<td>' + '[zhinum]' + '</td>' +
+	'<td>' + '[tonnage]' + '</td>' +
+	'<td>' + '[baseprice]' + '</td>' +
+	'<td>' + '[coefficient]' + '</td>' +
+
+	'<td>' + '[tranrate]' + '</td>' +
+	'<td>' + '[trancost]' + '</td>' +
+
+	'<td>' +
+	//'<button type="button" class="btn btn-primary" onclick = modifystudent(' + '[siItem]' + ')>修改</button>&nbsp;&nbsp;' +
+	'<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
+	'</td>' +
+
+	'</tr>';
+
+
+</script>
 </body>
 </html>
