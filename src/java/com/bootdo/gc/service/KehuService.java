@@ -30,4 +30,8 @@ public interface KehuService {
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
+
+	List<Map> queryKehu(Map map);
+
+	List<Map> queryKehu1(Map map);
 }

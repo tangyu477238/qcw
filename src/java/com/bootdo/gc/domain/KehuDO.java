@@ -21,12 +21,13 @@ public class KehuDO implements Serializable {
 	
 	//
 	private Long id;
+
+	@Excel(name = "单号", orderNum = "1",isImportField = "orderNo")
+	private String orderNo;
 	//日期
-	@Excel(name = "日期", orderNum = "1",isImportField = "bizdate")
+	@Excel(name = "日期", orderNum = "2",isImportField = "bizdate")
 	private String bizdate;
-	//发货单位
-	@Excel(name = "发货单位", orderNum = "2",isImportField = "forwunit")
-	private String forwunit;
+
 	//车号
 	@Excel(name = "车号", orderNum = "3",isImportField = "carnum")
 	private String carnum;
@@ -35,13 +36,13 @@ public class KehuDO implements Serializable {
 	private String station;
 	//吨位
 	@Excel(name = "吨位", orderNum = "5",isImportField = "tonnage")
-	private String tonnage;
+	private BigDecimal tonnage;
 	//结束吨位
 	@Excel(name = "结算吨位", orderNum = "6",isImportField = "settletonnage")
-	private String settletonnage;
+	private BigDecimal settletonnage;
 	//调整吨位
 	@Excel(name = "调整吨位", orderNum = "7",isImportField = "adjusttonnage")
-	private String adjusttonnage;
+	private BigDecimal adjusttonnage;
 	//运价
 	@Excel(name = "运价", orderNum = "8",isImportField = "transcost")
 	private BigDecimal transcost;
@@ -54,51 +55,71 @@ public class KehuDO implements Serializable {
 	//运费
 	@Excel(name = "运费", orderNum = "11",isImportField = "transfee")
 	private BigDecimal transfee;
-	//风险提示
-	@Excel(name = "风险提示", orderNum = "12",isImportField = "riskcues")
-	private String riskcues;
-	//运满满
-	@Excel(name = "运满满", orderNum = "13",isImportField = "fulltrans")
-	private String fulltrans;
-	//运满满付款时间
-	@Excel(name = "运满满付款时间", orderNum = "14",isImportField = "fulpaydate")
-	private String fulpaydate;
-	//银行卡
-	@Excel(name = "银行卡", orderNum = "15",isImportField = "bankcard")
-	private String bankcard;
-	//银行卡付款日期
-	@Excel(name = "银行卡付款日期", orderNum = "16",isImportField = "bankpaydate")
-	private String bankpaydate;
-	//农行卡二次付款
-	@Excel(name = "农行卡二次付款", orderNum = "17",isImportField = "bankcardtwo")
-	private BigDecimal bankcardtwo;
-	//银行卡二次付款日期
-	@Excel(name = "银行卡二次付款日期", orderNum = "18",isImportField = "bankpaytwodate")
+
+	//付款约定
+	@Excel(name = "付款约定", orderNum = "12",isImportField = "bankpaytwodate")
 	private String bankpaytwodate;
-	//运满满二次付款
-	@Excel(name = "运满满二次付款", orderNum = "19",isImportField = "fultranstwo")
+
+	//风险提示
+	private String riskcues;
+
+
+	//付款方式(1)
+	@Excel(name = "付款方式(1)", orderNum = "13",isImportField = "payType")
+	private String payType;
+	//金额(1)
+	@Excel(name = "金额(1)", orderNum = "14",isImportField = "fulltrans")
+	private String fulltrans;
+	//付款时间
+	@Excel(name = "付款日期(1)", orderNum = "15",isImportField = "fulpaydate")
+	private String fulpaydate;
+
+
+	//付款方式
+	@Excel(name = "付款方式(2)", orderNum = "16",isImportField = "bankcard")
+	private String forwunit;
+	//金额(2)
+	@Excel(name = "金额(2)", orderNum = "17",isImportField = "bankcard")
+	private String bankcard;
+	//付款日期
+	@Excel(name = "付款日期(2)", orderNum = "18",isImportField = "bankpaydate")
+	private String bankpaydate;
+
+
+
+
+
+	//
+//	@Excel(name = "", orderNum = "17",isImportField = "bankcardtwo")
+	private BigDecimal bankcardtwo;
+	//
+//	@Excel(name = "", orderNum = "19",isImportField = "fultranstwo")
 	private BigDecimal fultranstwo;
-	//运满满二次付款日期
-	@Excel(name = "运满满二次付款日期", orderNum = "20",isImportField = "fulpaytwodate")
+	//
+//	@Excel(name = "", orderNum = "20",isImportField = "fulpaytwodate")
 	private String fulpaytwodate;
+
+
+
 	//余额
-	@Excel(name = "余额", orderNum = "21",isImportField = "acbalance")
+	@Excel(name = "余额", orderNum = "19",isImportField = "acbalance")
 	private BigDecimal acbalance;
 	//回单
-	@Excel(name = "回单", orderNum = "22",isImportField = "receipt")
+	@Excel(name = "回单", orderNum = "20",isImportField = "receipt")
 	private String receipt;
 	//回单日期
-	@Excel(name = "回单日期", orderNum = "23",isImportField = "receiptdate")
+	@Excel(name = "回单日期", orderNum = "21",isImportField = "receiptdate")
 	private String receiptdate;
 	//承运人
-	@Excel(name = "承运人", orderNum = "24",isImportField = "carrier")
+	@Excel(name = "承运人", orderNum = "22",isImportField = "carrier")
 	private String carrier;
 	//备注
-	@Excel(name = "备注", orderNum = "25",isImportField = "remark")
+	@Excel(name = "备注", orderNum = "23",isImportField = "remark")
 	private String remark;
 
-	@Excel(name = "单号", orderNum = "26",isImportField = "orderNo")
-	private String orderNo;
+
+
+	private String kpid;
 
 
 }

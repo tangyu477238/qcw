@@ -1,5 +1,6 @@
 package com.bootdo.gc.service.impl;
 
+import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.KehuDO;
 import com.bootdo.gc.domain.SijiDO;
@@ -17,6 +18,13 @@ import java.util.Map;
 public class SijiServiceImpl  implements SijiService {
 	@Autowired
 	private SijiDao sijiDao;
+
+
+	@Autowired
+	private KehuService kehuService;
+
+	@Autowired
+	private KehuDao kehuDao;
 
 
 
@@ -48,11 +56,25 @@ public class SijiServiceImpl  implements SijiService {
 	
 	@Override
 	public int remove(Long id){
+		SijiDO sijiDO = sijiDao.get(id);
+
+		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
+		if (kehuDO!=null){
+			return 0;
+		}
 		return sijiDao.remove(id);
 	}
 	
 	@Override
 	public int batchRemove(Long[] ids){
+		for (Long id :ids){
+			SijiDO sijiDO = sijiDao.get(id);
+			KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
+			if (kehuDO!=null){
+				return 0;
+			}
+		}
+
 		return sijiDao.batchRemove(ids);
 	}
 

@@ -31,6 +31,13 @@ public interface KehuDao {
 	int batchRemove(Long[] ids);
 
 
+	KehuDO getOrder(String orderNo);
+
+
+	List<Map> queryKehu(Map map);
+
+	List<Map> queryKehu1(Map map);
+
 
 
 }

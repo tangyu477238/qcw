@@ -2,12 +2,14 @@ package com.bootdo.gc.controller;
 
 import com.bootdo.common.utils.*;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.service.SequenceService;
 import com.bootdo.gc.service.SijiService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,6 +30,11 @@ import java.util.UUID;
 public class SijiController {
 	@Autowired
 	private SijiService sijiService;
+
+	@Autowired
+	private SequenceService sequenceService;
+
+
 	
 	@GetMapping()
 	@RequiresPermissions("gc:siji:siji")
@@ -68,7 +75,7 @@ public class SijiController {
 	@PostMapping("/save")
 	@RequiresPermissions("gc:siji:add")
 	public R save( SijiDO siji){
-		siji.setOrderNo(StringUtil.makeOrderCode(UUID.randomUUID().toString()));
+		siji.setOrderNo(sequenceService.getSequence(""));
 
 		if(sijiService.save(siji)>0){
 			return R.ok();
@@ -96,7 +103,7 @@ public class SijiController {
 		if(sijiService.remove(id)>0){
 		return R.ok();
 		}
-		return R.error();
+		return R.error2();
 	}
 	
 	/**
@@ -106,8 +113,13 @@ public class SijiController {
 	@ResponseBody
 	@RequiresPermissions("gc:siji:batchRemove")
 	public R remove(@RequestParam("ids[]") Long[] ids){
-		sijiService.batchRemove(ids);
-		return R.ok();
+//		sijiService.batchRemove(ids);
+//		return R.ok();
+
+		if(sijiService.batchRemove(ids)>0){
+			return R.ok();
+		}
+		return R.error2();
 	}
 
 
@@ -130,4 +142,16 @@ public class SijiController {
 
 
 
+	@RequestMapping("/sijiMx")
+	public String SijiMx(String pid, Model model) {
+		//构建ModelAndView实例，并设置跳转地址
+//		ModelAndView view = new ModelAndView("gc/siji/sijiMx");
+//		//将数据放置到ModelAndView对象view中,第二个参数可以是任何java类型
+//		view.addObject();
+
+		model.addAttribute("pid", pid);
+
+		//返回ModelAndView对象view
+		return "gc/siji/sijiMx";
+	}
 }

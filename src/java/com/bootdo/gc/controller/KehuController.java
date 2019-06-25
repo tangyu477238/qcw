@@ -1,6 +1,7 @@
 package com.bootdo.gc.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -111,9 +112,9 @@ public class KehuController {
 	@RequiresPermissions("gc:kehu:remove")
 	public R remove( Long id){
 		if(kehuService.remove(id)>0){
-		return R.ok();
+			return R.ok();
 		}
-		return R.error();
+		return R.errorMsg("单据已回单，不可删除！");
 	}
 	
 	/**
@@ -123,8 +124,12 @@ public class KehuController {
 	@ResponseBody
 	@RequiresPermissions("gc:kehu:batchRemove")
 	public R remove(@RequestParam("ids[]") Long[] ids){
-		kehuService.batchRemove(ids);
-		return R.ok();
+
+
+		if(kehuService.batchRemove(ids)>0){
+			return R.ok();
+		}
+		return R.errorMsg("单据已回单，不可删除！");
 	}
 
 
@@ -154,5 +159,44 @@ public class KehuController {
 
 		return kehu;
 	}
+
+
+
+
+	@GetMapping("/queryKehuPage")
+	String queryKehuPage(){
+
+		return "gc/kehu/queryKehu";
+	}
+
+	//获取列表--结算
+	@ResponseBody
+	@GetMapping("/queryKehu")
+	List<Map> queryKehu(String startDate,String endDate){
+		Map map = new HashMap();
+		map.put("startDate",startDate);
+		map.put("endDate",endDate);
+		return kehuService.queryKehu(map);
+	}
+
+
+
+	@GetMapping("/totalKehuPage")
+	String totalKehuPage(){
+
+		return "gc/kehu/totalKehu";
+	}
+
+	@ResponseBody
+	@GetMapping("/queryKehu1")
+	List<Map> queryKehu1(String startDate,String endDate){
+		Map map = new HashMap();
+		map.put("startDate",startDate);
+		map.put("endDate",endDate);
+		return kehuService.queryKehu1(map);
+	}
+
+
+
 	
 }
