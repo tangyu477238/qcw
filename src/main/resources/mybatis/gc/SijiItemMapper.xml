@@ -4,11 +4,54 @@
 <mapper namespace="com.bootdo.gc.dao.SijiItemDao">
 
 	<select id="get" resultType="com.bootdo.gc.domain.SijiItemDO">
-		select `id`,`pid`,`steelnum`,`specs`,`packnum`,`tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,`arrivstation`,`payer` from gc_siji_item where id = #{value}
+		SELECT
+			s.`bizdate`,
+			s.`forwunit`,
+			s.`carnum`,
+
+			s.`arrivstation`,
+			s.`remark`,
+			s.`inforfee`,
+
+
+			si.`id`,
+			si.`pid`,
+			si.`steelnum`,
+			si.`specs`,
+			si.`packnum`,
+			si.`zhinum`,
+			si.`tonnage`,
+			si.`baseprice`,
+			si.`coefficient`,
+			si.`tranrate`,
+			si.`trancost`,
+
+
+			si.`billdate`,
+			si.`aminvoice`,
+			si.`issueoffice`,
+			si.`issueofficedate`,
+
+
+			si.`custompay`,
+			si.`taxdatepay`,
+			si.`paydate`,
+			si.`payer`,
+			s.order_no as orderNo
+
+		FROM
+			gc_siji s
+		INNER JOIN gc_siji_item si ON si.pid = s.pid
+		where si.id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.gc.domain.SijiItemDO">
-		select `id`,`pid`,`steelnum`,`specs`,`packnum`,`tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,`arrivstation`,`payer` from gc_siji_item
+		select
+		       `id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
+		       `tranrate`,`trancost`,`arrivstation`,`payer` ,
+				remark,billdate,aminvoice,issueoffice,issueofficedate,
+				inforfee,custompay,taxdatepay,paydate
+		from gc_siji_item
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
@@ -28,7 +71,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by id
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -60,7 +103,8 @@
 			`pid`, 
 			`steelnum`, 
 			`specs`, 
-			`packnum`, 
+			`packnum`,
+			`zhinum`,
 			`tonnage`, 
 			`baseprice`, 
 			`coefficient`, 
@@ -74,7 +118,8 @@
 			#{pid}, 
 			#{steelnum}, 
 			#{specs}, 
-			#{packnum}, 
+			#{packnum},
+			#{zhinum},
 			#{tonnage}, 
 			#{baseprice}, 
 			#{coefficient}, 
@@ -92,12 +137,27 @@
 			<if test="steelnum != null">`steelnum` = #{steelnum}, </if>
 			<if test="specs != null">`specs` = #{specs}, </if>
 			<if test="packnum != null">`packnum` = #{packnum}, </if>
+			<if test="zhinum != null">`zhinum` = #{zhinum}, </if>
 			<if test="tonnage != null">`tonnage` = #{tonnage}, </if>
 			<if test="baseprice != null">`baseprice` = #{baseprice}, </if>
 			<if test="coefficient != null">`coefficient` = #{coefficient}, </if>
 			<if test="tranrate != null">`tranrate` = #{tranrate}, </if>
 			<if test="trancost != null">`trancost` = #{trancost}, </if>
 			<if test="arrivstation != null">`arrivstation` = #{arrivstation}, </if>
+
+
+
+			<if test="billdate != null">`billdate` = #{billdate}, </if>
+			<if test="aminvoice != null">`aminvoice` = #{aminvoice}, </if>
+			<if test="issueoffice != null">`issueoffice` = #{issueoffice}, </if>
+			<if test="issueofficedate != null">`issueofficedate` = #{issueofficedate}, </if>
+
+			<if test="inforfee != null">`inforfee` = #{inforfee}, </if>
+			<if test="custompay != null">`custompay` = #{custompay}, </if>
+			<if test="taxdatepay != null">`taxdatepay` = #{taxdatepay}, </if>
+			<if test="paydate != null">`paydate` = #{paydate}, </if>
+
+
 			<if test="payer != null">`payer` = #{payer}</if>
 		</set>
 		where id = #{id}
@@ -113,5 +173,128 @@
 			#{id}
 		</foreach>
 	</delete>
+
+
+	<update id="heDui">
+		update   gc_siji_item  set payer = '1'  where id = #{value}
+	</update>
+
+
+
+
+	<select  id="querySijiList" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		SELECT
+		    s.`bizdate`,
+			s.`forwunit`,
+			s.`carnum`,
+
+			s.`arrivstation`,
+		    s.`remark`,
+		    s.`inforfee`,
+		    s.`custompay` as scustompay,
+
+
+			si.`id`,
+			si.`pid`,
+			si.`steelnum`,
+			si.`specs`,
+			si.`packnum`,
+		    si.`zhinum`,
+			si.`tonnage`,
+			si.`baseprice`,
+			si.`coefficient`,
+			si.`tranrate`,
+			si.`trancost`,
+
+
+		    si.`billdate`,
+		    si.`aminvoice`,
+			si.`issueoffice`,
+		    si.`issueofficedate`,
+
+
+			si.`custompay`,
+			si.`taxdatepay`,
+		    si.`paydate`,
+			si.`payer`,
+			s.order_no as orderNo
+
+		FROM
+			gc_siji s
+				INNER JOIN gc_siji_item si ON si.pid = s.pid
+
+		]]>
+
+
+		<where>
+
+
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+
+
+
+		</where>
+
+
+
+		order by s.order_no desc,si.id asc
+
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+
+	</select>
+
+
+
+
+	<select id="querySijiListCount" resultType="int">
+		SELECT
+		       count(*)
+		FROM
+		gc_siji s
+		INNER JOIN gc_siji_item si ON si.pid = s.pid
+
+		<where>
+
+
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+
+
+		</where>
+
+	</select>
+
 
 </mapper>

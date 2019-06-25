@@ -18,37 +18,26 @@
 		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid
 		from gc_siji
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+
 
 			<if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
 			<if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
 
 
-			<if test="forwunit != null and forwunit != ''">
-				<![CDATA[ and forwunit like CONCAT('%',#{forwunit},'%') ]]>
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and inforfee like CONCAT('%',#{inforfee},'%') ]]>
 		     </if>
+
 			<if test="carnum != null and carnum != ''">
 				<![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
 			</if>
-			<if test="steelnum != null and steelnum != ''"> and steelnum = #{steelnum} </if>
-		  		  <if test="specs != null and specs != ''"> and specs = #{specs} </if>
-		  		  <if test="packnum != null and packnum != ''"> and packnum = #{packnum} </if>
-		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
-		  		  <if test="baseprice != null and baseprice != ''"> and baseprice = #{baseprice} </if>
-		  		  <if test="coefficient != null and coefficient != ''"> and coefficient = #{coefficient} </if>
-		  		  <if test="tranrate != null and tranrate != ''"> and tranrate = #{tranrate} </if>
-		  		  <if test="trancost != null and trancost != ''"> and trancost = #{trancost} </if>
-		  		  <if test="arrivstation != null and arrivstation != ''">
-					  <![CDATA[ and arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
-				  </if>
-		  		  <if test="payer != null and payer != ''"> and payer = #{payer} </if>
-		  		  <if test="inforfee != null and inforfee != ''"> and inforfee = #{inforfee} </if>
-		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		  <if test="issueoffice != null and issueoffice != ''"> and issueoffice = #{issueoffice} </if>
-		  		  <if test="aminvoice != null and aminvoice != ''"> and aminvoice = #{aminvoice} </if>
-		  		  <if test="custompay != null and custompay != ''"> and custompay = #{custompay} </if>
-		  		  <if test="taxdatepay != null and taxdatepay != ''"> and taxdatepay = #{taxdatepay} </if>
-		  		</where>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+
+
+		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -64,28 +53,26 @@
 	
  	<select id="count" resultType="int">
 		select count(*) from gc_siji
-		 <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="bizdate != null and bizdate != ''"> and bizdate = #{bizdate} </if>
-		  		  <if test="forwunit != null and forwunit != ''"> and forwunit = #{forwunit} </if>
-		  		  <if test="carnum != null and carnum != ''"> and carnum = #{carnum} </if>
-		  		  <if test="steelnum != null and steelnum != ''"> and steelnum = #{steelnum} </if>
-		  		  <if test="specs != null and specs != ''"> and specs = #{specs} </if>
-		  		  <if test="packnum != null and packnum != ''"> and packnum = #{packnum} </if>
-		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
-		  		  <if test="baseprice != null and baseprice != ''"> and baseprice = #{baseprice} </if>
-		  		  <if test="coefficient != null and coefficient != ''"> and coefficient = #{coefficient} </if>
-		  		  <if test="tranrate != null and tranrate != ''"> and tranrate = #{tranrate} </if>
-		  		  <if test="trancost != null and trancost != ''"> and trancost = #{trancost} </if>
-		  		  <if test="arrivstation != null and arrivstation != ''"> and arrivstation = #{arrivstation} </if>
-		  		  <if test="payer != null and payer != ''"> and payer = #{payer} </if>
-		  		  <if test="inforfee != null and inforfee != ''"> and inforfee = #{inforfee} </if>
-		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		  <if test="issueoffice != null and issueoffice != ''"> and issueoffice = #{issueoffice} </if>
-		  		  <if test="aminvoice != null and aminvoice != ''"> and aminvoice = #{aminvoice} </if>
-		  		  <if test="custompay != null and custompay != ''"> and custompay = #{custompay} </if>
-		  		  <if test="taxdatepay != null and taxdatepay != ''"> and taxdatepay = #{taxdatepay} </if>
-		  		</where>
+		<where>
+
+
+			<if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
+
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and inforfee like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+
+
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.bootdo.gc.domain.SijiDO" useGeneratedKeys="true" keyProperty="id">
@@ -161,8 +148,9 @@
 			<if test="aminvoice != null">`aminvoice` = #{aminvoice}, </if>
 			<if test="custompay != null">`custompay` = #{custompay}, </if>
 			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="pid != null">`pid` = #{pid},</if>
 			<if test="taxdatepay != null">`taxdatepay` = #{taxdatepay}</if>
-			<if test="pid != null">`pid` = #{pid}</if>
+
 		</set>
 		where id = #{id}
 	</update>
@@ -198,10 +186,15 @@
 	<select id="getExcelList" resultType="com.bootdo.gc.domain.SijiDO">
 		select
 		f.`id`,f.`bizdate`,f.`forwunit`,f.`carnum`,
-		i.`steelnum`,i.`specs`,i.`packnum`,
+		f.`arrivstation`,f.`remark`,f.`inforfee`,
+		f.`payer`,f.order_no,f.pid,f.custompay as scustompay,
+
+		i.`steelnum`,i.`specs`,i.`packnum`,i.`zhinum`,
 		i.`tonnage`,i.`baseprice`,i.`coefficient`,i.`tranrate`,i.`trancost`,
-		f.`arrivstation`,f.`payer`,f.`inforfee`,f.`remark`,f.`issueoffice`,
-		f.`aminvoice`,f.`custompay`,f.`taxdatepay` ,f.order_no,f.pid
+
+
+		i.billdate,i.`aminvoice`,i.`issueoffice`,i.`issueofficedate`,
+		i.`custompay`,i.`taxdatepay`,i.`paydate`
 		from gc_siji f
 		inner join gc_siji_item i on f.pid = i.pid
 
@@ -211,8 +204,8 @@
 			<if test="startDate != null and startDate != ''"> and f.bizdate &gt;= #{startDate} </if>
 			<if test="endDate != null and endDate != ''"> and f.bizdate &lt;= #{endDate} </if>
 
-			<if test="forwunit != null and forwunit != ''">
-				<![CDATA[ and f.forwunit like CONCAT('%',#{forwunit},'%') ]]>
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and f.inforfee like CONCAT('%',#{inforfee},'%') ]]>
 			</if>
 
 			<if test="carnum != null and carnum != ''">
@@ -225,7 +218,7 @@
 
 		</where>
 
-		order by f.bizdate desc
+		order by f.order_no desc,i.id asc
 
 	</select>
 

@@ -8,7 +8,7 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-		       ,`remark` ,order_no
+		       ,`remark` ,order_no,pay_type,kpid
 
 		from gc_kehu where id = #{value}
 	</select>
@@ -18,7 +18,7 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`,`remark`
-		,order_no
+		,order_no,pay_type,kpid
 		from gc_kehu
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -49,8 +49,18 @@
 		  		  <if test="fultranstwo != null and fultranstwo != ''"> and fultranstwo = #{fultranstwo} </if>
 		  		  <if test="fulpaytwodate != null and fulpaytwodate != ''"> and fulpaytwodate = #{fulpaytwodate} </if>
 		  		  <if test="acbalance != null and acbalance != ''"> and acbalance = #{acbalance} </if>
-		  		  <if test="receipt != null and receipt != ''"> and receipt = #{receipt} </if>
-		  		  <if test="receiptdate != null and receiptdate != ''"> and receiptdate = #{receiptdate} </if>
+
+
+				  <if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
+				  <if test="receipt == '有或预有'"> and receipt in('有','预有') </if>
+
+
+
+				<if test="tstartDate != null and tstartDate != ''"> and receiptdate &gt;= #{tstartDate} </if>
+				<if test="tendDate != null and tendDate != ''"> and receiptdate &lt;= #{tendDate} </if>
+
+
+
 		  		  <if test="carrier != null and carrier != ''">
 
 					  <![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
@@ -72,34 +82,53 @@
 	
  	<select id="count" resultType="int">
 		select count(*) from gc_kehu
-		 <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="bizdate != null and bizdate != ''"> and bizdate = #{bizdate} </if>
-		  		  <if test="forwunit != null and forwunit != ''"> and forwunit = #{forwunit} </if>
-		  		  <if test="carnum != null and carnum != ''"> and carnum = #{carnum} </if>
-		  		  <if test="station != null and station != ''"> and station = #{station} </if>
-		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
-		  		  <if test="settletonnage != null and settletonnage != ''"> and settletonnage = #{settletonnage} </if>
-		  		  <if test="adjusttonnage != null and adjusttonnage != ''"> and adjusttonnage = #{adjusttonnage} </if>
-		  		  <if test="transcost != null and transcost != ''"> and transcost = #{transcost} </if>
-		  		  <if test="inforfee != null and inforfee != ''"> and inforfee = #{inforfee} </if>
-		  		  <if test="colmethod != null and colmethod != ''"> and colmethod = #{colmethod} </if>
-		  		  <if test="transfee != null and transfee != ''"> and transfee = #{transfee} </if>
-		  		  <if test="riskcues != null and riskcues != ''"> and riskcues = #{riskcues} </if>
-		  		  <if test="fulltrans != null and fulltrans != ''"> and fulltrans = #{fulltrans} </if>
-		  		  <if test="fulpaydate != null and fulpaydate != ''"> and fulpaydate = #{fulpaydate} </if>
-		  		  <if test="bankcard != null and bankcard != ''"> and bankcard = #{bankcard} </if>
-		  		  <if test="bankpaydate != null and bankpaydate != ''"> and bankpaydate = #{bankpaydate} </if>
-		  		  <if test="bankcardtwo != null and bankcardtwo != ''"> and bankcardtwo = #{bankcardtwo} </if>
-		  		  <if test="bankpaytwodate != null and bankpaytwodate != ''"> and bankpaytwodate = #{bankpaytwodate} </if>
-		  		  <if test="fultranstwo != null and fultranstwo != ''"> and fultranstwo = #{fultranstwo} </if>
-		  		  <if test="fulpaytwodate != null and fulpaytwodate != ''"> and fulpaytwodate = #{fulpaytwodate} </if>
-		  		  <if test="acbalance != null and acbalance != ''"> and acbalance = #{acbalance} </if>
-		  		  <if test="receipt != null and receipt != ''"> and receipt = #{receipt} </if>
-		  		  <if test="receiptdate != null and receiptdate != ''"> and receiptdate = #{receiptdate} </if>
-		  		  <if test="carrier != null and carrier != ''"> and carrier = #{carrier} </if>
-		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		</where>
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+
+			<if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
+
+
+			<if test="forwunit != null and forwunit != ''"> and forwunit = #{forwunit} </if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="station != null and station != ''"> and station = #{station} </if>
+			<if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
+			<if test="settletonnage != null and settletonnage != ''"> and settletonnage = #{settletonnage} </if>
+			<if test="adjusttonnage != null and adjusttonnage != ''"> and adjusttonnage = #{adjusttonnage} </if>
+			<if test="transcost != null and transcost != ''"> and transcost = #{transcost} </if>
+			<if test="inforfee != null and inforfee != ''"> and inforfee = #{inforfee} </if>
+			<if test="colmethod != null and colmethod != ''"> and colmethod = #{colmethod} </if>
+			<if test="transfee != null and transfee != ''"> and transfee = #{transfee} </if>
+			<if test="riskcues != null and riskcues != ''"> and riskcues = #{riskcues} </if>
+			<if test="fulltrans != null and fulltrans != ''"> and fulltrans = #{fulltrans} </if>
+			<if test="fulpaydate != null and fulpaydate != ''"> and fulpaydate = #{fulpaydate} </if>
+			<if test="bankcard != null and bankcard != ''"> and bankcard = #{bankcard} </if>
+			<if test="bankpaydate != null and bankpaydate != ''"> and bankpaydate = #{bankpaydate} </if>
+			<if test="bankcardtwo != null and bankcardtwo != ''"> and bankcardtwo = #{bankcardtwo} </if>
+			<if test="bankpaytwodate != null and bankpaytwodate != ''"> and bankpaytwodate = #{bankpaytwodate} </if>
+			<if test="fultranstwo != null and fultranstwo != ''"> and fultranstwo = #{fultranstwo} </if>
+			<if test="fulpaytwodate != null and fulpaytwodate != ''"> and fulpaytwodate = #{fulpaytwodate} </if>
+			<if test="acbalance != null and acbalance != ''"> and acbalance = #{acbalance} </if>
+
+
+			<if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
+			<if test="receipt == '有或预有'"> and receipt in('有','预有') </if>
+
+
+
+			<if test="tstartDate != null and tstartDate != ''"> and receiptdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and receiptdate &lt;= #{tendDate} </if>
+
+
+
+			<if test="carrier != null and carrier != ''">
+
+				<![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
+			</if>
+			<if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.bootdo.gc.domain.KehuDO" useGeneratedKeys="true" keyProperty="id">
@@ -130,7 +159,7 @@
 			`receiptdate`, 
 			`carrier`, 
 			`remark`,
-		 	 order_no
+		 	 order_no,pay_type,kpid
 		)
 		values
 		(
@@ -159,7 +188,9 @@
 			#{receiptdate}, 
 			#{carrier}, 
 			#{remark},
-		 	#{orderNo}
+		 	#{orderNo},
+			#{payType},
+		 	#{kpid}
 		)
 	</insert>
 	 
@@ -192,6 +223,9 @@
 			<if test="receiptdate != null">`receiptdate` = #{receiptdate}, </if>
 			<if test="carrier != null">`carrier` = #{carrier}, </if>
 			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="payType != null">`pay_type` = #{payType}, </if>
+			<if test="kpid != null">`kpid` = #{kpid}, </if>
+
 			<if test="remark != null">`remark` = #{remark}</if>
 		</set>
 		where id = #{id}
@@ -209,5 +243,205 @@
 	</delete>
 
 
+
+
+	<select id="getOrder" resultType="com.bootdo.gc.domain.KehuDO">
+		select `id`,`bizdate`,`forwunit`,`carnum`,`station`,`tonnage`,`settletonnage`,
+			   `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
+			   `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
+			   `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
+				,`remark` ,order_no,pay_type,kpid
+
+		from gc_kehu where order_no = #{orderNo}
+	</select>
+
+
+
+
+	<select  id="queryKehu1" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		select
+			sum(acbalance) as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
+			sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+			sum(qichu) as qichu
+		from (
+
+				 -- 当天回款金额(transfee)
+				 select
+					 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu
+				 from gc_kehu
+				 where receipt in ('预有','有')
+
+				   and receiptdate >= #{startDate}
+				   and receiptdate <= #{endDate}
+
+
+				 union all
+
+				 select
+					 0 as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
+					 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+					 0 as qichu
+				 from (
+						  -- 第一次付款金额
+						  select
+							  0 as acbalance,
+							  sum(case when pay_type = '运满满' then fulltrans else 0 end) as fulltrans,
+							  sum(case when pay_type = '农行卡' then fulltrans else 0 end) as bankcard,
+							  sum(case when pay_type = '现金' then fulltrans else 0 end) as xianjin,
+							  sum(case when pay_type = '百通石油' then fulltrans else 0 end) as shiyou,
+							  sum(case when pay_type = '百通石化' then fulltrans else 0 end) as shihua,
+							  sum(case when pay_type = '百通京博' then fulltrans else 0 end) as jingbo,
+							  0 as qichu
+						  from gc_kehu
+						  where receipt in ('预有','有')
+
+							and fulpaydate >= #{startDate}
+							and fulpaydate <= #{endDate}
+						  group by pay_type
+
+						  union all
+
+							  -- 第二次付款金额
+						  select
+							  0 as acbalance,
+							  sum(case when forwunit = '运满满' then bankcard else 0 end) as fulltrans,
+							  sum(case when forwunit = '农行卡' then bankcard else 0 end) as bankcard,
+							  sum(case when forwunit = '现金' then bankcard else 0 end) as xianjin,
+							  sum(case when forwunit = '百通石油' then bankcard else 0 end) as shiyou,
+							  sum(case when forwunit = '百通石化' then bankcard else 0 end) as shihua,
+							  sum(case when forwunit = '百通京博' then bankcard else 0 end) as jingbo,
+							  0 as qichu
+						  from gc_kehu
+						  where receipt in ('预有','有')
+							and bankpaydate >= #{startDate}
+							and bankpaydate <= #{endDate}
+
+						  group by forwunit
+
+					  )  t
+
+
+				 union all
+
+					 -- 期初余额（等于当月的所有余额累计）
+				 select
+					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,
+					 (transfee - fulltrans - bankcard) as qichu
+				 from (
+						  select
+							  sum(transfee) as transfee,
+							  sum(case when fulpaydate>= #{startDate}and fulpaydate< #{endDate} then fulltrans else 0 end) as fulltrans,
+							  sum(case when bankpaydate>= #{startDate} and bankpaydate< #{endDate} then bankcard else 0 end) as bankcard
+						  from gc_kehu
+						  where receipt in ('预有','有')
+							and receiptdate >= #{startDate}
+							and receiptdate <= #{endDate}
+					  ) t
+
+
+			 ) t
+
+
+
+		]]>
+
+	</select>
+
+
+
+
+
+	<select  id="queryKehu" resultType="java.util.HashMap" >
+		<![CDATA[
+
+
+
+
+
+
+
+			select
+				sum(acbalance) as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
+				sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+				sum(qichu) as qichu
+			from (
+
+					 -- 当天回款金额(transfee)
+					 select
+						 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu
+					 from gc_kehu
+					 where receipt in ('预有','有')
+					   and receiptdate = #{endDate}
+
+
+
+					 union all
+
+					 select
+						 0 as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
+						 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+						 0 as qichu
+					 from (
+							  -- 第一次付款金额
+							  select
+								  0 as acbalance,
+								  sum(case when pay_type = '运满满' then fulltrans else 0 end) as fulltrans,
+								  sum(case when pay_type = '农行卡' then fulltrans else 0 end) as bankcard,
+								  sum(case when pay_type = '现金' then fulltrans else 0 end) as xianjin,
+								  sum(case when pay_type = '百通石油' then fulltrans else 0 end) as shiyou,
+								  sum(case when pay_type = '百通石化' then fulltrans else 0 end) as shihua,
+								  sum(case when pay_type = '百通京博' then fulltrans else 0 end) as jingbo,
+								  0 as qichu
+							  from gc_kehu
+							  where receipt in ('预有','有')
+								and fulpaydate = #{endDate}
+							  group by pay_type
+
+							  union all
+
+								  -- 第二次付款金额
+							  select
+								  0 as acbalance,
+								  sum(case when forwunit = '运满满' then bankcard else 0 end) as fulltrans,
+								  sum(case when forwunit = '农行卡' then bankcard else 0 end) as bankcard,
+								  sum(case when forwunit = '现金' then bankcard else 0 end) as xianjin,
+								  sum(case when forwunit = '百通石油' then bankcard else 0 end) as shiyou,
+								  sum(case when forwunit = '百通石化' then bankcard else 0 end) as shihua,
+								  sum(case when forwunit = '百通京博' then bankcard else 0 end) as jingbo,
+								  0 as qichu
+							  from gc_kehu
+							  where receipt in ('预有','有')
+
+								and bankpaydate = #{endDate}
+							  group by forwunit
+
+						  )  t
+
+
+					 union all
+					  -- 期初余额（等于当月的所有余额累计）
+
+					 select
+					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,
+					 (transfee - fulltrans - bankcard) as qichu
+					 from (
+						 select
+						 sum(transfee) as transfee,
+						 sum(case when fulpaydate>= #{startDate} and fulpaydate< #{endDate} then fulltrans else 0 end) as fulltrans,
+						 sum(case when bankpaydate>= #{startDate} and bankpaydate< #{endDate} then bankcard else 0 end) as bankcard
+						 from gc_kehu
+						 where receipt in ('预有','有')
+						 and receiptdate >= #{startDate}
+						 and receiptdate < #{endDate}
+					  ) t
+
+
+				 ) t
+
+		]]>
+
+	</select>
 
 </mapper>
