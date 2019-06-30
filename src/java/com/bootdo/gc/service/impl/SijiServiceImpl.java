@@ -4,11 +4,15 @@ import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.KehuDO;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.domain.SijiItemDO;
 import com.bootdo.gc.service.KehuService;
+import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +25,7 @@ public class SijiServiceImpl  implements SijiService {
 
 
 	@Autowired
-	private KehuService kehuService;
+	private SijiItemService sijiItemService;
 
 	@Autowired
 	private KehuDao kehuDao;
@@ -51,8 +55,69 @@ public class SijiServiceImpl  implements SijiService {
 	
 	@Override
 	public int update(SijiDO siji){
+//		KehuDO kehuDO = kehuDao.getOrder(siji.getOrderNo());
+
+		SijiDO sijiDO = sijiDao.getPid(siji.getPid());
+		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
+
+		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
+			return 0;
+		}
+
+		kehuDO.setBizdate(siji.getBizdate());
+		kehuDO.setCarnum(siji.getCarnum());
+		kehuDO.setForwunit(siji.getForwunit());
+		kehuDO.setStation(siji.getArrivstation());
+
+		Map map = new HashMap();
+		kehuDO.setTonnage(new BigDecimal(0));
+		map.put("pid",siji.getPid());
+		List<SijiItemDO> list = sijiItemService.list(map);
+		for (SijiItemDO sijiItemDO : list){
+			kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
+		}
+		if (kehuDO.getTonnage()!=null){
+			kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
+		}
+		if (kehuDO.getSettletonnage()==null){
+			kehuDO.setSettletonnage(new BigDecimal(0));
+		}
+
+		if (kehuDO.getAdjusttonnage()==null){
+			kehuDO.setAdjusttonnage(new BigDecimal(0));
+		}
+
+		if (kehuDO.getTranscost()==null){
+			kehuDO.setTranscost(new BigDecimal(0));
+		}
+
+		if (kehuDO.getInforfee()==null){
+			kehuDO.setInforfee(new BigDecimal(0));
+		}
+		if (kehuDO.getTransfee()==null){
+			kehuDO.setTransfee(new BigDecimal(0));
+		}
+
+		if (kehuDO.getFulltrans()==null){
+			kehuDO.setFulltrans(new BigDecimal(0));
+		}
+		if (kehuDO.getBankcard()==null){
+			kehuDO.setBankcard(new BigDecimal(0));
+		}
+
+		BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
+		BigDecimal t2 = t1.multiply(kehuDO.getTranscost());
+		BigDecimal t3 = t2.subtract(kehuDO.getInforfee());
+		kehuDO.setTransfee(t3); //运费
+
+		kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
+		kehuDao.update(kehuDO); //信息更新
+
+
 		return sijiDao.update(siji);
 	}
+
+
 	
 	@Override
 	public int remove(Long id){

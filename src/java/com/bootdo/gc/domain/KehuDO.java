@@ -69,7 +69,7 @@ public class KehuDO implements Serializable {
 	private String payType;
 	//金额(1)
 	@Excel(name = "金额(1)", orderNum = "14",isImportField = "fulltrans")
-	private String fulltrans;
+	private BigDecimal fulltrans;
 	//付款时间
 	@Excel(name = "付款日期(1)", orderNum = "15",isImportField = "fulpaydate")
 	private String fulpaydate;
@@ -80,7 +80,7 @@ public class KehuDO implements Serializable {
 	private String forwunit;
 	//金额(2)
 	@Excel(name = "金额(2)", orderNum = "17",isImportField = "bankcard")
-	private String bankcard;
+	private BigDecimal bankcard;
 	//付款日期
 	@Excel(name = "付款日期(2)", orderNum = "18",isImportField = "bankpaydate")
 	private String bankpaydate;

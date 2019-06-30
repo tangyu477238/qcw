@@ -45,6 +45,7 @@ public class SijiItemController {
 	}
 
 
+	//显示规格明细
 	@GetMapping("/sijiMx/{id}")
 	String sijiMx(@PathVariable("id") Long id, Model model){
 
@@ -122,7 +123,7 @@ public class SijiItemController {
 
 
 	/**
-	 * //发货新增或者修改的----->保存
+	 * //发货新增----->保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")

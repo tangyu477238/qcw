@@ -89,8 +89,11 @@ public class SijiController {
 	@RequestMapping("/update")
 	@RequiresPermissions("gc:siji:edit")
 	public R update( SijiDO siji){
-		sijiService.update(siji);
-		return R.ok();
+
+		if(sijiService.update(siji)>0){
+			return R.ok();
+		}
+		return R.errorMsg("操作失败,付款已回单！");
 	}
 	
 	/**
@@ -101,9 +104,9 @@ public class SijiController {
 	@RequiresPermissions("gc:siji:remove")
 	public R remove( Long id){
 		if(sijiService.remove(id)>0){
-		return R.ok();
+			return R.ok();
 		}
-		return R.error2();
+		return R.errorMsg("操作失败,有关联单据！");
 	}
 	
 	/**

@@ -17,6 +17,9 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SijiItemDao {
 
 	SijiItemDO get(Long id);
+
+	SijiItemDO getItemDo(Long id);
+
 	
 	List<SijiItemDO> list(Map<String, Object> map);
 	

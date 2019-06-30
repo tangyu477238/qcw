@@ -35,4 +35,6 @@ public interface SijiDao {
 
 	List<SijiDO> getExcelList(Map<String,Object> map);
 
+	SijiDO getPid(String pid);
+
 }
