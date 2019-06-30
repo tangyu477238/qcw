@@ -3,6 +3,19 @@
 
 <mapper namespace="com.bootdo.gc.dao.SijiItemDao">
 
+
+	<select id="getItemDo" resultType="com.bootdo.gc.domain.SijiItemDO">
+		select
+		`id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
+		`tranrate`,`trancost`,`arrivstation`,`payer` ,
+		remark,billdate,aminvoice,issueoffice,issueofficedate,
+		inforfee,custompay,taxdatepay,paydate
+		from gc_siji_item
+		where  id = #{value}
+	</select>
+
+
+
 	<select id="get" resultType="com.bootdo.gc.domain.SijiItemDO">
 		SELECT
 			s.`bizdate`,

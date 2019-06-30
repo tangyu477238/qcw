@@ -179,6 +179,15 @@
 	</select>
 
 
+	<select id="getPid" resultType="com.bootdo.gc.domain.SijiDO">
+		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
+			   `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
+			   `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
+			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid
+		from gc_siji
+		where pid = #{pid}
+	</select>
+
 
 
 
