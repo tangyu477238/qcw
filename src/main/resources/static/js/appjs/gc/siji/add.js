@@ -54,35 +54,7 @@ function validateRule() {
 }
 
 
-// 添加表格数据
-function addeasypoi() {
-    var url = "/gc/sijiItem/save";
-    var pid = $("#pid").val();
-    var data = {
-        "pid": pid,
-        "steelnum":$("#steelnum").val(),
-        "specs":$("#specs").val(),
-        "packnum":$("#packnum").val(),
-        "tonnage":$("#tonnage").val(),
-        "baseprice":$("#baseprice").val(),
-        "coefficient":$("#coefficient").val()
-    };
-    if($("#steelnum").val().trim() == ""
-		|| $("#specs").val().trim() == ""){
-        alert("信息补充完整哟!");
-    }else{
 
-		$('#myModal').modal('hide');
-
-        $.post(url,data,function(result){
-            //alert("添加成功!!!");
-            //初始化表格
-            showTable();
-        });
-
-
-    }
-}
 
 
 function uuid() {

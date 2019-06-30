@@ -3,11 +3,27 @@ var prefix = "/gc/siji"
 $(function() {
 	load();
 
-    $("#startDate").val(getNowFormatDate());
+    $("#startDate").val(getNowFirstDate());
     $("#endDate").val(getNowFormatDate());
 });
 
 
+//获取当前时间，格式YYYY-MM-DD
+function getNowFirstDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + '01';
+    return currentdate;
+}
 
 
 //获取当前时间，格式YYYY-MM-DD
@@ -60,7 +76,7 @@ function load() {
                                 startDate:$('#startDate').val(),
                                 endDate:$('#endDate').val(),
                                 carnum:$('#carnum').val(),
-                                forwunit:$('#forwunit').val(),
+                                inforfee:$('#inforfee').val(),
                                 arrivstation:$('#arrivstation').val()
 							};
 						},
@@ -74,92 +90,54 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
+								{
 									field : 'id', 
-									title : 'id' 
-								},					{
-                                field : 'orderNo',
-                                title : '订单号'
-                            },
-																{
+									title : 'id',
+                                    align : 'center'
+								},
+								{
+									field : 'orderNo',
+									title : '订单号',
+									align : 'center'
+								},
+								{
 									field : 'bizdate', 
-									title : '业务发生日期'
+									title : '业务发生日期',
+									align : 'center'
 								},
-																{
+								{
 									field : 'forwunit', 
-									title : '发货单位' 
+									title : '发货单位' ,
+                                    align : 'center'
 								},
-																{
+								{
 									field : 'carnum', 
 									title : '车牌号码',
-									width:'50%'
+                                	align : 'center'
 								},
-								// 								{
-								// 	field : 'steelnum',
-								// 	title : '钢号'
-								// },
-								// 								{
-								// 	field : 'specs',
-								// 	title : '规格'
-								// },
-								// 								{
-								// 	field : 'packnum',
-								// 	title : '件数'
-								// },
-								// 								{
-								// 	field : 'tonnage',
-								// 	title : '吨数'
-								// },
-								// 								{
-								// 	field : 'baseprice',
-								// 	title : '基价'
-								// },
-								// 								{
-								// 	field : 'coefficient',
-								// 	title : '系数'
-								// },
-								// 								{
-								// 	field : 'tranrate',
-								// 	title : '运率'
-								// },
-								// 								{
-								// 	field : 'trancost',
-								// 	title : '运费'
-								// },
-																{
+
+								{
 									field : 'arrivstation', 
-									title : '到站' 
+									title : '到站' ,
+                                    align : 'center'
 								},
-																{
-									field : 'payer', 
-									title : '付款单位' 
+								{
+									field : 'inforfee',
+									title : '付款单位' ,
+                                    align : 'center'
 								},
-																{
-									field : 'inforfee', 
-									title : '收货单位' 
+								{
+									field : 'custompay',
+									title : '业务员' ,
+									align : 'center'
 								},
-																{
+								{
 									field : 'remark', 
-									title : '备注' 
-								},
+									title : '备注' ,
+                                    align : 'center'
+								} ,
 																{
-									field : 'issueoffice', 
-									title : '开票单位及日期' 
-								},
-																{
-									field : 'aminvoice', 
-									title : '开票金额' 
-								},
-																{
-									field : 'custompay', 
-									title : '客户付款及日期' 
-								},
-																{
-									field : 'taxdatepay', 
-									title : '付景耀税款日期及方式' 
-								},
-																{
-									title : '系统操作按钮',
+									title : '系统操作按钮(查看/编辑/删除)',
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
@@ -169,10 +147,10 @@ function load() {
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-												+ row.id
+										var f = '<a class="btn btn-success btn-sm" href="#" title="查看明细"  mce_href="#" onclick="queryMx(\''
+												+ row.pid
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d ;
+										return f + e + d  ;
 									}
 								} ]
 					});
@@ -240,7 +218,20 @@ function excel() {
 }
 
 
-function resetPwd(id) {
+function queryMx(id) {
+
+    var perContent = layer.open({
+        type : 2,
+        title : '查看明细',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '520px' ],
+        content : prefix + '/sijiMx?pid=' + id // iframe的url
+    });
+
+    //layer.full(perContent);
+
+
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组

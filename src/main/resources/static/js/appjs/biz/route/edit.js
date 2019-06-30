@@ -11,7 +11,7 @@ function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/gc/kehu/update",
+		url : "/biz/route/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {

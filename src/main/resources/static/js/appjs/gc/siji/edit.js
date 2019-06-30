@@ -46,4 +46,7 @@ function validateRule() {
 			}
 		}
 	})
+
+
+    showTable();
 }
