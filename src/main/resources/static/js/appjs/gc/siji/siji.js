@@ -63,7 +63,7 @@ function load() {
 						singleSelect : false, // 设置为true将禁止多选
 						// contentType : "application/x-www-form-urlencoded",
 						// //发送到服务器的数据编码类型
-						pageSize : 10, // 如果设置了分页，每页数据条数
+						pageSize : 25, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
 						//search : true, // 是否显示搜索框
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
@@ -77,7 +77,8 @@ function load() {
                                 endDate:$('#endDate').val(),
                                 carnum:$('#carnum').val(),
                                 inforfee:$('#inforfee').val(),
-                                arrivstation:$('#arrivstation').val()
+                                arrivstation:$('#arrivstation').val(),
+                                deptId:$('#deptId').val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
