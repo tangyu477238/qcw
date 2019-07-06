@@ -195,12 +195,12 @@
 						&times;
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-						添加产品明细
+						添加/修改产品明细
 					</h4>
 				</div>
 				<div class="modal-body">
 
-
+					<input type="hidden" id="itemId" name="itemId"	/>
 					<p>钢&nbsp;&nbsp;号&nbsp;&nbsp;:&nbsp;&nbsp;
 						<input type="text" id="steelnum" name="steelnum"	placeholder="请输入钢号..." size="20"/></p>
 					<p>规&nbsp;&nbsp;格&nbsp;&nbsp;:&nbsp;&nbsp;
@@ -263,6 +263,7 @@ function addeasypoi() {
     var pid = $("#pid").val();
     var data = {
         "pid": pid,
+        "id":$("#itemId").val(),
         "steelnum":$("#steelnum").val(),
         "specs":$("#specs").val(),
         "packnum":$("#packnum").val(),
@@ -278,6 +279,18 @@ function addeasypoi() {
 
         $('#myModal').modal('hide');
 
+        $("#itemId").val('');
+        $("#steelnum").val('');
+        $("#specs").val('');
+        $("#packnum").val('');
+        $("#zhinum").val('');
+        $("#tonnage").val('');
+
+        $("#baseprice").val('');
+        $("#coefficient").val('');
+        $("#tranrate").val('');
+        $("#trancost").val('');
+
         $.post(url,data,function(result){
             //alert("添加成功!!!");
             //初始化表格
@@ -290,7 +303,50 @@ function addeasypoi() {
 
 
 
+
+function modifystudent(id) {
+
+    //var pid = $("#pid").val();
+
+
+
+    $.ajax({
+        url : "/gc/sijiItem/updateItem/"+id,
+        type : "GET",
+        success : function(siItem) {
+
+
+            $("#itemId").val(siItem.id);
+
+            $("#steelnum").val(siItem.steelnum);
+            $("#specs").val(siItem.specs);
+            $("#packnum").val(siItem.packnum);
+            $("#zhinum").val(siItem.zhinum);
+            $("#tonnage").val(siItem.tonnage);
+
+            $("#baseprice").val(siItem.baseprice);
+            $("#coefficient").val(siItem.coefficient);
+            $("#tranrate").val(siItem.tranrate);
+            $("#trancost").val(siItem.trancost);
+
+            $('#myModal').modal('show');
+
+
+        }
+    });
+
+
+
+
+
+}
+
+
+
+
+
 function deleteItem(id) {
+
     layer.confirm('确定要删除选中的记录？', {
         btn : [ '确定', '取消' ]
     }, function() {
@@ -326,6 +382,10 @@ function showTable() {
 		},
 		success : function(list) {
 			$("#tdata").html("");
+            var packnum = 0;
+            var zhinum = 0;
+            var tonnage = 0;
+            var trancost = 0;
 			for(var i = 0;i < list.length;i++){
 				var siItem = list[i];
 				var td = tdtemplate.replace('[tNum]',i+1);
@@ -341,8 +401,20 @@ function showTable() {
 
 				td = td.replace('[siItem]',siItem);
 				td = td.replace('[id]',siItem.id);
+                td = td.replace('[id]',siItem.id);
 				$("#tdata").append(td);
+
+                packnum = packnum + siItem.packnum;
+                zhinum = zhinum + siItem.zhinum;
+                tonnage = tonnage + siItem.tonnage;
+                trancost = trancost + siItem.trancost;
 			}
+
+            var tl = totaltemplate.replace('[packnum]',packnum);
+            tl = tl.replace('[zhinum]',zhinum);
+            tl = tl.replace('[tonnage]',tonnage.toFixed(3));
+            tl = tl.replace('[trancost]',trancost.toFixed(2));
+            $("#tdata").append(tl);
 		}
 	});
 
@@ -363,21 +435,38 @@ var tdtemplate =
 	'<td>' + '[specs]' + '</td>' +
 	'<td>' + '[packnum]' + '</td>' +
     '<td>' + '[zhinum]' + '</td>' +
+
 	'<td>' + '[tonnage]' + '</td>' +
 	'<td>' + '[baseprice]' + '</td>' +
 	'<td>' + '[coefficient]' + '</td>' +
-
 	'<td>' + '[tranrate]' + '</td>' +
 	'<td>' + '[trancost]' + '</td>' +
 
 	'<td>' +
-	//'<button type="button" class="btn btn-primary" onclick = modifystudent(' + '[siItem]' + ')>修改</button>&nbsp;&nbsp;' +
+	'<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
 	'<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
 	'</td>' +
 
 	'</tr>';
 
+var totaltemplate =
+    '<tr>' +
+    '<td>' + '合计:' + '</td>' +
+    '<td>' + '' + '</td>' +
+    '<td>' + '' + '</td>' +
+    '<td>' + '[packnum]' + '</td>' +
+    '<td>' + '[zhinum]' + '</td>' +
 
+    '<td>' + '[tonnage]' + '</td>' +
+    '<td>' + '' + '</td>' +
+    '<td>' + '' + '</td>' +
+    '<td>' + '' + '</td>' +
+    '<td>' + '[trancost]' + '</td>' +
+    '<td>' +
+    // '<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
+    // '<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
+    '</td>' +
+    '</tr>';
 </script>
 </body>
 </html>

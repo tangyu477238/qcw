@@ -57,6 +57,10 @@
 			},
 			success : function(list) {
 				$("#tdata").html("");
+                var packnum = 0;
+                var zhinum = 0;
+                var tonnage = 0;
+                var trancost = 0;
 				for(var i = 0;i < list.length;i++){
 					var siItem = list[i];
 					var td = tdtemplate.replace('[tNum]',i+1);
@@ -73,7 +77,18 @@
 					td = td.replace('[siItem]',siItem);
 					td = td.replace('[id]',siItem.id);
 					$("#tdata").append(td);
+
+                    packnum = packnum + siItem.packnum;
+                    zhinum = zhinum + siItem.zhinum;
+                    tonnage = tonnage + siItem.tonnage;
+                    trancost = trancost + siItem.trancost;
 				}
+
+                var tl = totaltemplate.replace('[packnum]',packnum);
+                tl = tl.replace('[zhinum]',zhinum);
+                tl = tl.replace('[tonnage]',tonnage.toFixed(3));
+                tl = tl.replace('[trancost]',trancost.toFixed(2));
+                $("#tdata").append(tl);
 			}
 		});
 
@@ -100,15 +115,23 @@
 
 		'<td>' + '[tranrate]' + '</td>' +
 		'<td>' + '[trancost]' + '</td>' +
-
-		//'<td>' +
-		//'<button type="button" class="btn btn-primary" onclick = modifystudent(' + '[siItem]' + ')>修改</button>&nbsp;&nbsp;' +
-		//'<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
-		//'</td>' +
-
 		'</tr>';
 
+    var totaltemplate =
+        '<tr>' +
+        '<td>' + '合计:' + '</td>' +
+        '<td>' + '' + '</td>' +
+        '<td>' + '' + '</td>' +
+        '<td>' + '[packnum]' + '</td>' +
+        '<td>' + '[zhinum]' + '</td>' +
 
+        '<td>' + '[tonnage]' + '</td>' +
+        '<td>' + '' + '</td>' +
+        '<td>' + '' + '</td>' +
+        '<td>' + '' + '</td>' +
+        '<td>' + '[trancost]' + '</td>' +
+
+        '</tr>';
 </script>
 
 

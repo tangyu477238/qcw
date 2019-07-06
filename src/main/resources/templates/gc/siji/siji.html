@@ -30,7 +30,7 @@
 		<div class="portlet-body">
 			<form class="form-horizontal" action="#" id="searchUserFormId">
 
-
+				<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
 
 				<div class="row">
 					<div class="col-md-4">
@@ -96,10 +96,10 @@
 							<div class="columns pull-left">
 
 
-								<button shiro:hasPermission="gc:siji:add" type="button" class="btn  btn-primary" onclick="add()">
+								<button  type="button" class="btn  btn-primary" onclick="add()">
 									<i class="fa fa-plus" aria-hidden="true"></i>添加
 								</button>
-								<button shiro:hasPermission="gc:siji:batchRemove" type="button" class="btn  btn-danger"
+								<button  type="button" class="btn  btn-danger"
 										onclick="batchRemove()">
 									<i class="fa fa-trash" aria-hidden="true"></i>删除
 								</button>
@@ -131,31 +131,31 @@
 
 
 	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
-			<script type="text/javascript">
-				var s_edit_h = 'hidden';
-				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
-			</script>
-		</div>
-		<div shiro:hasPermission="gc:siji:edit">
-			<script type="text/javascript">
-				s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="gc:siji:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="gc:siji:resetPwd">
-			<script type="text/javascript">
-				var s_resetPwd_h = '';
-			</script>
-		</div>
+
+		<script type="text/javascript">
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+		</script>
+
+
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+
+
+		<script type="text/javascript">
+			var s_remove_h = '';
+		</script>
+
+
+		<script type="text/javascript">
+			var s_resetPwd_h = '';
+		</script>
+
 	</div>
 	<div th:include="gc/include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/siji/siji.js?v=2111111111111"></script>
+	<script type="text/javascript" src="/js/appjs/gc/siji/siji.js?v=2111166111111111"></script>
 
 
 

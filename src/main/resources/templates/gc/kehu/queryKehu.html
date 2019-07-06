@@ -19,7 +19,7 @@
 		<div class="portlet-body">
 			<form class="form-horizontal" action="#" id="searchUserFormId">
 
-
+				<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
 
 				<div class="row">
 					<div class="col-md-4">
@@ -165,10 +165,10 @@
 
 		var startDate = $("#startDate").val();
         var endDate = $("#endDate").val();
-
+        var deptId = $("#deptId").val();
 
         $.ajax({
-            url : "/gc/kehu/queryKehu?startDate="+startDate+"&endDate="+endDate,
+            url : "/gc/kehu/queryKehu?startDate="+startDate+"&endDate="+endDate+"&deptId="+deptId,
             type : "GET",
             data : {
             },
@@ -178,13 +178,13 @@
                     var siItem = list[i];
                     var td = tdtemplate.replace('[tNum]',i+1);
                     td = td.replace('[coefficient]',siItem.qichu.toFixed(2));
-                    td = td.replace('[steelnum]',siItem.acbalance);
-                    td = td.replace('[specs]',siItem.fulltrans);
-                    td = td.replace('[packnum]',siItem.bankcard);
-                    td = td.replace('[xianjin]',siItem.xianjin);
-                    td = td.replace('[shiyou]',siItem.shiyou);
-                    td = td.replace('[shihua]',siItem.shihua);
-                    td = td.replace('[jingbo]',siItem.jingbo);
+                    td = td.replace('[steelnum]',siItem.acbalance.toFixed(2));
+                    td = td.replace('[specs]',siItem.fulltrans.toFixed(2));
+                    td = td.replace('[packnum]',siItem.bankcard.toFixed(2));
+                    td = td.replace('[xianjin]',siItem.xianjin.toFixed(2));
+                    td = td.replace('[shiyou]',siItem.shiyou.toFixed(2));
+                    td = td.replace('[shihua]',siItem.shihua.toFixed(2));
+                    td = td.replace('[jingbo]',siItem.jingbo.toFixed(2));
                     var total = siItem.qichu + siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo;
                     td = td.replace('[total]',total.toFixed(2));
 
