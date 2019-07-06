@@ -8,7 +8,7 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-		       ,`remark` ,order_no,pay_type,kpid
+		       ,`remark` ,order_no,pay_type,kpid,dept_id,updated_name
 
 		from gc_kehu where id = #{value}
 	</select>
@@ -18,37 +18,19 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`,`remark`
-		,order_no,pay_type,kpid
+		,order_no,pay_type,kpid,dept_id,updated_name
 		from gc_kehu
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+
 
 		  		  <if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
 			      <if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
 
-
-		  		  <if test="forwunit != null and forwunit != ''"> and forwunit = #{forwunit} </if>
 		  		  <if test="carnum != null and carnum != ''">
 					  <![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
 				  </if>
+
 		  		  <if test="station != null and station != ''"> and station = #{station} </if>
-		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
-		  		  <if test="settletonnage != null and settletonnage != ''"> and settletonnage = #{settletonnage} </if>
-		  		  <if test="adjusttonnage != null and adjusttonnage != ''"> and adjusttonnage = #{adjusttonnage} </if>
-		  		  <if test="transcost != null and transcost != ''"> and transcost = #{transcost} </if>
-		  		  <if test="inforfee != null and inforfee != ''"> and inforfee = #{inforfee} </if>
-		  		  <if test="colmethod != null and colmethod != ''"> and colmethod = #{colmethod} </if>
-		  		  <if test="transfee != null and transfee != ''"> and transfee = #{transfee} </if>
-		  		  <if test="riskcues != null and riskcues != ''"> and riskcues = #{riskcues} </if>
-		  		  <if test="fulltrans != null and fulltrans != ''"> and fulltrans = #{fulltrans} </if>
-		  		  <if test="fulpaydate != null and fulpaydate != ''"> and fulpaydate = #{fulpaydate} </if>
-		  		  <if test="bankcard != null and bankcard != ''"> and bankcard = #{bankcard} </if>
-		  		  <if test="bankpaydate != null and bankpaydate != ''"> and bankpaydate = #{bankpaydate} </if>
-		  		  <if test="bankcardtwo != null and bankcardtwo != ''"> and bankcardtwo = #{bankcardtwo} </if>
-		  		  <if test="bankpaytwodate != null and bankpaytwodate != ''"> and bankpaytwodate = #{bankpaytwodate} </if>
-		  		  <if test="fultranstwo != null and fultranstwo != ''"> and fultranstwo = #{fultranstwo} </if>
-		  		  <if test="fulpaytwodate != null and fulpaytwodate != ''"> and fulpaytwodate = #{fulpaytwodate} </if>
-		  		  <if test="acbalance != null and acbalance != ''"> and acbalance = #{acbalance} </if>
 
 
 				  <if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
@@ -61,11 +43,13 @@
 
 
 
-		  		  <if test="carrier != null and carrier != ''">
+			  	<if test="carrier != null and carrier != ''">
+				  	<![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
+			  	</if>
 
-					  <![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
-				  </if>
-		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+				<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+
+
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -83,34 +67,16 @@
  	<select id="count" resultType="int">
 		select count(*) from gc_kehu
 		<where>
-			<if test="id != null and id != ''"> and id = #{id} </if>
+
 
 			<if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
 			<if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
 
-
-			<if test="forwunit != null and forwunit != ''"> and forwunit = #{forwunit} </if>
 			<if test="carnum != null and carnum != ''">
 				<![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
 			</if>
+
 			<if test="station != null and station != ''"> and station = #{station} </if>
-			<if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
-			<if test="settletonnage != null and settletonnage != ''"> and settletonnage = #{settletonnage} </if>
-			<if test="adjusttonnage != null and adjusttonnage != ''"> and adjusttonnage = #{adjusttonnage} </if>
-			<if test="transcost != null and transcost != ''"> and transcost = #{transcost} </if>
-			<if test="inforfee != null and inforfee != ''"> and inforfee = #{inforfee} </if>
-			<if test="colmethod != null and colmethod != ''"> and colmethod = #{colmethod} </if>
-			<if test="transfee != null and transfee != ''"> and transfee = #{transfee} </if>
-			<if test="riskcues != null and riskcues != ''"> and riskcues = #{riskcues} </if>
-			<if test="fulltrans != null and fulltrans != ''"> and fulltrans = #{fulltrans} </if>
-			<if test="fulpaydate != null and fulpaydate != ''"> and fulpaydate = #{fulpaydate} </if>
-			<if test="bankcard != null and bankcard != ''"> and bankcard = #{bankcard} </if>
-			<if test="bankpaydate != null and bankpaydate != ''"> and bankpaydate = #{bankpaydate} </if>
-			<if test="bankcardtwo != null and bankcardtwo != ''"> and bankcardtwo = #{bankcardtwo} </if>
-			<if test="bankpaytwodate != null and bankpaytwodate != ''"> and bankpaytwodate = #{bankpaytwodate} </if>
-			<if test="fultranstwo != null and fultranstwo != ''"> and fultranstwo = #{fultranstwo} </if>
-			<if test="fulpaytwodate != null and fulpaytwodate != ''"> and fulpaytwodate = #{fulpaytwodate} </if>
-			<if test="acbalance != null and acbalance != ''"> and acbalance = #{acbalance} </if>
 
 
 			<if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
@@ -124,10 +90,13 @@
 
 
 			<if test="carrier != null and carrier != ''">
-
 				<![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
 			</if>
-			<if test="remark != null and remark != ''"> and remark = #{remark} </if>
+
+			<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+
+
+
 		</where>
 	</select>
 	 
@@ -159,7 +128,8 @@
 			`receiptdate`, 
 			`carrier`, 
 			`remark`,
-		 	 order_no,pay_type,kpid
+		 	 order_no,pay_type,kpid,
+		 	 dept_id,updated_name
 		)
 		values
 		(
@@ -190,7 +160,9 @@
 			#{remark},
 		 	#{orderNo},
 			#{payType},
-		 	#{kpid}
+		 	#{kpid},
+			#{deptId},
+			#{updatedName}
 		)
 	</insert>
 	 
@@ -226,6 +198,9 @@
 			<if test="payType != null">`pay_type` = #{payType}, </if>
 			<if test="kpid != null">`kpid` = #{kpid}, </if>
 
+			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="updatedName != null">`updated_name` = #{updatedName}, </if>
+
 			<if test="remark != null">`remark` = #{remark}</if>
 		</set>
 		where id = #{id}
@@ -250,14 +225,15 @@
 			   `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 			   `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 			   `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-				,`remark` ,order_no,pay_type,kpid
+				,`remark` ,order_no,pay_type,kpid,dept_id,updated_name
 
-		from gc_kehu where order_no = #{orderNo}
+		from gc_kehu
+		where order_no = #{orderNo}
 	</select>
 
 
 
-
+	<!--应付款统计-->
 	<select  id="queryKehu1" resultType="java.util.HashMap" >
 		<![CDATA[
 
@@ -274,7 +250,7 @@
 				 where receipt in ('预有','有')
 
 				   and receiptdate >= #{startDate}
-				   and receiptdate <= #{endDate}
+				   and receiptdate <= #{endDate}  and dept_id = #{deptId}
 
 
 				 union all
@@ -298,7 +274,7 @@
 						  where receipt in ('预有','有')
 
 							and fulpaydate >= #{startDate}
-							and fulpaydate <= #{endDate}
+							and fulpaydate <= #{endDate}  and dept_id = #{deptId}
 						  group by pay_type
 
 						  union all
@@ -316,7 +292,7 @@
 						  from gc_kehu
 						  where receipt in ('预有','有')
 							and bankpaydate >= #{startDate}
-							and bankpaydate <= #{endDate}
+							and bankpaydate <= #{endDate}  and dept_id = #{deptId}
 
 						  group by forwunit
 
@@ -337,7 +313,7 @@
 						  from gc_kehu
 						  where receipt in ('预有','有')
 							and receiptdate >= #{startDate}
-							and receiptdate <= #{endDate}
+							and receiptdate <= #{endDate}  and dept_id = #{deptId}
 					  ) t
 
 
@@ -352,7 +328,7 @@
 
 
 
-
+	<!-- 当日结算明细 -->
 	<select  id="queryKehu" resultType="java.util.HashMap" >
 		<![CDATA[
 
@@ -373,7 +349,7 @@
 						 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu
 					 from gc_kehu
 					 where receipt in ('预有','有')
-					   and receiptdate = #{endDate}
+					   and receiptdate = #{endDate} and dept_id = #{deptId}
 
 
 
@@ -396,7 +372,7 @@
 								  0 as qichu
 							  from gc_kehu
 							  where receipt in ('预有','有')
-								and fulpaydate = #{endDate}
+								and fulpaydate = #{endDate} and dept_id = #{deptId}
 							  group by pay_type
 
 							  union all
@@ -414,7 +390,7 @@
 							  from gc_kehu
 							  where receipt in ('预有','有')
 
-								and bankpaydate = #{endDate}
+								and bankpaydate = #{endDate} and dept_id = #{deptId}
 							  group by forwunit
 
 						  )  t
@@ -435,6 +411,7 @@
 						 where receipt in ('预有','有')
 						 and receiptdate >= #{startDate}
 						 and receiptdate < #{endDate}
+						 and dept_id = #{deptId}
 					  ) t
 
 

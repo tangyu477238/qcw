@@ -259,7 +259,7 @@
 				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 			</if>
 
-
+			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
 
 		</where>
@@ -303,7 +303,7 @@
 				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 			</if>
 
-
+			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
 		</where>
 

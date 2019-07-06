@@ -7,15 +7,16 @@
 		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
 		       `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 		       `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
-		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid
-		from gc_siji where id = #{value}
+		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
+		from gc_siji
+		where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.gc.domain.SijiDO">
 		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
 		       `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 		       `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
-		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid
+		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
 		from gc_siji
         <where>  
 
@@ -35,6 +36,9 @@
 				<![CDATA[ and arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 			</if>
 
+			<if test="deptId != null and deptId != ''">
+				and dept_id = #{deptId}
+			</if>
 
 
 		</where>
@@ -70,7 +74,9 @@
 				<![CDATA[ and arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 			</if>
 
-
+			<if test="deptId != null and deptId != ''">
+				and dept_id = #{deptId}
+			</if>
 
 		</where>
 	</select>
@@ -98,7 +104,7 @@
 			`custompay`, 
 			`taxdatepay`,
 		 	 order_no,
-		 	 pid
+		 	 pid,dept_id,updated_name
 		)
 		values
 		(
@@ -122,7 +128,9 @@
 			#{custompay}, 
 			#{taxdatepay},
 			#{orderNo},
-			#{pid}
+			#{pid},
+			#{deptId},
+			#{updatedName}
 		)
 	</insert>
 	 
@@ -149,6 +157,10 @@
 			<if test="custompay != null">`custompay` = #{custompay}, </if>
 			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
 			<if test="pid != null">`pid` = #{pid},</if>
+
+			<if test="deptId != null">`dept_id` = #{deptId},</if>
+			<if test="updatedName != null">`updated_name` = #{updatedName},</if>
+
 			<if test="taxdatepay != null">`taxdatepay` = #{taxdatepay}</if>
 
 		</set>
@@ -173,9 +185,10 @@
 		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
 			   `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 			   `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
-			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid
+			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
 		from gc_siji
 		where order_no = #{orderNo}
+
 	</select>
 
 
@@ -183,9 +196,10 @@
 		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
 			   `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 			   `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
-			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid
+			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
 		from gc_siji
 		where pid = #{pid}
+
 	</select>
 
 
@@ -225,6 +239,9 @@
 				<![CDATA[ and f.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 			</if>
 
+			<if test="deptId != null and deptId != ''">
+				and f.dept_id = #{deptId}
+			</if>
 		</where>
 
 		order by f.order_no desc,i.id asc
