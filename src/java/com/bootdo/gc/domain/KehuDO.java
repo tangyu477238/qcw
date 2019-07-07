@@ -119,6 +119,10 @@ public class KehuDO implements Serializable {
 
 
 
+	private Long deptId;
+
+	private String updatedName;
+
 	private String kpid;
 
 

@@ -98,5 +98,9 @@ public class SijiItemDO implements Serializable {
 
 
 
+	private Long deptId;
+
+	private String updatedName;
+
 
 }

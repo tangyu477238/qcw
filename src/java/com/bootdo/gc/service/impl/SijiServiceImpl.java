@@ -55,11 +55,13 @@ public class SijiServiceImpl  implements SijiService {
 	
 	@Override
 	public int update(SijiDO siji){
-//		KehuDO kehuDO = kehuDao.getOrder(siji.getOrderNo());
+
 
 		SijiDO sijiDO = sijiDao.getPid(siji.getPid());
 		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
-
+		if (kehuDO==null){
+			return sijiDao.update(siji);
+		}
 		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
 			return 0;
 		}

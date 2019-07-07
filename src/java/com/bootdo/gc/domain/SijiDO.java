@@ -123,4 +123,8 @@ public class SijiDO implements Serializable {
 
 	private String pid;
 
+	private Long deptId;
+
+	private String updatedName;
+
 }

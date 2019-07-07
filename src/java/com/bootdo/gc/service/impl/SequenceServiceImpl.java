@@ -70,7 +70,9 @@ public class SequenceServiceImpl implements SequenceService {
 			this.update(sequenceDO);
 		}
 		StringBuffer sequence = new StringBuffer();
-		sequence.append(sequenceDO.getStype()).append(dateStr).append(String.format("%03d", sequenceDO.getNum()));
+		sequence.append(sequenceDO.getStype())
+				.append(dateStr)
+				.append(String.format("%03d", sequenceDO.getNum()));
 
 		return sequence.toString();
 	}

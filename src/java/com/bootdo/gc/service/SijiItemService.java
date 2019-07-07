@@ -15,6 +15,9 @@ import java.util.Map;
 public interface SijiItemService {
 	
 	SijiItemDO get(Long id);
+
+	SijiItemDO getItemDo(Long id);
+
 	
 	List<SijiItemDO> list(Map<String, Object> map);
 	
