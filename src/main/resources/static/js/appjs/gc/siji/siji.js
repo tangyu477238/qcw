@@ -1,10 +1,13 @@
 
 var prefix = "/gc/siji"
 $(function() {
-	load();
+
 
     $("#startDate").val(getNowFirstDate());
     $("#endDate").val(getNowFormatDate());
+
+
+    load();
 });
 
 

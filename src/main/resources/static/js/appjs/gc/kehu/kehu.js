@@ -2,10 +2,12 @@
 var prefix = "/gc/kehu"
 $(function() {
 
-    load();
-
     $("#startDate").val(getNowFirstDate());
     $("#endDate").val(getNowFormatDate());
+
+    load();
+
+
 });
 
 
@@ -407,8 +409,9 @@ function excel() {
     var carnum = $('#carnum').val();
     var carrier = $('#carrier').val();
     var receipt = $('#receipt').val();
+    var deptId = $('#deptId').val();
     window.open(prefix+"/export?startDate="+startDate+"&endDate="+endDate
-        +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt);
+        +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt+"&deptId="+deptId);
 
 }
 
