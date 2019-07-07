@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.system.domain.UserDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -35,20 +37,23 @@ import javax.servlet.http.HttpServletResponse;
  
 @Controller
 @RequestMapping("/gc/kehu")
-public class KehuController {
+public class KehuController extends BaseController {
 	@Autowired
 	private KehuService kehuService;
 	
 	@GetMapping()
-	@RequiresPermissions("gc:kehu:kehu")
-	String Kehu(){
-	    return "gc/kehu/kehu";
+
+	String Kehu(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		return "gc/kehu/kehu";
 	}
 	
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("gc:kehu:kehu")
+
 	public PageUtils list(@RequestParam Map<String, Object> params){
+
+
 		//查询列表数据
         Query query = new Query(params);
 		List<KehuDO> kehuList = kehuService.list(query);
@@ -58,13 +63,13 @@ public class KehuController {
 	}
 	
 	@GetMapping("/add")
-	@RequiresPermissions("gc:kehu:add")
+
 	String add(){
 	    return "gc/kehu/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	@RequiresPermissions("gc:kehu:edit")
+
 	String edit(@PathVariable("id") Long id,Model model){
 		KehuDO kehu = kehuService.get(id);
 		model.addAttribute("kehu", kehu);
@@ -81,12 +86,11 @@ public class KehuController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("gc:kehu:add")
+
 	public R save( KehuDO kehu){
-
-
-
-
+		UserDO userDo = getUser();
+		kehu.setDeptId(userDo.getDeptId());
+		kehu.setUpdatedName(userDo.getName());
 
 		if(kehuService.save(kehu)>0){
 			return R.ok();
@@ -98,8 +102,11 @@ public class KehuController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("gc:kehu:edit")
+
 	public R update( KehuDO kehu){
+		UserDO userDo = getUser();
+		kehu.setDeptId(userDo.getDeptId());
+		kehu.setUpdatedName(userDo.getName());
 		kehuService.update(kehu);
 		return R.ok();
 	}
@@ -109,7 +116,7 @@ public class KehuController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("gc:kehu:remove")
+
 	public R remove( Long id){
 		if(kehuService.remove(id)>0){
 			return R.ok();
@@ -122,7 +129,7 @@ public class KehuController {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("gc:kehu:batchRemove")
+
 	public R remove(@RequestParam("ids[]") Long[] ids){
 
 
@@ -137,9 +144,10 @@ public class KehuController {
 	@RequestMapping("/export")
 	public void exportstudent(HttpServletResponse res,
 							  @RequestParam Map<String, Object> params) throws IOException {
+//		UserDO userDo = getUser();
+//		params.put("deptId",userDo.getDeptId());
 
 		List<KehuDO> kehuList = kehuService.list(params);
-
 
 		ExcelUtil.exportExcel(kehuList,"付款统计表",
 				"付款统计表",KehuDO.class,"付款统计表.xls",res);
@@ -153,9 +161,8 @@ public class KehuController {
 	@ResponseBody
 	@GetMapping("/getOrder")
 	KehuDO getOrder(String orderNo){
+
 		KehuDO kehu = kehuService.getOrder(orderNo);
-
-
 
 		return kehu;
 	}
@@ -164,35 +171,37 @@ public class KehuController {
 
 
 	@GetMapping("/queryKehuPage")
-	String queryKehuPage(){
-
+	String queryKehuPage(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
 		return "gc/kehu/queryKehu";
 	}
 
 	//获取列表--结算
 	@ResponseBody
 	@GetMapping("/queryKehu")
-	List<Map> queryKehu(String startDate,String endDate){
+	List<Map> queryKehu(String startDate,String endDate,Long deptId){
 		Map map = new HashMap();
 		map.put("startDate",startDate);
 		map.put("endDate",endDate);
+		map.put("deptId",deptId);
 		return kehuService.queryKehu(map);
 	}
 
 
 
 	@GetMapping("/totalKehuPage")
-	String totalKehuPage(){
-
+	String totalKehuPage(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
 		return "gc/kehu/totalKehu";
 	}
 
 	@ResponseBody
 	@GetMapping("/queryKehu1")
-	List<Map> queryKehu1(String startDate,String endDate){
+	List<Map> queryKehu1(String startDate,String endDate,Long deptId){
 		Map map = new HashMap();
 		map.put("startDate",startDate);
 		map.put("endDate",endDate);
+		map.put("deptId",deptId);
 		return kehuService.queryKehu1(map);
 	}
 
