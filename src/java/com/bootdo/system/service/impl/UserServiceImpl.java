@@ -138,7 +138,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int resetPwd(UserVO userVO, UserDO userDO) throws Exception {
         if (Objects.equals(userVO.getUserDO().getUserId(), userDO.getUserId())) {
-            if (Objects.equals(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdOld()), userDO.getPassword())) {
+
+
+            String pst = MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdOld());
+
+            if (Objects.equals(pst, userDO.getPassword())) {
                 userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdNew()));
                 return userMapper.update(userDO);
             } else {
