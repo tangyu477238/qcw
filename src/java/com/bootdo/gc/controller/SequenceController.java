@@ -116,7 +116,7 @@ public class SequenceController {
 
 
 	/**
-	 * 删除
+	 * getSequence
 	 */
 	@GetMapping( "/getSequence")
 	@ResponseBody

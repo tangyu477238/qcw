@@ -1,9 +1,11 @@
 package com.bootdo.gc.controller;
 
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
 import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.service.SequenceService;
 import com.bootdo.gc.service.SijiService;
+import com.bootdo.system.domain.UserDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ import java.util.UUID;
  
 @Controller
 @RequestMapping("/gc/siji")
-public class SijiController {
+public class SijiController extends BaseController {
 	@Autowired
 	private SijiService sijiService;
 
@@ -37,15 +39,17 @@ public class SijiController {
 
 	
 	@GetMapping()
-	@RequiresPermissions("gc:siji:siji")
-	String Siji(){
-	    return "gc/siji/siji";
+
+	String Siji(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		return "gc/siji/siji";
 	}
 	
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("gc:siji:siji")
+
 	public PageUtils list(@RequestParam Map<String, Object> params){
+
 		//查询列表数据
         Query query = new Query(params);
 		List<SijiDO> sijiList = sijiService.list(query);
@@ -55,13 +59,13 @@ public class SijiController {
 	}
 	
 	@GetMapping("/add")
-	@RequiresPermissions("gc:siji:add")
+
 	String add(){
 	    return "gc/siji/add";
 	}
 
 	@GetMapping("/edit/{id}")
-	@RequiresPermissions("gc:siji:edit")
+
 	String edit(@PathVariable("id") Long id,Model model){
 		SijiDO siji = sijiService.get(id);
 		model.addAttribute("siji", siji);
@@ -73,10 +77,14 @@ public class SijiController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("gc:siji:add")
-	public R save( SijiDO siji){
-		siji.setOrderNo(sequenceService.getSequence(""));
 
+	public R save( SijiDO siji){
+
+		UserDO userDo = getUser();
+
+		siji.setOrderNo(sequenceService.getSequence(userDo.getImei()));
+		siji.setDeptId(userDo.getDeptId());
+		siji.setUpdatedName(userDo.getName());
 		if(sijiService.save(siji)>0){
 			return R.ok();
 		}
@@ -87,9 +95,11 @@ public class SijiController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("gc:siji:edit")
-	public R update( SijiDO siji){
 
+	public R update( SijiDO siji){
+		UserDO userDo = getUser();
+		siji.setDeptId(userDo.getDeptId());
+		siji.setUpdatedName(userDo.getName());
 		if(sijiService.update(siji)>0){
 			return R.ok();
 		}
@@ -101,7 +111,7 @@ public class SijiController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("gc:siji:remove")
+
 	public R remove( Long id){
 		if(sijiService.remove(id)>0){
 			return R.ok();
@@ -114,7 +124,7 @@ public class SijiController {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("gc:siji:batchRemove")
+
 	public R remove(@RequestParam("ids[]") Long[] ids){
 //		sijiService.batchRemove(ids);
 //		return R.ok();
@@ -157,4 +167,6 @@ public class SijiController {
 		//返回ModelAndView对象view
 		return "gc/siji/sijiMx";
 	}
+
+
 }

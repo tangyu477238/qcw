@@ -1,28 +1,19 @@
 package com.bootdo.gc.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-
-import com.bootdo.gc.domain.KehuDO;
-import com.bootdo.gc.domain.SijiDO;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.bootdo.gc.domain.SijiItemDO;
-import com.bootdo.gc.service.SijiItemService;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.gc.domain.SijiItemDO;
+import com.bootdo.gc.service.SijiItemService;
+import com.bootdo.system.domain.UserDO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -34,13 +25,14 @@ import com.bootdo.common.utils.R;
  
 @Controller
 @RequestMapping("/gc/sijiItem")
-public class SijiItemController {
+public class SijiItemController extends BaseController {
 	@Autowired
 	private SijiItemService sijiItemService;
 
 	//发货明细表
 	@GetMapping()
-	String sijiItem(){
+	String sijiItem(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
 		return "gc/siji/sijiItem";
 	}
 
@@ -60,6 +52,7 @@ public class SijiItemController {
 	@GetMapping("/list")
 	public PageUtils querySijiList(@RequestParam Map<String, Object> params){
 		//查询列表数据
+
 		Query query = new Query(params);
 		List<Map> sijiItemList = sijiItemService.querySijiList(query);
 
@@ -123,28 +116,51 @@ public class SijiItemController {
 
 
 	/**
-	 * //发货新增----->保存
+	 * //发货新增----->保存、或者修改保持。itemId是否有值决定
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	public R save( SijiItemDO sijiItem){
 		sijiItem.setTranrate(sijiItem.getBaseprice().multiply(sijiItem.getCoefficient()));
 		sijiItem.setTrancost(sijiItem.getTranrate().multiply(sijiItem.getTonnage()));
-		if(sijiItemService.save(sijiItem)>0){
-			return R.ok();
+
+		int flag;
+		if (sijiItem.getId()!=null && !"".equals(sijiItem.getId())){
+			flag = sijiItemService.update(sijiItem);
+		} else {
+			flag = sijiItemService.save(sijiItem);
 		}
-		return R.error();
+		if(flag>0){
+			return R.ok();
+		} else {
+			return R.error();
+		}
 	}
 
-	/**
-	 * //发货新增或者修改的----->修改
-	 */
+
+//	/**
+//	 * //发货新增或者修改的----->修改
+//	 */
+//	@ResponseBody
+//	@RequestMapping("/update")
+//	public R update( SijiItemDO sijiItem){
+//		sijiItemService.update(sijiItem);
+//		return R.ok();
+//	}
+
+
+
+	@GetMapping("/updateItem/{id}")
 	@ResponseBody
-	@RequestMapping("/update")
-	public R update( SijiItemDO sijiItem){
-		sijiItemService.update(sijiItem);
-		return R.ok();
+	SijiItemDO updateItem(@PathVariable("id") Long id){
+		SijiItemDO siji = sijiItemService.getItemDo(id);
+
+		return siji;
 	}
+
+
+
+
 	
 	/**
 	 * //发货新增或者修改的----->删除
