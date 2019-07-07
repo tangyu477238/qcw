@@ -15,6 +15,15 @@ public class R extends HashMap<String, Object> {
 		return error(1, "操作失败");
 	}
 
+	public static R error2() {
+		return error(1, "操作失败,有关联单据！");
+	}
+
+	public static R errorMsg(String msg) {
+		return error(1, msg);
+	}
+
+
 	public static R error(String msg) {
 		return error(500, msg);
 	}

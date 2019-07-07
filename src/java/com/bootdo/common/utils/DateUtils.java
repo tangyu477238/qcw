@@ -20,6 +20,22 @@ public class DateUtils {
      */
     public final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+
+    public final static String DATE_PATTERN_02 = "yyyyMMdd";
+
+
+
+
+    public static String getNowDate() {
+        Date date = new Date();
+        if (date != null) {
+            SimpleDateFormat df = new SimpleDateFormat(DATE_PATTERN);
+            return df.format(date);
+        }
+        return null;
+    }
+
+
     public static String format(Date date) {
         return format(date, DATE_PATTERN);
     }
