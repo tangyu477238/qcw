@@ -35,25 +35,25 @@ public class KehuDO implements Serializable {
 	@Excel(name = "到站", orderNum = "4",isImportField = "station")
 	private String station;
 	//吨位
-	@Excel(name = "吨位", orderNum = "5",isImportField = "tonnage")
+	@Excel(name = "吨位", orderNum = "5",isImportField = "tonnage" , type=10 )
 	private BigDecimal tonnage;
-	//结束吨位
-	@Excel(name = "结算吨位", orderNum = "6",isImportField = "settletonnage")
+	//结算吨位
+	@Excel(name = "结算吨位", orderNum = "6",isImportField = "settletonnage", type=10 )
 	private BigDecimal settletonnage;
 	//调整吨位
-	@Excel(name = "调整吨位", orderNum = "7",isImportField = "adjusttonnage")
+	@Excel(name = "调整吨位", orderNum = "7",isImportField = "adjusttonnage" , type=10 )
 	private BigDecimal adjusttonnage;
 	//运价
-	@Excel(name = "运价", orderNum = "8",isImportField = "transcost")
+	@Excel(name = "运价", orderNum = "8",isImportField = "transcost" , type=10 )
 	private BigDecimal transcost;
 	//信息费
-	@Excel(name = "信息费", orderNum = "9",isImportField = "inforfee")
+	@Excel(name = "信息费", orderNum = "9",isImportField = "inforfee" , type=10 )
 	private BigDecimal inforfee;
 	//收取方式
 	@Excel(name = "收取方式", orderNum = "10",isImportField = "colmethod")
 	private String colmethod;
 	//运费
-	@Excel(name = "运费", orderNum = "11",isImportField = "transfee")
+	@Excel(name = "运费", orderNum = "11",isImportField = "transfee", type=10 )
 	private BigDecimal transfee;
 
 	//付款约定
@@ -68,7 +68,7 @@ public class KehuDO implements Serializable {
 	@Excel(name = "付款方式(1)", orderNum = "13",isImportField = "payType")
 	private String payType;
 	//金额(1)
-	@Excel(name = "金额(1)", orderNum = "14",isImportField = "fulltrans")
+	@Excel(name = "金额(1)", orderNum = "14",isImportField = "fulltrans", type=10 )
 	private BigDecimal fulltrans;
 	//付款时间
 	@Excel(name = "付款日期(1)", orderNum = "15",isImportField = "fulpaydate")
@@ -79,7 +79,7 @@ public class KehuDO implements Serializable {
 	@Excel(name = "付款方式(2)", orderNum = "16",isImportField = "bankcard")
 	private String forwunit;
 	//金额(2)
-	@Excel(name = "金额(2)", orderNum = "17",isImportField = "bankcard")
+	@Excel(name = "金额(2)", orderNum = "17",isImportField = "bankcard" , type=10 )
 	private BigDecimal bankcard;
 	//付款日期
 	@Excel(name = "付款日期(2)", orderNum = "18",isImportField = "bankpaydate")
@@ -102,7 +102,7 @@ public class KehuDO implements Serializable {
 
 
 	//余额
-	@Excel(name = "余额", orderNum = "19",isImportField = "acbalance")
+	@Excel(name = "余额", orderNum = "19",isImportField = "acbalance", type=10 )
 	private BigDecimal acbalance;
 	//回单
 	@Excel(name = "回单", orderNum = "20",isImportField = "receipt")
