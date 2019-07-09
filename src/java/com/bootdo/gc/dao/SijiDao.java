@@ -37,4 +37,7 @@ public interface SijiDao {
 
 	SijiDO getPid(String pid);
 
+
+	List<Map> queryTotal(Map map);
+
 }

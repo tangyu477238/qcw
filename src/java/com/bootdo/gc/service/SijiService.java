@@ -32,4 +32,8 @@ public interface SijiService  {
 
 
 	List<SijiDO> getExcelList(Map<String, Object> map);
+
+
+	List<Map> queryTotal(Map map);
+
 }

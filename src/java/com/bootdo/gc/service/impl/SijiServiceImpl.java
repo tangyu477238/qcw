@@ -1,5 +1,6 @@
 package com.bootdo.gc.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.KehuDO;
@@ -8,6 +9,7 @@ import com.bootdo.gc.domain.SijiItemDO;
 import com.bootdo.gc.service.KehuService;
 import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
+import org.joda.time.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -164,4 +166,10 @@ public class SijiServiceImpl  implements SijiService {
 	}
 
 
+	@Override
+	public List<Map> queryTotal(Map map) {
+
+
+		return sijiDao.queryTotal(map);
+	}
 }

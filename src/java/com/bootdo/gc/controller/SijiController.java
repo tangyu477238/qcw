@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -39,7 +40,6 @@ public class SijiController extends BaseController {
 
 	
 	@GetMapping()
-
 	String Siji(Long deptId,Model model){
 		model.addAttribute("deptId", deptId);
 		return "gc/siji/siji";
@@ -166,6 +166,26 @@ public class SijiController extends BaseController {
 
 		//返回ModelAndView对象view
 		return "gc/siji/sijiMx";
+	}
+
+
+
+	@GetMapping("/queryTotalPage")
+	String queryTotalPage(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		for (int i = 0;i<12;i++){
+			model.addAttribute("bizMonth"+i, DateUtils.getNowMonth(-i));
+		}
+		return "gc/siji/queryTotal";
+	}
+
+	@ResponseBody
+	@GetMapping("/queryTotal")
+	List<Map> queryTotal(Long deptId,String inforfee){
+		Map map = new HashMap();
+		map.put("deptId",deptId);
+        map.put("inforfee",inforfee);
+		return sijiService.queryTotal(map);
 	}
 
 
