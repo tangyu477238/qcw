@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -23,7 +24,21 @@ public class DateUtils {
 
     public final static String DATE_PATTERN_02 = "yyyyMMdd";
 
+    public final static String MONTH_PATTERN = "yyyy-MM";
 
+
+//    public static void main(String[] args) {
+//        System.out.println(getNowMonth(-0));
+//    }
+
+
+    public static String getNowMonth(int num) {
+        Calendar calendar = Calendar.getInstance();//日历对象
+        calendar.setTime(new Date());//设置当前日期
+        calendar.add(Calendar.MONTH, num);//月份
+
+        return format(calendar.getTime(), MONTH_PATTERN);
+    }
 
 
     public static String getNowDate() {
