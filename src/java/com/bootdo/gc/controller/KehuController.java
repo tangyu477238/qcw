@@ -144,9 +144,10 @@ public class KehuController extends BaseController {
 	@RequestMapping("/export")
 	public void exportstudent(HttpServletResponse res,
 							  @RequestParam Map<String, Object> params) throws IOException {
-//		UserDO userDo = getUser();
-//		params.put("deptId",userDo.getDeptId());
 
+
+		params.put("order","asc");
+		params.put("sort","id");
 		List<KehuDO> kehuList = kehuService.list(params);
 
 		ExcelUtil.exportExcel(kehuList,"付款统计表",
