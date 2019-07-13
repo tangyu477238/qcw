@@ -30,7 +30,9 @@
 					  <![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
 				  </if>
 
-		  		  <if test="station != null and station != ''"> and station = #{station} </if>
+		  		  <if test="station != null and station != ''">
+					  <![CDATA[ and station like CONCAT('%',#{station},'%') ]]>
+				  </if>
 
 
 				  <if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
@@ -76,7 +78,9 @@
 				<![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
 			</if>
 
-			<if test="station != null and station != ''"> and station = #{station} </if>
+			<if test="station != null and station != ''">
+				<![CDATA[ and station like CONCAT('%',#{station},'%') ]]>
+			</if>
 
 
 			<if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>

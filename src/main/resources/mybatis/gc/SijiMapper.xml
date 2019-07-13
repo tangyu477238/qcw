@@ -244,7 +244,7 @@
 			</if>
 		</where>
 
-		order by f.order_no desc,i.id asc
+		order by f.order_no asc,i.id asc
 
 	</select>
 
