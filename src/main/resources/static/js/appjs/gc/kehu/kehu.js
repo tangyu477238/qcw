@@ -85,6 +85,7 @@ function load() {
                         tstartDate:$('#tstartDate').val(),
                         tendDate:$('#tendDate').val(),
 
+                        station:$('#station').val(),
                         carnum:$('#carnum').val(),
                         carrier:$('#carrier').val(),
                         receipt:$('#receipt').val(),
@@ -410,8 +411,9 @@ function excel() {
     var carrier = $('#carrier').val();
     var receipt = $('#receipt').val();
     var deptId = $('#deptId').val();
+    var station = $('#station').val();
     window.open(prefix+"/export?startDate="+startDate+"&endDate="+endDate
-        +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt+"&deptId="+deptId);
+        +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt+"&deptId="+deptId+"&station="+station);
 
 }
 
