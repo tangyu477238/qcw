@@ -1,9 +1,11 @@
 package com.bootdo.gc.service.impl;
 
+import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.*;
 import com.bootdo.gc.service.SijiService;
+import org.joda.time.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -191,13 +193,19 @@ public class SijiItemServiceImpl implements SijiItemService {
 		for (SijiItemImp1 imp1 : imp1s) {
 			SijiItemDO js = sijiItemDao.get(imp1.getId());
 			if (js!=null){
-				js.setBilldate(imp1.getBilldate());
-				js.setKouling(imp1.getKouling());
-				js.setAminvoice(imp1.getAminvoice());
+				//交单日期之前未填写，并本次有填写
+				if (js.getBilldate()==null && imp1.getBilldate()!=null){
+					js.setBilldate(imp1.getBilldate());
+					js.setKouling(imp1.getKouling());
+					js.setAminvoice(js.getTrancost().subtract(js.getKouling())); //结算金额=运费-扣减金额
+				}
+
 				js.setIssueoffice(imp1.getIssueoffice());
 				js.setIssueofficedate(imp1.getIssueofficedate());
 				js.setPaydate(imp1.getPaydate());
 				sijiItemDao.update(js);
+
+
 			}
 		}
 	}
@@ -205,11 +213,15 @@ public class SijiItemServiceImpl implements SijiItemService {
 	public void importExcel2(List<SijiItemImp2> imp2s) {
 		for (SijiItemImp2 imp2 : imp2s) {
 			SijiItemDO js = sijiItemDao.get(imp2.getId());
-			if (js!=null){
-				js.setCustompay(imp2.getCustompay());
-				js.setTaxdatepay(imp2.getTaxdatepay());
-				js.setTakeamount(imp2.getTakeamount());
-				sijiItemDao.update(js);
+			if (js != null && js.getAminvoice()!=null){
+				//之前未导入，且本次付款方式不为空
+				if (js.getCustompay() == null && imp2.getCustompay() != null) {
+					js.setCustompay(imp2.getCustompay());
+					js.setTaxdatepay(imp2.getTaxdatepay());
+					js.setTakeamount(imp2.getTakeamount());
+					sijiItemDao.update(js);
+				}
+
 			}
 		}
 	}
