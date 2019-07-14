@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<style>
+	.common-search-form{
+		margin-bottom:10px;
+		padding:20px 20px 0px!important;
+	}
+	.form-control{
+		border-radius: 4px!important;
+	}
+	.form-horizontal .control-label{
+		text-align: center;
+	}
+</style>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<!--<button shiro:hasPermission="gc:jiesuan:add" type="button" class="btn  btn-primary" onclick="add()">-->
+								<!--<i class="fa fa-plus" aria-hidden="true"></i>添加-->
+							<!--</button>-->
+							<button shiro:hasPermission="gc:jiesuan:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>批量删除
+							</button>
+
+							<button id="import" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon glyphicon-import">批量导入</span>
+							</button>
+
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="发票号或开票单位">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<!--导入modal-->
+	<div class="modal fade" tabindex="-1" role="dialog" id="importModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">导入excel</h4>
+				</div>
+				<div class="modal-body">
+					<div>
+						<!--<form action="/user/importExcel" method="POST" enctype="multipart/form-data" target="nm_iframe" >
+                            <input type="file" name="file"/>
+                        </form>
+                        <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>-->
+						<input type="file" name="file" id="excelImp">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<a onclick="importConfirm()" class="btn btn-primary" data-dismiss="modal">导入</a>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+
+
+
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="gc:jiesuan:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="gc:jiesuan:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="gc:jiesuan:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="gc/include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/gc/jiesuan/jiesuan.js?v=111"></script>
+
+<script type="text/javascript" >
+
+    // 导入
+    $('#import').click(function () {
+        $('#importModal').modal('show');
+    });
+
+    // 确认导入
+    function importConfirm() {
+        // $('form').submit();
+        var fileObj = document.getElementById('excelImp').files[0];
+        if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+
+            parent.layer.msg("请选择excel文件");
+            return;
+        }
+        var formFile = new FormData();
+        formFile.append('file', fileObj);
+
+        var url = '/gc/jiesuan/importExcel';
+
+
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formFile,
+            processData:false,
+            contentType:false,
+            // async: false,
+            success:function(data) {
+
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    reLoad();
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            },
+            error: function (e) {
+                parent.layer.msg("导入失败，请联系管理员");
+
+            }
+        })
+    }
+</script>
+</body>
+</html>

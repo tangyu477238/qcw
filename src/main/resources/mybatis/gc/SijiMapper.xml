@@ -217,7 +217,7 @@
 
 	<select id="getExcelList" resultType="com.bootdo.gc.domain.SijiDO">
 		select
-		f.`id`,f.`bizdate`,f.`forwunit`,f.`carnum`,
+		i.`id`,f.`bizdate`,f.`forwunit`,f.`carnum`,
 		f.`arrivstation`,f.`remark`,f.`inforfee`,
 		f.`payer`,f.order_no,f.pid,f.custompay as scustompay,
 

@@ -9,7 +9,7 @@
 		`id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
 		`tranrate`,`trancost`,`arrivstation`,`payer` ,
 		remark,billdate,aminvoice,issueoffice,issueofficedate,
-		inforfee,custompay,taxdatepay,paydate
+		inforfee,custompay,taxdatepay,paydate,kouling,takeamount
 		from gc_siji_item
 		where  id = #{value}
 	</select>
@@ -50,6 +50,7 @@
 			si.`taxdatepay`,
 			si.`paydate`,
 			si.`payer`,
+			si.kouling,si.takeamount,
 			s.order_no as orderNo
 
 		FROM
@@ -63,7 +64,7 @@
 		       `id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
 		       `tranrate`,`trancost`,`arrivstation`,`payer` ,
 				remark,billdate,aminvoice,issueoffice,issueofficedate,
-				inforfee,custompay,taxdatepay,paydate
+				inforfee,custompay,taxdatepay,paydate,kouling,takeamount
 		from gc_siji_item
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -124,7 +125,9 @@
 			`tranrate`, 
 			`trancost`, 
 			`arrivstation`, 
-			`payer`
+			`payer`,
+		 	kouling,
+		 	takeamount
 		)
 		values
 		(
@@ -139,7 +142,9 @@
 			#{tranrate}, 
 			#{trancost}, 
 			#{arrivstation}, 
-			#{payer}
+			#{payer},
+		 	#{kouling},
+		 	#{takeamount}
 		)
 	</insert>
 	 
@@ -170,6 +175,8 @@
 			<if test="taxdatepay != null">`taxdatepay` = #{taxdatepay}, </if>
 			<if test="paydate != null">`paydate` = #{paydate}, </if>
 
+			<if test="kouling != null">`kouling` = #{kouling}, </if>
+			<if test="takeamount != null">`takeamount` = #{takeamount}, </if>
 
 			<if test="payer != null">`payer` = #{payer}</if>
 		</set>
@@ -232,6 +239,8 @@
 			si.`taxdatepay`,
 		    si.`paydate`,
 			si.`payer`,
+		 	si.kouling,
+		 	si.takeamount,
 			s.order_no as orderNo
 
 		FROM

@@ -122,11 +122,18 @@
 					</div>
 
 
-					<div class="col-md-2">
+					<div class="col-md-6">
 						<div class="form-group">
 							<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>
-							<button  type="button" class="btn  btn-success" onclick="excel()">
-							导出
+							<button  type="button" class="btn  btn-success" onclick="excel()">导出</button>
+
+
+
+							<button id="import1" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon glyphicon-import">结算导入</span>
+							</button>
+							<button id="import2" type="button" class="btn btn-primary">
+								<span class="glyphicon glyphicon glyphicon-import">收款导入</span>
 							</button>
 						</div>
 					</div>
@@ -145,12 +152,6 @@
 
 
 
-
-
-
-
-
-
 </div>
 
 
@@ -158,7 +159,30 @@
 
 
 
-
+<!--导入modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="importModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">导入excel</h4>
+			</div>
+			<div class="modal-body">
+				<div>
+					<!--<form action="/user/importExcel" method="POST" enctype="multipart/form-data" target="nm_iframe" >
+                        <input type="file" name="file"/>
+                    </form>
+                    <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>-->
+					<input type="file" name="file" id="excelImp">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<a onclick="importConfirm()" class="btn btn-primary" data-dismiss="modal">导入</a>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
@@ -166,6 +190,71 @@
 
 
 <div th:include="gc/include :: footer"></div>
+
+
+
+
+<script type="text/javascript" >
+
+    var url = '/gc/sijiItem/importExcel';
+
+    // 导入
+    $('#import1').click(function () {
+        url = '/gc/sijiItem/importExcel';
+        $('#importModal').modal('show');
+    });
+
+
+    $('#import2').click(function () {
+        url = '/gc/sijiItem/importExcel2';
+        $('#importModal').modal('show');
+    });
+
+
+    // 确认导入
+    function importConfirm() {
+        // $('form').submit();
+        var fileObj = document.getElementById('excelImp').files[0];
+        if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+
+            parent.layer.msg("请选择excel文件");
+            return;
+        }
+        var formFile = new FormData();
+        formFile.append('file', fileObj);
+
+
+
+
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formFile,
+            processData:false,
+            contentType:false,
+            // async: false,
+            success:function(data) {
+
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    reLoad();
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            },
+            error: function (e) {
+                parent.layer.msg("导入失败，请联系管理员");
+
+            }
+        })
+    }
+</script>
+
+
+
+
 	<script type="text/javascript" >
 
         var prefix = "/gc/sijiItem"
@@ -390,8 +479,18 @@
                                 align : 'center'
                             },
                             {
+                                field : 'scustompay',
+                                title : '业务员' ,
+                                align : 'center'
+                            },
+                            {
                                 field : 'billdate',
                                 title : '交单日期' ,
+                                align : 'center'
+                            },
+                            {
+                                field : 'kouling',
+                                title : '扣零' ,
                                 align : 'center'
                             },
                             {
@@ -419,6 +518,11 @@
                                 align : 'center'
                             },
                             {
+                                field : 'paydate',
+                                title : '付税款日期' ,
+                                align : 'center'
+                            },
+                            {
                                 field : 'taxdatepay',
                                 title : '收款方式' ,
                                 align : 'center'
@@ -429,13 +533,8 @@
                                 align : 'center'
                             },
                             {
-                                field : 'paydate',
-                                title : '付税款日期' ,
-                                align : 'center'
-                            },
-                            {
-                                field : 'scustompay',
-                                title : '业务员' ,
+                                field : 'takeamount',
+                                title : '收款金额' ,
                                 align : 'center'
                             },
                             {
