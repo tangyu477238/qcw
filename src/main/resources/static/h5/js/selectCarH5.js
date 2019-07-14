@@ -48,56 +48,56 @@ $(function() {
 				var html=""
 				var html2=""
 				for(var i = 0;i<data.length;i++){
-					var carName = data[i].brand.split("-");
+					//var carName = data[i].brand.split("-");
 					if(data[i].id=="1685"){
 						html+="<div class=\"th_brand-item\">";
 						html+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html+="</div>";
 					}else if(data[i].id=="1677"){
 						html+="<div class=\"th_brand-item\">";
 						html+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html+="</div>";
 					}else if(data[i].id=="1662"){
 						html+="<div class=\"th_brand-item\">";
 						html+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html+="</div>";
 					}else if(data[i].id=="1708"){
 						html+="<div class=\"th_brand-item\">";
 						html+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html+="</div>";
 					}else if(data[i].id=="1774"){
 						html+="<div class=\"th_brand-item\">";
 						html+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html+="</div>";
 					}else if(data[i].id=="1777"){
 						html2+="<div class=\"th_brand-item\">";
 						html2+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html2+="</div>";
 					}else if(data[i].id=="1661"){
 						html2+="<div class=\"th_brand-item\">";
 						html2+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html2+="</div>";
 					}else if(data[i].id=="1779"){
 						html2+="<div class=\"th_brand-item\">";
 						html2+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html2+="</div>";
 					}else if(data[i].id=="1667"){
 						html2+="<div class=\"th_brand-item\">";
 						html2+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html2+="</div>";
 					}else if(data[i].id=="1703"){
 						html2+="<div class=\"th_brand-item\">";
 						html2+="<div class=\"th_item-icon\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\"><img alt=\"\" class=\"th_icon\" src=\""+data[i].url+"\"></a></div>"
-						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+carName[1]+"</a></div>";
+						html2+="	<div class=\"th_item-name\"><a href=\"javascript:;\" onclick=\"showCarInfo('"+data[i].id+"','"+data[i].url+"')\">"+data[i].brand+"</a></div>";
 						html2+="</div>";
 					}
 				}

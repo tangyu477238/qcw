@@ -8,6 +8,7 @@
 		       `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 		       `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
 		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
+		       ,invoice,kouling
 		from gc_siji
 		where id = #{value}
 	</select>
@@ -17,6 +18,7 @@
 		       `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 		       `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
 		       `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
+		       ,invoice,kouling
 		from gc_siji
         <where>  
 
@@ -104,7 +106,7 @@
 			`custompay`, 
 			`taxdatepay`,
 		 	 order_no,
-		 	 pid,dept_id,updated_name
+		 	 pid,dept_id,updated_name,invoice,kouling
 		)
 		values
 		(
@@ -130,7 +132,10 @@
 			#{orderNo},
 			#{pid},
 			#{deptId},
-			#{updatedName}
+			#{updatedName},
+			#{invoice},
+			#{kouling}
+
 		)
 	</insert>
 	 
@@ -160,6 +165,8 @@
 
 			<if test="deptId != null">`dept_id` = #{deptId},</if>
 			<if test="updatedName != null">`updated_name` = #{updatedName},</if>
+			<if test="invoice != null">`invoice` = #{invoice},</if>
+			<if test="kouling != null">`kouling` = #{kouling},</if>
 
 			<if test="taxdatepay != null">`taxdatepay` = #{taxdatepay}</if>
 
@@ -186,6 +193,7 @@
 			   `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 			   `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
 			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
+		       ,invoice,kouling
 		from gc_siji
 		where order_no = #{orderNo}
 
@@ -197,6 +205,7 @@
 			   `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
 			   `arrivstation`,`payer`,`inforfee`,`remark`,`issueoffice`,
 			   `aminvoice`,`custompay`,`taxdatepay` ,order_no,pid,dept_id,updated_name
+		       ,invoice,kouling
 		from gc_siji
 		where pid = #{pid}
 
@@ -217,7 +226,7 @@
 
 
 		i.billdate,i.`aminvoice`,i.`issueoffice`,i.`issueofficedate`,
-		i.`custompay`,i.`taxdatepay`,i.`paydate`
+		i.`custompay`,i.`taxdatepay`,i.`paydate`,f.invoice,f.kouling
 		from gc_siji f
 		inner join gc_siji_item i on f.pid = i.pid
 
