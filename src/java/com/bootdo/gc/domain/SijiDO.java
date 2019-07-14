@@ -126,4 +126,11 @@ public class SijiDO implements Serializable {
 
 	private String updatedName;
 
+	//发票号
+	private String invoice;
+
+	//扣零
+	private BigDecimal kouling;
+
+
 }
