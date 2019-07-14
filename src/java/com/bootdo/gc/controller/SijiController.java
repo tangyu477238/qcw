@@ -145,7 +145,7 @@ public class SijiController extends BaseController {
 		List<SijiDO> kehuList = sijiService.getExcelList(params);
 
 
-		ExcelUtil.exportExcel(kehuList,"发货统计表",
+		ExcelUtil.exportExcel(kehuList,null,
 				"发货统计表",SijiDO.class,"发货统计表.xls",res);
 
 

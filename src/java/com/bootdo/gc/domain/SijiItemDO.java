@@ -66,13 +66,19 @@ public class SijiItemDO implements Serializable {
 	//付款单位
 	private String inforfee;
 
+
+
+
+
 	@Excel(name = "交单日期", orderNum = "14",isImportField = "billdate")
 	//交单日期
 	private String billdate;
 
+	//扣零
+	private BigDecimal kouling;
+
 	//结算金额
 	private BigDecimal aminvoice;
-
 
 	//开票单位
 	private String issueoffice;
@@ -80,15 +86,19 @@ public class SijiItemDO implements Serializable {
 	//开票日期
 	private String issueofficedate;
 
+	//付税款日期
+	private String paydate;
+
 
 
 	//收款日期
 	private String custompay;
+
 	//收款方式
 	private String taxdatepay;
 
-	//付税款日期
-	private String paydate;
+	//收款金额
+	private BigDecimal takeamount;
 
 
 
@@ -101,6 +111,8 @@ public class SijiItemDO implements Serializable {
 	private Long deptId;
 
 	private String updatedName;
+
+
 
 
 }

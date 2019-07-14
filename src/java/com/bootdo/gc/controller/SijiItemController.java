@@ -1,16 +1,21 @@
 package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.utils.FileUtil;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.gc.domain.JiesuanDO;
 import com.bootdo.gc.domain.SijiItemDO;
+import com.bootdo.gc.domain.SijiItemImp1;
+import com.bootdo.gc.domain.SijiItemImp2;
 import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.system.domain.UserDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -196,5 +201,36 @@ public class SijiItemController extends BaseController {
 //		sijiItemService.batchRemove(ids);
 //		return R.ok();
 //	}
-	
+
+
+
+
+
+
+	@PostMapping("/importExcel")
+	@ResponseBody
+	public R importExcel(@RequestParam("file") MultipartFile file) {
+		List<SijiItemImp1> imp1s = FileUtil.importExcel(file, 0, 1, SijiItemImp1.class);
+		sijiItemService.importExcel(imp1s);
+		return R.ok();
+	}
+
+
+
+
+
+	@PostMapping("/importExcel2")
+	@ResponseBody
+	public R importExcel2(@RequestParam("file") MultipartFile file) {
+		List<SijiItemImp2> imp2s = FileUtil.importExcel(file, 0, 1, SijiItemImp2.class);
+		sijiItemService.importExcel2(imp2s);
+		return R.ok();
+	}
+
+
+
+
+
+
+
 }

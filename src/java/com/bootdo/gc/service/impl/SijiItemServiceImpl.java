@@ -2,8 +2,7 @@ package com.bootdo.gc.service.impl;
 
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
-import com.bootdo.gc.domain.KehuDO;
-import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.domain.*;
 import com.bootdo.gc.service.SijiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.bootdo.gc.dao.SijiItemDao;
-import com.bootdo.gc.domain.SijiItemDO;
 import com.bootdo.gc.service.SijiItemService;
 
 
@@ -184,5 +182,37 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 		return sijiItemDao.querySijiList(map);
 	}
+
+
+
+
+	@Override
+	public void importExcel(List<SijiItemImp1> imp1s) {
+		for (SijiItemImp1 imp1 : imp1s) {
+			SijiItemDO js = sijiItemDao.get(imp1.getId());
+			if (js!=null){
+				js.setBilldate(imp1.getBilldate());
+				js.setKouling(imp1.getKouling());
+				js.setAminvoice(imp1.getAminvoice());
+				js.setIssueoffice(imp1.getIssueoffice());
+				js.setIssueofficedate(imp1.getIssueofficedate());
+				js.setPaydate(imp1.getPaydate());
+				sijiItemDao.update(js);
+			}
+		}
+	}
+	@Override
+	public void importExcel2(List<SijiItemImp2> imp2s) {
+		for (SijiItemImp2 imp2 : imp2s) {
+			SijiItemDO js = sijiItemDao.get(imp2.getId());
+			if (js!=null){
+				js.setCustompay(imp2.getCustompay());
+				js.setTaxdatepay(imp2.getTaxdatepay());
+				js.setTakeamount(imp2.getTakeamount());
+				sijiItemDao.update(js);
+			}
+		}
+	}
+
 
 }

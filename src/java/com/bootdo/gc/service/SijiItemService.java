@@ -1,6 +1,9 @@
 package com.bootdo.gc.service;
 
+import com.bootdo.gc.domain.JiesuanDO;
 import com.bootdo.gc.domain.SijiItemDO;
+import com.bootdo.gc.domain.SijiItemImp1;
+import com.bootdo.gc.domain.SijiItemImp2;
 
 import java.util.List;
 import java.util.Map;
@@ -37,5 +40,6 @@ public interface SijiItemService {
 
 	int heDui(Long id);
 
-
+	void importExcel(List<SijiItemImp1> imp1s);
+	void importExcel2(List<SijiItemImp2> imp2s);
 }
