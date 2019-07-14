@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.gc.dao.JiesuanDao">
+
+	<select id="get" resultType="com.bootdo.gc.domain.JiesuanDO">
+		select `id`,`dept_id`,`updated_name`,`bizdate`,`payer`,`remark`,`invoice`,
+		       `amount`,`pid` from gc_jiesuan where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.gc.domain.JiesuanDO">
+		select `id`,`dept_id`,`updated_name`,`bizdate`,`payer`,`remark`,`invoice`,
+		       `amount`,`pid` from gc_jiesuan
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+		  		  <if test="updatedName != null and updatedName != ''"> and updated_name = #{updatedName} </if>
+		  		  <if test="bizdate != null and bizdate != ''"> and bizdate = #{bizdate} </if>
+		  		  <if test="payer != null and payer != ''"> and payer = #{payer} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="invoice != null and invoice != ''"> and invoice = #{invoice} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from gc_jiesuan
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+		  		  <if test="updatedName != null and updatedName != ''"> and updated_name = #{updatedName} </if>
+		  		  <if test="bizdate != null and bizdate != ''"> and bizdate = #{bizdate} </if>
+		  		  <if test="payer != null and payer != ''"> and payer = #{payer} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="invoice != null and invoice != ''"> and invoice = #{invoice} </if>
+		  		  <if test="amount != null and amount != ''"> and amount = #{amount} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.gc.domain.JiesuanDO" useGeneratedKeys="true" keyProperty="id">
+		insert into gc_jiesuan
+		(
+			`dept_id`, 
+			`updated_name`, 
+			`bizdate`, 
+			`payer`, 
+			`remark`, 
+			`invoice`,
+			`amount`, 
+			`pid`
+		)
+		values
+		(
+			#{deptId}, 
+			#{updatedName}, 
+			#{bizdate}, 
+			#{payer}, 
+			#{remark}, 
+			#{invoice},
+			#{amount}, 
+			#{pid}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.gc.domain.JiesuanDO">
+		update gc_jiesuan 
+		<set>
+			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="updatedName != null">`updated_name` = #{updatedName}, </if>
+			<if test="bizdate != null">`bizdate` = #{bizdate}, </if>
+			<if test="payer != null">`payer` = #{payer}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="invoice != null">`invoice` = #{invoice}, </if>
+			<if test="amount != null">`amount` = #{amount}, </if>
+			<if test="pid != null">`pid` = #{pid}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from gc_jiesuan where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from gc_jiesuan where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+
+	<select id="getByInvoice" resultType="com.bootdo.gc.domain.JiesuanDO">
+		select `id`,`dept_id`,`updated_name`,`bizdate`,`payer`,`remark`,`invoice`,
+			   `amount`,`pid` from gc_jiesuan
+		where invoice = #{invoice}
+	</select>
+</mapper>

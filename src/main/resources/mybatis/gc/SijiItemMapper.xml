@@ -151,7 +151,7 @@
 	<update id="update" parameterType="com.bootdo.gc.domain.SijiItemDO">
 		update gc_siji_item 
 		<set>
-			<if test="pid != null">`pid` = #{pid}, </if>
+
 			<if test="steelnum != null">`steelnum` = #{steelnum}, </if>
 			<if test="specs != null">`specs` = #{specs}, </if>
 			<if test="packnum != null">`packnum` = #{packnum}, </if>
@@ -177,8 +177,9 @@
 
 			<if test="kouling != null">`kouling` = #{kouling}, </if>
 			<if test="takeamount != null">`takeamount` = #{takeamount}, </if>
+			<if test="payer != null">`payer` = #{payer},</if>
 
-			<if test="payer != null">`payer` = #{payer}</if>
+			<if test="pid != null">`pid` = #{pid}</if>
 		</set>
 		where id = #{id}
 	</update>

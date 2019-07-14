@@ -226,7 +226,7 @@
 
 
 		i.billdate,i.`aminvoice`,i.`issueoffice`,i.`issueofficedate`,
-		i.`custompay`,i.`taxdatepay`,i.`paydate`,f.invoice,f.kouling
+		i.`custompay`,i.`taxdatepay`,i.`paydate`,f.invoice,i.kouling
 		from gc_siji f
 		inner join gc_siji_item i on f.pid = i.pid
 
