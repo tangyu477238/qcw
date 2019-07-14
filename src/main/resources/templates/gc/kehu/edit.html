@@ -146,13 +146,14 @@
 									<select class="form-control" name="payType" id="payType" onchange="setPayDate(0)">
 										<option th:value = "${kehu.payType}">[[${kehu.payType}]]</option>
 										<option value="">--不付--</option>
-
-										<option value="运满满">--运满满--</option>
-										<option value="现金">--现金--</option>
 										<option value="农行卡">--农行卡--</option>
+										<option value="运满满">--运满满--</option>
+
+
 										<option value="百通石化">--百通石化--</option>
 										<option value="百通石油">--百通石油--</option>
 										<option value="百通京博">--百通京博--</option>
+										<option value="现金">--现金--</option>
 									</select>
 
 								</div>
@@ -189,12 +190,14 @@
 
 										<option th:value = "${kehu.forwunit}">[[${kehu.forwunit}]]</option>
 										<option value="">--不付--</option>
-										<option value="运满满">--运满满--</option>
-										<option value="现金">--现金--</option>
 										<option value="农行卡">--农行卡--</option>
+										<option value="运满满">--运满满--</option>
+
+
 										<option value="百通石化">--百通石化--</option>
 										<option value="百通石油">--百通石油--</option>
 										<option value="百通京博">--百通京博--</option>
+										<option value="现金">--现金--</option>
 									</select>
 
 								</div>
@@ -366,6 +369,14 @@
 
 
 	function update() {
+        var inforfee = $("#inforfee").val();
+        var colmethod = $("#colmethod").val();
+        if (colmethod=='' && inforfee=='') {
+            parent.layer.msg("信息费和收取方式不能都不填！");
+            return ;
+        }
+
+
 		$.ajax({
 			cache : true,
 			type : "POST",
@@ -417,10 +428,10 @@
 
 	}
 
-
+	//第一个付款方式
 	function setPayDate(flag) {
 		var payType = $("#payType").val();
-		if (payType!=''){
+		if (payType!=''){ //没有付款方式
 			$("#pay2").show();
 
 			if (flag==0 || $("#fulpaydate").val()==getNowFormatDate()) {
@@ -481,7 +492,7 @@
 
 	function setPayDateRead(flag){
 		var receipt = $("#receipt").val();
-		if (receipt=='无'||receipt=='') {
+		if (receipt=='无'||receipt=='') { //没有回单时
 
 			$("#payType").attr("readonly",true);
 			$("#forwunit").attr("readonly",true);
@@ -494,7 +505,7 @@
 			$("#pay1").hide();
 			$("#pay3").hide();
 
-		} else {
+		} else { //有回单日期
 
 
 			$("#pay1").show();
@@ -504,6 +515,7 @@
 				$("#forwunit").attr("readonly",false);
 				$("#receiptdate").val(getNowFormatDate());
 			} else {
+			    //alert(11)
 				$("#receipt").attr("disabled",true);
 				$("#adjusttonnage").attr("readonly",true);
 				$("#transcost").attr("readonly",true);
@@ -584,11 +596,16 @@
                     td = td.replace('[id]',siItem.id);
 					$("#tdata").append(td);
 
-
+                    var s = $("#receiptdate").val();
                     if (subFlag != 1) {
                         $("#receipt").attr("disabled",true);
-                    } else {
+                    } else if (s == getNowFormatDate() || s =='')  {
                         $("#receipt").attr("disabled",false);
+					} else {
+                        $("#receipt").attr("disabled",false);
+                        $("#receipt").empty();
+                        $("<option value='[[${kehu.receipt}]]'>[[${kehu.receipt}]]</option><option value='有'>有</option>").appendTo("#receipt");//添加下拉框的option
+
                     }
 
 				}

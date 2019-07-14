@@ -146,13 +146,12 @@
 
 								<select class="form-control" name="payType" id="payType" onchange="setPayDate()">
 									<option value="">--不付--</option>
-
-									<option value="运满满">--运满满--</option>
-									<option value="现金">--现金--</option>
 									<option value="农行卡">--农行卡--</option>
+									<option value="运满满">--运满满--</option>
 									<option value="百通石化">--百通石化--</option>
 									<option value="百通石油">--百通石油--</option>
 									<option value="百通京博">--百通京博--</option>
+									<option value="现金">--现金--</option>
 								</select>
 
 							</div>
@@ -189,12 +188,12 @@
 								<select class="form-control" name="forwunit" id="forwunit" onchange="setPayDate2()">
 									<option value="">--不付--</option>
 
-									<option value="运满满">--运满满--</option>
-									<option value="现金">--现金--</option>
 									<option value="农行卡">--农行卡--</option>
+									<option value="运满满">--运满满--</option>
 									<option value="百通石化">--百通石化--</option>
 									<option value="百通石油">--百通石油--</option>
 									<option value="百通京博">--百通京博--</option>
+									<option value="现金">--现金--</option>
 								</select>
 
 							</div>
@@ -310,6 +309,14 @@
         var orderNo = $("#orderNo").val();
         if (orderNo==''){
             parent.layer.msg("订单号不能为空！");
+            return ;
+		}
+
+
+        var inforfee = $("#inforfee").val();
+        var colmethod = $("#colmethod").val();
+		if (colmethod==''&&inforfee=='') {
+            parent.layer.msg("信息费和收取方式不能都不填！");
             return ;
 		}
 
