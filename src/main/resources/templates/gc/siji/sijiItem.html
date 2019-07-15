@@ -474,13 +474,13 @@
                                 width: '10%'
                             },
                             {
-                                field : 'inforfee',
-                                title : '付款单位' ,
+                                field : 'scustompay',
+                                title : '业务员' ,
                                 align : 'center'
                             },
                             {
-                                field : 'scustompay',
-                                title : '业务员' ,
+                                field : 'inforfee',
+                                title : '付款单位' ,
                                 align : 'center'
                             },
                             {
@@ -536,6 +536,25 @@
                                 field : 'takeamount',
                                 title : '收款金额' ,
                                 align : 'center'
+                            },
+                            {
+
+                                title : '余额' ,
+                                align : 'center',
+								formatter:function(value,row,index){
+									var am = 0;
+                                    if (row.aminvoice=='' || row.aminvoice==null){
+                                        am = row.trancost;
+									} else {
+                                        am = row.aminvoice;
+									}
+
+                                    if(row.takeamount==''||row.takeamount==null){
+                                        return am;
+									}
+                                    return (am-row.takeamount).toFixed(2);
+
+                                }
                             },
                             {
                                 title : '系统操作',

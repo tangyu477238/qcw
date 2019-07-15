@@ -291,10 +291,13 @@ function addeasypoi() {
         $("#tranrate").val('');
         $("#trancost").val('');
 
-        $.post(url,data,function(result){
-            //alert("添加成功!!!");
-            //初始化表格
-            showTable();
+        $.post(url,data,function(r){
+            if (r.code==0) {
+                layer.msg(r.msg);
+                showTable();
+            }else{
+                layer.msg(r.msg);
+            }
         });
 
 
