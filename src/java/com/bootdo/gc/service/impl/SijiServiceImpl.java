@@ -64,9 +64,9 @@ public class SijiServiceImpl  implements SijiService {
 		if (kehuDO==null){
 			return sijiDao.update(siji);
 		}
-		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
-			return 0;
-		}
+//		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
+//			return 0;
+//		}
 
 		kehuDO.setBizdate(siji.getBizdate());
 		kehuDO.setCarnum(siji.getCarnum());

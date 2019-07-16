@@ -126,6 +126,9 @@ public class SijiItemController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	public R save( SijiItemDO sijiItem){
+
+
+
 		sijiItem.setTranrate(sijiItem.getBaseprice().multiply(sijiItem.getCoefficient()));
 		sijiItem.setTrancost(sijiItem.getTranrate().multiply(sijiItem.getTonnage()));
 
@@ -138,8 +141,9 @@ public class SijiItemController extends BaseController {
 		if(flag>0){
 			return R.ok();
 		} else {
-			return R.error();
+			return R.errorMsg("操作失败,付款已回单！");
 		}
+
 	}
 
 
@@ -174,9 +178,9 @@ public class SijiItemController extends BaseController {
 	@ResponseBody
 	public R remove( Long id){
 		if(sijiItemService.remove(id)>0){
-		return R.ok();
+			return R.ok();
 		}
-		return R.error();
+		return R.errorMsg("操作失败,付款已回单！");
 	}
 
 

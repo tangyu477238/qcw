@@ -118,7 +118,44 @@ public class SijiItemServiceImpl implements SijiItemService {
 	
 	@Override
 	public int update(SijiItemDO sijiItem){
-		return sijiItemDao.update(sijiItem);
+
+
+		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
+
+		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
+		if (kehuDO==null){
+			return sijiItemDao.update(sijiItem);
+		}
+		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
+			return 0;
+		}
+
+		int flag = sijiItemDao.update(sijiItem);
+
+		try {
+			kehuDO.setTonnage(new BigDecimal(0));
+			Map map = new HashMap();
+			map.put("pid", sijiItem.getPid());
+			List<SijiItemDO> list = sijiItemService.list(map);
+			for (SijiItemDO sijiItemDO : list) {
+				kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
+			}
+			if (kehuDO.getTonnage() != null) {
+				kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
+			}
+
+			BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
+			BigDecimal t2 = t1.multiply(kehuDO.getTranscost()).subtract(kehuDO.getInforfee());
+			kehuDO.setTransfee(t2); //运费
+
+			kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
+			kehuDao.update(kehuDO); //信息更新
+
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return flag;
 	}
 	
 	@Override
