@@ -434,7 +434,7 @@
 		if (payType!=''){ //没有付款方式
 			$("#pay2").show();
 
-			if (flag==0 || $("#fulpaydate").val()==getNowFormatDate()) {
+			if (flag==0 && ($("#fulpaydate").val()==getNowFormatDate()||$("#fulpaydate").val()=='')) {
 				$("#fulpaydate").val(getNowFormatDate());
 				$("#fulltrans").attr("readonly",false);
 			} else {
@@ -455,7 +455,7 @@
 		if (forwunit!=''){
 			$("#pay4").show();
 
-			if (flag==0 || $("#bankpaydate").val()==getNowFormatDate()) {
+			if (flag==0 && ($("#bankpaydate").val()==getNowFormatDate()||$("#bankpaydate").val()=='')) {
 				$("#bankcard").attr("readonly",false);
 				$("#bankpaydate").val(getNowFormatDate());
 			} else {
@@ -510,7 +510,7 @@
 
 			$("#pay1").show();
 			$("#pay3").show();
-			if (flag==0 || $("#receiptdate").val()==getNowFormatDate()) {
+			if (flag==0 && ($("#receiptdate").val()==getNowFormatDate()||$("#receiptdate").val()=='')) {
 				$("#payType").attr("readonly",false);
 				$("#forwunit").attr("readonly",false);
 				$("#receiptdate").val(getNowFormatDate());
