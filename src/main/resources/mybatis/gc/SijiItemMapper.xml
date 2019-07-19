@@ -9,7 +9,7 @@
 		`id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
 		`tranrate`,`trancost`,`arrivstation`,`payer` ,
 		remark,billdate,aminvoice,issueoffice,issueofficedate,
-		inforfee,custompay,taxdatepay,paydate,kouling,takeamount
+		inforfee,custompay,taxdatepay,paydate,kouling,takeamount,inputdate,yue
 		from gc_siji_item
 		where  id = #{value}
 	</select>
@@ -50,7 +50,7 @@
 			si.`taxdatepay`,
 			si.`paydate`,
 			si.`payer`,
-			si.kouling,si.takeamount,
+			si.kouling,si.takeamount,si.inputdate,si.yue,
 			s.order_no as orderNo
 
 		FROM
@@ -64,7 +64,7 @@
 		       `id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
 		       `tranrate`,`trancost`,`arrivstation`,`payer` ,
 				remark,billdate,aminvoice,issueoffice,issueofficedate,
-				inforfee,custompay,taxdatepay,paydate,kouling,takeamount
+				inforfee,custompay,taxdatepay,paydate,kouling,takeamount,inputdate,yue
 		from gc_siji_item
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -127,7 +127,7 @@
 			`arrivstation`, 
 			`payer`,
 		 	kouling,
-		 	takeamount
+		 	takeamount,inputdate,yue
 		)
 		values
 		(
@@ -144,7 +144,9 @@
 			#{arrivstation}, 
 			#{payer},
 		 	#{kouling},
-		 	#{takeamount}
+		 	#{takeamount},
+		 	#{inputdate},
+		 	#{yue}
 		)
 	</insert>
 	 
@@ -178,6 +180,8 @@
 			<if test="kouling != null">`kouling` = #{kouling}, </if>
 			<if test="takeamount != null">`takeamount` = #{takeamount}, </if>
 			<if test="payer != null">`payer` = #{payer},</if>
+			<if test="inputdate != null">`inputdate` = #{inputdate},</if>
+			<if test="yue != null">`yue` = #{yue},</if>
 
 			<if test="pid != null">`pid` = #{pid}</if>
 		</set>
@@ -242,6 +246,8 @@
 			si.`payer`,
 		 	si.kouling,
 		 	si.takeamount,
+		    si.inputdate,
+		    si.yue,
 			s.order_no as orderNo
 
 		FROM
