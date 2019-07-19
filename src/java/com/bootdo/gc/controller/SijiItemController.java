@@ -90,7 +90,7 @@ public class SijiItemController extends BaseController {
 	@RequestMapping("/updateItem")
 	public R updateItem(SijiItemDO siji){
 
-		sijiItemService.update(siji);
+		sijiItemService.updateItem(siji);
 
 		return R.ok();
 	}

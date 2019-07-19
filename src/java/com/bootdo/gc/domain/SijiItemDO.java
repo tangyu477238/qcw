@@ -100,10 +100,16 @@ public class SijiItemDO implements Serializable {
 	//收款金额
 	private BigDecimal takeamount;
 
+	//收款录入日期
+	private String inputdate;
 
+
+
+	private BigDecimal yue;
 
 	//核对
 	private String payer;
+
 
 
 

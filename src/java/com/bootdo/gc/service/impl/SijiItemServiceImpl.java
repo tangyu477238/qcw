@@ -115,7 +115,18 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 		return flag;
 	}
-	
+
+
+
+
+	@Override
+	public int updateItem(SijiItemDO sijiItem){
+
+		int flag = sijiItemDao.update(sijiItem);
+
+		return flag;
+	}
+
 	@Override
 	public int update(SijiItemDO sijiItem){
 
@@ -250,7 +261,7 @@ public class SijiItemServiceImpl implements SijiItemService {
 	public void importExcel2(List<SijiItemImp2> imp2s) {
 		for (SijiItemImp2 imp2 : imp2s) {
 			SijiItemDO js = sijiItemDao.get(imp2.getId());
-			if (js != null && js.getAminvoice()!=null){
+			if (js != null){
 				//之前未导入，且本次付款方式不为空
 				if (js.getCustompay() == null && imp2.getCustompay() != null) {
 					js.setCustompay(imp2.getCustompay());

@@ -29,6 +29,8 @@ public interface SijiItemService {
 	int save(SijiItemDO sijiItem);
 	
 	int update(SijiItemDO sijiItem);
+
+	int updateItem(SijiItemDO sijiItem);
 	
 	int remove(Long id);
 	
