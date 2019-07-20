@@ -137,9 +137,9 @@ public class SijiItemServiceImpl implements SijiItemService {
 		if (kehuDO==null){
 			return sijiItemDao.update(sijiItem);
 		}
-		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
-			return 0;
-		}
+//		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
+//			return 0;
+//		}
 
 		int flag = sijiItemDao.update(sijiItem);
 
@@ -242,7 +242,7 @@ public class SijiItemServiceImpl implements SijiItemService {
 			SijiItemDO js = sijiItemDao.get(imp1.getId());
 			if (js!=null){
 				//交单日期之前未填写，并本次有填写
-				if (js.getBilldate()==null && imp1.getBilldate()!=null){
+				if ((js.getBilldate()==null||"".equals(js.getBilldate())) && imp1.getBilldate()!=null){
 					js.setBilldate(imp1.getBilldate());
 					js.setKouling(imp1.getKouling());
 					js.setAminvoice(js.getTrancost().subtract(js.getKouling())); //结算金额=运费-扣减金额
@@ -261,12 +261,15 @@ public class SijiItemServiceImpl implements SijiItemService {
 	public void importExcel2(List<SijiItemImp2> imp2s) {
 		for (SijiItemImp2 imp2 : imp2s) {
 			SijiItemDO js = sijiItemDao.get(imp2.getId());
-			if (js != null){
-				//之前未导入，且本次付款方式不为空
-				if (js.getCustompay() == null && imp2.getCustompay() != null) {
+			if (js != null && js.getAminvoice()!=null){
+				//之前未导入或导入日期是当天，且本次付款方式不为空
+				if ((js.getInputdate() == null
+						||"".equals(js.getInputdate())
+						||DateUtils.getNowDate().equals(js.getInputdate())) && imp2.getCustompay() != null) {
 					js.setCustompay(imp2.getCustompay());
 					js.setTaxdatepay(imp2.getTaxdatepay());
 					js.setTakeamount(imp2.getTakeamount());
+					js.setInputdate(DateUtils.getNowDate());
 					sijiItemDao.update(js);
 				}
 

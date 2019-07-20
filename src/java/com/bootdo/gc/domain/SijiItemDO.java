@@ -1,6 +1,7 @@
 package com.bootdo.gc.domain;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.alibaba.druid.support.monitor.annotation.MTable;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -111,6 +112,8 @@ public class SijiItemDO implements Serializable {
 	private String payer;
 
 
+
+	private String receiptdate;
 
 
 
