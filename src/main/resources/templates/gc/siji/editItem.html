@@ -93,9 +93,12 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">交单日期：</label>
 								<div class="col-sm-3">
+
+
 									<input type="text"  id="billdate"   th:value="${siji.billdate}" name="billdate"
-										   placeholder="日期"   class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
 										   style="background-color: #fff;" readonly="readonly" required/>
+
 								</div>
 
 
@@ -154,9 +157,11 @@
 
 								<label class="col-sm-2 control-label">收款日期：</label>
 								<div class="col-sm-3">
-									<input id="custompay"  th:value="${siji.custompay}" name="custompay" type="text"
-										   placeholder="日期" class="laydate-icon layer-date form-control"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" >
+
+
+									<input type="text"  id="custompay"   th:value="${siji.custompay}" name="custompay"
+										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   style="background-color: #fff;" readonly="readonly" required/>
 								</div>
 
 							</div>
@@ -261,6 +266,9 @@
         var inputdate = $("#inputdate").val();
 
         if (inputdate!=''&&inputdate!=getNowFormatDate()) {
+            $("#billdate").attr("disabled",true);
+
+            $("#kouling").attr("readonly",true);
             $("#inputdate").attr("readonly",true);
             $("#taxdatepay").attr("readonly",true);
             $("#custompay").attr("disabled",true);

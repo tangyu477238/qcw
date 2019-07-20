@@ -211,11 +211,11 @@
 					<p>支&nbsp;&nbsp;数&nbsp;&nbsp;:&nbsp;&nbsp;
 						<input type="text" id="zhinum" name="zhinum"	placeholder="请输入支数..." size="20" /></p>
 					</p>
-					<p>吨&nbsp;&nbsp;位&nbsp;&nbsp;:&nbsp;&nbsp;
-						<input type="number" id="tonnage" name="tonnage"	placeholder="请输入吨位..." size="20"/></p>
-					<p>基&nbsp;&nbsp;价&nbsp;&nbsp;:&nbsp;&nbsp;
+					<p><span id="t1">吨&nbsp;&nbsp;位&nbsp;&nbsp;:&nbsp;&nbsp;</span>
+						<input type="number" id="tonnage" name="tonnage" readonly="readonly"	placeholder="请输入吨位..." size="20"/></p>
+					<p><span id="t2">基&nbsp;&nbsp;价&nbsp;&nbsp;:&nbsp;&nbsp;</span>
 						<input type="number" id="baseprice" 	name="baseprice"	placeholder="请输入基价..." size="20"/></p>
-					<p>系&nbsp;&nbsp;数&nbsp;&nbsp;:&nbsp;&nbsp;
+					<p><span id="t3">系&nbsp;&nbsp;数&nbsp;&nbsp;:&nbsp;&nbsp;</span>
 						<input type="number" id="coefficient" name="coefficient"	placeholder="请输入系数..." size="20"/></p>
 					<!--<p>运&nbsp;&nbsp;率&nbsp;&nbsp;:&nbsp;&nbsp;-->
 					<!--<input type="number" id="tranrate" name="tranrate"  size="20" readonly/></p>-->
@@ -249,6 +249,10 @@
 
 
 <script type="text/javascript">
+
+
+
+var delflag = 0;
 
 function addDetail() {
 	$('#myModal').modal('show');
@@ -334,6 +338,16 @@ function modifystudent(id) {
 
             $('#myModal').modal('show');
 
+            if (siItem.inputdate!=null&&siItem.inputdate!='') {
+                $("#baseprice").attr("readonly",true);
+                $("#coefficient").attr("readonly",true);
+                $("#t2").css("color","#c2c2c2");
+                $("#t3").css("color","#c2c2c2");
+			}
+            if (siItem.receiptdate!=null&&siItem.receiptdate!='') {
+                $("#tonnage").attr("readonly",true);
+                $("#t1").css("color","#c2c2c2");
+            }
 
         }
     });
@@ -404,7 +418,16 @@ function showTable() {
 
 				td = td.replace('[siItem]',siItem);
 				td = td.replace('[id]',siItem.id);
-                td = td.replace('[id]',siItem.id);
+
+
+
+                if ((siItem.inputdate!=null&&siItem.inputdate!='')||(siItem.receiptdate!=null&&siItem.receiptdate!='')) {
+
+                    td = td.replace('[del]','');
+                } else {
+                    td = td.replace('[del]','<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + siItem.id + '\')>删除</button>');
+				}
+
 				$("#tdata").append(td);
 
                 packnum = packnum + siItem.packnum;
@@ -447,7 +470,7 @@ var tdtemplate =
 
 	'<td>' +
 	'<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
-	'<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
+	'[del]' +
 	'</td>' +
 
 	'</tr>';
