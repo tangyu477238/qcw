@@ -6,12 +6,16 @@
 
 	<select id="getItemDo" resultType="com.bootdo.gc.domain.SijiItemDO">
 		select
-		`id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
-		`tranrate`,`trancost`,`arrivstation`,`payer` ,
-		remark,billdate,aminvoice,issueoffice,issueofficedate,
-		inforfee,custompay,taxdatepay,paydate,kouling,takeamount,inputdate,yue
-		from gc_siji_item
-		where  id = #{value}
+			k.receiptdate,
+			i.`id`,i.`pid`,i.`steelnum`,i.`specs`,i.`packnum`,
+			i.`zhinum`,i.`tonnage`,i.`baseprice`,i.`coefficient`,
+			i.`tranrate`,i.`trancost`,i.`arrivstation`,i.`payer` ,
+			i.remark,i.billdate,i.aminvoice,i.issueoffice,i.issueofficedate,
+			i.inforfee,i.custompay,i.taxdatepay,i.paydate,i.kouling,i.takeamount,i.inputdate,i.yue
+
+		from gc_siji_item i
+				 left join gc_kehu k on i.pid = k.kpid
+		where  i.id = #{value}
 	</select>
 
 
