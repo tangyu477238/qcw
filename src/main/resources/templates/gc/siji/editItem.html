@@ -93,12 +93,15 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">交单日期：</label>
 								<div class="col-sm-3">
-
-
 									<input type="text"  id="billdate"   th:value="${siji.billdate}" name="billdate"
 										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-										   style="background-color: #fff;" readonly="readonly" required/>
+										   style="background-color: #fff;" readonly="readonly" onchange="setAminvoice()" required/>
 
+								</div>
+
+								<label class="col-sm-2 control-label">扣零：</label>
+								<div class="col-sm-3">
+									<input id="kouling" onkeyup="setAminvoice()" th:value="${siji.kouling}"  name="kouling" class="form-control" type="text" required>
 								</div>
 
 
@@ -106,15 +109,20 @@
 
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">扣零：</label>
-                                <div class="col-sm-3">
-                                    <input id="kouling" onkeyup="setAminvoice()" th:value="${siji.kouling}"  name="kouling" class="form-control" type="text">
-                                </div>
+
+
+
 
                                 <label class="col-sm-2 control-label">结算金额：</label>
                                 <div class="col-sm-3">
                                     <input id="aminvoice"  th:value="${siji.aminvoice}"  name="aminvoice" class="form-control" type="text" readonly="readonly">
                                 </div>
+
+								<label class="col-sm-2 control-label">结算录入日期：</label>
+								<div class="col-sm-3">
+									<input id="aminvoicedate"  th:value="${siji.aminvoicedate}" name="aminvoicedate"
+										   class="form-control" type="text" readonly="readonly">
+								</div>
                             </div>
 
 
@@ -284,12 +292,26 @@
 
 
     function setAminvoice() {
+        var billdate = $("#billdate").val();
+
+
         var trancost = $("#trancost").val();
         var kouling = $("#kouling").val();
         var takeamount = $("#takeamount").val();
 
         $("#aminvoice").val((trancost-kouling).toFixed(2));
         $("#yue").val((trancost-kouling-takeamount).toFixed(2));
+
+        var aminvoicedate = $("#aminvoicedate").val();
+        if (billdate!='' && billdate!=null){ //扣减金额产生了结算
+            if (aminvoicedate==null||aminvoicedate==''){
+                $("#aminvoicedate").val(getNowFormatDate());
+			}
+		} else {
+            if (aminvoicedate==getNowFormatDate()){
+                $("#aminvoicedate").val('');
+			}
+		}
 
     }
 

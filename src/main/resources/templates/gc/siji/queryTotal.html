@@ -22,8 +22,18 @@
 				<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
 
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group">
+
+
+							<label class="col-sm-1 control-label">日期：</label>
+							<div class="col-sm-2">
+								<input id="inputdate"   name="inputdate"
+									   type="text" class="laydate-icon layer-date form-control"
+									   placeholder="日期" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   style="background-color: #fff;" readonly="readonly" required/>
+							</div>
+
 							<label class="control-label col-md-2">付款单位</label>
 							<div class="col-md-3">
 								<input type="text" class="form-control" name="inforfee" size="15"
@@ -45,7 +55,7 @@
 					<tr>
 
 						<th>序号</th>
-						<th > 付款单位</th>
+						<th >付款单位</th>
 						<th th:text="${bizMonth11}"></th>
 						<th th:text="${bizMonth10}"></th>
 						<th th:text="${bizMonth9}"></th>
@@ -60,7 +70,13 @@
 						<th th:text="${bizMonth1}"></th>
 						<th th:text="${bizMonth0}"></th>
 
-						<th>合计 </th>
+
+
+						<th>当日应收</th>
+                        <th>当日结算</th>
+						<th>调整金额</th>
+						<th>余额 </th>
+						<th>操作</th>
 					</tr>
 					</thead>
 
@@ -85,8 +101,12 @@
 						<th id="bizMonth2"></th>
 						<th id="bizMonth1"></th>
 						<th id="bizMonth0"></th>
-
+                        <th id="aminvoice"></th>
+                        <th id="takeamount"></th>
+						<th id="tiaozheng"></th>
 						<th id="totalAmount"></th>
+
+						<th ></th>
 					</tr>
 					</thead>
 				</table>
@@ -116,7 +136,44 @@
 
 
 
+<!-- 添加(模态框)（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					添加/修改调整金额
+				</h4>
+			</div>
+			<div class="modal-body">
+
+				<input type="hidden" id="payer" name="payer"	/>
+
+				<p><span id="t2">调整金额:&nbsp;&nbsp;</span>
+					<input type="number" id="amount" 	name="amount"	placeholder="请输入金额..." size="20"/></p>
+
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					关闭
+				</button>
+				<button type="button" class="btn btn-primary" onclick="addeasypoi()">
+					提交
+				</button>
+			</div>
+
+
+		</div><!-- /.modal-content -->
+	</div>
+</div>
+<!-- /.modal -->
 
 
 
@@ -136,13 +193,17 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#startDate").val(getNowFirstDate());
-        $("#endDate").val(getNowFormatDate());
+        //$("#startDate").val(getNowFirstDate());
+        $("#inputdate").val(getNowFormatDate());
 
         showTable();
     });
 
+    function addDetail(inforfee) {
 
+        $("#payer").val(inforfee);
+        $('#myModal').modal('show');
+    }
 
     //获取当前时间，格式YYYY-MM-DD
     function getNowFirstDate() {
@@ -186,9 +247,10 @@
 
         var inforfee = $("#inforfee").val();
         var deptId = $("#deptId").val();
+        var inputdate = $("#inputdate").val();
 
         $.ajax({
-            url : "/gc/siji/queryTotal?deptId="+deptId+"&inforfee="+inforfee,
+            url : "/gc/siji/queryTotal?deptId="+deptId+"&inforfee="+inforfee+"&inputdate="+inputdate,
             type : "GET",
             data : {
             },
@@ -199,7 +261,9 @@
                 var bizMonth5 = 0;var bizMonth4 = 0;var bizMonth3 = 0;
                 var bizMonth2 = 0;var bizMonth1 = 0;var bizMonth0 = 0;
 
-                var totalAmount = 0;
+                var aminvoice = 0; var takeamount = 0;
+                var tiaozheng = 0;  var totalAmount = 0;
+
                 for(var i = 0;i < list.length;i++){
                     var siItem = list[i];
                     var td = tdtemplate.replace('[tNum]',i+1);
@@ -219,7 +283,12 @@
                     td = td.replace('[bizMonth1]',siItem.bizMonth1);
                     td = td.replace('[bizMonth0]',siItem.bizMonth0);
 
+                    td = td.replace('[aminvoice]',siItem.aminvoice);
+                    td = td.replace('[takeamount]',siItem.takeamount);
+                    td = td.replace('[tiaozheng]',siItem.tiaozheng);
                     td = td.replace('[totalAmount]',siItem.totalAmount);
+
+                    td = td.replace('[modify]','<button type="button" class="btn btn-primary" onclick = addDetail(\'' + siItem.inforfee + '\')>调整</button>');
 
                     bizMonth11 = bizMonth11 + siItem.bizMonth11;
                     bizMonth10 = bizMonth10 + siItem.bizMonth10;
@@ -235,7 +304,11 @@
                     bizMonth1 = bizMonth1 + siItem.bizMonth1;
                     bizMonth0 = bizMonth0 + siItem.bizMonth0;
 
+                    aminvoice = aminvoice + siItem.aminvoice;
+                    takeamount = takeamount + siItem.takeamount;
+                    tiaozheng = tiaozheng + siItem.tiaozheng;
                     totalAmount = totalAmount + siItem.totalAmount;
+
                     $("#tdata").append(td);
                 }
 
@@ -254,7 +327,11 @@
                 $("#bizMonth1").text(bizMonth1.toFixed(2));
                 $("#bizMonth0").text(bizMonth0.toFixed(2));
 
+                $("#aminvoice").text(aminvoice.toFixed(2));
+                $("#takeamount").text(takeamount.toFixed(2));
+                $("#tiaozheng").text(tiaozheng.toFixed(2));
                 $("#totalAmount").text(totalAmount.toFixed(2));
+
             }
         });
 
@@ -285,10 +362,48 @@
         '<td>' + '[bizMonth2]' + '</td>' +
         '<td>' + '[bizMonth1]' + '</td>' +
         '<td>' + '[bizMonth0]' + '</td>' +
+
+        '<td>' + '[aminvoice]' + '</td>' +
+        '<td>' + '[takeamount]' + '</td>' +
+        '<td>' + '[tiaozheng]' + '</td>' +
         '<td>' + '[totalAmount]' + '</td>' +
+
+        '<td>' + '[modify]' + '</td>' +
         '</tr>';
 
 
+
+
+
+
+
+
+    // 添加表格数据
+    function addeasypoi() {
+        var url = "/gc/jiesuan/saveItem";
+
+        var data = {
+            "bizdate":getNowFormatDate(),
+            "amount":$("#amount").val(),
+            "payer":$("#payer").val()
+        };
+
+		$('#myModal').modal('hide');
+		$("#payer").val('');
+		$("#amount").val('');
+
+		$.post(url,data,function(r){
+			if (r.code==0) {
+				layer.msg(r.msg);
+				showTable();
+			}else{
+				layer.msg(r.msg);
+			}
+		});
+
+
+
+    }
 
 
 
