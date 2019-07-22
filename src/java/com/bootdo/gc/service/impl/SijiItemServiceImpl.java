@@ -246,6 +246,7 @@ public class SijiItemServiceImpl implements SijiItemService {
 					js.setBilldate(imp1.getBilldate());
 					js.setKouling(imp1.getKouling());
 					js.setAminvoice(js.getTrancost().subtract(js.getKouling())); //结算金额=运费-扣减金额
+					js.setAminvoicedate(DateUtils.getNowDate());
 				}
 
 				js.setIssueoffice(imp1.getIssueoffice());

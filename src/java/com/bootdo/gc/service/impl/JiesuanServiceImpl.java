@@ -36,7 +36,12 @@ public class JiesuanServiceImpl implements JiesuanService {
 	public int save(JiesuanDO jiesuan){
 		return jiesuanDao.save(jiesuan);
 	}
-	
+
+	@Override
+	public JiesuanDO getItem(String payer) {
+		return jiesuanDao.getItem(payer);
+	}
+
 	@Override
 	public int update(JiesuanDO jiesuan){
 		return jiesuanDao.update(jiesuan);

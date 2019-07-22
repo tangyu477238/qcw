@@ -180,10 +180,11 @@ public class SijiController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/queryTotal")
-	List<Map> queryTotal(Long deptId,String inforfee){
+	List<Map> queryTotal(Long deptId,String inforfee,String inputdate){
 		Map map = new HashMap();
 		map.put("deptId",deptId);
         map.put("inforfee",inforfee);
+		map.put("inputdate",inputdate);
 		return sijiService.queryTotal(map);
 	}
 

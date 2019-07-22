@@ -87,6 +87,32 @@ public class JiesuanController {
 		}
 		return R.error();
 	}
+
+
+
+	/**
+	 * 添加调整金额
+	 */
+	@ResponseBody
+	@PostMapping("/saveItem")
+
+	public R saveItem(JiesuanDO jiesuan ){
+
+//		JiesuanDO js = jiesuanService.getItem(jiesuan.getPayer());
+//		if (js == null) {
+//			jiesuanService.save(jiesuan);
+//		}
+
+		if(jiesuanService.save(jiesuan)>0){
+			return R.ok();
+		}
+
+		return R.error();
+	}
+
+
+
+
 	/**
 	 * 修改
 	 */

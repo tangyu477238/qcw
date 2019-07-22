@@ -81,6 +81,9 @@ public class SijiItemDO implements Serializable {
 	//结算金额
 	private BigDecimal aminvoice;
 
+	//结算录入日期
+	private String aminvoicedate;
+
 	//开票单位
 	private String issueoffice;
 
@@ -114,6 +117,7 @@ public class SijiItemDO implements Serializable {
 
 
 	private String receiptdate;
+
 
 
 

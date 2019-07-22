@@ -18,6 +18,9 @@ public interface JiesuanDao {
 
 	JiesuanDO get(Long id);
 
+	JiesuanDO getItem(String payer);
+
+
 	JiesuanDO getByInvoice(String invoice);
 
 	

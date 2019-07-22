@@ -15,7 +15,9 @@ import java.util.Map;
 public interface JiesuanService {
 	
 	JiesuanDO get(Long id);
-	
+
+	JiesuanDO getItem(String payer);
+
 	List<JiesuanDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
