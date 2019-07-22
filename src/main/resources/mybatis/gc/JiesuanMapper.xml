@@ -5,7 +5,16 @@
 
 	<select id="get" resultType="com.bootdo.gc.domain.JiesuanDO">
 		select `id`,`dept_id`,`updated_name`,`bizdate`,`payer`,`remark`,`invoice`,
-		       `amount`,`pid` from gc_jiesuan where id = #{value}
+		       `amount`,`pid` from gc_jiesuan
+		where id = #{value}
+	</select>
+
+
+	<select id="getItem" resultType="com.bootdo.gc.domain.JiesuanDO">
+		select `id`,`dept_id`,`updated_name`,`bizdate`,`payer`,`remark`,`invoice`,
+			   `amount`,`pid`
+		from gc_jiesuan
+		where payer = #{payer}
 	</select>
 
 	<select id="list" resultType="com.bootdo.gc.domain.JiesuanDO">

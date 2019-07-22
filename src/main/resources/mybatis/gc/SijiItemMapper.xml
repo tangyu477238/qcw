@@ -10,7 +10,7 @@
 			i.`id`,i.`pid`,i.`steelnum`,i.`specs`,i.`packnum`,
 			i.`zhinum`,i.`tonnage`,i.`baseprice`,i.`coefficient`,
 			i.`tranrate`,i.`trancost`,i.`arrivstation`,i.`payer` ,
-			i.remark,i.billdate,i.aminvoice,i.issueoffice,i.issueofficedate,
+			i.remark,i.billdate,i.aminvoice,i.aminvoicedate,i.issueoffice,i.issueofficedate,
 			i.inforfee,i.custompay,i.taxdatepay,i.paydate,i.kouling,i.takeamount,i.inputdate,i.yue
 
 		from gc_siji_item i
@@ -45,7 +45,7 @@
 
 
 			si.`billdate`,
-			si.`aminvoice`,
+			si.`aminvoice`,si.aminvoicedate,
 			si.`issueoffice`,
 			si.`issueofficedate`,
 
@@ -67,7 +67,7 @@
 		select
 		       `id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
 		       `tranrate`,`trancost`,`arrivstation`,`payer` ,
-				remark,billdate,aminvoice,issueoffice,issueofficedate,
+				remark,billdate,aminvoice,aminvoicedate,issueoffice,issueofficedate,
 				inforfee,custompay,taxdatepay,paydate,kouling,takeamount,inputdate,yue
 		from gc_siji_item
         <where>  
@@ -131,7 +131,7 @@
 			`arrivstation`, 
 			`payer`,
 		 	kouling,
-		 	takeamount,inputdate,yue
+		 	takeamount,inputdate,yue,aminvoicedate
 		)
 		values
 		(
@@ -150,7 +150,8 @@
 		 	#{kouling},
 		 	#{takeamount},
 		 	#{inputdate},
-		 	#{yue}
+		 	#{yue},
+		 	#{aminvoicedate}
 		)
 	</insert>
 	 
@@ -173,6 +174,8 @@
 
 			<if test="billdate != null">`billdate` = #{billdate}, </if>
 			<if test="aminvoice != null">`aminvoice` = #{aminvoice}, </if>
+			<if test="aminvoicedate != null">`aminvoicedate` = #{aminvoicedate}, </if>
+
 			<if test="issueoffice != null">`issueoffice` = #{issueoffice}, </if>
 			<if test="issueofficedate != null">`issueofficedate` = #{issueofficedate}, </if>
 
@@ -240,6 +243,7 @@
 
 		    si.`billdate`,
 		    si.`aminvoice`,
+		    si.aminvoicedate,
 			si.`issueoffice`,
 		    si.`issueofficedate`,
 
