@@ -129,8 +129,11 @@ public class SijiDO implements Serializable {
 	@Excel(name = "收款金额", orderNum = "27", type=10)
 	private String takeamount;
 
+	@Excel(name = "收款录入日期", orderNum = "28")
+	private String inputdate;
 
-
+	@Excel(name = "余额", orderNum = "28", type=10)
+	private String yue;
 
 
 	private String payer;
