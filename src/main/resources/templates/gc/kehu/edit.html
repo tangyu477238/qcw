@@ -141,7 +141,7 @@
 
 								<label class="col-sm-2 control-label">付款方式⑴：</label>
 								<div class="col-sm-3">
-									<!--<input id="payType" name="payType" class="form-control" type="text">-->
+
 
 									<select class="form-control" name="payType" id="payType" onchange="setPayDate(0)">
 										<option th:value = "${kehu.payType}">[[${kehu.payType}]]</option>
@@ -512,15 +512,18 @@
 			$("#pay1").show();
 			$("#pay3").show();
 			if (flag==0 && ($("#receiptdate").val()==getNowFormatDate()||$("#receiptdate").val()=='')) {
-				$("#payType").attr("readonly",false);
-				$("#forwunit").attr("readonly",false);
+				$("#payType").attr("readonly",false); //付款方式1
+				$("#forwunit").attr("readonly",false); //付款方式2
 				$("#receiptdate").val(getNowFormatDate());
+			} else if (flag==1 && ($("#receiptdate").val()==getNowFormatDate()||$("#receiptdate").val()=='')) {
+                $("#adjusttonnage").attr("readonly",false);
+                $("#transcost").attr("readonly",false);
+                $("#inforfee").attr("readonly",false);
 			} else {
-			    //alert(11)
-				$("#receipt").attr("readonly",true);
-				$("#adjusttonnage").attr("readonly",true);
-				$("#transcost").attr("readonly",true);
-				$("#inforfee").attr("readonly",true);
+                $("#receipt").attr("readonly",true);
+                $("#adjusttonnage").attr("readonly",true);
+                $("#transcost").attr("readonly",true);
+                $("#inforfee").attr("readonly",true);
 			}
 
 		}
