@@ -177,17 +177,25 @@
                 for(var i = 0;i < list.length;i++){
                     var siItem = list[i];
                     var td = tdtemplate.replace('[tNum]',i+1);
-                    td = td.replace('[coefficient]',siItem.qichu.toFixed(2));
-                    td = td.replace('[steelnum]',siItem.acbalance.toFixed(2));
-                    td = td.replace('[specs]',siItem.fulltrans.toFixed(2));
-                    td = td.replace('[packnum]',siItem.bankcard.toFixed(2));
-                    td = td.replace('[xianjin]',siItem.xianjin.toFixed(2));
-                    td = td.replace('[shiyou]',siItem.shiyou.toFixed(2));
-                    td = td.replace('[shihua]',siItem.shihua.toFixed(2));
-                    td = td.replace('[jingbo]',siItem.jingbo.toFixed(2));
-                    var total = siItem.qichu + siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo;
-                    td = td.replace('[total]',total.toFixed(2));
 
+                    td = td.replace('[coefficient]',siItem.qichu.toFixed(3));
+                    td = td.replace('[steelnum]',siItem.acbalance.toFixed(3));
+                    td = td.replace('[specs]',siItem.fulltrans.toFixed(3));
+                    td = td.replace('[packnum]',siItem.bankcard.toFixed(3));
+                    td = td.replace('[xianjin]',siItem.xianjin.toFixed(3));
+                    td = td.replace('[shiyou]',siItem.shiyou.toFixed(3));
+                    td = td.replace('[shihua]',siItem.shihua.toFixed(3));
+                    td = td.replace('[jingbo]',siItem.jingbo.toFixed(3));
+                    var total = siItem.qichu + siItem.acbalance ;
+                    total = total.toFixed(3)-siItem.fulltrans;
+                    total = total.toFixed(3)-siItem.bankcard;
+                    total = total.toFixed(3)-siItem.shiyou;
+                    total = total.toFixed(3)-siItem.shihua;
+                    total = total.toFixed(3)-siItem.jingbo;
+                    //total = total.toFixed(3);
+                    td = td.replace('[total]',total.toFixed(3));
+                    //alert(siItem.qichu)
+					//alert(total)
                     $("#tdata").append(td);
                 }
             }
