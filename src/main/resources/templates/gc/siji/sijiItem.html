@@ -124,9 +124,9 @@
 
 					<div class="col-md-6">
 						<div class="form-group">
-							<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>
-							<button  type="button" class="btn  btn-success" onclick="excel()">导出</button>
-
+							<button type="button" onclick="reLoad()" class="btn btn-primary">查询</button>
+							<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>
+							<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>
 
 
 							<button id="import1" type="button" class="btn btn-primary">
@@ -339,7 +339,7 @@
                         pageSize : 25, // 如果设置了分页，每页数据条数
                         pageNumber : 1, // 如果设置了分布，首页页码
 
-                        showColumns : true, // 是否显示内容下拉框（选择显示的列）
+                        showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						showFooter : true,
 
                         sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
@@ -583,6 +583,26 @@
         function reLoad() {
             $('#exampleTable').bootstrapTable('refresh');
         }
+
+		var showflag = 'showColumn';
+        function showCol() {
+            if (showflag=='showColumn'){
+                showflag = 'hideColumn';
+                $("#showBt").attr('class', "btn btn-success");
+                $("#showBt").html("展示");
+			} else {
+                showflag = 'showColumn';
+                $("#showBt").attr('class', "btn btn-warning");
+                $("#showBt").html("隐藏");
+			}
+            $('#exampleTable').bootstrapTable(showflag, 'orderNo');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'steelnum');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'specs');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'packnum');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'zhinum');//隐藏/展示
+        }
+
+
         function add() {
             layer.open({
                 type : 2,

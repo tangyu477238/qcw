@@ -226,7 +226,8 @@
 
 
 		i.billdate,i.`aminvoice`,i.`issueoffice`,i.`issueofficedate`,
-		i.`custompay`,i.`taxdatepay`,i.`paydate`,f.invoice,i.kouling,i.takeamount,i.aminvoicedate
+		i.`custompay`,i.`taxdatepay`,i.`paydate`,f.invoice,i.kouling,i.takeamount,
+		       i.aminvoicedate,i.inputdate,i.yue
 		from gc_siji f
 		inner join gc_siji_item i on f.pid = i.pid
 
@@ -277,33 +278,92 @@
 			s.inforfee ,
 
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0) -(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0) as 'bizMonth11',
+			then (IFNULL(si.aminvoice,0) ) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth11',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth10',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth10',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth9',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth9',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth8',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth8',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth7',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			 -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth7',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth6',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			 -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth6',
 
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth5',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			 -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth5',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth4',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth4',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth3',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth3',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth2',
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth2',
+
 			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth1',
-			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m')
-			then (IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)  as 'bizMonth0'
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m')
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth1',
+
+			IFNULL(sum(case when (LEFT(aminvoicedate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and aminvoicedate<#{inputdate})
+			then (IFNULL(si.aminvoice,0)) end),0)
+			  -
+			IFNULL(sum(case when (LEFT(aminvoicedate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and aminvoicedate<#{inputdate})
+			then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)
+			       as 'bizMonth0'
+
 			,IFNULL(sum(case when inputdate =#{inputdate} then takeamount else 0 end),0)  as takeamount
 			,IFNULL(sum(case when aminvoicedate =#{inputdate} then si.aminvoice else 0 end),0)  as aminvoice
-			,IFNULL(sum(IFNULL(si.aminvoice,0)-(case when si.inputdate<#{inputdate} then si.takeamount else 0 end)),0)  as totalAmount
+			,IFNULL(sum(IFNULL(si.aminvoice,0)-IFNULL(si.takeamount,0)),0)  as totalAmount
 			from gc_siji s
 			inner join gc_siji_item si  on s.pid = si.pid
 			where 1=1  and LEFT(aminvoicedate,7) >= date_format(date_add(now(), interval -11 month), '%Y-%m')
