@@ -136,16 +136,6 @@ function load() {
 									align : 'center'
 								},
 								{
-									field : 'invoice',
-									title : '发票号' ,
-									align : 'center'
-								},
-								{
-									field : 'kouling',
-									title : '扣零' ,
-									align : 'center'
-								},
-								{
 									field : 'remark', 
 									title : '备注' ,
                                     align : 'center'
