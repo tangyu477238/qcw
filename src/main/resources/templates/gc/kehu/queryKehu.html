@@ -186,9 +186,11 @@
                     td = td.replace('[shiyou]',siItem.shiyou.toFixed(3));
                     td = td.replace('[shihua]',siItem.shihua.toFixed(3));
                     td = td.replace('[jingbo]',siItem.jingbo.toFixed(3));
+
                     var total = siItem.qichu + siItem.acbalance ;
                     total = total.toFixed(3)-siItem.fulltrans;
                     total = total.toFixed(3)-siItem.bankcard;
+                    total = total.toFixed(3)-siItem.xianjin;
                     total = total.toFixed(3)-siItem.shiyou;
                     total = total.toFixed(3)-siItem.shihua;
                     total = total.toFixed(3)-siItem.jingbo;
