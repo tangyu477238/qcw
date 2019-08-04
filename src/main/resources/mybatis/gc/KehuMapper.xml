@@ -8,7 +8,7 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-		       ,`remark` ,order_no,pay_type,kpid,dept_id,updated_name
+		       ,`remark` ,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate
 
 		from gc_kehu where id = #{value}
 	</select>
@@ -18,7 +18,7 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`,`remark`
-		,order_no,pay_type,kpid,dept_id,updated_name
+		,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate
 		from gc_kehu
         <where>  
 
@@ -133,7 +133,8 @@
 			`carrier`, 
 			`remark`,
 		 	 order_no,pay_type,kpid,
-		 	 dept_id,updated_name
+		 	 dept_id,updated_name,
+		 	 shoushufei,shoushufeidate
 		)
 		values
 		(
@@ -166,14 +167,15 @@
 			#{payType},
 		 	#{kpid},
 			#{deptId},
-			#{updatedName}
+			#{updatedName},
+		 	#{shoushufei},#{shoushufeidate}
 		)
 	</insert>
 	 
 	<update id="update" parameterType="com.bootdo.gc.domain.KehuDO">
 		update gc_kehu 
 		<set>
-			<if test="bizdate != null">`bizdate` = #{bizdate}, </if>
+
 
 			<if test="forwunit != null">`forwunit` = #{forwunit}, </if>
 			<if test="carnum != null">`carnum` = #{carnum}, </if>
@@ -204,8 +206,11 @@
 
 			<if test="deptId != null">`dept_id` = #{deptId}, </if>
 			<if test="updatedName != null">`updated_name` = #{updatedName}, </if>
+			<if test="shoushufei != null">`shoushufei` = #{shoushufei}, </if>
+			<if test="shoushufeidate != null">`shoushufeidate` = #{shoushufeidate}, </if>
 
-			<if test="remark != null">`remark` = #{remark}</if>
+			<if test="remark != null">`remark` = #{remark},</if>
+			<if test="bizdate != null">`bizdate` = #{bizdate} </if>
 		</set>
 		where id = #{id}
 	</update>
@@ -229,7 +234,7 @@
 			   `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 			   `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 			   `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-				,`remark` ,order_no,pay_type,kpid,dept_id,updated_name
+				,`remark` ,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate
 
 		from gc_kehu
 		where order_no = #{orderNo}
@@ -244,25 +249,34 @@
 		select
 			sum(acbalance) as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
 			sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
-			sum(qichu) as qichu
+			sum(qichu) as qichu,sum(shoushufei) as shoushufei
 		from (
 
 				 -- 当天回款金额(transfee)
 				 select
-					 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu
+					 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,0 as shoushufei
 				 from gc_kehu
 				 where receipt in ('预有','有')
 
 				   and receiptdate >= #{startDate}
 				   and receiptdate <= #{endDate}  and dept_id = #{deptId}
 
+				 union all
+
+				   -- 当天手续费金额(shoushufei)
+					 select
+					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,sum(shoushufei) as shoushufei
+				 from gc_kehu
+				 where 1=1
+				 and shoushufeidate >= #{startDate}
+				 and shoushufeidate <= #{endDate}  and dept_id = #{deptId}
 
 				 union all
 
 				 select
 					 0 as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
 					 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
-					 0 as qichu
+					 0 as qichu,0 as shoushufei
 				 from (
 						  -- 第一次付款金额
 						  select
@@ -308,7 +322,7 @@
 					 -- 期初余额（等于当月的所有余额累计）
 				 select
 					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,
-					 (transfee - fulltrans - bankcard) as qichu
+					 (transfee - fulltrans - bankcard) as qichu,0 as shoushufei
 				 from (
 						  select
 							  sum(transfee) as transfee,
@@ -343,26 +357,33 @@
 
 
 			select
-				sum(acbalance) as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
+				sum(acbalance) as acbalance,sum(shoushufei) as shoushufei,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
 				sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
 				sum(qichu) as qichu
 			from (
 
 					 -- 当天回款金额(transfee)
 					 select
-						 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu
+						 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,0 as shoushufei
 					 from gc_kehu
 					 where receipt in ('预有','有')
-					   and receiptdate = #{endDate} and dept_id = #{deptId}
+					  and receiptdate = #{endDate} and dept_id = #{deptId}
 
+					union all
 
+					  -- 当天手续费金额(shoushufei)
+					 select
+						 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,sum(shoushufei) as shoushufei
+					 from gc_kehu
+					 where receipt in ('预有','有')
+					   and shoushufeidate = #{endDate} and dept_id = #{deptId}
 
 					 union all
 
 					 select
 						 0 as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
 						 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
-						 0 as qichu
+						 0 as qichu,0 as shoushufei
 					 from (
 							  -- 第一次付款金额
 							  select
@@ -405,10 +426,11 @@
 
 					 select
 					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,
-					 (transfee - fulltrans - bankcard) as qichu
+					 (transfee - fulltrans - bankcard-shoushufei) as qichu,0 as shoushufei
 					 from (
 						 select
 						 sum(transfee) as transfee,
+						 sum(case when shoushufeidate>= #{startDate} and shoushufeidate< #{endDate} then shoushufei else 0 end) as shoushufei,
 						 sum(case when fulpaydate>= #{startDate} and fulpaydate< #{endDate} then fulltrans else 0 end) as fulltrans,
 						 sum(case when bankpaydate>= #{startDate} and bankpaydate< #{endDate} then bankcard else 0 end) as bankcard
 						 from gc_kehu
