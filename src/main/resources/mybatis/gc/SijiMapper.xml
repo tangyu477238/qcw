@@ -267,21 +267,32 @@
 
 		select
 			t.order_no as orderNo,t.bizdate,t.carnum,t.forwunit,IFNULL(t.issueoffice,'') as issueoffice,t.js,
-		       IFNULL(k.transfee-k.shoushufei,0) as transfee,0 as ks
-				,t.js-IFNULL(k.transfee-k.shoushufei,0)- 0 as yue
+		       IFNULL(k.transfee-k.shoushufei,0) as transfee,shuie as ks
+				,t.js-IFNULL(k.transfee-k.shoushufei,0)- shuie as yue
 		from (
-				 select
+				  select
 					 s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid,
-					 sum(IFNULL(i.aminvoice,i.trancost)) as js
-				 from gc_siji s
-						  inner join gc_siji_item i on s.pid = i.pid
-				 group by s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid
-			 ) t
-				 left join gc_kehu k on t.pid = k.kpid
-		where 1=1
+					 sum(IFNULL(i.aminvoice,i.trancost)) as js,sum(IFNULL(i.shuie,0)) as shuie
+				  from gc_siji s
+				  inner join gc_siji_item i on s.pid = i.pid
+				  where  s.dept_id = #{deptId}
+				  ]]>
+
+					<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+					<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+					<if test="inforfee != null and inforfee != ''">
+						<![CDATA[ and s.forwunit like CONCAT('%',#{inforfee},'%') ]]>
+					</if>
+				  <![CDATA[
+				  group by s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid
+		) t
+		left join gc_kehu k on t.pid = k.kpid
+		order by bizdate
 
 		]]>
 	</select>
+
+
 
 
 

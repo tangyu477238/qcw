@@ -11,7 +11,8 @@
 			i.`zhinum`,i.`tonnage`,i.`baseprice`,i.`coefficient`,
 			i.`tranrate`,i.`trancost`,i.`arrivstation`,i.`payer` ,
 			i.remark,i.billdate,i.aminvoice,i.aminvoicedate,i.issueoffice,i.issueofficedate,
-			i.inforfee,i.custompay,i.taxdatepay,i.paydate,i.kouling,i.takeamount,i.inputdate,i.yue
+			i.inforfee,i.custompay,i.taxdatepay,i.paydate,i.kouling,i.takeamount,i.inputdate,
+		    i.yue,i.shuilv,i.shuie
 
 		from gc_siji_item i
 				 left join gc_kehu k on i.pid = k.kpid
@@ -54,7 +55,7 @@
 			si.`taxdatepay`,
 			si.`paydate`,
 			si.`payer`,
-			si.kouling,si.takeamount,si.inputdate,si.yue,
+			si.kouling,si.takeamount,si.inputdate,si.yue,si.shuilv,si.shuie,
 			s.order_no as orderNo
 
 		FROM
@@ -68,7 +69,7 @@
 		       `id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
 		       `tranrate`,`trancost`,`arrivstation`,`payer` ,
 				remark,billdate,aminvoice,aminvoicedate,issueoffice,issueofficedate,
-				inforfee,custompay,taxdatepay,paydate,kouling,takeamount,inputdate,yue
+				inforfee,custompay,taxdatepay,paydate,kouling,takeamount,inputdate,yue,shuilv,shuie
 		from gc_siji_item
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -131,7 +132,7 @@
 			`arrivstation`, 
 			`payer`,
 		 	kouling,
-		 	takeamount,inputdate,yue,aminvoicedate
+		 	takeamount,inputdate,yue,aminvoicedate,shuilv,shuie
 		)
 		values
 		(
@@ -151,7 +152,9 @@
 		 	#{takeamount},
 		 	#{inputdate},
 		 	#{yue},
-		 	#{aminvoicedate}
+		 	#{aminvoicedate},
+			#{shuilv},
+			#{shuie}
 		)
 	</insert>
 	 
@@ -189,6 +192,9 @@
 			<if test="payer != null">`payer` = #{payer},</if>
 			<if test="inputdate != null">`inputdate` = #{inputdate},</if>
 			<if test="yue != null">`yue` = #{yue},</if>
+
+			<if test="shuilv != null">`shuilv` = #{shuilv},</if>
+			<if test="shuie != null">`shuie` = #{shuie},</if>
 
 			<if test="pid != null">`pid` = #{pid}</if>
 		</set>
@@ -256,6 +262,9 @@
 		 	si.takeamount,
 		    si.inputdate,
 		    si.yue,
+
+		    si.shuilv,
+		    si.shuie,
 			s.order_no as orderNo
 
 		FROM
