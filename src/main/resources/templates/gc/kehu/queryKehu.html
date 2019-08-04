@@ -28,7 +28,7 @@
 							<div class="col-md-5 ">
 								<input type="hidden" id = "startDate" name="startDate" >
 								<input type="text" class="laydate-icon layer-date form-control"
-									   id="endDate" name="endDate" placeholder="开始日期"
+									   id="endDate" name="endDate" placeholder="日期"
 									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
 									   size="13"
 									   style="background-color: #fff;" readonly="readonly" required/>
@@ -129,7 +129,7 @@
     function getNowFirstDate() {
         var date = new Date();
         var seperator1 = "-";
-        var year = date.getFullYear();
+        var year = date.getFullYear()-1;
         var month = date.getMonth() + 1;
         var strDate = date.getDate();
         if (month >= 1 && month <= 9) {
