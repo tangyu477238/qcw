@@ -172,4 +172,11 @@ public class SijiServiceImpl  implements SijiService {
 
 		return sijiDao.queryTotal(map);
 	}
+
+	@Override
+	public List<Map> queryLirun(Map map) {
+
+
+		return sijiDao.queryLirun(map);
+	}
 }

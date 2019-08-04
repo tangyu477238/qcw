@@ -189,4 +189,24 @@ public class SijiController extends BaseController {
 	}
 
 
+	@GetMapping("/queryLirunPage")
+	String queryLirunPage(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+
+		return "gc/siji/queryLirun";
+	}
+
+	@ResponseBody
+	@GetMapping("/queryLirun")
+	List<Map> queryLirun(Long deptId,String inforfee,String inputdate){
+		Map map = new HashMap();
+		map.put("deptId",deptId);
+		map.put("inforfee",inforfee);
+		map.put("inputdate",inputdate);
+		return sijiService.queryLirun(map);
+	}
+
+
+
+
 }

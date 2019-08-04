@@ -36,4 +36,6 @@ public interface SijiService  {
 
 	List<Map> queryTotal(Map map);
 
+	List<Map> queryLirun(Map map);
+
 }

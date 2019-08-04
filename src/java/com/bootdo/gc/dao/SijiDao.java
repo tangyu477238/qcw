@@ -40,4 +40,6 @@ public interface SijiDao {
 
 	List<Map> queryTotal(Map map);
 
+	List<Map> queryLirun(Map map);
+
 }
