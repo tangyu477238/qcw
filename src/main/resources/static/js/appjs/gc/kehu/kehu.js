@@ -237,6 +237,22 @@ function load() {
                         rowspan:1
                     },
                     {
+                        field : 'shoushufei',
+                        title : '&nbsp;&nbsp;手续费&nbsp;&nbsp;',
+                        align: 'center',
+                        colspan:1,
+                        rowspan:2,
+                        footerFormatter: function (value) {
+                            var amount = 0;
+                            for (var i in value) {
+                                if (value[i].shoushufei!='' && value[i].shoushufei!=null){
+                                    amount += parseFloat(value[i].shoushufei);
+                                }
+                            }
+                            return amount.toFixed(3);
+                        }
+                    },
+                    {
                         field : 'acbalance',
                         title : '&nbsp;&nbsp;余&nbsp;&nbsp;额&nbsp;&nbsp;',
                         align: 'center',
