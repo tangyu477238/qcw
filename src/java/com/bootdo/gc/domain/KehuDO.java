@@ -118,6 +118,11 @@ public class KehuDO implements Serializable {
 	private String remark;
 
 
+	//手续费
+	@Excel(name = "手续费", orderNum = "24", type=10 )
+	private BigDecimal shoushufei;
+
+	private String shoushufeidate;
 
 	private Long deptId;
 
