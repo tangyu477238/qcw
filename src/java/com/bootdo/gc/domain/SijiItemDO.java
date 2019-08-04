@@ -125,6 +125,9 @@ public class SijiItemDO implements Serializable {
 
 	private String updatedName;
 
+	//税率/税额
+	private BigDecimal shuilv;
+	private BigDecimal shuie;
 
 
 

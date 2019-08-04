@@ -198,11 +198,12 @@ public class SijiController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/queryLirun")
-	List<Map> queryLirun(Long deptId,String inforfee,String inputdate){
+	List<Map> queryLirun(Long deptId,String inforfee,String startDate,String endDate){
 		Map map = new HashMap();
 		map.put("deptId",deptId);
 		map.put("inforfee",inforfee);
-		map.put("inputdate",inputdate);
+		map.put("startDate",startDate);
+		map.put("endDate",endDate);
 		return sijiService.queryLirun(map);
 	}
 
