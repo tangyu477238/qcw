@@ -261,6 +261,29 @@
 
 
 
+	<!-- 利润统计 -->
+	<select  id="queryLirun" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		select
+			t.order_no as orderNo,t.bizdate,t.carnum,t.forwunit,IFNULL(t.issueoffice,'') as issueoffice,t.js,
+		       IFNULL(k.transfee-k.shoushufei,0) as transfee,0 as ks
+				,t.js-IFNULL(k.transfee-k.shoushufei,0)- 0 as yue
+		from (
+				 select
+					 s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid,
+					 sum(IFNULL(i.aminvoice,i.trancost)) as js
+				 from gc_siji s
+						  inner join gc_siji_item i on s.pid = i.pid
+				 group by s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid
+			 ) t
+				 left join gc_kehu k on t.pid = k.kpid
+		where 1=1
+
+		]]>
+	</select>
+
+
 
 
 	<!-- 应收款统计 -->
