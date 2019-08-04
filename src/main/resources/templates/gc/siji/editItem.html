@@ -145,6 +145,22 @@
 
 							</div>
 
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">税率：</label>
+								<div class="col-sm-3">
+									<input id="shuilv"  th:value="${siji.shuilv}" name="shuilv"
+										   class="form-control" type="text" onkeyup="setShuie()">
+								</div>
+
+								<label class="col-sm-2 control-label">税额：</label>
+								<div class="col-sm-3">
+									<input id="shuie"  th:value="${siji.shuie}" name="shuie"
+										   class="form-control" type="text" readonly="readonly">
+								</div>
+
+
+							</div>
 
 
 
@@ -237,6 +253,12 @@
         setInputdateRead();
     });
 
+    
+    function setShuie() {
+        var shuilv = $("#shuilv").val();
+        var aminvoice = $("#aminvoice").val();
+        $("#shuie").val((shuilv*aminvoice).toFixed(2));
+    }
 
     function update() {
         $.ajax({
