@@ -231,15 +231,20 @@
 
 
 							<div class="form-group">
+
+								<label class="col-sm-2 control-label">手续费：</label>
+								<div class="col-sm-3">
+									<input id="shoushufei" onkeyup="showShoushufei()" th:value = "${kehu.shoushufei}" name="shoushufei" class="form-control" type="text" >
+									<input id="shoushufeidate" th:value = "${kehu.shoushufeidate}" name="shoushufeidate" type="hidden" >
+								</div>
+
+
 								<label class="col-sm-2 control-label">余额：</label>
 								<div class="col-sm-3">
 									<input id="acbalance" th:value = "${kehu.acbalance}" name="acbalance" class="form-control" type="text" readonly>
 								</div>
 
-								<label class="col-sm-2 control-label">风险提示：</label>
-								<div class="col-sm-3">
-									<input id="riskcues" th:value = "${kehu.riskcues}" name="riskcues" class="form-control" type="text">
-								</div>
+
 
 							</div>
 
@@ -247,10 +252,22 @@
 
 
 							<div class="form-group">
+								<label class="col-sm-2 control-label">风险提示：</label>
+								<div class="col-sm-3">
+									<input id="riskcues" th:value = "${kehu.riskcues}" name="riskcues" class="form-control" type="text">
+								</div>
+
 								<label class="col-sm-2 control-label">承运人：</label>
 								<div class="col-sm-3">
 									<input id="carrier" th:value = "${kehu.carrier}" name="carrier" class="form-control" type="text">
 								</div>
+
+
+							</div>
+
+
+
+							<div class="form-group">
 
 								<label class="col-sm-2 control-label">备注：</label>
 								<div class="col-sm-3">
@@ -258,10 +275,6 @@
 								</div>
 
 							</div>
-
-
-
-
 
 
 
@@ -354,12 +367,25 @@
 	$().ready(function() {
 		setPayDateRead(1);
 		showTable();
+        initShoushufei();
 	});
 
+	function initShoushufei() {
+        var shoushufei = $("#shoushufei").val();
+        var shoushufeidate = $("#shoushufeidate").val();
+        if (shoushufei!=null&&shoushufei!=''){
+            if (shoushufeidate==null||shoushufeidate==''){
+                $("#shoushufeidate").val(getNowFormatDate());
+            } else if (shoushufeidate!=getNowFormatDate()) {
+                $("#shoushufei").attr("readonly",true);
+            }
+        }
+    }
 
 
-
-	function queryMx() {
+	function showShoushufei() {
+        initShoushufei();
+        getYunjia();
 
 
 	}
@@ -418,11 +444,13 @@
 
 		var fulltrans = $("#fulltrans").val();//运满满
 		var bankcard = $("#bankcard").val();//银行卡
-		//var bankcardtwo = $("#bankcardtwo").val();//银行卡2
+
+		var shoushufei = $("#shoushufei").val();//手术费
+
 		//var fultranstwo = $("#fultranstwo").val();//运满满2
 
 
-		var acbalance = transfee - fulltrans - bankcard ;
+		var acbalance = transfee - fulltrans - bankcard - shoushufei ;
 		$("#acbalance").val(acbalance.toFixed(2));
 
 

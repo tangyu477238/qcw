@@ -71,6 +71,7 @@
 						<th> 百通石油</th>
 						<th> 百通石化</th>
 						<th> 百通京博</th>
+						<th> 手续费</th>
 						<th> 差额 </th>
 					</tr>
 					</thead>
@@ -193,7 +194,8 @@
                     td = td.replace('[shiyou]',siItem.shiyou.toFixed(2));
                     td = td.replace('[shihua]',siItem.shihua.toFixed(2));
                     td = td.replace('[jingbo]',siItem.jingbo.toFixed(2));
-                    var total =  siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo;
+                    td = td.replace('[shoushufei]',siItem.shoushufei.toFixed(2));
+                    var total =  siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo - siItem.shoushufei;
                     td = td.replace('[total]',total.toFixed(2));
 
                     $("#tdata").append(td);
@@ -222,6 +224,7 @@
         '<td>' + '[shiyou]' + '</td>' +
         '<td>' + '[shihua]' + '</td>' +
         '<td>' + '[jingbo]' + '</td>' +
+        '<td>' + '[shoushufei]' + '</td>' +
         '<td>' + '[total]' + '</td>' +
         '</tr>';
 
