@@ -491,7 +491,16 @@
                             {
                                 field : 'kouling',
                                 title : '扣零' ,
-                                align : 'center'
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].kouling!='' && value[i].kouling!=null){
+                                            amount += parseFloat(value[i].kouling);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
                             },
                             {
                                 field : 'aminvoice',
@@ -545,7 +554,16 @@
                             {
                                 field : 'takeamount',
                                 title : '收款金额' ,
-                                align : 'center'
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].takeamount!='' && value[i].takeamount!=null){
+                                            amount += parseFloat(value[i].takeamount);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
                             },
                             {
 
