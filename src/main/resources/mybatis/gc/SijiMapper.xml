@@ -262,17 +262,18 @@
 
 
 	<!-- 利润统计 -->
-	<select  id="queryLirun" resultType="java.util.HashMap" >
+	<select  id="queryLirun"  resultType="com.bootdo.gc.domain.LirunDO">
 		<![CDATA[
 
 		select
-			t.order_no as orderNo,t.bizdate,t.carnum,t.forwunit,IFNULL(t.issueoffice,'') as issueoffice,t.js,
-		       IFNULL(k.transfee-k.shoushufei,0) as transfee,shuie as ks
-				,t.js-IFNULL(k.transfee-k.shoushufei,0)- shuie as yue
+		       t.order_no as orderNo,t.bizdate,t.carnum,t.forwunit,
+		       IFNULL(t.issueoffice,'') as issueoffice,t.js,
+		       IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0) as transfee,shuie as ks
+				,t.js-IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0)- shuie as yue
 		from (
 				  select
 					 s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid,
-					 sum(IFNULL(i.aminvoice,i.trancost)) as js,sum(IFNULL(i.shuie,0)) as shuie
+					 sum(IFNULL(i.aminvoice,IFNULL(i.trancost,0))) as js,sum(IFNULL(i.shuie,0)) as shuie
 				  from gc_siji s
 				  inner join gc_siji_item i on s.pid = i.pid
 				  where  s.dept_id = #{deptId}
