@@ -1,5 +1,6 @@
 package com.bootdo.gc.service;
 
+import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
 
 import java.util.List;
@@ -36,6 +37,6 @@ public interface SijiService  {
 
 	List<Map> queryTotal(Map map);
 
-	List<Map> queryLirun(Map map);
+	List<LirunDO> queryLirun(Map map);
 
 }

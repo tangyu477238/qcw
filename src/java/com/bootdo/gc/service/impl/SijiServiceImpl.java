@@ -4,6 +4,7 @@ import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.KehuDO;
+import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.domain.SijiItemDO;
 import com.bootdo.gc.service.KehuService;
@@ -174,7 +175,7 @@ public class SijiServiceImpl  implements SijiService {
 	}
 
 	@Override
-	public List<Map> queryLirun(Map map) {
+	public List<LirunDO> queryLirun(Map map) {
 
 
 		return sijiDao.queryLirun(map);

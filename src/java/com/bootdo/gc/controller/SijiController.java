@@ -2,6 +2,7 @@ package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
+import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.service.SequenceService;
 import com.bootdo.gc.service.SijiService;
@@ -198,7 +199,7 @@ public class SijiController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/queryLirun")
-	List<Map> queryLirun(Long deptId,String inforfee,String startDate,String endDate){
+	List<LirunDO> queryLirun(Long deptId, String inforfee, String startDate, String endDate){
 		Map map = new HashMap();
 		map.put("deptId",deptId);
 		map.put("inforfee",inforfee);
@@ -209,5 +210,19 @@ public class SijiController extends BaseController {
 
 
 
+
+
+	// 导出全部数据
+	@RequestMapping("/exportLirun")
+	public void exportLirun(HttpServletResponse res,
+							  @RequestParam Map<String, Object> params) throws IOException {
+
+		List<LirunDO> kehuList = sijiService.queryLirun(params);
+
+		ExcelUtil.exportExcel(kehuList,null,
+				"利润表",LirunDO.class,"利润表.xls",res);
+
+
+	}
 
 }

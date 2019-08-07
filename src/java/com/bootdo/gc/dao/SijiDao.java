@@ -1,6 +1,7 @@
 package com.bootdo.gc.dao;
 
 import com.bootdo.gc.domain.KehuDO;
+import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
 
 import java.util.List;
@@ -40,6 +41,6 @@ public interface SijiDao {
 
 	List<Map> queryTotal(Map map);
 
-	List<Map> queryLirun(Map map);
+	List<LirunDO> queryLirun(Map map);
 
 }
