@@ -199,13 +199,9 @@ public class SijiController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/queryLirun")
-	List<LirunDO> queryLirun(Long deptId, String inforfee, String startDate, String endDate){
-		Map map = new HashMap();
-		map.put("deptId",deptId);
-		map.put("inforfee",inforfee);
-		map.put("startDate",startDate);
-		map.put("endDate",endDate);
-		return sijiService.queryLirun(map);
+	List<LirunDO> queryLirun(@RequestParam Map<String, Object> params){
+
+		return sijiService.queryLirun(params);
 	}
 
 

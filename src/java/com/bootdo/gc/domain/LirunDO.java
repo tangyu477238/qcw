@@ -32,9 +32,13 @@ public class LirunDO implements Serializable {
 	@Excel(name = "车号", orderNum = "3")
 	private String carnum;
 
+	//到站
+	@Excel(name = "到站", orderNum = "4")
+	private String arrivstation;
+
 	//付款单位
 	@Excel(name = "付款单位", orderNum = "4")
-	private String forwunit;
+	private String inforfee;
 
 
 
