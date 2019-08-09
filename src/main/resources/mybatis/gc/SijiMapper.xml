@@ -266,14 +266,14 @@
 		<![CDATA[
 
 		select
-		       t.order_no as orderNo,t.bizdate,t.carnum,t.forwunit,
-		       IFNULL(t.issueoffice,'') as issueoffice,t.js,
+		       t.order_no as orderNo,t.bizdate,t.carnum,t.inforfee,t.arrivstation,t.issueoffice ,t.js,
 		       IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0) as transfee,shuie as ks
 				,t.js-IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0)- shuie as yue
 		from (
 				  select
-					 s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid,
-					 sum(IFNULL(i.aminvoice,IFNULL(i.trancost,0))) as js,sum(IFNULL(i.shuie,0)) as shuie
+					s.order_no,s.bizdate,s.carnum,s.arrivstation,
+					IFNULL(s.inforfee,'') as  inforfee,IFNULL(i.issueoffice,'') as issueoffice, s.pid,
+					sum(IFNULL(i.aminvoice,IFNULL(i.trancost,0))) as js,sum(IFNULL(i.shuie,0)) as shuie
 				  from gc_siji s
 				  inner join gc_siji_item i on s.pid = i.pid
 				  where  s.dept_id = #{deptId}
@@ -282,10 +282,16 @@
 					<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
 					<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
 					<if test="inforfee != null and inforfee != ''">
-						<![CDATA[ and s.forwunit like CONCAT('%',#{inforfee},'%') ]]>
+						<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+					</if>
+					<if test="carnum != null and carnum != ''">
+						<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+					</if>
+					<if test="arrivstation != null and arrivstation != ''">
+						<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 					</if>
 				  <![CDATA[
-				  group by s.order_no,s.bizdate,s.carnum,s.forwunit,i.issueoffice,s.pid
+				  group by s.order_no,s.bizdate,s.carnum,IFNULL(s.inforfee,''),IFNULL(i.issueoffice,''),s.pid,s.arrivstation
 		) t
 		left join gc_kehu k on t.pid = k.kpid
 		order by bizdate

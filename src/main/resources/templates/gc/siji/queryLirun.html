@@ -50,13 +50,22 @@
 								</div>
 							</div>
 
-							<label class="control-label col-md-2">付款单位</label>
-							<div class="col-md-3">
+
+							<div class="col-md-2">
 								<input type="text" class="form-control" name="inforfee" size="15"
-									   id="inforfee" >
+									   id="inforfee" placeholder="付款单位">
 							</div>
-							<div class="col-md-1 ">
+							<div class="col-md-2">
+								<input type="text" class="form-control" name="carnum" size="15"
+									   id="carnum" placeholder="车号">
+							</div>
+							<div class="col-md-2">
+								<input type="text" class="form-control" name="arrivstation" size="15"
+									   id="arrivstation" placeholder="到站">
+							</div>
+							<div class="col-md-2 ">
 								<button type="button" onclick="showTable()" class="btn btn-primary queryButton">查询</button>
+								<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>
 							</div>
 						</div>
 					</div>
@@ -73,6 +82,7 @@
 						<th>订单号</th>
 						<th >日期</th>
 						<th >车号</th>
+						<th >到站</th>
 						<th >付款单位</th>
 						<th >开票单位</th>
 						<th >结算金额</th>
@@ -90,6 +100,7 @@
 						<th></th>
 						<th></th>
 						<th > 合计:</th>
+						<th ></th>
 						<th ></th>
 						<th ></th>
 						<th ></th>
@@ -140,6 +151,26 @@
 
 
 <script type="text/javascript">
+
+
+
+    function excel() {
+
+        var carnum = $("#carnum").val();
+        var arrivstation = $("#arrivstation").val();
+        var inforfee = $("#inforfee").val();
+        var deptId = $("#deptId").val();
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        window.open("/gc/siji/exportLirun?deptId="+deptId+"&inforfee="+inforfee
+			+"&startDate="+startDate+"&endDate="+endDate
+            +"&carnum="+carnum+"&arrivstation="+arrivstation);
+
+    }
+
+
+
+
     $(function() {
         $("#startDate").val(getNowFirstDate());
         $("#endDate").val(getNowFormatDate());
@@ -192,14 +223,17 @@
 
     function showTable() {
 
-
+        var carnum = $("#carnum").val();
+        var arrivstation = $("#arrivstation").val();
         var inforfee = $("#inforfee").val();
         var deptId = $("#deptId").val();
         var startDate = $("#startDate").val();
         var endDate = $("#endDate").val();
 
         $.ajax({
-            url : "/gc/siji/queryLirun?deptId="+deptId+"&inforfee="+inforfee+"&startDate="+startDate+"&endDate="+endDate,
+            url : "/gc/siji/queryLirun?deptId="+deptId+"&inforfee="+inforfee
+				+"&startDate="+startDate+"&endDate="+endDate
+                +"&carnum="+carnum+"&arrivstation="+arrivstation,
             type : "GET",
             data : {
             },
@@ -221,7 +255,8 @@
                     td = td.replace('[orderNo]',siItem.orderNo);
                     td = td.replace('[bizdate]',siItem.bizdate);
                     td = td.replace('[carnum]',siItem.carnum);
-                    td = td.replace('[forwunit]',siItem.forwunit);
+                    td = td.replace('[arrivstation]',siItem.arrivstation);
+                    td = td.replace('[inforfee]',siItem.inforfee);
                     td = td.replace('[issueoffice]',siItem.issueoffice);
 
                     td = td.replace('[js]',siItem.js);
@@ -278,7 +313,9 @@
         '<td>' + '[orderNo]' + '</td>' +
         '<td>' + '[bizdate]' + '</td>' +
         '<td>' + '[carnum]' + '</td>' +
-        '<td>' + '[forwunit]' + '</td>' +
+        '<td>' + '[arrivstation]' + '</td>' +
+        '<td>' + '[inforfee]' + '</td>' +
+
         '<td>' + '[issueoffice]' + '</td>' +
         '<td>' + '[js]' + '</td>' +
         '<td>' + '[transfee]' + '</td>' +
