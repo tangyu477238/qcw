@@ -532,6 +532,25 @@
                                 align : 'center'
                             },
                             {
+                                field : 'shuilv',
+                                title : '税率' ,
+                                align : 'center'
+                            },
+                            {
+                                field : 'shuie',
+                                title : '税额' ,
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].shuie!='' && value[i].shuie!=null){
+                                            amount += parseFloat(value[i].shuie);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
+                            },
+                            {
                                 field : 'paydate',
                                 title : '付税款日期' ,
                                 align : 'center'
