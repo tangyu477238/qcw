@@ -83,6 +83,8 @@
 						<th >日期</th>
 						<th >车号</th>
 						<th >到站</th>
+						<th >吨位</th>
+						<th >运价</th>
 						<th >付款单位</th>
 						<th >开票单位</th>
 						<th >结算金额</th>
@@ -100,6 +102,8 @@
 						<th></th>
 						<th></th>
 						<th > 合计:</th>
+						<th ></th>
+						<th ></th>
 						<th ></th>
 						<th ></th>
 						<th ></th>
@@ -256,6 +260,11 @@
                     td = td.replace('[bizdate]',siItem.bizdate);
                     td = td.replace('[carnum]',siItem.carnum);
                     td = td.replace('[arrivstation]',siItem.arrivstation);
+
+                    td = td.replace('[tonnage]',siItem.tonnage);
+                    td = td.replace('[transcost]',siItem.transcost);
+
+
                     td = td.replace('[inforfee]',siItem.inforfee);
                     td = td.replace('[issueoffice]',siItem.issueoffice);
 
@@ -314,6 +323,12 @@
         '<td>' + '[bizdate]' + '</td>' +
         '<td>' + '[carnum]' + '</td>' +
         '<td>' + '[arrivstation]' + '</td>' +
+
+        '<td>' + '[tonnage]' + '</td>' +
+        '<td>' + '[transcost]' + '</td>' +
+
+
+
         '<td>' + '[inforfee]' + '</td>' +
 
         '<td>' + '[issueoffice]' + '</td>' +
