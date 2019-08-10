@@ -36,33 +36,42 @@ public class LirunDO implements Serializable {
 	@Excel(name = "到站", orderNum = "4")
 	private String arrivstation;
 
+	//吨位
+	@Excel(name = "吨位", orderNum = "5", type=10 )
+	private BigDecimal tonnage;
+
+	//运价
+	@Excel(name = "运价", orderNum = "6", type=10 )
+	private BigDecimal transcost;
+
+
 	//付款单位
-	@Excel(name = "付款单位", orderNum = "4")
+	@Excel(name = "付款单位", orderNum = "7")
 	private String inforfee;
 
 
 
 
 	//开票单位
-	@Excel(name = "开票单位", orderNum = "5")
+	@Excel(name = "开票单位", orderNum = "8")
 	private String issueoffice;
 
 
 	//结算金额
-	@Excel(name = "结算金额", orderNum = "6", type=10 )
+	@Excel(name = "结算金额", orderNum = "9", type=10 )
 	private BigDecimal js;
 
 
 	//司机运费
-	@Excel(name = "司机运费", orderNum = "7", type=10 )
+	@Excel(name = "司机运费", orderNum = "10", type=10 )
 	private BigDecimal transfee;
 
 	//扣税
-	@Excel(name = "扣税", orderNum = "8", type=10 )
+	@Excel(name = "扣税", orderNum = "11", type=10 )
 	private BigDecimal ks;
 
 
-	@Excel(name = "余额", orderNum = "9", type=10)
+	@Excel(name = "余额", orderNum = "12", type=10)
 	private BigDecimal yue;
 
 
