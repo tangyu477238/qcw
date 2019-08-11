@@ -227,7 +227,7 @@
 
 		i.billdate,i.`aminvoice`,i.`issueoffice`,i.`issueofficedate`,
 		i.`custompay`,i.`taxdatepay`,i.`paydate`,f.invoice,i.kouling,i.takeamount,
-		       i.aminvoicedate,i.inputdate,i.yue
+		       i.aminvoicedate,i.inputdate,i.yue,i.shuilv,i.shuie
 		from gc_siji f
 		inner join gc_siji_item i on f.pid = i.pid
 
@@ -288,8 +288,15 @@
 						<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
 					</if>
 					<if test="arrivstation != null and arrivstation != ''">
-						<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+						 and s.arrivstation in
+						<foreach collection="arrivstation" item="arrivstation" index="index" open="(" close=")" separator=",">
+							#{arrivstation}
+						</foreach>
 					</if>
+
+
+
+
 				  <![CDATA[
 				  group by s.order_no,s.bizdate,s.carnum,IFNULL(s.inforfee,''),IFNULL(i.issueoffice,''),s.pid,s.arrivstation
 		) t
