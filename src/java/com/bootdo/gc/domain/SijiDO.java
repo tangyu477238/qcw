@@ -113,26 +113,34 @@ public class SijiDO implements Serializable {
 	@Excel(name = "开票日期", orderNum = "23")
 	private String issueofficedate;
 
-	@Excel(name = "付税款日期", orderNum = "24")
+	@Excel(name = "税率", orderNum = "24", type=10 )
+	private BigDecimal shuilv;
+
+	@Excel(name = "税额", orderNum = "25", type=10 )
+	private BigDecimal shuie;
+
+
+
+	@Excel(name = "付税款日期", orderNum = "26")
 	private String paydate;
 
 
 
-	@Excel(name = "收款方式", orderNum = "25")
+	@Excel(name = "收款方式", orderNum = "27")
 	private String taxdatepay;
 
 	//收款日期
-	@Excel(name = "收款日期", orderNum = "26")
+	@Excel(name = "收款日期", orderNum = "28")
 	private String custompay;
 
 	//收款金额
-	@Excel(name = "收款金额", orderNum = "27", type=10)
+	@Excel(name = "收款金额", orderNum = "29", type=10)
 	private String takeamount;
 
-	@Excel(name = "收款录入日期", orderNum = "28")
+	@Excel(name = "收款录入日期", orderNum = "30")
 	private String inputdate;
 
-	@Excel(name = "余额", orderNum = "28", type=10)
+	@Excel(name = "余额", orderNum = "31", type=10)
 	private String yue;
 
 

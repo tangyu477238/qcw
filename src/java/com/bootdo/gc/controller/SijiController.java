@@ -200,6 +200,16 @@ public class SijiController extends BaseController {
 	@ResponseBody
 	@GetMapping("/queryLirun")
 	List<LirunDO> queryLirun(@RequestParam Map<String, Object> params){
+		if (params.get("arrivstation")!=null){
+			if (!"".equals(params.get("arrivstation").toString())
+					&& !"null".equals(params.get("arrivstation").toString())){
+				String s ="";
+				params.put("arrivstation",params.get("arrivstation").toString().split(","));
+			} else {
+				params.remove("arrivstation");
+			}
+
+		}
 
 		return sijiService.queryLirun(params);
 	}
@@ -210,7 +220,15 @@ public class SijiController extends BaseController {
 	@RequestMapping("/exportLirun")
 	public void exportLirun(HttpServletResponse res,
 							  @RequestParam Map<String, Object> params) throws IOException {
+		if (params.get("arrivstation")!=null){
+			if (!"".equals(params.get("arrivstation").toString())
+					&& !"null".equals(params.get("arrivstation").toString())){
+				params.put("arrivstation",params.get("arrivstation").toString().split(","));
+			} else {
+				params.remove("arrivstation");
+			}
 
+		}
 		List<LirunDO> kehuList = sijiService.queryLirun(params);
 
 		ExcelUtil.exportExcel(kehuList,null,

@@ -44,8 +44,14 @@ public class SijiItemImp1 implements Serializable {
 	@Excel(name = "开票日期", orderNum = "5" )
 	private String issueofficedate;
 
+
+	//结算金额
+	@Excel(name = "税率", orderNum = "6" )
+	private BigDecimal shuilv;
+
+
 	//付税款日期
-	@Excel(name = "付税款日期", orderNum = "6" )
+	@Excel(name = "付税款日期", orderNum = "7" )
 	private String paydate;
 
 

@@ -251,6 +251,8 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 				js.setIssueoffice(imp1.getIssueoffice());
 				js.setIssueofficedate(imp1.getIssueofficedate());
+				js.setShuilv(imp1.getShuilv());
+				js.setShuie(js.getAminvoice().multiply(js.getShuilv()));//税额=结算金额*税率
 				js.setPaydate(imp1.getPaydate());
 				sijiItemDao.update(js);
 
