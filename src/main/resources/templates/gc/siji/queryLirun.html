@@ -62,7 +62,7 @@
 							<div class="col-md-2">
 
 								<div class="col-md-2">
-									<select title="到站" name="arrivstation"  id="arrivstation" class="selectpicker" data-live-search="true" >
+									<select title="到站" name="arrivstation"  id="arrivstation" class="selectpicker" data-live-search="true" multiple>
 
 									</select>
 								</div>
@@ -225,7 +225,7 @@
                     var siItem = list[i];
 
                     html += '<option value="'+siItem.arrivstation+'" data-tokens="'+siItem.arrivstation+'">'
-						+siItem.arrivstation+'</option>';
+						+'['+i+']'+siItem.arrivstation+'</option>';
 
                 }
 
