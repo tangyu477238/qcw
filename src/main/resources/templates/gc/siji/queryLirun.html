@@ -60,8 +60,12 @@
 									   id="carnum" placeholder="车号">
 							</div>
 							<div class="col-md-2">
-								<input type="text" class="form-control" name="arrivstation" size="15"
-									   id="arrivstation" placeholder="到站">
+
+								<div class="col-md-2">
+									<select title="到站" name="arrivstation"  id="arrivstation" class="selectpicker" data-live-search="true" >
+
+									</select>
+								</div>
 							</div>
 							<div class="col-md-2 ">
 								<button type="button" onclick="showTable()" class="btn btn-primary queryButton">查询</button>
@@ -83,14 +87,16 @@
 						<th >日期</th>
 						<th >车号</th>
 						<th >到站</th>
-						<th >吨位</th>
-						<th >运价</th>
+
 						<th >付款单位</th>
 						<th >开票单位</th>
 						<th >结算金额</th>
+						<th >吨位</th>
+						<th >运价</th>
 						<th >付司机运费</th>
 						<th >扣税</th>
 						<th >余额</th>
+						<th >操作</th>
 					</tr>
 					</thead>
 
@@ -106,14 +112,15 @@
 						<th ></th>
 						<th ></th>
 						<th ></th>
-						<th ></th>
-						<th ></th>
+
 
 						<th id="js"></th>
+						<th ></th>
+						<th ></th>
 						<th id="transfee"></th>
 						<th id="ks"></th>
 						<th id="yue"></th>
-
+						<th ></th>
 
 
 					</tr>
@@ -180,7 +187,58 @@
         $("#endDate").val(getNowFormatDate());
 
         showTable();
+
+        //initOrglist();
     });
+
+
+
+
+    $('.selectpicker').on('shown.bs.select',function(e){
+        initOrglist();
+    });
+
+
+    function initOrglist(){
+
+        var carnum = $("#carnum").val();
+        var inforfee = $("#inforfee").val();
+        var deptId = $("#deptId").val();
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+
+
+
+        $.ajax({
+            url : "/gc/siji/arrivstation?deptId="+deptId+"&inforfee="+inforfee
+                +"&startDate="+startDate+"&endDate="+endDate
+                +"&carnum="+carnum,
+            type : "GET",
+            data : {
+            },
+            success : function(list) {
+                var opt = $('.selectpicker');
+                var html = '';
+
+
+                for(var i = 0;i < list.length;i++){
+                    var siItem = list[i];
+
+                    html += '<option value="'+siItem.arrivstation+'" data-tokens="'+siItem.arrivstation+'">'
+						+siItem.arrivstation+'</option>';
+
+                }
+
+                opt.html(html);
+                //必须加，刷新select
+                opt.selectpicker('refresh');
+
+            }
+        });
+
+    }
+
+
 
     function addDetail(inforfee) {
 
@@ -261,18 +319,21 @@
                     td = td.replace('[carnum]',siItem.carnum);
                     td = td.replace('[arrivstation]',siItem.arrivstation);
 
-                    td = td.replace('[tonnage]',siItem.tonnage);
-                    td = td.replace('[transcost]',siItem.transcost);
 
 
                     td = td.replace('[inforfee]',siItem.inforfee);
                     td = td.replace('[issueoffice]',siItem.issueoffice);
 
                     td = td.replace('[js]',siItem.js);
+
+                    td = td.replace('[tonnage]',siItem.tonnage);
+                    td = td.replace('[transcost]',siItem.transcost);
+
                     td = td.replace('[transfee]',siItem.transfee);
                     td = td.replace('[ks]',siItem.ks);
                     td = td.replace('[yue]',siItem.yue);
 
+                    td = td.replace('[id]',siItem.pid);
 
 
                     // bizMonth11 = bizMonth11 + siItem.bizMonth11;
@@ -312,7 +373,21 @@
 
     }
 
+    function queryMx(id) {
 
+        var perContent = layer.open({
+            type : 2,
+            title : '查看明细',
+            maxmin : true,
+            shadeClose : false, // 点击遮罩关闭层
+            area : [ '800px', '520px' ],
+            content : '/gc/siji/sijiMx?pid=' + id // iframe的url
+        });
+
+        //layer.full(perContent);
+
+
+    }
 
 
 
@@ -324,18 +399,18 @@
         '<td>' + '[carnum]' + '</td>' +
         '<td>' + '[arrivstation]' + '</td>' +
 
+
+        '<td>' + '[inforfee]' + '</td>' +
+        '<td>' + '[issueoffice]' + '</td>' +
+        '<td>' + '[js]' + '</td>' +
+
         '<td>' + '[tonnage]' + '</td>' +
         '<td>' + '[transcost]' + '</td>' +
 
-
-
-        '<td>' + '[inforfee]' + '</td>' +
-
-        '<td>' + '[issueoffice]' + '</td>' +
-        '<td>' + '[js]' + '</td>' +
         '<td>' + '[transfee]' + '</td>' +
         '<td>' + '[ks]' + '</td>' +
         '<td>' + '[yue]' + '</td>' +
+        '<td>' +'<button type="button" class="btn btn-primary" onclick = queryMx(\'' + '[id]' + '\')>查看</button>' +'</td>' +
         '</tr>';
 
 

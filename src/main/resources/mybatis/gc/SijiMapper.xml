@@ -268,7 +268,7 @@
 		select
 		       t.order_no as orderNo,t.bizdate,t.carnum,t.inforfee,t.arrivstation,t.issueoffice ,t.js,
 		       IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0) as transfee,shuie as ks
-				,t.js-IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0)- shuie as yue,k.tonnage,k.transcost
+				,t.js-IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0)- shuie as yue,k.tonnage,k.transcost,t.pid
 		from (
 				  select
 					s.order_no,s.bizdate,s.carnum,s.arrivstation,
@@ -436,10 +436,43 @@
 		]]>
 
 
-
-
-
-
-
 	</select>
+
+
+
+
+
+
+
+
+    <!-- 车站 -->
+    <select  id="arrivstation"  resultType="java.util.HashMap">
+        <![CDATA[
+
+
+				  select
+					s.arrivstation
+				  from gc_siji s
+				  inner join gc_siji_item i on s.pid = i.pid
+				  where  s.dept_id = #{deptId}
+		]]>
+
+        <if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+        <if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+        <if test="inforfee != null and inforfee != ''">
+            <![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+        </if>
+        <if test="carnum != null and carnum != ''">
+            <![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+        </if>
+
+        <![CDATA[
+				  group by s.arrivstation
+
+                  order by arrivstation
+		]]>
+    </select>
+
+
+
 </mapper>
