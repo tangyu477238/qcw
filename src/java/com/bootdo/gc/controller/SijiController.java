@@ -206,8 +206,6 @@ public class SijiController extends BaseController {
 
 
 
-
-
 	// 导出全部数据
 	@RequestMapping("/exportLirun")
 	public void exportLirun(HttpServletResponse res,
@@ -219,6 +217,16 @@ public class SijiController extends BaseController {
 				"利润表",LirunDO.class,"利润表.xls",res);
 
 
+	}
+
+
+
+
+	@ResponseBody
+	@GetMapping("/arrivstation")
+	List<Map> arrivstation(@RequestParam Map<String, Object> params){
+
+		return sijiService.arrivstation(params);
 	}
 
 }

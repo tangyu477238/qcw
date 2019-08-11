@@ -180,4 +180,13 @@ public class SijiServiceImpl  implements SijiService {
 
 		return sijiDao.queryLirun(map);
 	}
+
+	@Override
+	public List<Map> arrivstation(Map map) {
+
+
+		return sijiDao.arrivstation(map);
+	}
+
+
 }

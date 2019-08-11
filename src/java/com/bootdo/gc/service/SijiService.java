@@ -39,4 +39,6 @@ public interface SijiService  {
 
 	List<LirunDO> queryLirun(Map map);
 
+	List<Map> arrivstation(Map map);
+
 }

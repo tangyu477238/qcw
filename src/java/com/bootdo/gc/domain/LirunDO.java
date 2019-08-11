@@ -76,6 +76,8 @@ public class LirunDO implements Serializable {
 
 
 
+	private String pid;
+
 
 
 }

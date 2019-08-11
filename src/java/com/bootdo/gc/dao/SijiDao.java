@@ -43,4 +43,6 @@ public interface SijiDao {
 
 	List<LirunDO> queryLirun(Map map);
 
+	List<Map> arrivstation(Map map);
+
 }
