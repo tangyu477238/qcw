@@ -20,37 +20,39 @@
 			<form class="form-horizontal" action="#" id="searchUserFormId">
 
 				<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
+				<input type="hidden" id="startDate" name="startDate" >
+				<input type="hidden" id="endDate" name="endDate" >
 
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label col-md-2">日期</label>
-							<div class="col-md-5 ">
+				<!--<div class="row">-->
+					<!--<div class="col-md-4">-->
+						<!--<div class="form-group">-->
+							<!--<label class="control-label col-md-2">日期</label>-->
+							<!--<div class="col-md-5 ">-->
 
-								<input type="text" class="laydate-icon layer-date form-control"
-									   id="startDate" name="startDate" placeholder="开始日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-									   size="13"
-									   style="background-color: #fff;" readonly="readonly" required/>
-							</div>
+								<!--<input type="text" class="laydate-icon layer-date form-control"-->
+									   <!--id="startDate" name="startDate" placeholder="开始日期"-->
+									   <!--onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"-->
+									   <!--size="13"-->
+									   <!--style="background-color: #fff;" readonly="readonly" required/>-->
+							<!--</div>-->
 
-							<div class="col-md-5 ">
+							<!--<div class="col-md-5 ">-->
 
-								<input type="text" class="laydate-icon layer-date form-control"
-									   id="endDate" name="endDate" placeholder="结束日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-									   size="13"
-									   style="background-color: #fff;" readonly="readonly" required/>
-							</div>
+								<!--<input type="text" class="laydate-icon layer-date form-control"-->
+									   <!--id="endDate" name="endDate" placeholder="结束日期"-->
+									   <!--onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"-->
+									   <!--size="13"-->
+									   <!--style="background-color: #fff;" readonly="readonly" required/>-->
+							<!--</div>-->
 
-						</div>
-					</div>
-					<div class="col-md-1 ">
-						<button type="button" onclick="showTable()" class="btn btn-primary queryButton">查询</button>
-					</div>
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="col-md-1 ">-->
+						<!--<button type="button" onclick="showTable()" class="btn btn-primary queryButton">查询</button>-->
+					<!--</div>-->
 
 
-				</div>
+				<!--</div>-->
 
 
 
@@ -64,6 +66,7 @@
 					<tr>
 
 						<th>序号</th>
+						<th> 月份</th>
 						<th> 回单金额</th>
 						<th> 运满满 </th>
 						<th> 银行卡 </th>
@@ -78,6 +81,27 @@
 
 					<tbody id = "tdata">
 					</tbody>
+
+
+					<thead>
+					<tr>
+
+						<th></th>
+						<th > 合计:</th>
+						<th id="bizMonth0"></th>
+						<th id="bizMonth1"></th>
+						<th id="bizMonth2"></th>
+						<th id="bizMonth3"></th>
+						<th id="bizMonth4"></th>
+						<th id="bizMonth5"></th>
+
+						<th id="bizMonth6"></th>
+						<th id="bizMonth7"></th>
+						<th id="bizMonth8"></th>
+
+
+					</tr>
+					</thead>
 				</table>
 
 			</form>
@@ -183,23 +207,61 @@
             },
             success : function(list) {
                 $("#tdata").html("");
+
+                var bizMonth0 = 0;var bizMonth1 = 0;var bizMonth2 = 0;
+                var bizMonth3 = 0;var bizMonth4 = 0;var bizMonth5 = 0;
+                var bizMonth6 = 0;var bizMonth7 = 0; //var bizMonth8 = 0;
+
                 for(var i = 0;i < list.length;i++){
                     var siItem = list[i];
                     var td = tdtemplate.replace('[tNum]',i+1);
-                    //td = td.replace('[coefficient]',siItem.qichu);
+                    td = td.replace('[bizMonth]',siItem.bizMonth);
+
                     td = td.replace('[steelnum]',siItem.acbalance.toFixed(2));
                     td = td.replace('[specs]',siItem.fulltrans.toFixed(2));
                     td = td.replace('[packnum]',siItem.bankcard.toFixed(2));
+
                     td = td.replace('[xianjin]',siItem.xianjin.toFixed(2));
                     td = td.replace('[shiyou]',siItem.shiyou.toFixed(2));
                     td = td.replace('[shihua]',siItem.shihua.toFixed(2));
+
                     td = td.replace('[jingbo]',siItem.jingbo.toFixed(2));
                     td = td.replace('[shoushufei]',siItem.shoushufei.toFixed(2));
                     var total =  siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo - siItem.shoushufei;
                     td = td.replace('[total]',total.toFixed(2));
-
                     $("#tdata").append(td);
+
+
+                    bizMonth0 = bizMonth0 + siItem.acbalance;
+                    bizMonth1 = bizMonth1 + siItem.fulltrans;
+                    bizMonth2 = bizMonth2 + siItem.bankcard;
+
+                    bizMonth3 = bizMonth3 + siItem.xianjin;
+                    bizMonth4 = bizMonth4 + siItem.shiyou;
+                    bizMonth5 = bizMonth5 + siItem.shihua;
+
+                    bizMonth6 = bizMonth6 + siItem.jingbo;
+                    bizMonth7 = bizMonth7 + siItem.shoushufei;
+
+
                 }
+
+                var bizMonth8 = bizMonth0 - bizMonth1 - bizMonth2 - bizMonth3
+					- bizMonth4 - bizMonth5 - bizMonth6 - bizMonth7 ;
+
+                $("#bizMonth0").text(bizMonth0.toFixed(2));
+                $("#bizMonth1").text(bizMonth1.toFixed(2));
+                $("#bizMonth2").text(bizMonth2.toFixed(2));
+
+                $("#bizMonth3").text(bizMonth3.toFixed(2));
+                $("#bizMonth4").text(bizMonth4.toFixed(2));
+                $("#bizMonth5").text(bizMonth5.toFixed(2));
+
+                $("#bizMonth6").text(bizMonth6.toFixed(2));
+                $("#bizMonth7").text(bizMonth7.toFixed(2));
+                $("#bizMonth8").text(bizMonth8.toFixed(2));
+
+
             }
         });
 
@@ -216,7 +278,7 @@
     var tdtemplate =
         '<tr>' +
         '<td>' + '[tNum]' + '</td>' +
-        //'<td>' + '[coefficient]' + '</td>' +
+        '<td>' + '[bizMonth]' + '</td>' +
         '<td>' + '[steelnum]' + '</td>' +
         '<td>' + '[specs]' + '</td>' +
         '<td>' + '[packnum]' + '</td>' +
@@ -227,6 +289,12 @@
         '<td>' + '[shoushufei]' + '</td>' +
         '<td>' + '[total]' + '</td>' +
         '</tr>';
+
+
+
+
+
+
 
 
 </script>
