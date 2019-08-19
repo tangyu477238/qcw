@@ -54,29 +54,29 @@
 					<thead>
 					<tr>
 
-						<th>序号</th>
-						<th >付款单位</th>
-						<th th:text="${bizMonth11}"></th>
-						<th th:text="${bizMonth10}"></th>
-						<th th:text="${bizMonth9}"></th>
-						<th th:text="${bizMonth8}"></th>
-						<th th:text="${bizMonth7}"></th>
-						<th th:text="${bizMonth6}"></th>
+						<th style="text-align: center">序号</th>
+						<th style="text-align: center" >付款单位</th>
+						<th style="text-align: center" th:text="${bizMonth11}"></th>
+						<th style="text-align: center" th:text="${bizMonth10}"></th>
+						<th style="text-align: center" th:text="${bizMonth9}"></th>
+						<th style="text-align: center" th:text="${bizMonth8}"></th>
+						<th style="text-align: center" th:text="${bizMonth7}"></th>
+						<th style="text-align: center" th:text="${bizMonth6}"></th>
 
-						<th th:text="${bizMonth5}"></th>
-						<th th:text="${bizMonth4}"></th>
-						<th th:text="${bizMonth3}"></th>
-						<th th:text="${bizMonth2}"></th>
-						<th th:text="${bizMonth1}"></th>
-						<th th:text="${bizMonth0}"></th>
+						<th style="text-align: center" th:text="${bizMonth5}"></th>
+						<th style="text-align: center" th:text="${bizMonth4}"></th>
+						<th style="text-align: center" th:text="${bizMonth3}"></th>
+						<th style="text-align: center" th:text="${bizMonth2}"></th>
+						<th style="text-align: center" th:text="${bizMonth1}"></th>
+						<th style="text-align: center" th:text="${bizMonth0}"></th>
 
 
 
-						<th>当日应收</th>
-                        <th>当日结算</th>
-						<th>调整金额</th>
-						<th>余额 </th>
-						<th>操作</th>
+						<th style="text-align: center">当日应收</th>
+                        <th style="text-align: center">当日结算</th>
+						<th style="text-align: center">调整金额</th>
+						<th style="text-align: center">余额 </th>
+						<th style="text-align: center">操作</th>
 					</tr>
 					</thead>
 
@@ -87,24 +87,24 @@
 					<tr>
 
 						<th></th>
-						<th > 合计:</th>
-						<th id="bizMonth11"></th>
-						<th id="bizMonth10"></th>
-						<th id="bizMonth9"></th>
-						<th id="bizMonth8"></th>
-						<th id="bizMonth7"></th>
-						<th id="bizMonth6"></th>
+						<th  style="text-align: center"> 合计:</th>
+						<th style="text-align: center" id="bizMonth11"></th>
+						<th style="text-align: center" id="bizMonth10"></th>
+						<th style="text-align: center" id="bizMonth9"></th>
+						<th style="text-align: center" id="bizMonth8"></th>
+						<th style="text-align: center" id="bizMonth7"></th>
+						<th style="text-align: center" id="bizMonth6"></th>
 
-						<th id="bizMonth5"></th>
-						<th id="bizMonth4"></th>
-						<th id="bizMonth3"></th>
-						<th id="bizMonth2"></th>
-						<th id="bizMonth1"></th>
-						<th id="bizMonth0"></th>
-                        <th id="aminvoice"></th>
-                        <th id="takeamount"></th>
-						<th id="tiaozheng"></th>
-						<th id="totalAmount"></th>
+						<th style="text-align: center" id="bizMonth5"></th>
+						<th style="text-align: center" id="bizMonth4"></th>
+						<th style="text-align: center" id="bizMonth3"></th>
+						<th style="text-align: center" id="bizMonth2"></th>
+						<th style="text-align: center" id="bizMonth1"></th>
+						<th style="text-align: center" id="bizMonth0"></th>
+                        <th style="text-align: center" id="aminvoice"></th>
+                        <th style="text-align: center" id="takeamount"></th>
+						<th style="text-align: center" id="tiaozheng"></th>
+						<th style="text-align: center" id="totalAmount"></th>
 
 						<th ></th>
 					</tr>
@@ -347,28 +347,28 @@
 
     var tdtemplate =
         '<tr>' +
-        '<td>' + '[tNum]' + '</td>' +
-        '<td>' + '[inforfee]' + '</td>' +
-        '<td>' + '[bizMonth11]' + '</td>' +
-        '<td>' + '[bizMonth10]' + '</td>' +
-        '<td>' + '[bizMonth9]' + '</td>' +
-        '<td>' + '[bizMonth8]' + '</td>' +
-        '<td>' + '[bizMonth7]' + '</td>' +
-        '<td>' + '[bizMonth6]' + '</td>' +
-        '<td>' + '[bizMonth5]' + '</td>' +
+        '<td style="text-align: center">' + '[tNum]' + '</td>' +
+        '<td style="text-align: center">' + '[inforfee]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth11]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth10]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth9]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth8]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth7]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth6]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth5]' + '</td>' +
 
-        '<td>' + '[bizMonth4]' + '</td>' +
-        '<td>' + '[bizMonth3]' + '</td>' +
-        '<td>' + '[bizMonth2]' + '</td>' +
-        '<td>' + '[bizMonth1]' + '</td>' +
-        '<td>' + '[bizMonth0]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth4]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth3]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth2]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth1]' + '</td>' +
+        '<td style="text-align: center">' + '[bizMonth0]' + '</td>' +
 
-        '<td>' + '[aminvoice]' + '</td>' +
-        '<td>' + '[takeamount]' + '</td>' +
-        '<td>' + '[tiaozheng]' + '</td>' +
-        '<td>' + '[totalAmount]' + '</td>' +
+        '<td style="text-align: center">' + '[aminvoice]' + '</td>' +
+        '<td style="text-align: center">' + '[takeamount]' + '</td>' +
+        '<td style="text-align: center">' + '[tiaozheng]' + '</td>' +
+        '<td style="text-align: center">' + '[totalAmount]' + '</td>' +
 
-        '<td>' + '[modify]' + '</td>' +
+        '<td style="text-align: center">' + '[modify]' + '</td>' +
         '</tr>';
 
 
