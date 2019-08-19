@@ -36,7 +36,7 @@ public interface KehuDao {
 
 	List<Map> queryKehu(Map map);
 
-	List<Map> queryKehu1(Map map);
+	Map queryKehu1(Map map);
 
 
 

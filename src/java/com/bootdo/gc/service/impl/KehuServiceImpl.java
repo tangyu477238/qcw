@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,8 +136,14 @@ public class KehuServiceImpl implements KehuService {
 
 	@Override
 	public List<Map> queryKehu1(Map map) {
+		List<Map> list = new ArrayList<>();
+		for (int i = 0; i <12 ; i++) {
+			map.put("startDate",DateUtils.getNowMonth(-i)+"-01");
+			map.put("endDate",DateUtils.getNowMonth(-i)+"-31");
+			list.add(kehuDao.queryKehu1(map));
 
-		return   kehuDao.queryKehu1(map);
+		}
+		return  list;
 	}
 	
 }
