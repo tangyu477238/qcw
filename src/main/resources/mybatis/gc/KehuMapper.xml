@@ -246,7 +246,7 @@
 	<select  id="queryKehu1" resultType="java.util.HashMap" >
 		<![CDATA[
 
-		select
+		select LEFT(#{startDate},7) as bizMonth,
 			sum(acbalance) as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
 			sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
 			sum(qichu) as qichu,sum(shoushufei) as shoushufei
