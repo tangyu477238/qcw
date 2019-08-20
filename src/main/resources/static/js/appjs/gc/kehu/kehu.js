@@ -148,7 +148,7 @@ function load() {
                     },
                     {
                         field : 'station',
-                        title : '到站',
+                        title : '&nbsp;&nbsp;&nbsp;&nbsp;到&nbsp;&nbsp;站&nbsp;&nbsp;&nbsp;&nbsp;',
                         align: 'center',
                         colspan:1,
                         rowspan:2
@@ -192,7 +192,7 @@ function load() {
                     },
                     {
                         field : 'colmethod',
-                        title : '收取<br>方式',
+                        title : '&nbsp;&nbsp;收取方式&nbsp;&nbsp;',
                         align: 'center',
                         colspan:1,
                         rowspan:2
@@ -317,12 +317,12 @@ function load() {
                         }
                     } ],[{
                             field : 'payType',
-                            title : '付款方式',
+                            title : '&nbsp;&nbsp;付款方式&nbsp;&nbsp;',
                             align: 'center'
                         },
                         {
                             field : 'fulltrans',
-                            title : '&nbsp;&nbsp;&nbsp;&nbsp;金&nbsp;&nbsp;额&nbsp;&nbsp;&nbsp;&nbsp;',
+                            title : '&nbsp;&nbsp;金&nbsp;&nbsp;额&nbsp;&nbsp;',
                             align: 'center',
                             footerFormatter: function (value) {
                                 var amount = 0;
@@ -341,12 +341,12 @@ function load() {
                         },
                         {
                             field : 'forwunit',
-                            title : '付款方式',
+                            title : '&nbsp;&nbsp;付款方式&nbsp;&nbsp;',
                             align: 'center'
                         },
                         {
                             field : 'bankcard',
-                            title : '&nbsp;&nbsp;&nbsp;&nbsp;金&nbsp;&nbsp;额&nbsp;&nbsp;&nbsp;&nbsp;',
+                            title : '&nbsp;&nbsp;金&nbsp;&nbsp;额&nbsp;&nbsp;',
                             align: 'center',
                             footerFormatter: function (value) {
                                 var amount = 0;

@@ -122,7 +122,7 @@ function load() {
 
 								{
 									field : 'arrivstation', 
-									title : '到站' ,
+									title : '&nbsp;&nbsp;&nbsp;&nbsp;到&nbsp;&nbsp;站&nbsp;&nbsp;&nbsp;&nbsp;' ,
                                     align : 'center'
 								},
 								{
