@@ -363,7 +363,7 @@
         var inputdate = $("#inputdate").val();
         var takeamount = $("#takeamount").val();
         if (inputdate==''||ndate==inputdate) {
-            if (takeamount==''){
+            if (takeamount==''||takeamount==0){
                 $("#inputdate").val('');
 			} else {
                 $("#inputdate").val(getNowFormatDate());
