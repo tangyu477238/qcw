@@ -258,8 +258,8 @@
 				 from gc_kehu
 				 where receipt in ('预有','有')
 
-				   and receiptdate >= #{startDate}
-				   and receiptdate <= #{endDate}  and dept_id = #{deptId}
+				   and bizdate >= #{startDate}
+				   and bizdate <= #{endDate}  and dept_id = #{deptId}
 
 				 union all
 
@@ -268,8 +268,8 @@
 					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,sum(shoushufei) as shoushufei
 				 from gc_kehu
 				 where 1=1
-				 and shoushufeidate >= #{startDate}
-				 and shoushufeidate <= #{endDate}  and dept_id = #{deptId}
+				 and bizdate >= #{startDate}
+				 and bizdate <= #{endDate}  and dept_id = #{deptId}
 
 				 union all
 
@@ -291,8 +291,8 @@
 						  from gc_kehu
 						  where receipt in ('预有','有')
 
-							and fulpaydate >= #{startDate}
-							and fulpaydate <= #{endDate}  and dept_id = #{deptId}
+							and bizdate >= #{startDate}
+							and bizdate <= #{endDate}  and dept_id = #{deptId}
 						  group by pay_type
 
 						  union all
@@ -309,8 +309,8 @@
 							  0 as qichu
 						  from gc_kehu
 						  where receipt in ('预有','有')
-							and bankpaydate >= #{startDate}
-							and bankpaydate <= #{endDate}  and dept_id = #{deptId}
+							and bizdate >= #{startDate}
+							and bizdate <= #{endDate}  and dept_id = #{deptId}
 
 						  group by forwunit
 
@@ -326,12 +326,12 @@
 				 from (
 						  select
 							  sum(transfee) as transfee,
-							  sum(case when fulpaydate>= #{startDate}and fulpaydate< #{endDate} then fulltrans else 0 end) as fulltrans,
-							  sum(case when bankpaydate>= #{startDate} and bankpaydate< #{endDate} then bankcard else 0 end) as bankcard
+							  sum(case when bizdate>= #{startDate}and bizdate< #{endDate} then fulltrans else 0 end) as fulltrans,
+							  sum(case when bizdate>= #{startDate} and bizdate< #{endDate} then bankcard else 0 end) as bankcard
 						  from gc_kehu
 						  where receipt in ('预有','有')
-							and receiptdate >= #{startDate}
-							and receiptdate <= #{endDate}  and dept_id = #{deptId}
+							and bizdate >= #{startDate}
+							and bizdate <= #{endDate}  and dept_id = #{deptId}
 					  ) t
 
 
