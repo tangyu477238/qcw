@@ -120,11 +120,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-2">
-						<div class="form-group">
-							<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>
-						</div>
-					</div>
+
 
 				</div>
 
@@ -135,15 +131,16 @@
 						<div class="actions pull-left">
 							<div class="columns pull-left">
 
+								<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>
 
-								<button type="button" class="btn  btn-primary" onclick="add()">
+								<button shiro:hasPermission="biz:kehu:pms"  type="button" class="btn  btn-primary" onclick="add()">
 									<i class="fa fa-plus" aria-hidden="true"></i>添加
 								</button>
-								<button type="button" class="btn  btn-danger"
+								<button shiro:hasPermission="biz:kehu:pms" type="button" class="btn  btn-danger"
 										onclick="batchRemove()">
 									<i class="fa fa-trash" aria-hidden="true"></i>删除
 								</button>
-								<button  type="button" class="btn  btn-success" onclick="excel()">
+								<button type="button" class="btn  btn-success" onclick="excel()">
 									导出
 								</button>
 
@@ -173,25 +170,19 @@
 
 	<script type="text/javascript">
         var s_edit_h = 'hidden';
-        var s_remove_h = 'hidden';
-        var s_resetPwd_h = 'hidden';
+
 	</script>
 
 
-	<script type="text/javascript">
-        s_edit_h = '';
-	</script>
+	<div shiro:hasPermission="biz:kehu:pms">
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+	</div>
 
-	<script type="text/javascript">
-        var s_remove_h = '';
-	</script>
-
-	<script type="text/javascript">
-        var s_resetPwd_h = '';
-	</script>
 
 </div>
 <div th:include="gc/include :: footer"></div>
-<script type="text/javascript" src="/js/appjs/gc/kehu/kehu.js?v=1111111111111111"></script>
+<script type="text/javascript" src="/js/appjs/gc/kehu/kehu.js?v=1111111111111111111"></script>
 </body>
 </html>

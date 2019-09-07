@@ -129,10 +129,10 @@
 							<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>
 
 
-							<button id="import1" type="button" class="btn btn-primary">
+							<button id="import1" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary">
 								<span class="glyphicon glyphicon glyphicon-import">结算导入</span>
 							</button>
-							<button id="import2" type="button" class="btn btn-warning">
+							<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">
 								<span class="glyphicon glyphicon glyphicon-import">收款导入</span>
 							</button>
 						</div>
@@ -185,9 +185,15 @@
 </div><!-- /.modal -->
 
 
+<script type="text/javascript">
+    var s_edit_h = 'hidden';
+</script>
 
-
-
+<div shiro:hasPermission="biz:kehu:pms">
+	<script type="text/javascript">
+        s_edit_h = '';
+	</script>
+</div>
 
 <div th:include="gc/include :: footer"></div>
 
@@ -269,6 +275,7 @@
 
 
         function excel() {
+            var deptId =  $('#deptId').val()
 
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
@@ -276,7 +283,7 @@
             var inforfee = $('#inforfee').val();
             var arrivstation = $('#arrivstation').val();
             window.open("/gc/siji/export?startDate="+startDate+"&endDate="+endDate
-                +"&carnum="+carnum+"&inforfee="+inforfee+"&arrivstation="+arrivstation);
+                +"&carnum="+carnum+"&inforfee="+inforfee+"&arrivstation="+arrivstation+"&deptId="+deptId);
 
         }
 
@@ -608,7 +615,7 @@
                                 field : 'id',
                                 align : 'center',
                                 formatter : function(value, row, index) {
-                                    var e = '<a class="btn btn-primary btn-sm  href="#" mce_href="#" title="编辑" onclick="edit(\''
+                                    var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="编辑" onclick="edit(\''
                                         + row.id
                                         + '\')"><i class="fa fa-edit"></i></a> ';
 
