@@ -11,6 +11,7 @@
 						<form class="form-horizontal m-t" id="signupForm">
 							<input id="id" name="id" th:value="${siji.id}"  type="hidden">
 							<input id="pid" name="pid" th:value="${siji.pid}"  type="hidden" >
+							<input id="deptId" name="deptId" th:value="${siji.deptId}"  type="hidden" >
 
 							<!--<div class="form-group">-->
 								<!--<label class="col-sm-1 control-label">日期：</label>-->
@@ -74,6 +75,8 @@
 									<!--<input id="tranrate"  th:value="${siji.tranrate}" name="tranrate"-->
 										   <!--class="form-control" type="text" readonly="readonly" required>-->
 								<!--</div>-->
+
+
 							</div>
 
 
@@ -95,7 +98,7 @@
 								<div class="col-sm-3">
 									<input type="text"  id="billdate"   th:value="${siji.billdate}" name="billdate"
 										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-										   style="background-color: #fff;" readonly="readonly" onchange="setAminvoice()" required/>
+										   style="background-color: #fff;" readonly="readonly" required/>
 
 								</div>
 
@@ -105,129 +108,36 @@
 								</div>
 
 
+
+
+
 							</div>
 
 
                             <div class="form-group">
 
-
-
-
-                                <label class="col-sm-2 control-label">结算金额：</label>
-                                <div class="col-sm-3">
-                                    <input id="aminvoice"  th:value="${siji.aminvoice}"  name="aminvoice" class="form-control" type="text" readonly="readonly">
-                                </div>
-
-								<label class="col-sm-2 control-label">结算录入日期：</label>
+								<label class="col-sm-2 control-label">结算金额：</label>
 								<div class="col-sm-3">
-									<input id="aminvoicedate"  th:value="${siji.aminvoicedate}" name="aminvoicedate"
-										   class="form-control" type="text" readonly="readonly">
+									<input id="aminvoice"  th:value="${siji.aminvoice}"
+										   name="aminvoice" class="form-control" type="text"  readonly="readonly">
 								</div>
+
+
+
+								<!--<label class="col-sm-2 control-label">录入日期：</label>-->
+								<!--<div class="col-sm-3">-->
+									<!--<input id="aminvoicedate"  th:value="${siji.aminvoicedate}" name="aminvoicedate"-->
+										   <!--class="form-control" type="text" readonly="readonly">-->
+								<!--</div>-->
                             </div>
 
 
-							<div class="form-group">
-
-								<label class="col-sm-2 control-label">开票单位：</label>
-								<div class="col-sm-3">
-									<input id="issueoffice"  th:value="${siji.issueoffice}" name="issueoffice"
-										   class="form-control" type="text">
-								</div>
-
-
-								<label class="col-sm-2 control-label">开票日期：</label>
-								<div class="col-sm-3">
-
-									<input type="text"  id="issueofficedate"   th:value="${siji.issueofficedate}" name="issueofficedate"
-										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-										   style="background-color: #fff;" readonly="readonly" required/>
-								</div>
-
-							</div>
-
-							<div class="form-group">
-
-								<label class="col-sm-2 control-label">税率：</label>
-								<div class="col-sm-3">
-									<input id="shuilv"  th:value="${siji.shuilv}" name="shuilv"
-										   class="form-control" type="text" onkeyup="setShuie()">
-								</div>
-
-								<label class="col-sm-2 control-label">税额：</label>
-								<div class="col-sm-3">
-									<input id="shuie"  th:value="${siji.shuie}" name="shuie"
-										   class="form-control" type="text" readonly="readonly">
-								</div>
-
-
-							</div>
-
-
-
-
-
-							<div class="form-group">
-
-								<!--<label class="col-sm-2 control-label">收款单位：</label>-->
-								<!--<div class="col-sm-3">-->
-									<!--<input id="inforfee"  th:value="${siji.inforfee}" name="inforfee" class="form-control" type="text">-->
-								<!--</div>-->
-
-								<label class="col-sm-2 control-label">收款方式：</label>
-								<div class="col-sm-3">
-									<input  id="taxdatepay" th:value="${siji.taxdatepay}" name="taxdatepay" class="form-control" type="text">
-								</div>
-
-
-								<label class="col-sm-2 control-label">收款日期：</label>
-								<div class="col-sm-3">
-
-
-									<input type="text"  id="custompay"   th:value="${siji.custompay}" name="custompay"
-										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-										   style="background-color: #fff;" readonly="readonly" required/>
-								</div>
-
-							</div>
-
-                            <div class="form-group">
-
-                                <label class="col-sm-2 control-label">收款金额：</label>
-                                <div class="col-sm-3">
-                                    <input id="takeamount"   th:value="${siji.takeamount}" name="takeamount"
-                                           class="form-control" type="text" onkeyup="setInputdate()">
-                                </div>
-
-
-								<label class="col-sm-2 control-label">收款录入日期：</label>
-								<div class="col-sm-3">
-									<input id="inputdate"  th:value="${siji.inputdate}" name="inputdate"
-										   class="form-control" type="text" readonly="readonly">
-								</div>
-
-
-							</div>
-
-							<div class="form-group">
-
-								<label class="col-sm-2 control-label">余额：</label>
-								<div class="col-sm-3">
-									<input id="yue"  th:value="${siji.yue}"  name="yue" class="form-control" type="text" readonly="readonly">
-								</div>
-
-								<label class="col-sm-2 control-label">付税款日期：</label>
-								<div class="col-sm-3">
-									<input id="paydate" th:value="${siji.paydate}" name="paydate"  type="text" placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
-										   style="background-color: #fff;" readonly="readonly" required>
-								</div>
-
-							</div>
 
 
 
 							<div class="form-group">
 								<div class="col-sm-12 col-sm-offset-3">
-									<button type="submit" class="btn btn-primary" onclick="update()">提交</button>
+									<button type="submit" class="btn btn-primary" onclick="update()">交单</button>
 								</div>
 							</div>
 						</form>
@@ -250,15 +160,15 @@
 <script type="text/javascript">
 
     $().ready(function() {
-        setInputdateRead();
+        // setInputdateRead();
     });
 
     
-    function setShuie() {
-        var shuilv = $("#shuilv").val();
-        var aminvoice = $("#aminvoice").val();
-        $("#shuie").val((shuilv*aminvoice).toFixed(2));
-    }
+    // function setShuie() {
+    //     var shuilv = $("#shuilv").val();
+    //     var aminvoice = $("#aminvoice").val();
+    //     $("#shuie").val((shuilv*aminvoice).toFixed(2));
+    // }
 
     function update() {
         $.ajax({
@@ -291,22 +201,22 @@
 
 
 
-    function setInputdateRead() {
-
-        var inputdate = $("#inputdate").val();
-
-        if (inputdate!=''&&inputdate!=getNowFormatDate()) {
-            $("#billdate").attr("disabled",true);
-
-            $("#kouling").attr("readonly",true);
-            $("#inputdate").attr("readonly",true);
-            $("#taxdatepay").attr("readonly",true);
-            $("#custompay").attr("disabled",true);
-            $("#takeamount").attr("readonly",true);
-		}
-
-
-    }
+    // function setInputdateRead() {
+	//
+    //     var inputdate = $("#inputdate").val();
+	//
+    //     if (inputdate!=''&&inputdate!=getNowFormatDate()) {
+    //         $("#billdate").attr("disabled",true);
+	//
+    //         $("#kouling").attr("readonly",true);
+    //         $("#inputdate").attr("readonly",true);
+    //         $("#taxdatepay").attr("readonly",true);
+    //         $("#custompay").attr("disabled",true);
+    //         $("#takeamount").attr("readonly",true);
+	// 	}
+	//
+	//
+    // }
 
 
 
@@ -314,26 +224,33 @@
 
 
     function setAminvoice() {
-        var billdate = $("#billdate").val();
+        // var billdate = $("#billdate").val();
+
+        var trancost = $("#trancost").val(); //运费
+
+        var kouling = $("#kouling").val(); //扣零
 
 
-        var trancost = $("#trancost").val();
-        var kouling = $("#kouling").val();
-        var takeamount = $("#takeamount").val();
+        if ((trancost-kouling)<0){
+            $("#kouling").val(0);
+            $("#aminvoice").val(0);
+            parent.layer.msg("扣零不能超过运费！");
+            return ;
+        }
+        $("#aminvoice").val((trancost-kouling).toFixed(2)); //结算金额
 
-        $("#aminvoice").val((trancost-kouling).toFixed(2));
-        $("#yue").val((trancost-kouling-takeamount).toFixed(2));
 
-        var aminvoicedate = $("#aminvoicedate").val();
-        if (billdate!='' && billdate!=null){ //扣减金额产生了结算
-            if (aminvoicedate==null||aminvoicedate==''){
-                $("#aminvoicedate").val(getNowFormatDate());
-			}
-		} else {
-            if (aminvoicedate==getNowFormatDate()){
-                $("#aminvoicedate").val('');
-			}
-		}
+
+        // var aminvoicedate = $("#aminvoicedate").val();
+        // if (billdate!='' && billdate!=null){ //扣减金额产生了结算
+        //     if (aminvoicedate==null||aminvoicedate==''){
+        //         $("#aminvoicedate").val(getNowFormatDate());
+		// 	}
+		// } else {
+        //     if (aminvoicedate==getNowFormatDate()){
+        //         $("#aminvoicedate").val('');
+		// 	}
+		// }
 
     }
 

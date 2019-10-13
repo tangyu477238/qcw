@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.gc.dao.SijiItemInvoiceDao">
+
+
+	<select id="getItemDo" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+		select
+			k.receiptdate,
+			i.`id`,i.`pid`,i.`steelnum`,i.`specs`,i.`packnum`,
+			i.`zhinum`,i.`tonnage`,i.`baseprice`,i.`coefficient`,
+			i.`tranrate`,i.`trancost`,i.`arrivstation`,i.`payer` ,
+			i.remark,i.billdate,i.aminvoice,i.aminvoicedate,i.issueoffice,i.issueofficedate,
+			i.inforfee,i.custompay,i.taxdatepay,i.kouling,i.takeamount,i.inputdate,
+		    i.yue,i.shuilv,i.shuie
+
+		from gc_siji_item_invoice i
+				 left join gc_kehu k on i.pid = k.kpid
+		where  i.id = #{value}
+	</select>
+
+
+
+	<select id="get" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+		SELECT
+			s.`bizdate`,
+			s.`forwunit`,
+			s.`carnum`,
+
+			s.`arrivstation`,
+			s.`remark`,
+			s.`inforfee`,
+
+
+			si.`id`,
+			si.`pid`,
+			si.`steelnum`,
+			si.`specs`,
+			si.`packnum`,
+			si.`zhinum`,
+			si.`tonnage`,
+			si.`baseprice`,
+			si.`coefficient`,
+			si.`tranrate`,
+			si.`trancost`,
+
+
+			si.`billdate`,
+			si.`aminvoice`,si.aminvoicedate,
+			si.`issueoffice`,
+			si.`issueofficedate`,
+
+
+			si.`custompay`,
+			si.`taxdatepay`,
+			si.`payer`,
+			si.kouling,si.takeamount,si.inputdate,si.yue,si.shuilv,si.shuie,
+			s.order_no as orderNo
+
+		FROM
+			gc_siji s
+		INNER JOIN gc_siji_item_invoice si ON si.pid = s.pid
+		where si.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+		select
+		       `id`,`pid`,`steelnum`,`specs`,`packnum`,`zhinum`,`tonnage`,`baseprice`,`coefficient`,
+		       `tranrate`,`trancost`,`arrivstation`,`payer` ,
+				remark,billdate,aminvoice,aminvoicedate,issueoffice,issueofficedate,
+				inforfee,custompay,taxdatepay,kouling,takeamount,inputdate,yue,shuilv,shuie
+		from gc_siji_item_invoice
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="steelnum != null and steelnum != ''"> and steelnum = #{steelnum} </if>
+		  		  <if test="specs != null and specs != ''"> and specs = #{specs} </if>
+		  		  <if test="packnum != null and packnum != ''"> and packnum = #{packnum} </if>
+		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
+		  		  <if test="baseprice != null and baseprice != ''"> and baseprice = #{baseprice} </if>
+		  		  <if test="coefficient != null and coefficient != ''"> and coefficient = #{coefficient} </if>
+		  		  <if test="tranrate != null and tranrate != ''"> and tranrate = #{tranrate} </if>
+		  		  <if test="trancost != null and trancost != ''"> and trancost = #{trancost} </if>
+		  		  <if test="arrivstation != null and arrivstation != ''"> and arrivstation = #{arrivstation} </if>
+		  		  <if test="payer != null and payer != ''"> and payer = #{payer} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from gc_siji_item_invoice
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="steelnum != null and steelnum != ''"> and steelnum = #{steelnum} </if>
+		  		  <if test="specs != null and specs != ''"> and specs = #{specs} </if>
+		  		  <if test="packnum != null and packnum != ''"> and packnum = #{packnum} </if>
+		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
+		  		  <if test="baseprice != null and baseprice != ''"> and baseprice = #{baseprice} </if>
+		  		  <if test="coefficient != null and coefficient != ''"> and coefficient = #{coefficient} </if>
+		  		  <if test="tranrate != null and tranrate != ''"> and tranrate = #{tranrate} </if>
+		  		  <if test="trancost != null and trancost != ''"> and trancost = #{trancost} </if>
+		  		  <if test="arrivstation != null and arrivstation != ''"> and arrivstation = #{arrivstation} </if>
+		  		  <if test="payer != null and payer != ''"> and payer = #{payer} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.gc.domain.SijiItemInvoiceDO" useGeneratedKeys="true" keyProperty="id">
+		insert into gc_siji_item_invoice
+		(
+			`pid`,
+
+			`bizdate`,
+			`carnum`,
+			`arrivstation`,
+			billdate,
+			aminvoice,
+
+			issueoffice,
+			issueofficedate,
+
+		 	inforfee,
+			custompay,
+			taxdatepay,
+
+		 	takeamount,
+		 	inputdate,yue,dept_id,state
+		)
+		values
+		(
+			#{pid},
+			#{bizdate},
+			#{carnum},
+			#{arrivstation},
+
+			#{billdate},
+			#{aminvoice},
+
+			#{issueoffice},
+			#{issueofficedate},
+
+			#{inforfee},
+			#{custompay},
+			#{taxdatepay},
+
+
+		 	#{takeamount},
+		 	#{inputdate},
+		 	#{yue},
+			#{deptId},
+			#{state}
+		)
+	</insert>
+
+
+
+
+
+	<update id="updateState" parameterType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+		update gc_siji_item_invoice set state = 0
+
+		where pid = #{pid}
+	</update>
+
+
+	<update id="update" parameterType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+		update gc_siji_item_invoice
+		<set>
+
+			<if test="steelnum != null">`steelnum` = #{steelnum}, </if>
+			<if test="specs != null">`specs` = #{specs}, </if>
+			<if test="packnum != null">`packnum` = #{packnum}, </if>
+			<if test="zhinum != null">`zhinum` = #{zhinum}, </if>
+			<if test="tonnage != null">`tonnage` = #{tonnage}, </if>
+			<if test="baseprice != null">`baseprice` = #{baseprice}, </if>
+			<if test="coefficient != null">`coefficient` = #{coefficient}, </if>
+			<if test="tranrate != null">`tranrate` = #{tranrate}, </if>
+			<if test="trancost != null">`trancost` = #{trancost}, </if>
+			<if test="arrivstation != null">`arrivstation` = #{arrivstation}, </if>
+
+
+
+			<if test="billdate != null">`billdate` = #{billdate}, </if>
+			<if test="aminvoice != null">`aminvoice` = #{aminvoice}, </if>
+			<if test="aminvoicedate != null">`aminvoicedate` = #{aminvoicedate}, </if>
+
+			<if test="issueoffice != null">`issueoffice` = #{issueoffice}, </if>
+			<if test="issueofficedate != null">`issueofficedate` = #{issueofficedate}, </if>
+
+			<if test="inforfee != null">`inforfee` = #{inforfee}, </if>
+			<if test="custompay != null">`custompay` = #{custompay}, </if>
+			<if test="taxdatepay != null">`taxdatepay` = #{taxdatepay}, </if>
+
+			<if test="kouling != null">`kouling` = #{kouling}, </if>
+			<if test="takeamount != null">`takeamount` = #{takeamount}, </if>
+			<if test="payer != null">`payer` = #{payer},</if>
+			<if test="inputdate != null">`inputdate` = #{inputdate},</if>
+			<if test="yue != null">`yue` = #{yue},</if>
+
+			<if test="shuilv != null">`shuilv` = #{shuilv},</if>
+			<if test="shuie != null">`shuie` = #{shuie},</if>
+
+			<if test="pid != null">`pid` = #{pid}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from gc_siji_item_invoice where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from gc_siji_item_invoice where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<update id="heDui">
+		update   gc_siji_item_invoice  set payer = '1'  where id = #{value}
+	</update>
+
+
+
+
+	<select  id="querySijiList" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		SELECT
+		    s.`bizdate`,
+			s.`forwunit`,
+			s.`carnum`,
+
+			s.`arrivstation`,
+		    s.`remark`,
+		    s.`inforfee`,
+		    s.`custompay` as scustompay,
+
+
+			si.`id`,
+			si.`pid`,
+			si.`steelnum`,
+			si.`specs`,
+			si.`packnum`,
+		    si.`zhinum`,
+			si.`tonnage`,
+			si.`baseprice`,
+			si.`coefficient`,
+			si.`tranrate`,
+			si.`trancost`,
+
+
+		    si.`billdate`,
+		    si.`aminvoice`,
+		    si.aminvoicedate,
+			i.`issueoffice`,
+		    i.`issueofficedate`,
+
+
+			si.`custompay`,
+			si.`taxdatepay`,
+			si.`payer`,
+		 	si.kouling,
+		 	si.takeamount,
+		    si.inputdate,
+		    si.yue,
+
+		    si.shuilv,
+		    si.shuie,
+			s.order_no as orderNo
+
+		FROM gc_siji s
+		  inner join gc_siji_item_aminvoice i on i.pid = s.pid
+				INNER JOIN gc_siji_item_invoice si ON si.pid = i.id
+
+		]]>
+
+
+		<where>
+
+
+			<!--<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>-->
+			<!--<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>-->
+			<!--<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>-->
+			<!--<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>-->
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+
+
+		</where>
+
+
+
+		order by si.id desc
+
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+
+	</select>
+
+
+
+
+	<select id="querySijiListCount" resultType="int">
+		SELECT
+		       count(*)
+		FROM gc_siji s
+		inner join gc_siji_item_aminvoice i on i.pid = s.pid
+		INNER JOIN gc_siji_item_invoice si ON si.pid = i.id
+
+		<where>
+
+
+			<!--<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>-->
+			<!--<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>-->
+			<!--<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>-->
+			<!--<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>-->
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+
+		</where>
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+	<select id="getLastAminvoice" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+		SELECT
+			s.yue
+		FROM
+			gc_siji_item_invoice s
+
+		where s.pid = #{pid} and s.state = 1
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+		order by id desc
+	</select>
+
+
+
+
+
+	<select id="getBilldateList" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+
+		select * from (
+			select
+			s.pid ,s.order_no as orderNo,s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,
+			sum(si.kouling) as kouling,sum(si.aminvoice) as aminvoice,
+			sum(si.trancost) as trgetBilldateListancost,s.custompay as scustompay,s.dept_id as deptId,IFNULL(max(i.yue),sum(si.aminvoice))
+			as yue
+			from gc_siji s
+			inner join gc_siji_item si on s.pid = si.pid
+			left join gc_siji_item_invoice i on i.pid = s.pid and i.state=1
+			where si.billdate is not null and si.billdate != ''
+			<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
+			<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
+			GROUP BY s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.pid,s.order_no,s.custompay,s.dept_id
+		) t
+		where t.yue>0
+		order by bizdate
+
+	</select>
+
+
+
+	<select id="getAminvoicefoByPid" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+
+		select * from (
+			  select
+				  i.id as pid ,s.order_no as orderNo,s.bizdate,s.arrivstation,s.carnum,s.inforfee,
+				  si.billdate,sum(i.takeamount) as aminvoice,
+				  s.custompay as scustompay,s.dept_id as deptId, IFNULL(max(ii.yue),sum(i.takeamount))as yue
+			  from gc_siji s
+					   inner join gc_siji_item si on s.pid = si.pid
+					   inner join gc_siji_item_aminvoice i on i.pid = s.pid
+					   left join gc_siji_item_invoice ii on ii.pid = i.id and ii.state=1
+			  where si.billdate is not null and si.billdate != ''
+			<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
+			<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
+		  	GROUP BY i.id,s.order_no ,s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.custompay,s.dept_id
+	  	) t
+		where t.yue>0
+		order by bizdate
+
+	</select>
+
+
+
+
+
+</mapper>

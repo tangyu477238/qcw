@@ -1,51 +1,8 @@
 
-var prefix = "/gc/siji"
+var prefix = "/gc/custom"
 $(function() {
-
-
-    $("#startDate").val(getNowFirstDate());
-    $("#endDate").val(getNowFormatDate());
-
-
-    load();
+	load();
 });
-
-
-//获取当前时间，格式YYYY-MM-DD
-function getNowFirstDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    if (month >= 1 && month <= 9) {
-        month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-    }
-    var currentdate = year + seperator1 + month + seperator1 + '01';
-    return currentdate;
-}
-
-
-//获取当前时间，格式YYYY-MM-DD
-function getNowFormatDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    if (month >= 1 && month <= 9) {
-        month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-    }
-    var currentdate = year + seperator1 + month + seperator1 + strDate;
-    return currentdate;
-}
-
 
 function load() {
 	$('#exampleTable')
@@ -66,7 +23,7 @@ function load() {
 						singleSelect : false, // 设置为true将禁止多选
 						// contentType : "application/x-www-form-urlencoded",
 						// //发送到服务器的数据编码类型
-						pageSize : 25, // 如果设置了分页，每页数据条数
+						pageSize : 10, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
 						//search : true, // 是否显示搜索框
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
@@ -75,13 +32,9 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset,
-                                startDate:$('#startDate').val(),
-                                endDate:$('#endDate').val(),
-                                carnum:$('#carnum').val(),
-                                inforfee:$('#inforfee').val(),
-                                arrivstation:$('#arrivstation').val(),
-                                deptId:$('#deptId').val()
+								offset:params.offset
+					           // name:$('#searchName').val(),
+					           // username:$('#searchName').val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -94,67 +47,33 @@ function load() {
 								{
 									checkbox : true
 								},
-								{
-									field : 'id', 
-									title : 'id',
-                                    align : 'center'
-								},
-								{
-									field : 'orderNo',
-									title : '订单号',
-									align : 'center'
-								},
-								{
-									field : 'bizdate', 
-									title : '业务发生日期',
-									align : 'center'
-								},
-								{
-									field : 'forwunit', 
-									title : '发货单位' ,
-                                    align : 'center'
-								},
-								{
-									field : 'carnum', 
-									title : '车牌号码',
-                                	align : 'center'
-								},
-
-								{
-									field : 'arrivstation', 
-									title : '&nbsp;&nbsp;&nbsp;&nbsp;到&nbsp;&nbsp;站&nbsp;&nbsp;&nbsp;&nbsp;' ,
-                                    align : 'center'
-								},
-								{
-									field : 'inforfee',
-									title : '付款单位' ,
-                                    align : 'center'
-								},
-								{
-									field : 'custompay',
-									title : '业务员' ,
-									align : 'center'
-								},
-								{
-									field : 'remark', 
-									title : '备注' ,
-                                    align : 'center'
-								} ,
 																{
-									title : '系统操作按钮(查看/编辑/删除)',
+									field : 'id', 
+									title : 'id'
+								},
+																{
+									field : 'name', 
+									title : '名称' 
+								},
+																{
+									field : 'shuilv', 
+									title : '税率' 
+								},
+																{
+									title : '操作',
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
 										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
 												+ row.id
 												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm '+s_edit_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="查看明细"  mce_href="#" onclick="queryMx(\''
-												+ row.pid
+										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+												+ row.id
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return f + e + d  ;
+										return e + d ;
 									}
 								} ]
 					});
@@ -163,7 +82,7 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
-	var perContent = layer.open({
+	layer.open({
 		type : 2,
 		title : '增加',
 		maxmin : true,
@@ -171,11 +90,9 @@ function add() {
 		area : [ '800px', '520px' ],
 		content : prefix + '/add' // iframe的url
 	});
-
-    layer.full(perContent);
 }
 function edit(id) {
-    var perContent = layer.open({
+	layer.open({
 		type : 2,
 		title : '编辑',
 		maxmin : true,
@@ -183,8 +100,6 @@ function edit(id) {
 		area : [ '800px', '520px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});
-
-    layer.full(perContent);
 }
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {
@@ -208,34 +123,7 @@ function remove(id) {
 	})
 }
 
-
-function excel() {
-
-    var startDate = $('#startDate').val();
-    var endDate = $('#endDate').val();
-    var carnum = $('#carnum').val();
-    var forwunit = $('#forwunit').val();
-    var arrivstation = $('#arrivstation').val();
-    window.open(prefix+"/export?startDate="+startDate+"&endDate="+endDate
-        +"&carnum="+carnum+"&forwunit="+forwunit+"&arrivstation="+arrivstation);
-
-}
-
-
-function queryMx(id) {
-
-    var perContent = layer.open({
-        type : 2,
-        title : '查看明细',
-        maxmin : true,
-        shadeClose : false, // 点击遮罩关闭层
-        area : [ '800px', '520px' ],
-        content : prefix + '/sijiMx?pid=' + id // iframe的url
-    });
-
-    //layer.full(perContent);
-
-
+function resetPwd(id) {
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
@@ -271,5 +159,3 @@ function batchRemove() {
 
 	});
 }
-
-

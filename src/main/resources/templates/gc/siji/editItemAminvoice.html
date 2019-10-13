@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="id" name="id" th:value="${siji.id}"  type="hidden">
+							<input id="pid" name="pid" th:value="${siji.pid}"  type="hidden" >
+							<input id="deptId" name="deptId" th:value="${siji.deptId}"  type="hidden" >
+
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">业务日期：</label>
+								<div class="col-sm-3">
+									<input id="bizdate"  th:value="${siji.bizdate}"  name="bizdate"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+								<label class="col-sm-2 control-label">付款单位：</label>
+								<div class="col-sm-3">
+									<input id="inforfee" th:value="${siji.inforfee}" name="inforfee"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+							</div>
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">车号：</label>
+								<div class="col-sm-3">
+									<input id="carnum"  th:value="${siji.carnum}"  name="carnum"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+								<label class="col-sm-2 control-label">到站：</label>
+								<div class="col-sm-3">
+									<input id="arrivstation" th:value="${siji.arrivstation}" name="arrivstation"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+							</div>
+
+
+
+
+
+
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">交单日期：</label>
+								<div class="col-sm-3">
+									<input id="billdate"  th:value="${siji.billdate}" name="billdate"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+
+								<label class="col-sm-2 control-label">发票金额：</label>
+								<div class="col-sm-3">
+									<input id="aminvoice"  th:value="${siji.aminvoice}" name="aminvoice"
+										   class="form-control" type="text" readonly="readonly" required>
+								</div>
+
+
+
+
+							</div>
+
+
+
+							<!--<div class="form-group">-->
+
+								<!--<label class="col-sm-1 control-label">备注：</label>-->
+								<!--<div class="col-sm-9">-->
+									<!--<textarea id="remark"  th:value="${siji.remark}" name="remark" class="form-control" ></textarea>-->
+								<!--</div>-->
+
+							<!--</div>-->
+
+
+
+
+
+
+                            <div class="form-group">
+
+								<label class="col-sm-2 control-label">余额：</label>
+								<div class="col-sm-3">
+									<input id="yue"  th:value="${siji.yue}"  name="yue" class="form-control" type="text" readonly="readonly">
+								</div>
+
+
+
+								<!--<label class="col-sm-2 control-label">本次结算金额：</label>-->
+								<!--<div class="col-sm-3">-->
+									<!--<input id="aminvoice"  th:value="${siji.aminvoice}"  onkeyup="setAminvoice()" name="aminvoice" class="form-control" type="text" >-->
+								<!--</div>-->
+
+								<!--<label class="col-sm-2 control-label">录入日期：</label>-->
+								<!--<div class="col-sm-3">-->
+									<!--<input id="aminvoicedate"  th:value="${siji.aminvoicedate}" name="aminvoicedate"-->
+										   <!--class="form-control" type="text" readonly="readonly">-->
+								<!--</div>-->
+
+                            </div>
+
+
+
+
+
+
+
+							<div class="form-group">
+
+
+								<label class="col-sm-2 control-label">收款方式：</label>
+								<div class="col-sm-3">
+									<input  id="taxdatepay" th:value="${siji.taxdatepay}" name="taxdatepay" class="form-control" type="text">
+								</div>
+
+
+								<label class="col-sm-2 control-label">收款日期：</label>
+								<div class="col-sm-3">
+
+
+									<input type="text"  id="custompay"   th:value="${siji.custompay}" name="custompay"
+										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   style="background-color: #fff;" readonly="readonly" required/>
+								</div>
+
+							</div>
+
+                            <div class="form-group">
+
+                                <label class="col-sm-2 control-label">收款金额：</label>
+                                <div class="col-sm-3">
+                                    <input id="takeamount"   th:value="${siji.takeamount}" name="takeamount"
+                                           class="form-control" type="text" onkeyup="setInputdate()">
+                                </div>
+
+
+								<label class="col-sm-2 control-label">录入日期：</label>
+								<div class="col-sm-3">
+									<input id="inputdate"  th:value="${siji.inputdate}" name="inputdate"
+										   class="form-control" type="text" readonly="readonly">
+								</div>
+
+
+							</div>
+
+
+
+
+							<div class="form-group">
+								<div class="col-sm-12 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary" onclick="update()">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+
+
+
+
+
+
+
+<div th:include="gc/include::footer"></div>
+
+
+
+<script type="text/javascript">
+
+    $().ready(function() {
+        setInputdateRead();
+    });
+
+    
+    // function setShuie() {
+    //     var shuilv = $("#shuilv").val();
+    //     var aminvoice = $("#aminvoice").val();
+    //     $("#shuie").val((shuilv*aminvoice).toFixed(2));
+    // }
+
+    function update() {
+
+
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/gc/sijiItemInvoice/updateItem",
+            data : $('#signupForm').serialize(),// 你的formid
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    parent.reLoad();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+    function setInputdateRead() {
+
+        var inputdate = $("#inputdate").val();
+
+        if (inputdate!=''&&inputdate!=getNowFormatDate()) {
+            $("#billdate").attr("disabled",true);
+
+            //$("#kouling").attr("readonly",true);
+            $("#inputdate").attr("readonly",true);
+            $("#taxdatepay").attr("readonly",true);
+            $("#custompay").attr("disabled",true);
+            $("#takeamount").attr("readonly",true);
+		}
+
+
+    }
+
+
+
+
+
+
+    function setAminvoice() {
+        //var billdate = $("#billdate").val();
+        //var aminvoice = $("#aminvoice").val(); //结算金额
+
+
+
+
+        var takeamount = $("#takeamount").val(); //收款金额
+        var yue = $("#yue").val(); //余额
+        if ((yue-takeamount)<0){
+            $("#takeamount").val(0);
+            parent.layer.msg("收款金额不能超过余额！");
+			return ;
+        }
+
+        //$("#yue").val(yue-takeamount);
+
+
+
+
+
+
+        // var aminvoicedate = $("#aminvoicedate").val();
+        // if (billdate!='' && billdate!=null){ //扣减金额产生了结算
+        //     if (aminvoicedate==null||aminvoicedate==''){
+        //         $("#aminvoicedate").val(getNowFormatDate());
+		// 	}
+		// } else {
+        //     if (aminvoicedate==getNowFormatDate()){
+        //         $("#aminvoicedate").val('');
+		// 	}
+		// }
+
+    }
+
+
+    //获取当前时间，格式YYYY-MM-DD
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+
+
+
+    function setInputdate(){
+
+        $("#inputdate").val(getNowFormatDate());
+
+        setAminvoice();
+    }
+
+</script>
+</body>
+</html>

@@ -125,16 +125,20 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<button type="button" onclick="reLoad()" class="btn btn-primary">查询</button>
-							<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>
-							<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>
 
 
-							<button id="import1" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary">
-								<span class="glyphicon glyphicon glyphicon-import">结算导入</span>
-							</button>
-							<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">
-								<span class="glyphicon glyphicon glyphicon-import">收款导入</span>
-							</button>
+							<!--<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>-->
+							<!--<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>-->
+
+
+							<!--<button id="import1" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary">-->
+								<!--<span class="glyphicon glyphicon glyphicon-import">结算导入</span>-->
+							<!--</button>-->
+							<!--<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">-->
+								<!--<span class="glyphicon glyphicon glyphicon-import">收款导入</span>-->
+							<!--</button>-->
+
+
 						</div>
 					</div>
 
@@ -263,7 +267,7 @@
 
 	<script type="text/javascript" >
 
-        var prefix = "/gc/sijiItem"
+        var prefix = "/gc/sijiItemAminvoice"
         $(function() {
 
             $("#startDate").val(getNowFirstDate());
@@ -329,7 +333,7 @@
                 .bootstrapTable(
                     {
                         method : 'get', // 服务器数据的请求方式 get or post
-                        url : prefix + "/list", // 服务器数据的加载地址
+                        url : prefix + "/getBilldateList", // 服务器数据的加载地址
                         //	showRefresh : true,
                         //	showToggle : true,
                         //	showColumns : true,
@@ -377,11 +381,6 @@
                         columns : [
                             {
                                 checkbox : true
-                            },
-                            {
-                                field : 'id',
-                                title : 'id',
-                                align : 'center'
                             },					{
                                 field : 'orderNo',
                                 title : '订单号',
@@ -397,11 +396,6 @@
                                 align : 'center'
                             },
                             {
-                                field : 'forwunit',
-                                title : '发货单位' ,
-                                align : 'center'
-                            },
-                            {
                                 field : 'carnum',
                                 title : '车牌号码',
                                 align : 'center'
@@ -411,55 +405,7 @@
                                 title : '&nbsp;&nbsp;&nbsp;&nbsp;到&nbsp;&nbsp;站&nbsp;&nbsp;&nbsp;&nbsp;',
                                 align : 'center'
                             },
-                            {
-                                field : 'steelnum',
-                                title : '钢号',
-                                align : 'center'
-                            },
-                            {
-                                field : 'specs',
-                                title : '规格',
-                                align : 'center'
-                            },
-                            {
-                                field : 'packnum',
-                                title : '件数',
-                                align : 'center'
-                            },
-                            {
-                                field : 'zhinum',
-                                title : '支数',
-                                align : 'center'
-                            },
-                            {
-                                field : 'tonnage',
-                                title : '钢材吨数',
-                                align : 'center',
-                                footerFormatter: function (value) {
-                                    var amount = 0;
-                                    for (var i in value) {
-                                        if (value[i].tonnage!='' && value[i].tonnage!=null){
-                                            amount += parseFloat(value[i].tonnage);
-                                        }
-                                    }
-                                    return amount.toFixed(3);
-                                }
-                            },
-                            {
-                                field : 'baseprice',
-                                title : '基价',
-                                align : 'center'
-                            },
-                            {
-                                field : 'coefficient',
-                                title : '系数',
-                                align : 'center'
-                            },
-                            {
-                                field : 'tranrate',
-                                title : '运率',
-                                align : 'center'
-                            },
+
                             {
                                 field : 'trancost',
                                 title : '钢材运费',
@@ -473,12 +419,6 @@
                                     }
                                     return amount.toFixed(2);
                                 }
-                            },
-                            {
-                                field : 'remark',
-                                title : '备注' ,
-                                align : 'center',
-                                width: '10%'
                             },
                             {
                                 field : 'scustompay',
@@ -528,9 +468,9 @@
                                 field : 'id',
                                 align : 'center',
                                 formatter : function(value, row, index) {
-                                    var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                        + row.id
-                                        + '\')"><i class="fa fa-edit"></i></a> ';
+                                    var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="开票" onclick="edit(\''
+                                        + row.pid
+                                        + '\')">开票</a> ';
 
                                     return e ;
                                 }
