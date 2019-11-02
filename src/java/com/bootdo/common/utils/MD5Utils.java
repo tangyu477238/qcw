@@ -27,7 +27,7 @@ public class MD5Utils {
 	}
 	public static void main(String[] args) {
 		
-		System.out.println(MD5Utils.encrypt("admin", "111111"));
+		System.out.println(MD5Utils.encrypt("laiwuyuanhang", "111111"));
 	}
 
 

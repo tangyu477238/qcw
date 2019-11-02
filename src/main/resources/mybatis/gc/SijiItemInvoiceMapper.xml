@@ -401,22 +401,58 @@
 	</select>
 
 
-
+	<!--获取待结算余额-->
 	<select id="getAminvoicefoByPid" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
 
 		select * from (
-			  select
-				  i.id as pid ,s.order_no as orderNo,s.bizdate,s.arrivstation,s.carnum,s.inforfee,
-				  si.billdate,sum(i.takeamount) as aminvoice,
-				  s.custompay as scustompay,s.dept_id as deptId, IFNULL(max(ii.yue),sum(i.takeamount))as yue
-			  from gc_siji s
-					   inner join gc_siji_item si on s.pid = si.pid
-					   inner join gc_siji_item_aminvoice i on i.pid = s.pid
-					   left join gc_siji_item_invoice ii on ii.pid = i.id and ii.state=1
-			  where si.billdate is not null and si.billdate != ''
+
+			SELECT
+			i.id AS id,
+			i.id AS pid,
+			s.orderNo AS orderNo,
+			s.bizdate,
+			s.arrivstation,
+			s.carnum,
+			s.inforfee,
+			s.billdate,
+			sum(i.takeamount) AS aminvoice,
+			s.scustompay,
+			s.deptId,
+			IFNULL( max(ii.yue), sum(i.takeamount) ) AS yue
+			FROM (
+				SELECT
+				s.pid AS pid,
+				s.order_no AS orderNo,
+				s.bizdate,
+				s.arrivstation,
+				s.carnum,
+				s.inforfee,
+				si.billdate,
+				s.custompay AS scustompay,
+				s.dept_id AS deptId
+				FROM gc_siji s
+				INNER JOIN gc_siji_item si ON s.pid = si.pid
+				INNER JOIN gc_siji_item_aminvoice i ON i.pid = s.pid
+				where 1=1 AND i.id = #{id}
+
+				<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
+				<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
+
+				GROUP BY	s.pid,	s.order_no,	s.bizdate,s.arrivstation,	s.carnum,	s.inforfee, si.billdate,s.custompay,s.dept_id
+
+			) s
+			INNER JOIN gc_siji_item_aminvoice i ON i.pid = s.pid
+			LEFT JOIN gc_siji_item_invoice ii ON ii.pid = i.id AND ii.state = 1
+			WHERE s.billdate IS NOT NULL AND s.billdate != '' AND  i.id = #{id}
+
 			<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
 			<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
-		  	GROUP BY i.id,s.order_no ,s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.custompay,s.dept_id
+
+			GROUP BY	i.id,	s.orderNo,	s.bizdate,s.arrivstation,	s.carnum,	s.inforfee, s.billdate,s.scustompay,s.deptId
+
+
+
+
 	  	) t
 		where t.yue>0
 		order by bizdate

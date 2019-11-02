@@ -233,7 +233,7 @@
 
 
 
-
+    <!--待结算数据-->
 	<select  id="querySijiList" resultType="java.util.HashMap" >
 		<![CDATA[
 
@@ -294,16 +294,16 @@ select * from (
 		<where>
 
 
-			<!--<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>-->
-			<!--<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>-->
-			<!--<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>-->
-			<!--<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>-->
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.inputdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.inputdate &lt;= #{tendDate} </if>
 
 			<if test="inforfee != null and inforfee != ''">
 				<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
 			</if>
-			<if test="carnum != null and carnum != ''">
-				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			<if test="issueoffice != null and issueoffice != ''">
+				<![CDATA[ and si.issueoffice like CONCAT('%',#{issueoffice},'%') ]]>
 			</if>
 			<if test="arrivstation != null and arrivstation != ''">
 				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
@@ -342,22 +342,22 @@ select * from (
 		<where>
 
 
-			<!--<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>-->
-			<!--<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>-->
-			<!--<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>-->
-			<!--<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>-->
+            <if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+            <if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+            <if test="tstartDate != null and tstartDate != ''"> and si.inputdate &gt;= #{tstartDate} </if>
+            <if test="tendDate != null and tendDate != ''"> and si.inputdate &lt;= #{tendDate} </if>
 
-			<if test="inforfee != null and inforfee != ''">
-				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
-			</if>
-			<if test="carnum != null and carnum != ''">
-				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
-			</if>
-			<if test="arrivstation != null and arrivstation != ''">
-				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
-			</if>
+            <if test="inforfee != null and inforfee != ''">
+                <![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
+            </if>
+            <if test="issueoffice != null and issueoffice != ''">
+                <![CDATA[ and si.issueoffice like CONCAT('%',#{issueoffice},'%') ]]>
+            </if>
+            <if test="arrivstation != null and arrivstation != ''">
+                <![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+            </if>
 
-			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+            <if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
 		</where>
 
@@ -389,6 +389,7 @@ select * from (
 
 
 
+    <!--待开票数据-->
 
 	<select id="getBilldateList" resultType="com.bootdo.gc.domain.SijiItemAminvoiceDO">
 
@@ -402,12 +403,45 @@ select * from (
 			inner join gc_siji_item si on s.pid = si.pid
 			left join gc_siji_item_aminvoice i on i.pid = s.pid and i.state=1
 			where si.billdate is not null and si.billdate != ''
+
+
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
 			<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
 			<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
 			GROUP BY s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.pid,s.order_no,s.custompay,s.dept_id
 		) t
 		where t.yue>0
 		order by bizdate
+
+	</select>
+
+
+
+
+
+
+	<!--开票单位列表-->
+	<select  id="getIssueoffice" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		SELECT id,name from gc_custom
+		order by name
+
+		]]>
+
 
 	</select>
 

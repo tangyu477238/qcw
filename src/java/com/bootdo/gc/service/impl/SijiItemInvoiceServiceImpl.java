@@ -3,10 +3,11 @@ package com.bootdo.gc.service.impl;
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
+import com.bootdo.gc.dao.SijiItemInvoiceDao;
 import com.bootdo.gc.domain.*;
-import com.bootdo.gc.service.SijiItemAminvoiceService;
+import com.bootdo.gc.service.SijiItemInvoiceService;
+import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
-import org.joda.time.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bootdo.gc.dao.SijiItemDao;
-import com.bootdo.gc.service.SijiItemService;
-
-
 
 @Service
-public class SijiItemServiceImpl implements SijiItemService {
+public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 
 	@Autowired
 	private SijiDao sijiDao;
 
 	@Autowired
-	private SijiItemDao sijiItemDao;
+	private SijiItemInvoiceDao SijiItemInvoiceDao;
 
 
 	@Autowired
@@ -41,70 +38,62 @@ public class SijiItemServiceImpl implements SijiItemService {
 	private SijiService sijiService;
 
 
-	@Autowired
-	private SijiItemAminvoiceService sijiItemAminvoiceService;
-
 
 	@Override
-	public SijiItemDO get(Long id){
-		SijiItemDO sijiItemDO = sijiItemDao.get(id);
-		SijiDO sijiDO = sijiDao.getPid(sijiItemDO.getPid());
-		sijiItemDO.setDeptId(sijiDO.getDeptId());
-		Map map = new HashMap();
-		map.put("pid",sijiItemDO.getPid());
-		List<SijiItemAminvoiceDO> list = sijiItemAminvoiceService.getLastAminvoice(map);
-		if (list!=null && !list.isEmpty()){
-			sijiItemDO.setYue(list.get(0).getYue());
-		} else {
-			sijiItemDO.setYue(sijiItemDO.getTrancost());
-		}
-
-
-		return sijiItemDO;
+	public SijiItemInvoiceDO get(Long id){
+		return SijiItemInvoiceDao.get(id);
 	}
 
 	@Override
-	public SijiItemDO getItemDo(Long id){
-		return sijiItemDao.getItemDo(id);
+	public List<SijiItemInvoiceDO> getLastAminvoice(Map<String, Object> map){
+		return SijiItemInvoiceDao.getLastAminvoice(map);
+	}
+
+
+
+
+	@Override
+	public SijiItemInvoiceDO getItemDo(Long id){
+		return SijiItemInvoiceDao.getItemDo(id);
 	}
 
 
 
 	@Override
-	public List<SijiItemDO> list(Map<String, Object> map){
-		return sijiItemDao.list(map);
+	public List<SijiItemInvoiceDO> list(Map<String, Object> map){
+		return SijiItemInvoiceDao.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
-		return sijiItemDao.count(map);
+		return SijiItemInvoiceDao.count(map);
 	}
 
 	@Override
 	public int querySijiListCount(Map<String, Object> map){
-		return sijiItemDao.querySijiListCount(map);
+		return SijiItemInvoiceDao.querySijiListCount(map);
 	}
 
 
 
-	
+
 	@Override
-	public int save(SijiItemDO sijiItem){
+	public int save(SijiItemInvoiceDO sijiItem){
 
 		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
 		if (sijiDO==null){
-			return sijiItemDao.save(sijiItem);
+			return SijiItemInvoiceDao.save(sijiItem);
 		}
 		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
 		if (kehuDO==null){
-			return sijiItemDao.save(sijiItem);
+			return SijiItemInvoiceDao.save(sijiItem);
 		}
 		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
 			return 0;
 		}
 
 
-		int flag = sijiItemDao.save(sijiItem);
+		int flag = SijiItemInvoiceDao.save(sijiItem);
 
 
 //		kehuDO.setForwunit(siji.getForwunit());
@@ -114,9 +103,9 @@ public class SijiItemServiceImpl implements SijiItemService {
 		kehuDO.setTonnage(new BigDecimal(0));
 		Map map = new HashMap();
 		map.put("pid", sijiItem.getPid());
-		List<SijiItemDO> list = sijiItemService.list(map);
-		for (SijiItemDO sijiItemDO : list){
-			kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
+		List<SijiItemInvoiceDO> list = sijiItemService.list(map);
+		for (SijiItemInvoiceDO SijiItemInvoiceDO : list){
+			kehuDO.setTonnage(kehuDO.getTonnage().add(SijiItemInvoiceDO.getTonnage())); //吨位
 		}
 		if (kehuDO.getTonnage()!=null){
 			kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
@@ -137,36 +126,42 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 
 	@Override
-	public int updateItem(SijiItemDO sijiItem){
+	public int updateItem(SijiItemInvoiceDO sijiItem){
 
-		int flag = sijiItemDao.update(sijiItem);
+
+		SijiItemInvoiceDao.updateState(sijiItem);//更新是否最新结算
+
+
+		sijiItem.setYue(sijiItem.getYue().subtract(sijiItem.getTakeamount()));
+		sijiItem.setState(1);
+		int flag = SijiItemInvoiceDao.save(sijiItem);
 
 		return flag;
 	}
 
 	@Override
-	public int update(SijiItemDO sijiItem){
+	public int update(SijiItemInvoiceDO sijiItem){
 
 
 		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
 
 		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
 		if (kehuDO==null){
-			return sijiItemDao.update(sijiItem);
+			return SijiItemInvoiceDao.update(sijiItem);
 		}
 //		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
 //			return 0;
 //		}
 
-		int flag = sijiItemDao.update(sijiItem);
+		int flag = SijiItemInvoiceDao.update(sijiItem);
 
 		try {
 			kehuDO.setTonnage(new BigDecimal(0));
 			Map map = new HashMap();
 			map.put("pid", sijiItem.getPid());
-			List<SijiItemDO> list = sijiItemService.list(map);
-			for (SijiItemDO sijiItemDO : list) {
-				kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
+			List<SijiItemInvoiceDO> list = sijiItemService.list(map);
+			for (SijiItemInvoiceDO SijiItemInvoiceDO : list) {
+				kehuDO.setTonnage(kehuDO.getTonnage().add(SijiItemInvoiceDO.getTonnage())); //吨位
 			}
 			if (kehuDO.getTonnage() != null) {
 				kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
@@ -185,50 +180,13 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 		return flag;
 	}
-	
+
 	@Override
 	public int remove(Long id){
 
-		SijiItemDO sijiItem = this.get(id);
-		if (sijiItem==null){
-			return sijiItemDao.remove(id);
-		}
-		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
 
-		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
-        if (kehuDO==null){
-            return sijiItemDao.remove(id);
-        }
-		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
-			return 0;
-		}
+		int flag = SijiItemInvoiceDao.remove(id);
 
-
-		int flag = sijiItemDao.remove(id);
-
-
-         try {
-             kehuDO.setTonnage(new BigDecimal(0));
-             Map map = new HashMap();
-             map.put("pid", sijiItem.getPid());
-             List<SijiItemDO> list = sijiItemService.list(map);
-             for (SijiItemDO sijiItemDO : list) {
-                 kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
-             }
-             if (kehuDO.getTonnage() != null) {
-                 kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
-             }
-
-             BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
-             BigDecimal t2 = t1.multiply(kehuDO.getTranscost()).subtract(kehuDO.getInforfee());
-             kehuDO.setTransfee(t2); //运费
-
-             kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
-             kehuDao.update(kehuDO); //信息更新
-
-         }catch (Exception e){
-             e.printStackTrace();
-         }
 		return flag;
 
 
@@ -236,42 +194,69 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 	@Override
 	public int heDui(Long id){
-		return sijiItemDao.heDui(id);
+		return SijiItemInvoiceDao.heDui(id);
 	}
 
 	@Override
 	public int batchRemove(Long[] ids){
-		return sijiItemDao.batchRemove(ids);
+		return SijiItemInvoiceDao.batchRemove(ids);
 	}
 
 	@Override
 	public List<Map> querySijiList(Map<String, Object> map) {
-		List<Map> list = sijiItemDao.querySijiList(map);
 
-		for (Map emap : list){
-			Map param = new HashMap();
-			param.put("pid",emap.get("pid"));
-			List<SijiItemAminvoiceDO> aminvoicelist =
-					sijiItemAminvoiceService.getLastAminvoice(param);
-			if (aminvoicelist!=null && !aminvoicelist.isEmpty()){
-				emap.put("yue",aminvoicelist.get(0).getYue());
-			} else {
-				emap.put("yue",emap.get("trancost"));
-			}
-		}
-
-
-
-		return list;
+		return SijiItemInvoiceDao.querySijiList(map);
 	}
 
 
+	@Override
+	public List<SijiItemInvoiceDO> getBilldateList(Map<String, Object> map) {
+
+		return SijiItemInvoiceDao.getBilldateList(map);
+	}
+
+
+
+	@Override
+	public SijiItemInvoiceDO getAminvoicefoByPid(String id) {
+
+		Map map = new HashMap();
+		map.put("id",id);
+		SijiItemInvoiceDO SijiItemInvoiceDO = new SijiItemInvoiceDO();
+		List<SijiItemInvoiceDO> list = SijiItemInvoiceDao.getAminvoicefoByPid(map);
+		if (!list.isEmpty()){
+			SijiItemInvoiceDO = list.get(0);
+		}
+		return SijiItemInvoiceDO;
+	}
+
+
+	@Override
+	public SijiItemInvoiceDO getBillInfoByPid(String pid) {
+
+		Map map = new HashMap();
+		map.put("pid",pid);
+		SijiItemInvoiceDO SijiItemInvoiceDO = new SijiItemInvoiceDO();
+		List<SijiItemInvoiceDO> list = SijiItemInvoiceDao.getBilldateList(map);
+		if (!list.isEmpty()){
+			SijiItemInvoiceDO = list.get(0);
+
+//			List<SijiItemInvoiceDO>  yuelist = getLastAminvoice(map); //有余额取余额，没有取结算金额
+//			if (!yuelist.isEmpty()){
+//				SijiItemInvoiceDO.setYue(yuelist.get(0).getYue());
+//			} else {
+//				SijiItemInvoiceDO.setYue(SijiItemInvoiceDO.getAminvoice());
+//			}
+
+		}
+		return SijiItemInvoiceDO;
+	}
 
 
 	@Override
 	public void importExcel(List<SijiItemImp1> imp1s) {
 		for (SijiItemImp1 imp1 : imp1s) {
-			SijiItemDO js = sijiItemDao.get(imp1.getId());
+			SijiItemInvoiceDO js = SijiItemInvoiceDao.get(imp1.getId());
 			if (js!=null){
 				//交单日期之前未填写，并本次有填写
 				if ((js.getBilldate()==null||"".equals(js.getBilldate())) && imp1.getBilldate()!=null){
@@ -286,7 +271,7 @@ public class SijiItemServiceImpl implements SijiItemService {
 				js.setShuilv(imp1.getShuilv());
 				js.setShuie(js.getAminvoice().multiply(js.getShuilv()));//税额=结算金额*税率
 				js.setPaydate(imp1.getPaydate());
-				sijiItemDao.update(js);
+				SijiItemInvoiceDao.update(js);
 
 
 			}
@@ -295,7 +280,7 @@ public class SijiItemServiceImpl implements SijiItemService {
 	@Override
 	public void importExcel2(List<SijiItemImp2> imp2s) {
 		for (SijiItemImp2 imp2 : imp2s) {
-			SijiItemDO js = sijiItemDao.get(imp2.getId());
+			SijiItemInvoiceDO js = SijiItemInvoiceDao.get(imp2.getId());
 			if (js != null && js.getAminvoice()!=null){
 				//之前未导入或导入日期是当天，且本次付款方式不为空
 				if ((js.getInputdate() == null
@@ -305,7 +290,7 @@ public class SijiItemServiceImpl implements SijiItemService {
 					js.setTaxdatepay(imp2.getTaxdatepay());
 					js.setTakeamount(imp2.getTakeamount());
 					js.setInputdate(DateUtils.getNowDate());
-					sijiItemDao.update(js);
+					SijiItemInvoiceDao.update(js);
 				}
 
 			}

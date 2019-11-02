@@ -62,8 +62,8 @@
 					<div class="col-md-2">
 						<div class="form-group">
 
-							<input id="carnum" name="carnum" type="text" class="form-control" size="10"
-								   placeholder="车牌号">
+							<input id="issueoffice" name="issueoffice" type="text" class="form-control" size="10"
+								   placeholder="开票单位">
 
 						</div>
 					</div>
@@ -90,7 +90,7 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="control-label col-md-2">交单</label>
+							<label class="control-label col-md-2">录单</label>
 							<div class="col-md-5 ">
 
 								<input type="text" class="laydate-icon layer-date form-control"
@@ -266,8 +266,8 @@
         var prefix = "/gc/sijiItemAminvoice"
         $(function() {
 
-            $("#startDate").val(getNowFirstDate());
-            $("#endDate").val(getNowFormatDate());
+            //$("#startDate").val(getNowFirstDate());
+            //$("#endDate").val(getNowFormatDate());
 
             load();
         });
@@ -279,11 +279,11 @@
 
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
-            var carnum = $('#carnum').val();
+            var issueoffice = $('#issueoffice').val();
             var inforfee = $('#inforfee').val();
             var arrivstation = $('#arrivstation').val();
             window.open("/gc/siji/export?startDate="+startDate+"&endDate="+endDate
-                +"&carnum="+carnum+"&inforfee="+inforfee+"&arrivstation="+arrivstation+"&deptId="+deptId);
+                +"&issueoffice="+issueoffice+"&inforfee="+inforfee+"&arrivstation="+arrivstation+"&deptId="+deptId);
 
         }
 
@@ -359,7 +359,7 @@
                                 endDate:$('#endDate').val(),
                                 tstartDate:$('#tstartDate').val(),
                                 tendDate:$('#tendDate').val(),
-                                carnum:$('#carnum').val(),
+                                issueoffice:$('#issueoffice').val(),
                                 inforfee:$('#inforfee').val(),
                                 arrivstation:$('#arrivstation').val(),
                                 deptId:$('#deptId').val()
@@ -489,7 +489,7 @@
                                 align : 'center',
                                 formatter : function(value, row, index) {
                                     var d = '<a class="btn btn-primary btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="结算" onclick="edit(\''
-                                        + row.pid
+                                        + row.id
                                         + '\')">结算</a> ';
 
                                     var e = '<a class="btn btn-warning btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="删除" onclick="remove(\''
