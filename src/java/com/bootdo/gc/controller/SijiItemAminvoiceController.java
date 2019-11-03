@@ -93,7 +93,23 @@ public class SijiItemAminvoiceController extends BaseController {
 	}
 
 
+	/**
+	 *  editPiliang---->批量开票
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/editPiliang/{ids}")
+	String editPiliang(@PathVariable("ids") String ids,Model model){
 
+		model.addAttribute("ids", ids);
+
+		Map<String, Object> params = new HashMap();
+		List<Map<String, Object>> issueofficeList = sijiItemService.getIssueoffice(params);
+		model.addAttribute("issueofficeList", issueofficeList);
+
+		return "gc/siji/editPiliangBill";
+	}
 
 
 
@@ -130,6 +146,22 @@ public class SijiItemAminvoiceController extends BaseController {
 		return R.ok();
 	}
 
+
+	/**
+	 * 批量开票保存 ---->跳转保存
+	 */
+	@ResponseBody
+	@RequestMapping("/piliangSave")
+	public R piliangSave(@RequestParam Map<String, Object> params){
+
+		String id = params.get("ids").toString();
+		String ids [] = id.split(",");
+		params.put("array", ids);
+
+		sijiItemService.getBilldateArray(params);
+
+		return R.ok();
+	}
 
 
 

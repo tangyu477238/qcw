@@ -214,7 +214,23 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 		return SijiItemAminvoiceDao.getIssueoffice(map);
 	}
 
+	@Override
+	public void getBilldateArray(Map<String, Object> map) {
 
+		List<SijiItemAminvoiceDO> list = SijiItemAminvoiceDao.getBilldateArray(map);
+		for (SijiItemAminvoiceDO sijiItem : list){
+
+			SijiItemAminvoiceDO  si = getBillInfoByPid(sijiItem.getPid());
+			sijiItem.setIssueoffice(map.get("issueoffice").toString());
+			sijiItem.setIssueofficedate(map.get("issueofficedate").toString());
+			sijiItem.setInputdate(DateUtils.getNowDate());
+			sijiItem.setTakeamount(si.getYue());
+			sijiItem.setYue(new BigDecimal(0));
+			sijiItem.setState(1);
+			SijiItemAminvoiceDao.updateState(sijiItem);//更新是否最新结算
+			int flag = SijiItemAminvoiceDao.save(sijiItem);
+		}
+	}
 
 	@Override
 	public List<SijiItemAminvoiceDO> getBilldateList(Map<String, Object> map) {
@@ -232,14 +248,6 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 		List<SijiItemAminvoiceDO> list = SijiItemAminvoiceDao.getBilldateList(map);
 		if (!list.isEmpty()){
 			sijiItemAminvoiceDO = list.get(0);
-
-//			List<SijiItemAminvoiceDO>  yuelist = getLastAminvoice(map); //有余额取余额，没有取结算金额
-//			if (!yuelist.isEmpty()){
-//				sijiItemAminvoiceDO.setYue(yuelist.get(0).getYue());
-//			} else {
-//				sijiItemAminvoiceDO.setYue(sijiItemAminvoiceDO.getAminvoice());
-//			}
-
 		}
 		return sijiItemAminvoiceDO;
 	}

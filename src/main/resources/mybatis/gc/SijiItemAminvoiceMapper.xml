@@ -448,4 +448,50 @@ select * from (
 
 
 
+
+
+
+
+
+
+
+	<!--待开票数据 in -->
+
+	<select id="getBilldateArray" resultType="com.bootdo.gc.domain.SijiItemAminvoiceDO">
+
+		select * from (
+		select
+		s.pid ,s.order_no as orderNo,s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,
+		sum(si.kouling) as kouling,sum(si.aminvoice) as aminvoice,
+		sum(si.trancost) as trancost,s.custompay as scustompay,s.dept_id as deptId,IFNULL(max(i.yue),sum(si.aminvoice))
+		as yue
+		from gc_siji s
+		inner join gc_siji_item si on s.pid = si.pid
+		left join gc_siji_item_aminvoice i on i.pid = s.pid and i.state=1
+		where si.billdate is not null and si.billdate != ''
+
+		and s.pid IN
+		<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+
+
+		GROUP BY s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.pid,s.order_no,s.custompay,s.dept_id
+		) t
+		where t.yue>0
+		order by bizdate
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

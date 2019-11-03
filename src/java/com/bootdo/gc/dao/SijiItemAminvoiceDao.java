@@ -46,10 +46,13 @@ public interface SijiItemAminvoiceDao {
 
 	List<SijiItemAminvoiceDO> getLastAminvoice(Map<String, Object> map);
 
+	List<Map<String, Object>> getIssueoffice(Map<String, Object> map);
+
+
+
 	List<SijiItemAminvoiceDO> getBilldateList(Map<String, Object> map);
 
-
-	List<Map<String, Object>> getIssueoffice(Map<String, Object> map);
+	List<SijiItemAminvoiceDO> getBilldateArray(Map<String, Object> map);
 
 
 }
