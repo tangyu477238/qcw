@@ -59,7 +59,8 @@
 
 		FROM
 			gc_siji s
-		INNER JOIN gc_siji_item_invoice si ON si.pid = s.pid
+		INNER JOIN gc_siji_item_aminvoice sia ON sia.pid = s.pid
+		INNER JOIN gc_siji_item_invoice si ON si.pid = sia.id
 		where si.id = #{value}
 	</select>
 
@@ -402,7 +403,7 @@
 
 
 	<!--获取待结算余额-->
-	<select id="getAminvoicefoByPid" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
+	<select id="getAminvoicefoById" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
 
 		select * from (
 
@@ -462,5 +463,77 @@
 
 
 
+
+
+
+
+
+
+	<!--待结算数据-->
+	<select  id="querySijiArray" resultType="java.util.HashMap" >
+
+
+		select * from (
+
+
+		SELECT
+		s.`bizdate`,
+		s.`forwunit`,
+		s.`carnum`,
+
+		s.`arrivstation`,
+		s.`remark`,
+		s.`inforfee`,
+		s.`custompay` as scustompay,
+
+
+		si.`id`,
+		si.`pid`,
+		si.`steelnum`,
+		si.`specs`,
+		si.`packnum`,
+		si.`zhinum`,
+		si.`tonnage`,
+		si.`baseprice`,
+		si.`coefficient`,
+		si.`tranrate`,
+		si.`trancost`,
+
+
+		si.`billdate`,
+		si.`aminvoice`,
+		si.aminvoicedate,
+		si.`issueoffice`,
+		si.`issueofficedate`,
+
+
+		si.`custompay`,
+		si.`taxdatepay`,
+		si.`payer`,
+		si.kouling,
+		si.takeamount,
+		si.inputdate,
+		si.yue,
+
+		si.shuilv,
+		si.shuie,
+		s.order_no as orderNo,IFNULL(i.yue,si.aminvoice)  as syue
+
+		FROM
+		gc_siji s
+		INNER JOIN gc_siji_item_aminvoice si ON si.pid = s.pid
+		left join gc_siji_item_invoice i on i.pid = si.id and i.state=1
+
+		where 1=1  and si.id IN
+		<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+
+
+		) t
+		where syue>0
+
+
+	</select>
 
 </mapper>

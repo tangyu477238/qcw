@@ -270,32 +270,30 @@
 		FROM
 			gc_siji s
 				INNER JOIN gc_siji_item si ON si.pid = s.pid
-
+			where (si.billdate ='' or si.billdate is null )
 		]]>
 
 
-		<where>
 
 
-			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
-			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
-			<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
-			<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
 
-			<if test="inforfee != null and inforfee != ''">
-				<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
-			</if>
-			<if test="carnum != null and carnum != ''">
-				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
-			</if>
-			<if test="arrivstation != null and arrivstation != ''">
-				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
-			</if>
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+		<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+		<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
 
-			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+		<if test="inforfee != null and inforfee != ''">
+			<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
+		</if>
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+		<if test="arrivstation != null and arrivstation != ''">
+			<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+		</if>
 
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
-		</where>
 
 
 
@@ -317,28 +315,28 @@
 		FROM
 		gc_siji s
 		INNER JOIN gc_siji_item si ON si.pid = s.pid
+		where (si.billdate ='' or si.billdate is null )
 
-		<where>
 
 
-			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
-			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
-			<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
-			<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+		<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+		<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
 
-			<if test="inforfee != null and inforfee != ''">
-				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
-			</if>
-			<if test="carnum != null and carnum != ''">
-				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
-			</if>
-			<if test="arrivstation != null and arrivstation != ''">
-				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
-			</if>
+		<if test="inforfee != null and inforfee != ''">
+			<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+		</if>
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+		<if test="arrivstation != null and arrivstation != ''">
+			<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+		</if>
 
-			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
-		</where>
+
 
 	</select>
 
