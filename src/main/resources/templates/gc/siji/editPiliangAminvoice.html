@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="ids" name="ids" th:value="${ids}"  type="hidden">
+
+
+
+
+							<div class="form-group">
+
+
+								<label class="col-sm-2 control-label">收款方式：</label>
+								<div class="col-sm-3">
+									<input  id="taxdatepay"   name="taxdatepay" class="form-control" type="text">
+								</div>
+
+
+								<label class="col-sm-2 control-label">收款日期：</label>
+								<div class="col-sm-3">
+
+
+									<input type="text"  id="custompay"    name="custompay"
+										   placeholder="日期" class="laydate-icon layer-date form-control" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+										   style="background-color: #fff;" readonly="readonly" required/>
+								</div>
+
+							</div>
+
+                            <!--<div class="form-group">-->
+
+                                <!--<label class="col-sm-2 control-label">收款金额：</label>-->
+                                <!--<div class="col-sm-3">-->
+                                    <!--<input id="takeamount"   th:value="${siji.takeamount}" name="takeamount"-->
+                                           <!--class="form-control" type="text" onkeyup="setInputdate()">-->
+                                <!--</div>-->
+
+
+								<!--<label class="col-sm-2 control-label">录入日期：</label>-->
+								<!--<div class="col-sm-3">-->
+									<!--<input id="inputdate"  th:value="${siji.inputdate}" name="inputdate"-->
+										   <!--class="form-control" type="text" readonly="readonly">-->
+								<!--</div>-->
+
+
+							<!--</div>-->
+
+
+
+
+							<div class="form-group">
+								<div class="col-sm-12 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary" onclick="update()">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+
+
+
+
+
+
+
+<div th:include="gc/include::footer"></div>
+
+
+
+<script type="text/javascript">
+
+    $().ready(function() {
+
+    });
+
+    
+
+
+    function update() {
+
+        var ids = $("#ids").val();
+        var taxdatepay = $("#taxdatepay").val();
+        var custompay = $("#custompay").val();
+
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/gc/sijiItemInvoice/updatePiliang",
+            data : {
+                'ids' : ids,
+                'taxdatepay' : taxdatepay,
+                'custompay' : custompay
+			},
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    parent.reLoad();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+
+    }
+
+
+
+
+</script>
+</body>
+</html>

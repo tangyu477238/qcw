@@ -135,6 +135,11 @@
 							<!--<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">-->
 								<!--<span class="glyphicon glyphicon glyphicon-import">收款导入</span>-->
 							<!--</button>-->
+
+
+							<button   shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary" onclick="piliang()">
+								<span class="glyphicon glyphicon glyphicon-import">批量结算</span>
+							</button>
 						</div>
 					</div>
 
@@ -271,6 +276,36 @@
 
             load();
         });
+
+
+        function piliang() {
+            var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+            if (rows.length == 0) {
+                layer.msg("请选择要结算的数据");
+                return;
+            }
+
+            var ids ='' ;
+
+            // 遍历所有选择的行数据，取每条数据对应的ID
+            $.each(rows, function(i, row) {
+                ids =ids + row['id']+',';
+            });
+
+            layer.open({
+                type : 2,
+                title : '编辑',
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : '/gc/sijiItemInvoice/editPiliang/' + ids // iframe的url
+            });
+
+
+
+
+        }
+
 
 
 
@@ -429,7 +464,7 @@
                             },
                             {
                                 field : 'billdate',
-                                title : '交单日期' ,
+                                title : '对账日期' ,
                                 align : 'center'
                             },
                             {
