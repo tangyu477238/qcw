@@ -82,6 +82,40 @@ public class SijiItemController extends BaseController {
 
 
 
+	/**
+	 * 发货明细表 ---->跳转批量对账
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/editPiliangItem/{ids}")
+	String editPiliangItem(@PathVariable("ids") String ids,Model model){
+		model.addAttribute("ids", ids);
+		return "gc/siji/editPiliangItem";
+	}
+
+
+
+    /**
+     * 对账保存 --批量-->跳转保存
+     */
+    @ResponseBody
+    @RequestMapping("/updatePiliang")
+    public R updatePiliang(@RequestParam Map<String, Object> params){
+
+        String id = params.get("ids").toString();
+        String ids [] = id.split(",");
+        params.put("array", ids);
+
+//        sijiItemService.getInvoicedateArray(params);
+
+        return R.ok();
+    }
+
+
+
+
+
 
 	/**
 	 * 发货明细表 ---->跳转保存

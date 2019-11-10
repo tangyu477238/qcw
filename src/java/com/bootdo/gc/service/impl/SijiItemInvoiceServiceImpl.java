@@ -75,7 +75,39 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 	}
 
 
+	@Override
+	public void getInvoicedateArray(Map<String, Object> map) {
 
+		List<Map> list = SijiItemInvoiceDao.querySijiArray(map);
+
+
+		Map papms = new HashMap();
+		for (Map itemMap : list){
+
+
+			papms.put("id", itemMap.get("id"));
+			SijiItemInvoiceDO sijiItemInvoiceDO = new SijiItemInvoiceDO();
+			List<SijiItemInvoiceDO> invoiceList = SijiItemInvoiceDao.getAminvoicefoById(papms);
+			if (!invoiceList.isEmpty()){
+				sijiItemInvoiceDO = invoiceList.get(0);
+			}
+
+
+			SijiItemInvoiceDao.updateState(sijiItemInvoiceDO);//更新是否最新结算
+
+			sijiItemInvoiceDO.setCustompay(map.get("custompay").toString());
+			sijiItemInvoiceDO.setTaxdatepay(map.get("taxdatepay").toString());
+			sijiItemInvoiceDO.setInputdate(DateUtils.getNowDate());
+
+			sijiItemInvoiceDO.setTakeamount(sijiItemInvoiceDO.getYue());
+
+			sijiItemInvoiceDO.setYue(new BigDecimal(0));
+			sijiItemInvoiceDO.setState(1);
+			int flag = SijiItemInvoiceDao.save(sijiItemInvoiceDO);
+		}
+
+
+	}
 
 	@Override
 	public int save(SijiItemInvoiceDO sijiItem){
@@ -217,13 +249,17 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 
 
 
+
+
+
+
 	@Override
-	public SijiItemInvoiceDO getAminvoicefoByPid(String id) {
+	public SijiItemInvoiceDO getAminvoicefoById(String id) {
 
 		Map map = new HashMap();
 		map.put("id",id);
 		SijiItemInvoiceDO SijiItemInvoiceDO = new SijiItemInvoiceDO();
-		List<SijiItemInvoiceDO> list = SijiItemInvoiceDao.getAminvoicefoByPid(map);
+		List<SijiItemInvoiceDO> list = SijiItemInvoiceDao.getAminvoicefoById(map);
 		if (!list.isEmpty()){
 			SijiItemInvoiceDO = list.get(0);
 		}

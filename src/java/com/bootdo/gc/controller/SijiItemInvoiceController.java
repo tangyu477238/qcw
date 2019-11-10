@@ -93,7 +93,7 @@ public class SijiItemInvoiceController extends BaseController {
 	 */
 	@GetMapping("/editItem/{id}")
 	String editItem(@PathVariable("id") String id,Model model){
-		SijiItemInvoiceDO siji = sijiItemService.getAminvoicefoByPid(id);
+		SijiItemInvoiceDO siji = sijiItemService.getAminvoicefoById(id);
 		model.addAttribute("siji", siji);
 		return "gc/siji/editItemAminvoice";
 	}
@@ -117,6 +117,36 @@ public class SijiItemInvoiceController extends BaseController {
 
 
 
+	/**
+	 *  待结算列表--批量-->跳转开始gc_siji_item_invoice（收款）界面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/editPiliang/{ids}")
+	String editPiliang(@PathVariable("ids") String ids,Model model){
+		model.addAttribute("ids", ids);
+
+		return "gc/siji/editPiliangAminvoice";
+	}
+
+
+
+	/**
+	 * 收款保存 --批量-->跳转保存
+	 */
+	@ResponseBody
+	@RequestMapping("/updatePiliang")
+	public R updatePiliang(@RequestParam Map<String, Object> params){
+
+		String id = params.get("ids").toString();
+		String ids [] = id.split(",");
+		params.put("array", ids);
+
+		sijiItemService.getInvoicedateArray(params);
+
+		return R.ok();
+	}
 
 
 

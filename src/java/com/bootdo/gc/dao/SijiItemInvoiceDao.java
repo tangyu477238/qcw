@@ -1,5 +1,6 @@
 package com.bootdo.gc.dao;
 
+import com.bootdo.gc.domain.SijiItemAminvoiceDO;
 import com.bootdo.gc.domain.SijiItemInvoiceDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -48,9 +49,11 @@ public interface SijiItemInvoiceDao {
 
 	List<SijiItemInvoiceDO> getBilldateList(Map<String, Object> map);
 
-	List<SijiItemInvoiceDO> getAminvoicefoByPid(Map<String, Object> map);
+
+	List<SijiItemInvoiceDO> getAminvoicefoById(Map<String, Object> map);
 
 
+	List<Map> querySijiArray(Map<String, Object> map);
 
 
 }

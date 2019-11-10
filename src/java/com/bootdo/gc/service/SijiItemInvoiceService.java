@@ -50,6 +50,8 @@ public interface SijiItemInvoiceService {
 
 	SijiItemInvoiceDO getBillInfoByPid(String pid);
 
-	SijiItemInvoiceDO getAminvoicefoByPid(String pid);
+	SijiItemInvoiceDO getAminvoicefoById(String id);
 
+
+	void getInvoicedateArray(Map<String, Object> map);
 }
