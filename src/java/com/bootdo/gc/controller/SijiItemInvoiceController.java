@@ -119,7 +119,7 @@ public class SijiItemInvoiceController extends BaseController {
 
 	/**
 	 *  待结算列表--批量-->跳转开始gc_siji_item_invoice（收款）界面
-	 * @param id
+	 * @param ids
 	 * @param model
 	 * @return
 	 */
@@ -224,12 +224,23 @@ public class SijiItemInvoiceController extends BaseController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	public R remove( Long id){
+	public R remove(Long id){
 		if(sijiItemService.remove(id)>0){
 			return R.ok();
 		}
-		return R.errorMsg("操作失败！");
+		return R.errorMsg("操作失败！录入日期可能非当天");
 	}
+
+
+	@PostMapping( "/removeAdmin")
+	@ResponseBody
+	public R removeAdmin(Long id){
+		if(sijiItemService.removeAdmin(id)>0){
+			return R.ok();
+		}
+		return R.errorMsg("操作失败！录入日期可能非当天");
+	}
+
 
 //
 //

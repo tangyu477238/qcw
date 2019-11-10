@@ -44,4 +44,8 @@ public interface SijiItemService {
 
 	void importExcel(List<SijiItemImp1> imp1s);
 	void importExcel2(List<SijiItemImp2> imp2s);
+
+	void updatePiliang(Map<String, Object> map);
+
+
 }

@@ -33,6 +33,8 @@ public interface SijiItemInvoiceService {
 
 	int remove(Long id);
 
+	int removeAdmin(Long id);
+
 	int batchRemove(Long[] ids);
 
 	List<Map> querySijiList(Map<String, Object> map);

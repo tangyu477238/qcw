@@ -55,7 +55,7 @@ public interface SijiItemAminvoiceDao {
 	List<SijiItemAminvoiceDO> getBilldateArray(Map<String, Object> map);
 
 
-
+	List<Map<String, Object>> getInvoiceList(Long id);
 
 
 }

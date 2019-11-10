@@ -88,8 +88,8 @@ public class SijiItemController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/editPiliangItem/{ids}")
-	String editPiliangItem(@PathVariable("ids") String ids,Model model){
+	@GetMapping("/editPiliang/{ids}")
+	String editPiliang(@PathVariable("ids") String ids,Model model){
 		model.addAttribute("ids", ids);
 		return "gc/siji/editPiliangItem";
 	}
@@ -107,7 +107,7 @@ public class SijiItemController extends BaseController {
         String ids [] = id.split(",");
         params.put("array", ids);
 
-//        sijiItemService.getInvoicedateArray(params);
+        sijiItemService.updatePiliang(params);
 
         return R.ok();
     }

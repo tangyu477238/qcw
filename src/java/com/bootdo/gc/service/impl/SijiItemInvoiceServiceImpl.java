@@ -213,14 +213,24 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 		return flag;
 	}
 
+
+	@Override
+	public int removeAdmin(Long id){
+		int flag = SijiItemInvoiceDao.remove(id);
+		return flag;
+	}
+
 	@Override
 	public int remove(Long id){
 
+		SijiItemInvoiceDO sijiItemInvoiceDO = SijiItemInvoiceDao.get(id);
+		if (!DateUtils.getNowDate().equals(sijiItemInvoiceDO.getInputdate())){
+			return 0 ;
+		}
 
-		int flag = SijiItemInvoiceDao.remove(id);
+		int flag = this.removeAdmin(id);
 
 		return flag;
-
 
 	}
 

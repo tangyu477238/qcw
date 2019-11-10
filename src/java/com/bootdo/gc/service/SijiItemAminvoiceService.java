@@ -32,7 +32,10 @@ public interface SijiItemAminvoiceService {
 	int updateItem(SijiItemAminvoiceDO sijiItem);
 	
 	int remove(Long id);
-	
+
+	int removeAdmin(Long id);
+
+
 	int batchRemove(Long[] ids);
 
 	List<Map> querySijiList(Map<String, Object> map);
@@ -53,6 +56,8 @@ public interface SijiItemAminvoiceService {
 
 	List<SijiItemAminvoiceDO> getBilldateList(Map<String, Object> map);
     void getBilldateArray(Map<String, Object> map);
+
+
 
 
 

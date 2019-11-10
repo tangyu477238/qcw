@@ -247,8 +247,23 @@ public class SijiItemAminvoiceController extends BaseController {
 		if(sijiItemService.remove(id)>0){
 			return R.ok();
 		}
-		return R.errorMsg("操作失败！");
+		return R.errorMsg("操作失败！录入日期可能非当天或已产生回款！");
 	}
+
+
+
+	/**
+	 * //结算明细单----->删除
+	 */
+	@PostMapping( "/removeAdmin")
+	@ResponseBody
+	public R removeAdmin( Long id){
+		if(sijiItemService.remove(id)>0){
+			return R.ok();
+		}
+		return R.errorMsg("操作失败！录入日期可能非当天或已产生回款！");
+	}
+
 
 //
 //

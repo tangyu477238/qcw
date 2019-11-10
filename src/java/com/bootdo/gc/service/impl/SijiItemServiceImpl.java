@@ -313,4 +313,23 @@ public class SijiItemServiceImpl implements SijiItemService {
 	}
 
 
+	@Override
+	public void updatePiliang(Map<String, Object> map) {
+
+		String ids [] = (String[]) map.get("array");
+
+		for (String id : ids){
+
+			SijiItemDO sijiItemDO =  sijiItemDao.get(new Long(id));
+
+			sijiItemDO.setAminvoice(sijiItemDO.getTrancost()); //运费等于结算金额
+			sijiItemDO.setKouling(new BigDecimal(0));
+			sijiItemDO.setBilldate(map.get("billdate").toString());
+			int flag = sijiItemDao.update(sijiItemDO);
+		}
+	}
+
+
+
+
 }
