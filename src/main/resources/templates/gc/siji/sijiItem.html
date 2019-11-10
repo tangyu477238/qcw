@@ -90,7 +90,7 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="control-label col-md-2">交单</label>
+							<label class="control-label col-md-2">对账</label>
 							<div class="col-md-5 ">
 
 								<input type="text" class="laydate-icon layer-date form-control"
@@ -125,16 +125,22 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<button type="button" onclick="reLoad()" class="btn btn-primary">查询</button>
-							<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>
+							<button type="button" class="btn  btn-primary" onclick="excel()">导出</button>
 							<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>
 
 
-							<button id="import1" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary">
-								<span class="glyphicon glyphicon glyphicon-import">结算导入</span>
-							</button>
-							<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">
-								<span class="glyphicon glyphicon glyphicon-import">收款导入</span>
-							</button>
+							<!--<button id="import1" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary">-->
+								<!--<span class="glyphicon glyphicon glyphicon-import">结算导入</span>-->
+							<!--</button>-->
+							<!--<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">-->
+								<!--<span class="glyphicon glyphicon glyphicon-import">收款导入</span>-->
+							<!--</button>-->
+
+                            <button  shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary" onclick="piliang()">
+                                批量对账
+                            </button>
+
+
 						</div>
 					</div>
 
@@ -271,6 +277,37 @@
 
             load();
         });
+
+
+
+        function piliang() {
+            var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+            if (rows.length == 0) {
+                layer.msg("请选择要对账的数据");
+                return;
+            }
+
+            var ids ='' ;
+
+            // 遍历所有选择的行数据，取每条数据对应的ID
+            $.each(rows, function(i, row) {
+                ids =ids + row['id']+',';
+            });
+
+            layer.open({
+                type : 2,
+                title : '编辑',
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : prefix + '/editPiliang/' + ids // iframe的url
+            });
+
+
+
+
+        }
+
 
 
 
@@ -492,7 +529,7 @@
                             },
                             {
                                 field : 'billdate',
-                                title : '交单日期' ,
+                                title : '对账日期' ,
                                 align : 'center'
                             },
                             {

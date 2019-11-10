@@ -142,7 +142,7 @@
 
 
 							<button   shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary" onclick="piliang()">
-								<span class="glyphicon glyphicon glyphicon-import">批量开票</span>
+								批量开票
 							</button>
 
 						</div>
@@ -475,6 +475,20 @@
 										}
 									}
 									return amount.toFixed(2);
+                                }
+                            },
+                            {
+                                field : 'yue',
+                                title : '余额' ,
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].yue!='' && value[i].yue!=null){
+                                            amount += parseFloat(value[i].yue);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
                                 }
                             },
                             {
