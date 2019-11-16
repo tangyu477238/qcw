@@ -216,6 +216,12 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 
 	@Override
 	public int removeAdmin(Long id){
+
+		int maxid = SijiItemInvoiceDao.getMaxId(id);
+		if(maxid>0){
+			SijiItemInvoiceDao.updateLastState(maxid);
+		}
+
 		int flag = SijiItemInvoiceDao.remove(id);
 		return flag;
 	}
@@ -225,9 +231,11 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 
 		SijiItemInvoiceDO sijiItemInvoiceDO = SijiItemInvoiceDao.get(id);
 		if (!DateUtils.getNowDate().equals(sijiItemInvoiceDO.getInputdate())){
-			return 0 ;
+			return -2 ;
 		}
-
+		if (sijiItemInvoiceDO.getState()!=1){
+			return -1 ;
+		}
 		int flag = this.removeAdmin(id);
 
 		return flag;

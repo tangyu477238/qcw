@@ -184,6 +184,23 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 
 
 	@Override
+	public int removeBill(String id){
+		Map map = new HashMap();
+		map.put("pid",id);
+
+		int count  = SijiItemAminvoiceDao.count(map); //已开票
+		if (count > 0) {
+			return 0 ;
+		}
+		int flag = SijiItemAminvoiceDao.removeBill(map);
+
+		return flag;
+
+	}
+
+
+
+	@Override
 	public int removeAdmin(Long id){
 
 		List<Map<String, Object>> invoiceList = SijiItemAminvoiceDao.getInvoiceList(id);
@@ -191,7 +208,14 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 			return 0 ;
 		}
 
+		int maxid = SijiItemAminvoiceDao.getMaxId(id);
+		if(maxid>0){
+			SijiItemAminvoiceDao.updateLastState(maxid);
+		}
+
 		int flag = SijiItemAminvoiceDao.remove(id);
+
+
 
 		return flag;
 
@@ -202,7 +226,10 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 
 		SijiItemAminvoiceDO sijiItemAminvoiceDo = SijiItemAminvoiceDao.get(id);
 		if (!DateUtils.getNowDate().equals(sijiItemAminvoiceDo.getInputdate())){
-			return 0 ;
+			return -2 ;
+		}
+		if (sijiItemAminvoiceDo.getState()!=1){
+			return -1 ;
 		}
 
 		int flag = this.removeAdmin(id);

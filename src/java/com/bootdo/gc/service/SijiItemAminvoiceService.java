@@ -33,6 +33,9 @@ public interface SijiItemAminvoiceService {
 	
 	int remove(Long id);
 
+	int removeBill(String id);
+
+
 	int removeAdmin(Long id);
 
 

@@ -244,11 +244,29 @@ public class SijiItemAminvoiceController extends BaseController {
 	@PostMapping( "/remove")
 	@ResponseBody
 	public R remove( Long id){
-		if(sijiItemService.remove(id)>0){
+
+		int flag = sijiItemService.remove(id);
+		if(flag>0){
+			return R.ok();
+		} else if (flag == -1){
+			return R.errorMsg("操作失败！此单非最后一次录入的订单！");
+		} else if (flag == -2){
+			return R.errorMsg("操作失败！此单录入日期非当天！");
+		}
+		return R.errorMsg("操作失败！此单已产生回款！");
+	}
+	/**
+	 * //待开票数据清除----->删除
+	 */
+	@PostMapping( "/removeBill")
+	@ResponseBody
+	public R removeBill(String id){
+		if(sijiItemService.removeBill(id)>0){
 			return R.ok();
 		}
-		return R.errorMsg("操作失败！录入日期可能非当天或已产生回款！");
+		return R.errorMsg("操作失败！或已产生开票！");
 	}
+
 
 
 

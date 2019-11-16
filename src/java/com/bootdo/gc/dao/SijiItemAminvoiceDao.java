@@ -23,14 +23,18 @@ public interface SijiItemAminvoiceDao {
 	List<SijiItemAminvoiceDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
-	
+
+	int getMaxId(Long id);
+
 	int save(SijiItemAminvoiceDO sijiItem);
 	
 	int update(SijiItemAminvoiceDO sijiItem);
 
 	int updateState(SijiItemAminvoiceDO sijiItem);
 
-	
+
+	int updateLastState(int id);
+
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
@@ -57,5 +61,6 @@ public interface SijiItemAminvoiceDao {
 
 	List<Map<String, Object>> getInvoiceList(Long id);
 
+	int removeBill(Map<String, Object> map);
 
 }

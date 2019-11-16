@@ -25,12 +25,15 @@ public interface SijiItemInvoiceDao {
 
 	int count(Map<String, Object> map);
 
+	int getMaxId(Long id);
+
 	int save(SijiItemInvoiceDO sijiItem);
 
 	int update(SijiItemInvoiceDO sijiItem);
 
 	int updateState(SijiItemInvoiceDO sijiItem);
 
+	int updateLastState(int id);
 
 	int remove(Long id);
 

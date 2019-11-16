@@ -225,8 +225,15 @@ public class SijiItemInvoiceController extends BaseController {
 	@PostMapping( "/remove")
 	@ResponseBody
 	public R remove(Long id){
-		if(sijiItemService.remove(id)>0){
+
+		int flag = sijiItemService.remove(id);
+
+		if(flag>0){
 			return R.ok();
+		} else if (flag == -1){
+			return R.errorMsg("操作失败！此单非最后一次录入的订单！");
+		} else if (flag == -2){
+			return R.errorMsg("操作失败！此单录入日期非当天！");
 		}
 		return R.errorMsg("操作失败！录入日期可能非当天");
 	}
