@@ -76,6 +76,10 @@
         var ids = $("#ids").val();
         var issueoffice = $("#issueoffice").val();
         var issueofficedate = $("#issueofficedate").val();
+        if (issueofficedate=='') {
+            parent.layer.msg("开票日期不能为空");
+            return ;
+        }
         $.ajax({
             cache : true,
             type : "POST",

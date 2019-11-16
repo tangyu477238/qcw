@@ -500,7 +500,11 @@
                                         + row.pid
                                         + '\')">开票</a> ';
 
-                                    return e ;
+                                    var f = '<a class="btn btn-primary btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="删除" onclick="remove(\''
+                                        + row.pid
+                                        + '\')">删除</a> ';
+
+                                    return f + e ;
                                 }
                             }]
                     });
@@ -602,7 +606,7 @@
                 btn : [ '确定', '取消' ]
             }, function() {
                 $.ajax({
-                    url : prefix+"/remove",
+                    url : prefix+"/removeBill",
                     type : "post",
                     data : {
                         'id' : id

@@ -460,89 +460,90 @@
 	select
 	t1.inforfee ,
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m')
-	then (IFNULL(t1.takeamount,0) ) end),0)
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m') and t1.inputdate<#{inputdate})
+	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth11',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth10',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth9',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth8',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth7',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth6',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth5',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth4',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth3',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth2',
 
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when LEFT(t1.inputdate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m')
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth1',
 
-	IFNULL(sum(case when (LEFT(t1.inputdate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and t1.inputdate<#{inputdate})
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then (IFNULL(t1.takeamount,0)) end),0)
 	-
-	IFNULL(sum(case when (LEFT(t1.inputdate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and t1.inputdate<#{inputdate})
+	IFNULL(sum(case when (LEFT(t1.bizdate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and t1.inputdate<#{inputdate})
 	then ((case when t2.inputdate<#{inputdate} then IFNULL(t2.invoamount,0) else 0 end)) end),0)
 	as 'bizMonth0'
+
 	,IFNULL(sum(case when t1.inputdate =#{inputdate} then t1.takeamount else 0 end),0)  as aminvoice
 	,IFNULL(sum(case when t2.inputdate =#{inputdate} then t2.invoamount else 0 end),0)  as takeamount
 
@@ -556,10 +557,10 @@
 
 
 	  	select
-		sum(takeamount) as takeamount, inforfee, inputdate
+		sum(takeamount) as takeamount, inforfee, inputdate, bizdate
 		from (
 
-			SELECT max(k.takeamount) as takeamount,s.inforfee,k.inputdate ,k.id
+			SELECT max(k.takeamount) as takeamount,s.inforfee,k.inputdate ,k.id,s.bizdate
 			from gc_siji s
 			inner join gc_siji_item si on s.pid = si.pid
 			inner join gc_siji_item_aminvoice k on k.pid = si.pid
@@ -572,10 +573,10 @@
 				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
 			</if>
 			<![CDATA[
-			GROUP BY s.inforfee,k.inputdate,k.id
+			GROUP BY s.inforfee,k.inputdate,k.id,s.bizdate
 
 		) t
-		group by inforfee, inputdate
+		group by inforfee, inputdate, bizdate
 
 
 	) t1
@@ -585,10 +586,10 @@
 
 
 	select
-	sum(invoamount) as invoamount, inforfee, inputdate
+	sum(invoamount) as invoamount, inforfee, inputdate,bizdate
 	from (
 		SELECT
-		max(invo.takeamount) as invoamount,s.inforfee,k.inputdate ,invo.id
+		max(invo.takeamount) as invoamount,s.inforfee,k.inputdate ,invo.id,s.bizdate
 		from gc_siji s
 		inner join gc_siji_item si on s.pid = si.pid
 		inner join gc_siji_item_aminvoice k on k.pid = si.pid
@@ -603,15 +604,15 @@
 		</if>
 		<![CDATA[
 
-		GROUP BY s.inforfee,k.inputdate,invo.id
+		GROUP BY s.inforfee,k.inputdate,invo.id,s.bizdate
 	) t
-	group by inforfee, inputdate
+	group by inforfee, inputdate,bizdate
 
 
 
 
 
-	) t2 on t1.inforfee = t2.inforfee and t1.inputdate = t2.inputdate
+	) t2 on t1.inforfee = t2.inforfee and t1.inputdate = t2.inputdate and t1.bizdate = t2.bizdate
 
 
     group by t1.inforfee

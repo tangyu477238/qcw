@@ -474,17 +474,16 @@
                             {
                                 field : 'takeamount',
                                 title : '收款金额' ,
-                                align : 'center'
-								// ,
-                                // footerFormatter: function (value) {
-                                //     var amount = 0;
-                                //     for (var i in value) {
-                                //         if (value[i].takeamount!='' && value[i].takeamount!=null){
-                                //             amount += parseFloat(value[i].takeamount);
-                                //         }
-                                //     }
-                                //     return amount.toFixed(2);
-                                // }
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].takeamount!='' && value[i].takeamount!=null){
+                                            amount += parseFloat(value[i].takeamount);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
                             },
                             // {
 							//

@@ -500,23 +500,32 @@
                             {
                                 field : 'takeamount',
                                 title : '开票金额' ,
-                                align : 'center'
-								// ,
-                                // footerFormatter: function (value) {
-                                //     var amount = 0;
-                                //     for (var i in value) {
-                                //         if (value[i].takeamount!='' && value[i].takeamount!=null){
-                                //             amount += parseFloat(value[i].takeamount);
-                                //         }
-                                //     }
-                                //     return amount.toFixed(2);
-                                // }
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].takeamount!='' && value[i].takeamount!=null){
+                                            amount += parseFloat(value[i].takeamount);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
                             },
                             {
 
                                 title : '余额' ,
                                 align : 'center',
-                                field : 'syue'
+                                field : 'syue',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].syue!='' && value[i].syue!=null){
+                                            amount += parseFloat(value[i].syue);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
+
                             },
                             {
                                 title : '系统操作',

@@ -55,6 +55,7 @@
 			si.`taxdatepay`,
 			si.`payer`,
 			si.kouling,si.takeamount,si.inputdate,si.yue,si.shuilv,si.shuie,
+			si.state,
 			s.order_no as orderNo
 
 		FROM
@@ -164,6 +165,11 @@
 
 
 
+	<update id="updateLastState" >
+		update gc_siji_item_aminvoice set state = 1
+
+		where id = #{id}
+	</update>
 
 
 	<update id="updateState" parameterType="com.bootdo.gc.domain.SijiItemAminvoiceDO">
@@ -281,7 +287,7 @@ select * from (
 
 		    si.shuilv,
 		    si.shuie,
-			s.order_no as orderNo,IFNULL(i.yue,si.aminvoice)  as syue
+			s.order_no as orderNo,IFNULL(i.yue,si.takeamount)  as syue
 
 		FROM
 			gc_siji s
@@ -503,6 +509,13 @@ select * from (
 
 
 
+	<!--清除对账记录-->
+
+	<update id="removeBill" >
+		update gc_siji_item set billdate = null ,aminvoice = null ,kouling = null
+
+		where pid = #{pid}
+	</update>
 
 
 
@@ -510,5 +523,14 @@ select * from (
 
 
 
+
+	<select id="getMaxId" resultType="int">
+
+		SELECT IFNULL(max(ss.id), 0) id
+		from gc_siji_item_aminvoice  s
+		inner join gc_siji_item_aminvoice ss on s.pid = ss.pid
+		where  s.id = #{id} and ss.id !=#{id}
+
+	</select>
 
 </mapper>

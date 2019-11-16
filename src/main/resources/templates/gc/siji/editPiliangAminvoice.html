@@ -19,7 +19,7 @@
 
 								<label class="col-sm-2 control-label">收款方式：</label>
 								<div class="col-sm-3">
-									<input  id="taxdatepay"   name="taxdatepay" class="form-control" type="text">
+									<input  id="taxdatepay"   name="taxdatepay" class="form-control" type="text" required/>
 								</div>
 
 
@@ -88,10 +88,15 @@
 
     function update() {
 
+
+
         var ids = $("#ids").val();
         var taxdatepay = $("#taxdatepay").val();
         var custompay = $("#custompay").val();
-
+        if (custompay=='') {
+            parent.layer.msg("收款日期不能为空");
+            return ;
+        }
         $.ajax({
             cache : true,
             type : "POST",

@@ -55,6 +55,7 @@
 			si.`taxdatepay`,
 			si.`payer`,
 			si.kouling,si.takeamount,si.inputdate,si.yue,si.shuilv,si.shuie,
+			si.state,
 			s.order_no as orderNo
 
 		FROM
@@ -535,5 +536,26 @@
 
 
 	</select>
+
+
+
+
+	<select id="getMaxId" resultType="int">
+
+		SELECT IFNULL(max(ss.id), 0) id
+		from gc_siji_item_invoice  s
+				 inner join gc_siji_item_invoice ss on s.pid = ss.pid
+		where  s.id = #{id} and ss.id !=#{id}
+
+	</select>
+
+
+
+	<update id="updateLastState" >
+		update gc_siji_item_invoice set state = 1
+
+		where id = #{id}
+	</update>
+
 
 </mapper>

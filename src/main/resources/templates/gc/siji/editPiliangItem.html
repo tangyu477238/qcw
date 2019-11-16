@@ -68,6 +68,10 @@
     function update() {
         var ids = $("#ids").val();
         var billdate = $("#billdate").val();
+        if (billdate=='') {
+            parent.layer.msg("对账日期不能为空");
+            return ;
+        }
         $.ajax({
             cache : true,
             type : "POST",
