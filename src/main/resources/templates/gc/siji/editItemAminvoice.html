@@ -121,7 +121,12 @@
 
 								<label class="col-sm-2 control-label">收款方式：</label>
 								<div class="col-sm-3">
-									<input  id="taxdatepay" th:value="${siji.taxdatepay}" name="taxdatepay" class="form-control" type="text">
+									<!--<input  id="taxdatepay" th:value="${siji.taxdatepay}" name="taxdatepay" class="form-control" type="text">-->
+
+									<select data-placeholder="--请选择--" name="taxdatepay" id="taxdatepay"
+											class="selectpicker form-control" data-live-search="true">
+										<option th:each="issueoffice : ${issueofficeList}" th:value="${issueoffice.name}" th:text="${issueoffice.name}"  ></option>
+									</select>
 								</div>
 
 

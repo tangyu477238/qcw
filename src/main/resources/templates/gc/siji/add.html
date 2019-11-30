@@ -31,7 +31,12 @@
 
 								<label class="col-sm-1 control-label">发货单位：</label>
 								<div class="col-sm-4">
-									<input id="forwunit" name="forwunit" class="form-control" type="text">
+									<!--<input id="forwunit" name="forwunit" class="form-control" type="text">-->
+
+									<select data-placeholder="--请选择--" name="forwunit" id="forwunit"
+											class="selectpicker form-control" data-live-search="true">
+										<option th:each="fhdw : ${fhdwList}" th:value="${fhdw.name}" th:text="${fhdw.name}"  ></option>
+									</select>
 								</div>
 							</div>
 
@@ -47,7 +52,11 @@
 
 								<label class="col-sm-1 control-label">到站：</label>
 								<div class="col-sm-4">
-									<input id="arrivstation" name="arrivstation" class="form-control" type="text">
+									<!--<input id="arrivstation" name="arrivstation" class="form-control" type="text">-->
+									<select data-placeholder="--请选择--" name="arrivstation" id="arrivstation"
+											class="selectpicker form-control" data-live-search="true">
+										<option th:each="issueoffice : ${issueofficeList}" th:value="${issueoffice.name}" th:text="${issueoffice.name}"  ></option>
+									</select>
 								</div>
 
 							</div>
@@ -61,7 +70,13 @@
 
 								<label class="col-sm-1 control-label">付款单位：</label>
 								<div class="col-sm-4">
-									<input id="inforfee" name="inforfee" class="form-control" type="text">
+									<!--<input id="inforfee" name="inforfee" class="form-control" type="text">-->
+
+									<select data-placeholder="--请选择--" name="inforfee" id="inforfee"
+											class="selectpicker form-control" data-live-search="true">
+										<option th:each="fkdw : ${fkdwList}" th:value="${fkdw.name}" th:text="${fkdw.name}"  ></option>
+									</select>
+
 								</div>
 
 								<label class="col-sm-1 control-label">业务员：</label>

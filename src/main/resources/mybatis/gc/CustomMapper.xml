@@ -12,6 +12,8 @@
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+					<if test="stype != null and stype != ''"> and stype = #{stype} </if>
+					<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
 		  		  <if test="shuilv != null and shuilv != ''"> and shuilv = #{shuilv} </if>
 		  		</where>
         <choose>
@@ -32,6 +34,8 @@
 		 <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+			 <if test="stype != null and stype != ''"> and stype = #{stype} </if>
+			 <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
 		  		  <if test="shuilv != null and shuilv != ''"> and shuilv = #{shuilv} </if>
 		  		</where>
 	</select>
@@ -41,13 +45,15 @@
 		(
 			`id`, 
 			`name`, 
-			`shuilv`
+			`shuilv`,stype,dept_id
 		)
 		values
 		(
 			#{id}, 
 			#{name}, 
-			#{shuilv}
+			#{shuilv},
+			#{stype},
+			#{deptId}
 		)
 	</insert>
 	 
@@ -71,4 +77,19 @@
 		</foreach>
 	</delete>
 
+
+
+
+	<!--列表-->
+	<select  id="getCustomList" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		SELECT id,name from gc_custom
+		where  stype = #{stype} and dept_id = #{deptId}
+		order by name
+
+		]]>
+
+
+	</select>
 </mapper>

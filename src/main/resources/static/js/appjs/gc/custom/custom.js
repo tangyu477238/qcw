@@ -32,9 +32,10 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
-					           // username:$('#searchName').val()
+								offset:params.offset,
+                                deptId:$('#deptId').val(),
+                                stype:$('#stype').val(),
+					           	name:$('#searchName').val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -55,10 +56,10 @@ function load() {
 									field : 'name', 
 									title : '名称' 
 								},
-																{
-									field : 'shuilv', 
-									title : '税率' 
-								},
+								// 								{
+								// 	field : 'shuilv',
+								// 	title : '税率'
+								// },
 																{
 									title : '操作',
 									field : 'id',
@@ -82,13 +83,15 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
+    var deptId=$('#deptId').val();
+    var stype=$('#stype').val();
 	layer.open({
 		type : 2,
 		title : '增加',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/add' // iframe的url
+		content : prefix + '/add?deptId='+deptId+'&stype='+stype // iframe的url
 	});
 }
 function edit(id) {

@@ -279,6 +279,9 @@
 
 
         function piliang() {
+
+            var deptId = $('#deptId').val();
+
             var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
             if (rows.length == 0) {
                 layer.msg("请选择要结算的数据");
@@ -298,7 +301,7 @@
                 maxmin : true,
                 shadeClose : false, // 点击遮罩关闭层
                 area : [ '800px', '520px' ],
-                content : '/gc/sijiItemInvoice/editPiliang/' + ids // iframe的url
+                content : '/gc/sijiItemInvoice/editPiliang?deptId='+deptId+'&ids=' + ids // iframe的url
             });
 
 
@@ -582,14 +585,14 @@
 
         function edit(id) {
 
-
+            var deptId = $('#deptId').val();
 			layer.open({
                 type : 2,
                 title : '编辑',
                 maxmin : true,
                 shadeClose : false, // 点击遮罩关闭层
                 area : [ '800px', '520px' ],
-                content : '/gc/sijiItemInvoice/editItem/' + id // iframe的url
+                content : '/gc/sijiItemInvoice/editItem?deptId='+deptId+'&id=' + id // iframe的url
             });
 
 
