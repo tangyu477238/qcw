@@ -29,4 +29,7 @@ public interface CustomDao {
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);
+
+
+	List<Map<String, Object>> getCustomList(Map<String, Object> map);
 }

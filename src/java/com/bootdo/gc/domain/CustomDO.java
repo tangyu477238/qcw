@@ -1,5 +1,7 @@
 package com.bootdo.gc.domain;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +15,7 @@ import java.util.Date;
  * @email tangzhiyu@vld-tech.com
  * @date 2019-10-10 16:17:23
  */
+@Data
 public class CustomDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -23,40 +26,17 @@ public class CustomDO implements Serializable {
 	//税率
 	private BigDecimal shuilv;
 
-	/**
-	 * 设置：
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	/**
-	 * 获取：
-	 */
-	public Long getId() {
-		return id;
-	}
-	/**
-	 * 设置：名称
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * 获取：名称
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * 设置：税率
-	 */
-	public void setShuilv(BigDecimal shuilv) {
-		this.shuilv = shuilv;
-	}
-	/**
-	 * 获取：税率
-	 */
-	public BigDecimal getShuilv() {
-		return shuilv;
-	}
+
+
+	private Long deptId;
+	private String stype;
+
+
+
+
+
+
+
+
+
 }

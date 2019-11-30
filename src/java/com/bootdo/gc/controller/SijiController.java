@@ -4,6 +4,7 @@ import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
 import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.service.CustomService;
 import com.bootdo.gc.service.SequenceService;
 import com.bootdo.gc.service.SijiService;
 import com.bootdo.system.domain.UserDO;
@@ -38,6 +39,8 @@ public class SijiController extends BaseController {
 	@Autowired
 	private SequenceService sequenceService;
 
+	@Autowired
+	private CustomService customService;
 
 	
 	@GetMapping()
@@ -61,8 +64,23 @@ public class SijiController extends BaseController {
 	
 	@GetMapping("/add")
 
-	String add(){
-	    return "gc/siji/add";
+	String add(@RequestParam Map<String, Object> params,Model model){
+
+		model.addAttribute("deptId", params.get("deptId"));
+
+		params.put("stype", "station");
+		List<Map<String, Object>> issueofficeList = customService.getCustomList(params); //到站
+		model.addAttribute("issueofficeList", issueofficeList);
+
+		params.put("stype", "fhdw");
+		List<Map<String, Object>> fhdwList = customService.getCustomList(params); //发货单位
+		model.addAttribute("fhdwList", fhdwList);
+
+		params.put("stype", "fkdw");
+		List<Map<String, Object>> fkdwList = customService.getCustomList(params); //付款单位
+		model.addAttribute("fkdwList", fkdwList);
+
+		return "gc/siji/add";
 	}
 
 	@GetMapping("/edit/{id}")

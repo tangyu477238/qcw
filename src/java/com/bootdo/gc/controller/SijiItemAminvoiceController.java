@@ -95,16 +95,16 @@ public class SijiItemAminvoiceController extends BaseController {
 
 	/**
 	 *  editPiliang---->批量开票
-	 * @param ids
+	 * @param params
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/editPiliang/{ids}")
-	String editPiliang(@PathVariable("ids") String ids,Model model){
+	@GetMapping("/editPiliang")
+	String editPiliang(@RequestParam Map<String, Object> params, Model model){
 
-		model.addAttribute("ids", ids);
+		model.addAttribute("ids", params.get("ids"));
 
-		Map<String, Object> params = new HashMap();
+		params.put("stype", "kpdw");
 		List<Map<String, Object>> issueofficeList = sijiItemService.getIssueoffice(params);
 		model.addAttribute("issueofficeList", issueofficeList);
 
@@ -115,16 +115,17 @@ public class SijiItemAminvoiceController extends BaseController {
 
 	/**
 	 *  交单列表---->跳转开始开票界面
-	 * @param id
+	 * @param params
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/editItem/{id}")
-	String editItem(@PathVariable("id") String id,Model model){
+	@GetMapping("/editItem")
+	String editItem(@RequestParam Map<String, Object> params, Model model){
+		String id = params.get("id").toString();
 		SijiItemAminvoiceDO siji = sijiItemService.getBillInfoByPid(id);
 		model.addAttribute("siji", siji);
 
-		Map<String, Object> params = new HashMap();
+		params.put("stype", "kpdw");
 		List<Map<String, Object>> issueofficeList = sijiItemService.getIssueoffice(params);
 		model.addAttribute("issueofficeList", issueofficeList);
 

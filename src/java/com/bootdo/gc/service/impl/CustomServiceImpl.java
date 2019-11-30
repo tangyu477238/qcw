@@ -16,7 +16,13 @@ import com.bootdo.gc.service.CustomService;
 public class CustomServiceImpl implements CustomService {
 	@Autowired
 	private CustomDao customDao;
-	
+
+
+	@Override
+	public List<Map<String, Object>> getCustomList(Map<String, Object> map) {
+		return customDao.getCustomList(map);
+	}
+
 	@Override
 	public CustomDO get(Long id){
 		return customDao.get(id);

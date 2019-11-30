@@ -5,6 +5,7 @@ import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.dao.SijiItemAminvoiceDao;
 import com.bootdo.gc.domain.*;
+import com.bootdo.gc.service.CustomService;
 import com.bootdo.gc.service.SijiItemAminvoiceService;
 import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
@@ -37,7 +38,8 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 	@Autowired
 	private SijiService sijiService;
 
-
+	@Autowired
+	private CustomService customService;
 
 	@Override
 	public SijiItemAminvoiceDO get(Long id){
@@ -257,7 +259,7 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 	@Override
 	public List<Map<String, Object>> getIssueoffice(Map<String, Object> map) {
 
-		return SijiItemAminvoiceDao.getIssueoffice(map);
+		return customService.getCustomList(map);
 	}
 
 	@Override

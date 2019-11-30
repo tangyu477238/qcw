@@ -13,6 +13,8 @@ import java.util.Map;
  * @date 2019-10-10 16:17:23
  */
 public interface CustomService {
+
+	List<Map<String, Object>> getCustomList(Map<String, Object> map);
 	
 	CustomDO get(Long id);
 	

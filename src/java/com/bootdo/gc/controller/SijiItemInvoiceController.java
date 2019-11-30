@@ -5,6 +5,7 @@ import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 import com.bootdo.gc.domain.SijiItemInvoiceDO;
+import com.bootdo.gc.service.CustomService;
 import com.bootdo.gc.service.SijiItemInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class SijiItemInvoiceController extends BaseController {
 	@Autowired
 	private SijiItemInvoiceService sijiItemService;
 
+	@Autowired
+	private CustomService customService;
 
 
 
@@ -37,14 +40,6 @@ public class SijiItemInvoiceController extends BaseController {
 		model.addAttribute("deptId", deptId);
 		return "gc/siji/sijiItemInvoice";
 	}
-
-
-//	//显示规格明细
-//	@GetMapping("/sijiMx/{id}")
-//	String sijiMx(@PathVariable("id") Long id, Model model){
-//
-//		return "gc/siji/sijiMx";
-//	}
 
 
 
@@ -87,14 +82,19 @@ public class SijiItemInvoiceController extends BaseController {
 
 	/**
 	 *  待结算列表---->跳转开始gc_siji_item_invoice（收款）界面
-	 * @param id
+	 * @param params
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/editItem/{id}")
-	String editItem(@PathVariable("id") String id,Model model){
-		SijiItemInvoiceDO siji = sijiItemService.getAminvoicefoById(id);
+	@GetMapping("/editItem")
+	String editItem(@RequestParam Map<String, Object> params, Model model){
+		SijiItemInvoiceDO siji = sijiItemService.getAminvoicefoById(params.get("id").toString());
 		model.addAttribute("siji", siji);
+
+		params.put("stype", "skfs");
+		List<Map<String, Object>> issueofficeList = customService.getCustomList(params);
+		model.addAttribute("issueofficeList", issueofficeList);
+
 		return "gc/siji/editItemAminvoice";
 	}
 
@@ -119,13 +119,17 @@ public class SijiItemInvoiceController extends BaseController {
 
 	/**
 	 *  待结算列表--批量-->跳转开始gc_siji_item_invoice（收款）界面
-	 * @param ids
+	 * @param params
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/editPiliang/{ids}")
-	String editPiliang(@PathVariable("ids") String ids,Model model){
-		model.addAttribute("ids", ids);
+	@GetMapping("/editPiliang")
+	String editPiliang(@RequestParam Map<String, Object> params, Model model){
+		model.addAttribute("ids", params.get("ids"));
+
+		params.put("stype", "skfs");
+		List<Map<String, Object>> issueofficeList = customService.getCustomList(params);
+		model.addAttribute("issueofficeList", issueofficeList);
 
 		return "gc/siji/editPiliangAminvoice";
 	}
@@ -148,72 +152,6 @@ public class SijiItemInvoiceController extends BaseController {
 		return R.ok();
 	}
 
-
-
-
-
-
-//
-//	//发货新增或者修改的----->规格列表
-//	@ResponseBody
-//	@GetMapping("/itemList")
-//	public List<SijiItemInvoiceDO> itemList(@RequestParam Map<String, Object> params){
-//
-//		List<SijiItemInvoiceDO> sijiItemList = sijiItemService.list(params);
-//
-//		return sijiItemList;
-//	}
-
-
-
-//
-//
-//	/**
-//	 * //发货新增----->保存、或者修改保持。itemId是否有值决定
-//	 */
-//	@ResponseBody
-//	@PostMapping("/save")
-//	public R save( SijiItemInvoiceDO sijiItem){
-//
-//
-//
-//		sijiItem.setTranrate(sijiItem.getBaseprice().multiply(sijiItem.getCoefficient()));
-//		sijiItem.setTrancost(sijiItem.getTranrate().multiply(sijiItem.getTonnage()));
-//
-//		int flag;
-//		if (sijiItem.getId()!=null && !"".equals(sijiItem.getId())){
-//			flag = sijiItemService.update(sijiItem);
-//		} else {
-//			flag = sijiItemService.save(sijiItem);
-//		}
-//		if(flag>0){
-//			return R.ok();
-//		} else {
-//			return R.errorMsg("操作失败,付款已回单！");
-//		}
-//
-//	}
-
-
-//	/**
-//	 * //发货新增或者修改的----->修改
-//	 */
-//	@ResponseBody
-//	@RequestMapping("/update")
-//	public R update( SijiItemInvoiceDO sijiItem){
-//		sijiItemService.update(sijiItem);
-//		return R.ok();
-//	}
-
-//
-//
-//	@GetMapping("/updateItem/{id}")
-//	@ResponseBody
-//	SijiItemInvoiceDO updateItem(@PathVariable("id") Long id){
-//		SijiItemInvoiceDO siji = sijiItemService.getItemDo(id);
-//
-//		return siji;
-//	}
 
 
 
@@ -247,56 +185,6 @@ public class SijiItemInvoiceController extends BaseController {
 		}
 		return R.errorMsg("操作失败！录入日期可能非当天");
 	}
-
-
-//
-//
-//	@ResponseBody
-//	@PostMapping( "/heDui")
-//	public R heDui(Long id){
-//
-//		sijiItemService.heDui(id);
-//		return R.ok();
-//	}
-//
-
-	
-//	/**
-//	 * 删除
-//	 */
-//	@PostMapping( "/batchRemove")
-//	@ResponseBody
-//	@RequiresPermissions("gc:sijiItem:batchRemove")
-//	public R remove(@RequestParam("ids[]") Long[] ids){
-//		sijiItemService.batchRemove(ids);
-//		return R.ok();
-//	}
-
-
-
-
-
-
-//	@PostMapping("/importExcel")
-//	@ResponseBody
-//	public R importExcel(@RequestParam("file") MultipartFile file) {
-//		List<SijiItemImp1> imp1s = FileUtil.importExcel(file, 0, 1, SijiItemImp1.class);
-//		sijiItemService.importExcel(imp1s);
-//		return R.ok();
-//	}
-//
-//
-//
-//
-//
-//	@PostMapping("/importExcel2")
-//	@ResponseBody
-//	public R importExcel2(@RequestParam("file") MultipartFile file) {
-//		List<SijiItemImp2> imp2s = FileUtil.importExcel(file, 0, 1, SijiItemImp2.class);
-//		sijiItemService.importExcel2(imp2s);
-//		return R.ok();
-//	}
-
 
 
 

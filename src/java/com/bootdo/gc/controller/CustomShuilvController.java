@@ -3,6 +3,7 @@ package com.bootdo.gc.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.bootdo.gc.service.CustomService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -15,32 +16,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.gc.domain.CustomDO;
-import com.bootdo.gc.service.CustomService;
+import com.bootdo.gc.domain.CustomShuilvDO;
+import com.bootdo.gc.service.CustomShuilvService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 
 /**
- * 客户
+ * 
  * 
  * @author tzy
  * @email tangzhiyu@vld-tech.com
- * @date 2019-10-10 16:17:23
+ * @date 2019-11-27 17:12:30
  */
  
 @Controller
-@RequestMapping("/gc/custom")
-public class CustomController {
+@RequestMapping("/gc/customShuilv")
+public class CustomShuilvController {
+	@Autowired
+	private CustomShuilvService customShuilvService;
+
+
+
 	@Autowired
 	private CustomService customService;
 	
 	@GetMapping()
 
-	String Custom(@RequestParam Map<String, Object> params,Model model){
+	String CustomShuilv(@RequestParam Map<String, Object> params,Model model){
 		model.addAttribute("deptId", params.get("deptId"));
-		model.addAttribute("stype", params.get("stype"));
-		return "gc/custom/custom";
+		return "gc/customShuilv/customShuilv";
 	}
 	
 	@ResponseBody
@@ -49,26 +54,39 @@ public class CustomController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<CustomDO> customList = customService.list(query);
-		int total = customService.count(query);
-		PageUtils pageUtils = new PageUtils(customList, total);
+		List<CustomShuilvDO> customShuilvList = customShuilvService.list(query);
+		int total = customShuilvService.count(query);
+		PageUtils pageUtils = new PageUtils(customShuilvList, total);
 		return pageUtils;
 	}
 	
 	@GetMapping("/add")
-	@RequiresPermissions("gc:custom:add")
 	String add(@RequestParam Map<String, Object> params,Model model){
-        model.addAttribute("deptId", params.get("deptId"));
-        model.addAttribute("stype", params.get("stype"));
-	    return "gc/custom/add";
+
+
+		model.addAttribute("deptId", params.get("deptId"));
+
+
+		params.put("stype", "fkdw");
+		List<Map<String, Object>> fkdwList = customService.getCustomList(params); //付款单位
+		model.addAttribute("fkdwList", fkdwList);
+
+		params.put("stype", "kpdw");
+		List<Map<String, Object>> kpdwList = customService.getCustomList(params); //发货单位
+		model.addAttribute("kpdwList", kpdwList);
+
+
+
+		return "gc/customShuilv/add";
 	}
 
+
 	@GetMapping("/edit/{id}")
-	@RequiresPermissions("gc:custom:edit")
+
 	String edit(@PathVariable("id") Long id,Model model){
-		CustomDO custom = customService.get(id);
-		model.addAttribute("custom", custom);
-	    return "gc/custom/edit";
+		CustomShuilvDO customShuilv = customShuilvService.get(id);
+		model.addAttribute("customShuilv", customShuilv);
+	    return "gc/customShuilv/edit";
 	}
 	
 	/**
@@ -76,9 +94,12 @@ public class CustomController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("gc:custom:add")
-	public R save( CustomDO custom){
-		if(customService.save(custom)>0){
+
+	public R save( CustomShuilvDO customShuilv){
+
+
+
+		if(customShuilvService.save(customShuilv)>0){
 			return R.ok();
 		}
 		return R.error();
@@ -88,9 +109,9 @@ public class CustomController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("gc:custom:edit")
-	public R update( CustomDO custom){
-		customService.update(custom);
+
+	public R update( CustomShuilvDO customShuilv){
+		customShuilvService.update(customShuilv);
 		return R.ok();
 	}
 	
@@ -99,9 +120,9 @@ public class CustomController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("gc:custom:remove")
+
 	public R remove( Long id){
-		if(customService.remove(id)>0){
+		if(customShuilvService.remove(id)>0){
 		return R.ok();
 		}
 		return R.error();
@@ -112,9 +133,9 @@ public class CustomController {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("gc:custom:batchRemove")
+
 	public R remove(@RequestParam("ids[]") Long[] ids){
-		customService.batchRemove(ids);
+		customShuilvService.batchRemove(ids);
 		return R.ok();
 	}
 	
