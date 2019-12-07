@@ -1,16 +1,13 @@
 package com.bootdo.gc.service.impl;
 
-import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.KehuDO;
 import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.domain.SijiItemDO;
-import com.bootdo.gc.service.KehuService;
 import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
-import org.joda.time.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +47,22 @@ public class SijiServiceImpl  implements SijiService {
 	public int count(Map<String, Object> map){
 		return sijiDao.count(map);
 	}
-	
+
+	@Override
+	public int updatePiliangPrice(Map<String, Object> map){
+		return sijiDao.updatePiliangPrice(map);
+	}
+
+	@Override
+	public Map getDunSum(String [] ids){
+
+		return sijiDao.getDunSum(ids);
+	}
+
+
+
+
+
 	@Override
 	public int save(SijiDO siji){
 		return sijiDao.save(siji);

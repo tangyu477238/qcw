@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,9 +84,26 @@ public class SijiController extends BaseController {
 		return "gc/siji/add";
 	}
 
-	@GetMapping("/edit/{id}")
+	@GetMapping("/edit")
 
-	String edit(@PathVariable("id") Long id,Model model){
+	String edit(@RequestParam Map<String, Object> params,Model model){
+
+		model.addAttribute("deptId", params.get("deptId"));
+
+		params.put("stype", "station");
+		List<Map<String, Object>> issueofficeList = customService.getCustomList(params); //到站
+		model.addAttribute("issueofficeList", issueofficeList);
+
+		params.put("stype", "fhdw");
+		List<Map<String, Object>> fhdwList = customService.getCustomList(params); //发货单位
+		model.addAttribute("fhdwList", fhdwList);
+
+		params.put("stype", "fkdw");
+		List<Map<String, Object>> fkdwList = customService.getCustomList(params); //付款单位
+		model.addAttribute("fkdwList", fkdwList);
+
+		Long id = Long.parseLong(params.get("id").toString());
+
 		SijiDO siji = sijiService.get(id);
 		model.addAttribute("siji", siji);
 	    return "gc/siji/edit";
@@ -175,15 +193,27 @@ public class SijiController extends BaseController {
 
 	@RequestMapping("/sijiMx")
 	public String SijiMx(String pid, Model model) {
-		//构建ModelAndView实例，并设置跳转地址
-//		ModelAndView view = new ModelAndView("gc/siji/sijiMx");
-//		//将数据放置到ModelAndView对象view中,第二个参数可以是任何java类型
-//		view.addObject();
 
 		model.addAttribute("pid", pid);
 
 		//返回ModelAndView对象view
 		return "gc/siji/sijiMx";
+	}
+
+
+
+	@RequestMapping("/updatePrice")
+	public String updatePrice(@RequestParam Map<String, Object> params, Model model) {
+
+		model.addAttribute("ids", params.get("ids").toString());
+
+		String[] ids = params.get("ids").toString().split(",");
+		Map map = sijiService.getDunSum(ids);
+
+		model.addAttribute("dunwei", map.get("tonnage"));
+		model.addAttribute("arrivstation", params.get("arrivstation"));
+        model.addAttribute("inforfee", params.get("inforfee"));
+		return "gc/siji/editPiliangPrice";
 	}
 
 
@@ -264,5 +294,30 @@ public class SijiController extends BaseController {
 
 		return sijiService.arrivstation(params);
 	}
+
+
+
+	/**
+	 * 批量价格修改
+	 */
+	@ResponseBody
+	@PostMapping("/updatePiliangPrice")
+
+	public R updatePiliangPrice(@RequestParam Map<String, Object> params){
+
+		int count = 0;
+		String ids [] = params.get("ids").toString().split(",");
+		for (String str : ids){
+			params.put("pid", str);
+			count = sijiService.updatePiliangPrice(params);
+		}
+
+		if (count>0) {
+			return R.ok();
+		}
+		return R.errorMsg("操作失败！");
+	}
+
+
 
 }

@@ -97,8 +97,6 @@ public class CustomShuilvController {
 
 	public R save( CustomShuilvDO customShuilv){
 
-
-
 		if(customShuilvService.save(customShuilv)>0){
 			return R.ok();
 		}

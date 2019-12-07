@@ -3,6 +3,7 @@ package com.bootdo.gc.service;
 import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,11 @@ public interface SijiService  {
 	List<SijiDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
+
+
+	int updatePiliangPrice(Map<String, Object> map);
+
+	Map getDunSum(String [] ids);
 	
 	int save(SijiDO siji);
 	
