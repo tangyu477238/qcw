@@ -3,6 +3,7 @@
 
 <mapper namespace="com.bootdo.gc.dao.SijiDao">
 
+
 	<select id="get" resultType="com.bootdo.gc.domain.SijiDO">
 		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
 		       `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
@@ -188,6 +189,26 @@
 
 
 
+	<select id="getDunSum" resultType="java.util.HashMap">
+		select SUM(tonnage) as tonnage from gc_siji_item where pid in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+
+
+
+	<delete id="updatePiliangPrice">
+		update gc_siji_item set baseprice=#{price},tranrate =coefficient*#{price},
+		                        trancost = tonnage*(coefficient*#{price})
+		where pid = #{pid}
+	</delete>
+
+
+
+
+
 	<select id="getOrder" resultType="com.bootdo.gc.domain.SijiDO">
 		select `id`,`bizdate`,`forwunit`,`carnum`,`steelnum`,`specs`,`packnum`,
 			   `tonnage`,`baseprice`,`coefficient`,`tranrate`,`trancost`,
@@ -311,145 +332,6 @@
 
 
 
-	<!-- 应收款统计 -->
-	<!--<select  id="queryTotal" resultType="java.util.HashMap" >-->
-		<!--<![CDATA[-->
-
-
-			<!--select-->
-			<!--bizMonth11,bizMonth10,bizMonth9,bizMonth8,bizMonth7,bizMonth6,-->
-			<!--bizMonth5,bizMonth4,bizMonth3,bizMonth2,bizMonth1,bizMonth0,-->
-			<!--aminvoice,takeamount,totalAmount-IFNULL(t1.amount,0) as totalAmount,inforfee,IFNULL(t1.amount,0) as tiaozheng-->
-			<!--from (-->
-
-
-			<!--select-->
-			<!--s.inforfee ,-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0) ) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -11 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth11',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -10 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth10',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -9 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth9',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -8 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth8',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			 <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -7 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth7',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			 <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -6 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth6',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			 <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -5 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth5',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -4 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth4',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -3 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth3',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -2 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth2',-->
-
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m')-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when LEFT(aminvoicedate,7) = date_format(date_add(now(), interval -1 month), '%Y-%m')-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth1',-->
-
-			<!--IFNULL(sum(case when (LEFT(aminvoicedate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and aminvoicedate<#{inputdate})-->
-			<!--then (IFNULL(si.aminvoice,0)) end),0)-->
-			  <!-- - -->
-			<!--IFNULL(sum(case when (LEFT(aminvoicedate,7) = date_format(date_add(now(), interval 0 month), '%Y-%m') and aminvoicedate<#{inputdate})-->
-			<!--then ((case when si.inputdate<#{inputdate} then si.takeamount else 0 end)) end),0)-->
-			       <!--as 'bizMonth0'-->
-
-			<!--,IFNULL(sum(case when inputdate =#{inputdate} then takeamount else 0 end),0)  as takeamount-->
-			<!--,IFNULL(sum(case when aminvoicedate =#{inputdate} then si.aminvoice else 0 end),0)  as aminvoice-->
-			<!--,IFNULL(sum(IFNULL(si.aminvoice,0)-IFNULL(si.takeamount,0)),0)  as totalAmount-->
-			<!--from gc_siji s-->
-			<!--inner join gc_siji_item si  on s.pid = si.pid-->
-			<!--where 1=1  and LEFT(aminvoicedate,7) >= date_format(date_add(now(), interval -11 month), '%Y-%m')-->
-
-		<!--]]>-->
-
-		<!--<if test="deptId != null and deptId != ''">-->
-			<!--and s.dept_id = #{deptId}-->
-		<!--</if>-->
-		<!--<if test="inforfee != null and inforfee != ''">-->
-			<!--<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>-->
-		<!--</if>-->
-
-
-
-		<!--<![CDATA[-->
-				<!--group by s.inforfee-->
-			<!--) t-->
-			<!--left join (-->
-				<!--select-->
-				<!--sum(amount) as amount ,payer-->
-				<!--from gc_jiesuan j-->
-				<!--where LEFT(j.bizdate,7) >= date_format(date_add(now(), interval -11 month), '%Y-%m')-->
-				<!--and j.bizdate <=#{inputdate}-->
-				<!--group by payer-->
-			<!--) t1 on t.inforfee = t1.payer-->
-
-			<!--order by  inforfee desc-->
-		<!--]]>-->
-
-
-	<!--</select>-->
-
-
-
-
-
 
 	 <!--应收款统计 -->
 	<select  id="queryTotal" resultType="java.util.HashMap" >
@@ -525,11 +407,11 @@
 		sum(takeamount) as takeamount, inforfee, bizdate
 		from (
 
-			SELECT max(k.takeamount) as takeamount,s.inforfee ,k.id,LEFT(s.bizdate,7) as bizdate
+			SELECT max(case when k.inputdate<#{inputdate} then k.takeamount else 0 end) as takeamount,s.inforfee ,k.id,LEFT(s.bizdate,7) as bizdate
 			from gc_siji s
 			inner join gc_siji_item si on s.pid = si.pid
 			inner join gc_siji_item_aminvoice k on k.pid = si.pid
-			where 1=1 and  k.inputdate<#{inputdate}
+			where 1=1 and  k.inputdate<=#{inputdate}
 			]]>
 			<if test="deptId != null and deptId != ''">
 				and s.dept_id = #{deptId}

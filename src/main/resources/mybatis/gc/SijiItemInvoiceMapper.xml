@@ -456,7 +456,7 @@
 
 
 	  	) t
-		where t.yue>0
+		where t.yue!=0
 		order by bizdate
 
 	</select>
@@ -532,7 +532,7 @@
 
 
 		) t
-		where syue>0
+		where syue!=0
 
 
 	</select>
