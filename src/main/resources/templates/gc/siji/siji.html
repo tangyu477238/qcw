@@ -58,7 +58,7 @@
 						<div class="form-group">
 
 							<input type="text" class="form-control" name="inforfee" size="15"
-								   id="inforfee" placeholder="付款单位">
+								   id="inforfee" placeholder="付款单位" required>
 
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 					<div class="col-md-2">
 						<div class="form-group">
 							<input id="arrivstation" name="arrivstation" type="text" class="form-control" size="10"
-								   placeholder="到站">
+								   placeholder="到站" required>
 						</div>
 					</div>
 
@@ -102,9 +102,9 @@
 								<button  type="button" shiro:hasPermission="biz:kehu:pms" class="btn  btn-danger" onclick="batchRemove()">
 									<i class="fa fa-trash" aria-hidden="true"></i>删除
 								</button>
-								<!--<button  type="button" class="btn  btn-success" onclick="excel()">-->
-									<!--导出-->
-								<!--</button>-->
+								<button  type="button" shiro:hasPermission="biz:kehu:pms" class="btn  btn-success" onclick="updatePrice()">
+									批量改价
+								</button>
 
 							</div>
 						</div>
@@ -142,7 +142,7 @@
 			</script>
 		</div>
 	<div th:include="gc/include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/siji/siji.js?v=1111"></script>
+	<script type="text/javascript" src="/js/appjs/gc/siji/siji.js?v=11111111111111111111111"></script>
 
 
 
