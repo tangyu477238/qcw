@@ -189,8 +189,12 @@
 
 
 
+
+
+
+
 	<select id="getDunSum" resultType="java.util.HashMap">
-		select SUM(tonnage) as tonnage from gc_siji_item where pid in
+		select SUM(tonnage) as tonnage from gc_siji_item where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
@@ -199,11 +203,25 @@
 
 
 
-	<delete id="updatePiliangPrice">
+	<update id="updatePiliangPrice">
 		update gc_siji_item set baseprice=#{price},tranrate =coefficient*#{price},
 		                        trancost = tonnage*(coefficient*#{price})
-		where pid = #{pid}
-	</delete>
+		where id = #{pid}
+	</update>
+
+
+	<update id="updatePiliangShuilv">
+		UPDATE gc_siji_item a
+			INNER JOIN gc_siji b ON a.pid = b.pid
+		set a.shuilv = #{price},a.shuie=#{price}*IFNULL(a.aminvoice,IFNULL(a.trancost,0))
+		where b.order_no = #{orderNo}
+
+
+	</update>
+
+
+
+
 
 
 

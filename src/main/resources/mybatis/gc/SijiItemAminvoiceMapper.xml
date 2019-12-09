@@ -533,4 +533,151 @@ select * from (
 
 	</select>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--获取对账明细列表数据-->
+
+	<select id="getDuizhangList" resultType="com.bootdo.gc.domain.SijiItemAminvoiceDO">
+
+
+		select
+		s.pid ,s.order_no as orderNo,s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,
+		sum(si.kouling) as kouling,sum(si.aminvoice) as aminvoice,
+		sum(si.trancost) as trancost,s.custompay as scustompay,s.dept_id as deptId,
+		IFNULL(max(i.yue),sum(si.aminvoice)) as yue,
+
+		sum(si.aminvoice)-IFNULL(max(i.yue),sum(si.aminvoice)) as baseprice,
+
+		t.yue as coefficient,
+
+        sum(si.aminvoice)-IFNULL(max(i.yue),sum(si.aminvoice))-t.yue as tranrate,
+
+		sum(si.aminvoice)-IFNULL((sum(si.aminvoice)-IFNULL(max(i.yue),sum(si.aminvoice))-t.yue),0) as tonnage
+
+		from gc_siji s
+		inner join gc_siji_item si on s.pid = si.pid
+		left join gc_siji_item_aminvoice i on i.pid = s.pid and i.state=1
+		left join (
+			select
+			i.pid,SUM(IFNULL(inv.yue,i.takeamount)) as yue
+			from gc_siji_item_aminvoice i
+			left join gc_siji_item_invoice inv on inv.pid = i.id and inv.state=1
+			where 1=1
+			<if test="deptId != null and deptId != ''">and i.dept_id = #{deptId}</if>
+			<if test="startDate != null and startDate != ''"> and i.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and i.bizdate &lt;= #{endDate} </if>
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and i.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and i.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and i.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+			GROUP BY i.pid
+		) t on t.pid = i.pid
+		where  1=1
+
+
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+		<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+		<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+		<if test="inforfee != null and inforfee != ''">
+			<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+		</if>
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+		<if test="arrivstation != null and arrivstation != ''">
+			<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+		</if>
+		<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
+		<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
+		GROUP BY s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.pid,s.order_no,s.custompay,s.dept_id
+
+		order by bizdate,orderNo
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+
+
+
+
+	<select id="getDuizhangListCount" resultType="int">
+		select
+		       count(*)
+		from (
+		select
+		s.order_no
+		from gc_siji s
+		inner join gc_siji_item si on s.pid = si.pid
+		left join gc_siji_item_aminvoice i on i.pid = s.pid and i.state=1
+		left join (
+		select
+		i.pid,SUM(IFNULL(inv.yue,i.takeamount)) as yue
+		from gc_siji_item_aminvoice i
+		left join gc_siji_item_invoice inv on inv.pid = i.id and inv.state=1
+		where 1=1
+		<if test="deptId != null and deptId != ''">and i.dept_id = #{deptId}</if>
+				<if test="startDate != null and startDate != ''"> and i.bizdate &gt;= #{startDate} </if>
+				<if test="endDate != null and endDate != ''"> and i.bizdate &lt;= #{endDate} </if>
+				<if test="inforfee != null and inforfee != ''">
+					<![CDATA[ and i.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+				</if>
+				<if test="carnum != null and carnum != ''">
+					<![CDATA[ and i.carnum like CONCAT('%',#{carnum},'%') ]]>
+				</if>
+				<if test="arrivstation != null and arrivstation != ''">
+					<![CDATA[ and i.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+				</if>
+		      GROUP BY i.pid
+		      ) t on t.pid = i.pid
+		  where  1=1
+
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+			<if test="pid != null and pid != ''">and s.pid = #{pid}</if>
+			<if test="deptId != null and deptId != ''">and s.dept_id = #{deptId}</if>
+		  GROUP BY s.bizdate,s.arrivstation,s.carnum,s.inforfee,si.billdate,s.pid,s.order_no,s.custompay,s.dept_id
+		) t
+
+	</select>
+
+
+
 </mapper>
