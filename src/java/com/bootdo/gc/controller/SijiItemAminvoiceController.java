@@ -1,10 +1,8 @@
 package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
-import com.bootdo.common.utils.FileUtil;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
-import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.*;
+import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.domain.SijiItemAminvoiceDO;
 import com.bootdo.gc.domain.SijiItemImp1;
 import com.bootdo.gc.domain.SijiItemImp2;
@@ -16,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +35,47 @@ public class SijiItemAminvoiceController extends BaseController {
 	private SijiItemAminvoiceService sijiItemService;
 
 
+	//跳转----对账明细列表
+	@GetMapping("sijiItemDuizhang")
+	String sijiItemDuizhang(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		return "gc/siji/sijiItemDuizhang";
+	}
+
+
+
+	//获取对账明细列表
+	@ResponseBody
+	@GetMapping("/getDuizhangList")
+	public PageUtils getDuizhangList(@RequestParam Map<String, Object> params){
+		//查询列表数据
+
+		Query query = new Query(params);
+		List<SijiItemAminvoiceDO> sijiItemList = sijiItemService.getDuizhangList(query);
+
+		int total = sijiItemService.getDuizhangListCount(query);
+		PageUtils pageUtils = new PageUtils(sijiItemList, total);
+		return pageUtils;
+	}
+
+
+	// 导出全部数据
+	@RequestMapping("/exportDuizhang")
+	public void exportDuizhang(HttpServletResponse res,
+							  @RequestParam Map<String, Object> params) throws IOException {
+
+		List<SijiItemAminvoiceDO> sijiItemList = sijiItemService.getDuizhangList(params);
+
+		ExcelUtil.exportExcel(sijiItemList,null,
+				"对账明细表",SijiItemAminvoiceDO.class,"对账明细表.xls",res);
+
+
+	}
+
+
+
+
+
 	//跳转交单明细表
 	@GetMapping("/bill")
 	String sijiItemBill(Long deptId,Model model){
@@ -50,13 +91,6 @@ public class SijiItemAminvoiceController extends BaseController {
 		return "gc/siji/sijiItemAminvoice";
 	}
 
-
-//	//显示规格明细
-//	@GetMapping("/sijiMx/{id}")
-//	String sijiMx(@PathVariable("id") Long id, Model model){
-//
-//		return "gc/siji/sijiMx";
-//	}
 
 
 
@@ -174,71 +208,6 @@ public class SijiItemAminvoiceController extends BaseController {
 
 
 //
-//	//发货新增或者修改的----->规格列表
-//	@ResponseBody
-//	@GetMapping("/itemList")
-//	public List<SijiItemAminvoiceDO> itemList(@RequestParam Map<String, Object> params){
-//
-//		List<SijiItemAminvoiceDO> sijiItemList = sijiItemService.list(params);
-//
-//		return sijiItemList;
-//	}
-
-
-
-//
-//
-//	/**
-//	 * //发货新增----->保存、或者修改保持。itemId是否有值决定
-//	 */
-//	@ResponseBody
-//	@PostMapping("/save")
-//	public R save( SijiItemAminvoiceDO sijiItem){
-//
-//
-//
-//		sijiItem.setTranrate(sijiItem.getBaseprice().multiply(sijiItem.getCoefficient()));
-//		sijiItem.setTrancost(sijiItem.getTranrate().multiply(sijiItem.getTonnage()));
-//
-//		int flag;
-//		if (sijiItem.getId()!=null && !"".equals(sijiItem.getId())){
-//			flag = sijiItemService.update(sijiItem);
-//		} else {
-//			flag = sijiItemService.save(sijiItem);
-//		}
-//		if(flag>0){
-//			return R.ok();
-//		} else {
-//			return R.errorMsg("操作失败,付款已回单！");
-//		}
-//
-//	}
-
-
-//	/**
-//	 * //发货新增或者修改的----->修改
-//	 */
-//	@ResponseBody
-//	@RequestMapping("/update")
-//	public R update( SijiItemAminvoiceDO sijiItem){
-//		sijiItemService.update(sijiItem);
-//		return R.ok();
-//	}
-
-//
-//
-//	@GetMapping("/updateItem/{id}")
-//	@ResponseBody
-//	SijiItemAminvoiceDO updateItem(@PathVariable("id") Long id){
-//		SijiItemAminvoiceDO siji = sijiItemService.getItemDo(id);
-//
-//		return siji;
-//	}
-
-
-
-
-//
 	/**
 	 * //结算明细单----->删除
 	 */
@@ -284,53 +253,7 @@ public class SijiItemAminvoiceController extends BaseController {
 	}
 
 
-//
-//
-//	@ResponseBody
-//	@PostMapping( "/heDui")
-//	public R heDui(Long id){
-//
-//		sijiItemService.heDui(id);
-//		return R.ok();
-//	}
-//
 
-	
-//	/**
-//	 * 删除
-//	 */
-//	@PostMapping( "/batchRemove")
-//	@ResponseBody
-//	@RequiresPermissions("gc:sijiItem:batchRemove")
-//	public R remove(@RequestParam("ids[]") Long[] ids){
-//		sijiItemService.batchRemove(ids);
-//		return R.ok();
-//	}
-
-
-
-
-
-
-//	@PostMapping("/importExcel")
-//	@ResponseBody
-//	public R importExcel(@RequestParam("file") MultipartFile file) {
-//		List<SijiItemImp1> imp1s = FileUtil.importExcel(file, 0, 1, SijiItemImp1.class);
-//		sijiItemService.importExcel(imp1s);
-//		return R.ok();
-//	}
-//
-//
-//
-//
-//
-//	@PostMapping("/importExcel2")
-//	@ResponseBody
-//	public R importExcel2(@RequestParam("file") MultipartFile file) {
-//		List<SijiItemImp2> imp2s = FileUtil.importExcel(file, 0, 1, SijiItemImp2.class);
-//		sijiItemService.importExcel2(imp2s);
-//		return R.ok();
-//	}
 
 
 

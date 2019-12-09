@@ -54,6 +54,14 @@ public class SijiServiceImpl  implements SijiService {
 	}
 
 	@Override
+	public int updatePiliangShuilv(Map<String, Object> map){
+		return sijiDao.updatePiliangShuilv(map);
+	}
+
+
+
+
+	@Override
 	public Map getDunSum(String [] ids){
 
 		return sijiDao.getDunSum(ids);

@@ -287,9 +287,17 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 	}
 
 
+	@Override
+	public List<SijiItemAminvoiceDO> getDuizhangList(Map<String, Object> map) {
 
+		return SijiItemAminvoiceDao.getDuizhangList(map);
+	}
 
+	@Override
+	public int getDuizhangListCount(Map<String, Object> map) {
 
+		return SijiItemAminvoiceDao.getDuizhangListCount(map);
+	}
 
 
 

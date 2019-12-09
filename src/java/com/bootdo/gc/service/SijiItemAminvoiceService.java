@@ -62,6 +62,9 @@ public interface SijiItemAminvoiceService {
 
 
 
-
+    //对账明细列表
+    List<SijiItemAminvoiceDO> getDuizhangList(Map<String, Object> map);
+    //对账明细列表
+    int getDuizhangListCount(Map<String, Object> map);
 
 }

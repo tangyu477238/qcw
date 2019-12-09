@@ -27,6 +27,11 @@ public interface SijiDao {
 
 	int updatePiliangPrice(Map<String,Object> map);
 
+	int updatePiliangShuilv(Map<String,Object> map);
+
+
+
+
 	Map getDunSum(String [] ids);
 
 	int save(SijiDO siji);

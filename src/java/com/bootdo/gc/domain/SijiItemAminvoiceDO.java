@@ -24,63 +24,83 @@ public class SijiItemAminvoiceDO implements Serializable {
 	//@Excel(name = "pid", orderNum = "1",isImportField = "pid")
 	private String pid;
 
-	//钢号
-	@Excel(name = "业务日期", orderNum = "4",isImportField = "bizdate")
-	private String bizdate;
-
-
-	//规格
-	@Excel(name = "订单号", orderNum = "5",isImportField = "orderNo")
+	@Excel(name = "订单号", orderNum = "1",isImportField = "orderNo")
 	private String orderNo;
 
-	//业务员
-	@Excel(name = "业务员", orderNum = "6",isImportField = "custompay"  )
-	private String scustompay;
+	@Excel(name = "业务日期", orderNum = "2",isImportField = "bizdate")
+	private String bizdate;
 
-
-
-	//吨数
-	@Excel(name = "吨数", orderNum = "7",isImportField = "tonnage" , type=10 )
-	private BigDecimal tonnage;
-	//基价
-	@Excel(name = "基价", orderNum = "8",isImportField = "baseprice" , type=10 )
-	private BigDecimal baseprice;
-	//系数
-	@Excel(name = "系数", orderNum = "9",isImportField = "coefficient" , type=10 )
-	private BigDecimal coefficient;
-	//运率
-	@Excel(name = "运率", orderNum = "10",isImportField = "tranrate" , type=10 )
-	private BigDecimal tranrate;
-	//运费
-	@Excel(name = "运费", orderNum = "11",isImportField = "trancost" , type=10 )
-	private BigDecimal trancost;
-
+	@Excel(name = "车牌号", orderNum = "3",isImportField = "carnum")
 	private String carnum;
 
 	//到站
-	@Excel(name = "到站", orderNum = "12",isImportField = "arrivstation")
+	@Excel(name = "到站", orderNum = "4",isImportField = "arrivstation")
 	private String arrivstation;
 
-	@Excel(name = "备注", orderNum = "13",isImportField = "remark")
-	private String remark;
 
 
+
+
+	@Excel(name = "钢材运费", orderNum = "5",isImportField = "trancost" , type=10 )
+	private BigDecimal trancost;
+
+	//业务员
+	@Excel(name = "业务员", orderNum = "6",isImportField = "scustompay"  )
+	private String scustompay;
+
+	@Excel(name = "付款单位", orderNum = "7",isImportField = "inforfee"  )
 	//付款单位
 	private String inforfee;
 
-
-
-
-
-	@Excel(name = "交单日期", orderNum = "14",isImportField = "billdate")
+	@Excel(name = "对账日期", orderNum = "8",isImportField = "billdate")
 	//交单日期
 	private String billdate;
 
+
+
+	@Excel(name = "扣零", orderNum = "9",isImportField = "kouling" , type=10 )
 	//扣零
 	private BigDecimal kouling;
 
+	@Excel(name = "结算金额", orderNum = "10",isImportField = "aminvoice" , type=10 )
 	//结算金额
 	private BigDecimal aminvoice;
+
+	@Excel(name = "未开票金额", orderNum = "11",isImportField = "yue" , type=10 )
+	private BigDecimal yue;
+
+
+
+
+	//基价
+	@Excel(name = "开票金额", orderNum = "12",isImportField = "baseprice" , type=10 )
+	private BigDecimal baseprice;
+	//系数
+	@Excel(name = "待回款金额", orderNum = "13",isImportField = "coefficient" , type=10 )
+	private BigDecimal coefficient;
+	//运率
+	@Excel(name = "已回款金额", orderNum = "14",isImportField = "tranrate" , type=10 )
+	private BigDecimal tranrate;
+	//运费
+
+
+
+	//吨位
+	@Excel(name = "余额", orderNum = "15",isImportField = "tonnage" , type=10 )
+	private BigDecimal tonnage;
+
+
+	private String remark;
+
+
+
+
+
+
+
+
+
+
 
 	//结算录入日期
 	private String aminvoicedate;
@@ -110,7 +130,7 @@ public class SijiItemAminvoiceDO implements Serializable {
 
 
 
-	private BigDecimal yue;
+
 
 	//核对
 	private String payer;

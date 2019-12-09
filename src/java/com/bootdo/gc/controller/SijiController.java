@@ -202,6 +202,20 @@ public class SijiController extends BaseController {
 
 
 
+	@RequestMapping("/shuilv")
+	public String shuilv(@RequestParam Map<String, Object> params, Model model) {
+
+		model.addAttribute("ids", params.get("ids").toString());
+
+
+
+		model.addAttribute("arrivstation", params.get("arrivstation"));
+		model.addAttribute("inforfee", params.get("inforfee"));
+
+		return "gc/siji/editPiliangShuilv";
+	}
+
+
 	@RequestMapping("/updatePrice")
 	public String updatePrice(@RequestParam Map<String, Object> params, Model model) {
 
@@ -247,7 +261,7 @@ public class SijiController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/queryLirun")
-	List<LirunDO> queryLirun(@RequestParam Map<String, Object> params){
+	public PageUtils queryLirun(@RequestParam Map<String, Object> params){
 		if (params.get("arrivstation")!=null){
 			if (!"".equals(params.get("arrivstation").toString())
 					&& !"null".equals(params.get("arrivstation").toString())){
@@ -258,9 +272,15 @@ public class SijiController extends BaseController {
 			}
 
 		}
+		Query query = new Query(params);
+		List<LirunDO> list = sijiService.queryLirun(query);
+		int total = 1;
+		PageUtils pageUtils = new PageUtils(list, total);
 
-		return sijiService.queryLirun(params);
+		return pageUtils;
 	}
+
+
 
 
 
@@ -318,6 +338,28 @@ public class SijiController extends BaseController {
 		return R.errorMsg("操作失败！");
 	}
 
+
+
+	/**
+	 * 批量税率修改
+	 */
+	@ResponseBody
+	@PostMapping("/updatePiliangShuilv")
+
+	public R updatePiliangShuilv(@RequestParam Map<String, Object> params){
+
+		int count = 0;
+		String ids [] = params.get("ids").toString().split(",");
+		for (String str : ids){
+			params.put("orderNo", str);
+			count = sijiService.updatePiliangShuilv(params);
+		}
+
+		if (count>0) {
+			return R.ok();
+		}
+		return R.errorMsg("操作失败！");
+	}
 
 
 }
