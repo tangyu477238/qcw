@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
-<head th:include="include :: header"></head>
+<head th:include="gc/include :: header"></head>
 <body class="gray-bg">
 
-
 <form class="form-horizontal" action="#" id="searchUserFormId">
-<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
-<input type="hidden" id="stype"  name="stype" th:value = "${stype}">
+	<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
+
 
 	<div class="wrapper wrapper-content ">
 		<div class="col-sm-12">
@@ -15,10 +14,10 @@
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button  type="button" class="btn  btn-primary" onclick="add()">
+							<button type="button" class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button type="button" class="btn  btn-danger"
+							<button  type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
@@ -37,7 +36,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
 		<div>
 			<script type="text/javascript">
@@ -62,10 +60,10 @@
 			</script>
 		</div>
 	</div>
-	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/custom/custom.js?v=2"></script>
-
+	<div th:include="gc/include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/gc/addr/addr.js?v=11"></script>
 
 </form>
+
 </body>
 </html>

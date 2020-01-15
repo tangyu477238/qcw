@@ -3,22 +3,19 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-
-
 <form class="form-horizontal" action="#" id="searchUserFormId">
-<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
-<input type="hidden" id="stype"  name="stype" th:value = "${stype}">
 
+	<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
 	<div class="wrapper wrapper-content ">
 		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button  type="button" class="btn  btn-primary" onclick="add()">
-								<i class="fa fa-plus" aria-hidden="true"></i>添加
-							</button>
-							<button type="button" class="btn  btn-danger"
+							<!--<button shiro:hasPermission="gc:orderItem:add" type="button" class="btn  btn-primary" onclick="add()">-->
+								<!--<i class="fa fa-plus" aria-hidden="true"></i>添加-->
+							<!--</button>-->
+							<button shiro:hasPermission="gc:orderItem:batchRemove" type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
@@ -28,7 +25,7 @@
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="searchName" type="text" class="form-control"
-								placeholder="">
+								placeholder="车号">
 						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
@@ -37,7 +34,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
 		<div>
 			<script type="text/javascript">
@@ -46,26 +42,34 @@
 				var s_resetPwd_h = 'hidden';
 			</script>
 		</div>
-		<div >
+		<div shiro:hasPermission="gc:orderItem:edit">
 			<script type="text/javascript">
 				s_edit_h = '';
 			</script>
 		</div>
-		<div >
+		<div shiro:hasPermission="gc:orderItem:remove">
 			<script type="text/javascript">
 				var s_remove_h = '';
 			</script>
 		</div>
-		<div >
+		<div shiro:hasPermission="gc:orderItem:resetPwd">
 			<script type="text/javascript">
 				var s_resetPwd_h = '';
 			</script>
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/custom/custom.js?v=2"></script>
+
+	<script type="text/javascript" th:inline="javascript">
+
+        var driver = [[${driverList}]];
+
+	</script>
+
+	<script type="text/javascript" src="/js/appjs/gc/orderItem/orderItem.js?v=110111111111">
 
 
+	</script>
 </form>
 </body>
 </html>

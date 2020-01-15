@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+<form class="form-horizontal" action="#" id="searchUserFormId">
+
+	<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<!--<button shiro:hasPermission="gc:order:batchRemove" type="button" class="btn  btn-danger"-->
+								<!--onclick="batchRemove()">-->
+								<!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
+							<!--</button>-->
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div >
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div >
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div >
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="gc/include :: footer"></div>
+
+<script type="text/javascript" th:inline="javascript">
+	var renyuan = [[${sysUserList}]];
+    var orderuser = [[${orderuser}]];
+    var driver = [[${driverList}]];
+
+</script>
+
+<script type="text/javascript">
+
+
+    var myVar;
+	var prefix = "/gc/order"
+	$(function() {
+        load();
+        //20秒一次
+        myVar = setInterval(function(){ reLoad() }, 20000);
+	});
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+	//停止函数
+    function myStopFunction() {
+        clearInterval(myVar);
+    }
+
+
+    function reData() {
+        var data = $('#exampleTable').bootstrapTable('getData', true);
+        mergeCellsTotal(data, "id"); //单元格统计
+
+        mergeCells("id", $('#exampleTable'));
+        mergeCells("createusername", $('#exampleTable'));
+        mergeCells("bizdate", $('#exampleTable'));
+        mergeCells("forwunit", $('#exampleTable'));
+        // mergeCells("steelnum", $('#exampleTable'));
+
+        mergeCells("specs", $('#exampleTable'));
+        mergeCells("tonnage", $('#exampleTable'))
+        mergeCells("jsprice", $('#exampleTable'))
+        mergeCells("sytonnage", $('#exampleTable'))
+
+        mergeCells("station", $('#exampleTable'));
+        mergeCells("fromstation", $('#exampleTable'));
+        mergeCells("orderuser", $('#exampleTable'));
+        mergeCells("huidan", $('#exampleTable'));
+    }
+
+	function load() {
+		$('#exampleTable')
+			.bootstrapTable(
+				{
+					method : 'get', // 服务器数据的请求方式 get or post
+					url : prefix + "/tlist", // 服务器数据的加载地址
+					//	showRefresh : true,
+					//	showToggle : true,
+					//	showColumns : true,
+					iconSize : 'outline',
+					toolbar : '#exampleToolbar',
+					striped : true, // 设置为true会有隔行变色效果
+					dataType : "json", // 服务器返回的数据类型
+					pagination : true, // 设置为true会在底部显示分页条
+					// queryParamsType : "limit",
+					// //设置为limit则会发送符合RESTFull格式的参数
+					singleSelect : true, // 设置为true将禁止多选
+					// contentType : "application/x-www-form-urlencoded",
+					// //发送到服务器的数据编码类型
+					pageSize : 1000, // 如果设置了分页，每页数据条数
+					pageNumber : 1, // 如果设置了分布，首页页码
+					//search : true, // 是否显示搜索框
+					showColumns : false, // 是否显示内容下拉框（选择显示的列）
+					sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
+					queryParams : function(params) {
+						return {
+							//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+							limit: params.limit,
+							offset:params.offset,
+                            bizdate:getNowFormatDate(),
+
+							deptId:$('#deptId').val(),
+							username:$('#searchName').val()
+						};
+					},
+                    onLoadSuccess: function (data) {
+
+                        reData();
+
+                    },
+
+
+
+					// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
+					// queryParamsType = 'limit' ,返回参数必须包含
+					// limit, offset, search, sort, order 否则, 需要包含:
+					// pageSize, pageNumber, searchText, sortName,
+					// sortOrder.
+					// 返回false将会终止请求
+					columns : [
+						// {
+						// 	checkbox : true
+						// },
+						{
+							field : 'id',
+							title : 'id'
+						},
+						// 								{
+						// 	field : 'deptId',
+						// 	title : '地区'
+						// },
+						{
+							field : 'createusername',
+							title : '业务接单员',
+                            formatter : function(value, row, index) {
+                                if (orderuser!=row['createuser']) {
+                                    return row['createusername'];
+                                }else {
+                                    return '<font color="red">'+row['createusername']+'</font>';
+                                }
+                            }
+						},
+						// 								{
+						// 	field : 'createuser',
+						// 	title : '业务接单员',
+						// 	formatter : function(value, row, index) {
+						// 		for(var j = 0;j<renyuan.length; j++) {
+						// 			if (renyuan[j].userId == row['createuser']) {
+						// 				return renyuan[j].name;
+						// 			}
+						// 		}
+						// 	}
+						// },
+						{
+							field : 'biztime',
+							title : '时间'
+						},
+						{
+							field : 'forwunit',
+							title : '发货单位'
+						},
+						// {
+						// 	field : 'steelnum',
+						// 	title : '钢号'
+						// },
+						{
+							field : 'specs',
+							title : '规格'
+						},
+						{
+							field : 'tonnage',
+							title : '吨数'
+						},
+                        {
+                            field : 'jsprice',
+                            title : '结算单价',
+                            formatter : function(value, row, index) {
+                                if (orderuser!=row['createuser']) {
+                                    return '';
+                                }else {
+                                    return row['jsprice'];
+								}
+							}
+                        },
+						{
+							field : 'sytonnage',
+							title : '剩余吨位'
+						},
+						// {
+						// 	field : 'addr',
+						// 	title : '卸车地址'
+						// },
+						{
+							field : 'station',
+							title : '到站',
+                            formatter : function(value, row, index) {
+                                var g = '<a href="#" mce_href="#"  onclick="dizhi(\''+ row.addr+ '\')">'+row.station+'</a> ';
+                                return g ;
+							}
+						},
+						{
+							field : 'fromstation',
+							title : '装车地点'
+						},
+                        {
+                            field : 'orderuser',
+                            title : '派车员' ,
+                            formatter : function(value, row, index) {
+                                for(var j = 0;j<renyuan.length; j++) {
+                                    if (renyuan[j].userId == row['orderuser']) {
+                                        if (orderuser!=row['orderuser']) {
+                                            return renyuan[j].name;
+                                        }else {
+                                            return '<font color="red">'+renyuan[j].name+'</font>';
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                        	field : 'huidan',
+                        	title : '是否回单'
+                        },
+						{
+							field : 'carnum',
+							title : '车牌号',
+                            formatter : function(value, row, index) {
+                                for(var j = 0;j<driver.length; j++) {
+                                    if (driver[j].id == row['carnum']) {
+                                        return driver[j].carnum;
+                                    }
+                                }
+                            }
+						},
+                        {
+                            field : 'zztonnage',
+                            title : '装载吨数'
+                        },
+                        {
+                            field : 'trancost',
+                            title : '运费'
+                        },
+                        {
+                            field : 'driver',
+                            title : '司机'
+                        },
+                        {
+                            field : 'idcard',
+                            title : '司机身份证'
+                        },
+                        {
+                            field : 'drivertel',
+                            title : '司机电话'
+                        },
+                        {
+                            field : 'remark',
+                            title : '备注'
+                        },
+
+
+						{
+							title : '操作',
+							field : 'id',
+							align : 'center',
+							formatter : function(value, row, index) {
+								var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
+									+ row.id
+									+ '\')"><i class="fa fa-edit"></i></a> ';
+								var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+									+ row.id
+									+ '\')"><i class="fa fa-remove"></i></a> ';
+                                var f = '<a class="btn btn-success btn-sm  href="#" mce_href="#" title="派车" onclick="paiche(\''
+                                    + row.id
+                                    + '\')">派车</a> ';
+                                var g = '';
+								var x = '';
+                                if (orderuser==row['createuser']) {
+                                    x = e + d ;
+                                }
+                                if (orderuser==row['orderuser'] && row['state']==0) {
+                                    x = x + f + g ;
+                                }
+								return x ;
+							}
+						} ]
+				});
+	}
+
+
+
+
+    //对应第一个合并的单元格
+    var sort = Array();//2,5,3
+	//统计合并数
+    mergeCellsTotal = function(data, fieldName) {
+        sort.length = 0;
+        var num = 1;
+        for (var i = 0; i < data.length - 1; i++) {
+            for ( var prop in data[i]) {
+                if (prop == fieldName) {
+                    if (data[i][prop] == data[i + 1][prop]) {
+                        num++;
+                        if (i == data.length - 2) {
+                            sort.push(num);
+                        }
+                    } else {
+                        sort.push(num);
+                        num = 1;
+                    }
+                    break;
+                }
+            }
+        }
+    };
+
+    mergeCells = function(fieldName, target) {
+
+        var index = 0;
+        for (var j = 0; j < sort.length; j++) {
+            var count = sort[j];
+            $(target).bootstrapTable('mergeCells', {
+                index : index,
+                field : fieldName,
+                colspan : 1,
+                rowspan : count
+            });
+            index += count;
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function reLoad() {
+		$('#exampleTable').bootstrapTable('refresh');
+        reData();
+	}
+
+    function dizhi(addr) {
+        alert(addr)
+	}
+
+
+	function add() {
+		layer.open({
+			type : 2,
+			title : '增加',
+			maxmin : true,
+			shadeClose : false, // 点击遮罩关闭层
+			area : [ '800px', '520px' ],
+			content : prefix + '/add?deptId='+$('#deptId').val() // iframe的url
+		});
+	}
+	function edit(id) {
+		layer.open({
+			type : 2,
+			title : '编辑',
+			maxmin : true,
+			shadeClose : false, // 点击遮罩关闭层
+			area : [ '800px', '520px' ],
+			content : prefix + '/edit/' + id // iframe的url
+		});
+	}
+    function paiche(id) {
+        layer.open({
+            type : 2,
+            title : '派车',
+            maxmin : true,
+            shadeClose : false, // 点击遮罩关闭层
+            area : [ '800px', '520px' ],
+            content : '/gc/orderItem/add?id='+id+'&deptId='+$('#deptId').val() // iframe的url
+        });
+    }
+
+    function wancheng(id) {
+        layer.confirm('确定完成了此订单吗？', {
+            btn : [ '确定', '取消' ]
+        }, function() {
+            $.ajax({
+                url : prefix+"/wancheng",
+                type : "post",
+                data : {
+                    'id' : id
+                },
+                success : function(r) {
+                    if (r.code==0) {
+                        layer.msg(r.msg);
+                        reLoad();
+                    }else{
+                        layer.msg(r.msg);
+                    }
+                }
+            });
+        })
+    }
+
+
+	function remove(id) {
+		layer.confirm('确定要删除选中的记录？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				url : prefix+"/remove",
+				type : "post",
+				data : {
+					'id' : id
+				},
+				success : function(r) {
+					if (r.code==0) {
+						layer.msg(r.msg);
+						reLoad();
+					}else{
+						layer.msg(r.msg);
+					}
+				}
+			});
+		})
+	}
+
+	function resetPwd(id) {
+	}
+	function batchRemove() {
+		var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+		if (rows.length == 0) {
+			layer.msg("请选择要删除的数据");
+			return;
+		}
+		layer.confirm("确认要删除选中的'" + rows.length + "'条数据吗?", {
+			btn : [ '确定', '取消' ]
+			// 按钮
+		}, function() {
+			var ids = new Array();
+			// 遍历所有选择的行数据，取每条数据对应的ID
+			$.each(rows, function(i, row) {
+				ids[i] = row['id'];
+			});
+			$.ajax({
+				type : 'POST',
+				data : {
+					"ids" : ids
+				},
+				url : prefix + '/batchRemove',
+				success : function(r) {
+					if (r.code == 0) {
+						layer.msg(r.msg);
+						reLoad();
+					} else {
+						layer.msg(r.msg);
+					}
+				}
+			});
+		}, function() {
+
+		});
+	}
+
+
+
+</script>
+
+
+
+</form>
+</body>
+</html>

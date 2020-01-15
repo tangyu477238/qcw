@@ -62,7 +62,7 @@
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="form-control" name="carnum" size="15"
-								   id="carnum" placeholder="车号">
+								   id="carnum" placeholder="开票单位">
 						</div>
 						<div class="col-md-2">
 
@@ -205,8 +205,8 @@
     var prefix = "/gc/sijiItemInvoice"
     $(function() {
 
-        //$("#startDate").val(getNowFirstDate());
-        //$("#endDate").val(getNowFormatDate());
+        $("#startDate").val(getNowFirstDate());
+        $("#endDate").val(getNowFormatDate());
 
         load();
     });
@@ -342,7 +342,6 @@
 
 
 
-	var arrivstation = '';
     function load() {
 
         $('#exampleTable')
@@ -381,7 +380,7 @@
                             tendDate:$('#tendDate').val(),
                             carnum:$('#carnum').val(),
                             inforfee:$('#inforfee').val(),
-                            arrivstation:arrivstation,
+                            arrivstation:''+$('#arrivstation').val(),
                             deptId:$('#deptId').val()
 
                             // name:$('#searchName').val(),
@@ -445,22 +444,30 @@
                         {
                             field : 'js',
                             title : '结算金额' ,
-                            align : 'center'
-                            // ,
-                            // footerFormatter: function (value) {
-                            // 	var amount = 0;
-                            // 	for (var i in value) {
-                            // 	    if (value[i].aminvoice!='' && value[i].aminvoice!=null){
-                            //             amount += parseFloat(value[i].aminvoice);
-                            // 		}
-                            // 	}
-                            // 	return amount.toFixed(2);
-                            // }
+                            align : 'center',
+                            footerFormatter: function (value) {
+                                var amount = 0;
+                                for (var i in value) {
+                                    if (value[i].js!='' && value[i].js!=null){
+                                        amount += parseFloat(value[i].js);
+                                    }
+                                }
+                                return amount.toFixed(2);
+                            }
                         },
                         {
                             field : 'tonnage',
                             title : '吨位' ,
-                            align : 'center'
+                            align : 'center',
+                            footerFormatter: function (value) {
+                                var amount = 0;
+                                for (var i in value) {
+                                    if (value[i].tonnage!='' && value[i].tonnage!=null){
+                                        amount += parseFloat(value[i].tonnage);
+                                    }
+                                }
+                                return amount.toFixed(3);
+                            }
                         },
                         {
                             field : 'transcost',
@@ -470,7 +477,16 @@
                         {
                             field : 'transfee',
                             title : '付司机运费' ,
-                            align : 'center'
+                            align : 'center',
+                            footerFormatter: function (value) {
+                                var amount = 0;
+                                for (var i in value) {
+                                    if (value[i].transfee!='' && value[i].transfee!=null){
+                                        amount += parseFloat(value[i].transfee);
+                                    }
+                                }
+                                return amount.toFixed(2);
+                            }
                         },
                         {
                             field : 'ks',
@@ -480,13 +496,22 @@
                         {
                             field : 'yue',
                             title : '余额' ,
-                            align : 'center'
+                            align : 'center',
+                            footerFormatter: function (value) {
+                                var amount = 0;
+                                for (var i in value) {
+                                    if (value[i].yue!='' && value[i].yue!=null){
+                                        amount += parseFloat(value[i].yue);
+                                    }
+                                }
+                                return amount.toFixed(2);
+                            }
                         },
                         {
                             title : '系统操作',
                             align : 'center',
                             formatter : function(value, row, index) {
-                                var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'"  href="#" mce_href="#" title="查看" onclick="queryMx(\''
+                                var e = '<a class="btn btn-primary btn-sm"  href="#" mce_href="#" title="查看" onclick="queryMx(\''
                                     + row.pid
                                     + '\')">查看</a> ';
 
@@ -496,7 +521,6 @@
                 });
     }
     function reLoad() {
-        arrivstation = ''+$('#arrivstation').val();
         $('#exampleTable').bootstrapTable('refresh');
     }
 
