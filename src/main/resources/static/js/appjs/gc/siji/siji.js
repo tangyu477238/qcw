@@ -18,6 +18,16 @@ function getNowFirstDate() {
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var strDate = date.getDate();
+
+
+    if (month=2) {
+        month = 12;
+        year = year-1;
+	} else if (month=1) {
+        month = 11;
+        year = year-1;
+    }
+
     if (month >= 1 && month <= 9) {
         month = "0" + month;
     }
@@ -154,6 +164,7 @@ function load() {
 										var f = '<a class="btn btn-success btn-sm" href="#" title="查看明细"  mce_href="#" onclick="queryMx(\''
 												+ row.pid
 												+ '\')"><i class="fa fa-key"></i></a> ';
+
 										return f + e + d  ;
 									}
 								} ]
@@ -177,13 +188,14 @@ function add() {
     layer.full(perContent);
 }
 function edit(id) {
+    var deptId=$('#deptId').val();
     var perContent = layer.open({
 		type : 2,
 		title : '编辑',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/edit/' + id // iframe的url
+		content : prefix + '/edit?id=' + id+'&deptId='+deptId // iframe的url
 	});
 
     layer.full(perContent);
@@ -237,8 +249,41 @@ function queryMx(id) {
 
     //layer.full(perContent);
 
+}
+
+function updatePrice() {
+    var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+    if (rows.length == 0) {
+        layer.msg("请选择要修改价格的数据");
+        return;
+    }
+
+
+	var ids = new Array();
+    // 遍历所有选择的行数据，取每条数据对应的ID
+    $.each(rows, function(i, row) {
+        ids[i] = row['pid'];
+    });
+
+    var arrivstation = $('#arrivstation').val();
+    var inforfee = $('#inforfee').val();
+
+	var perContent = layer.open({
+        type : 2,
+        title : '批量改价',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '520px' ],
+        content : prefix + '/updatePrice?ids='+ids + '&arrivstation='+ arrivstation +'&inforfee='+inforfee // iframe的url
+    });
+
+    //layer.full(perContent);
 
 }
+
+
+
+
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {

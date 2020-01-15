@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.gc.dao.OrderItemDao">
+
+	<select id="get" resultType="com.bootdo.gc.domain.OrderItemDO">
+		select `id`,`dept_id`,`pid`,`createusername`,`createuser`,`carnum`,`tonnage`,`trancost`,`carname`,`cartel`,`driver`,`idcard`,`tel`,`route`,`remark`,`state` from gc_order_item where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.gc.domain.OrderItemDO">
+		select
+		si.`id`,si.`dept_id`,si.`pid`,si.`createusername`,si.`createuser`,si.`carnum`,si.`tonnage`,si.`trancost`,si.`carname`,
+		si.`cartel`,`driver`,si.`idcard`,si.`tel`,si.`route`,si.`remark`,si.`state` ,
+		s.bizdate,s.station,s.forwunit
+		from gc_order_item  si
+		     inner join gc_order s on si.pid = s.id
+        <where>  
+		  		  <if test="id != null and id != ''"> and si.id = #{id} </if>
+		  		  <if test="deptId != null and deptId != ''"> and si.dept_id = #{deptId} </if>
+		  		  <if test="pid != null and pid != ''"> and si.pid = #{pid} </if>
+		  		  <if test="createusername != null and createusername != ''"> and si.createusername = #{createusername} </if>
+		  		  <if test="createuser != null and createuser != ''"> and si.createuser = #{createuser} </if>
+		  		  <if test="carnum != null and carnum != ''"> and si.carnum = #{carnum} </if>
+		  		  <if test="tonnage != null and tonnage != ''"> and si.tonnage = #{tonnage} </if>
+		  		  <if test="trancost != null and trancost != ''"> and si.trancost = #{trancost} </if>
+		  		  <if test="carname != null and carname != ''"> and si.carname = #{carname} </if>
+		  		  <if test="cartel != null and cartel != ''"> and si.cartel = #{cartel} </if>
+		  		  <if test="driver != null and driver != ''"> and si.driver = #{driver} </if>
+		  		  <if test="idcard != null and idcard != ''"> and si.idcard = #{idcard} </if>
+		  		  <if test="tel != null and tel != ''"> and si.tel = #{tel} </if>
+		  		  <if test="route != null and route != ''"> and si.route = #{route} </if>
+		  		  <if test="remark != null and remark != ''"> and si.remark = #{remark} </if>
+		  		  <if test="state != null and state != ''"> and si.state = #{state} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from gc_order_item
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+		  		  <if test="pid != null and pid != ''"> and pid = #{pid} </if>
+		  		  <if test="createusername != null and createusername != ''"> and createusername = #{createusername} </if>
+		  		  <if test="createuser != null and createuser != ''"> and createuser = #{createuser} </if>
+		  		  <if test="carnum != null and carnum != ''"> and carnum = #{carnum} </if>
+		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
+		  		  <if test="trancost != null and trancost != ''"> and trancost = #{trancost} </if>
+		  		  <if test="carname != null and carname != ''"> and carname = #{carname} </if>
+		  		  <if test="cartel != null and cartel != ''"> and cartel = #{cartel} </if>
+		  		  <if test="driver != null and driver != ''"> and driver = #{driver} </if>
+		  		  <if test="idcard != null and idcard != ''"> and idcard = #{idcard} </if>
+		  		  <if test="tel != null and tel != ''"> and tel = #{tel} </if>
+		  		  <if test="route != null and route != ''"> and route = #{route} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.gc.domain.OrderItemDO" useGeneratedKeys="true" keyProperty="id">
+		insert into gc_order_item
+		(
+			`dept_id`, 
+			`pid`, 
+			`createusername`, 
+			`createuser`, 
+			`carnum`, 
+			`tonnage`, 
+			`trancost`, 
+			`carname`, 
+			`cartel`, 
+			`driver`, 
+			`idcard`, 
+			`tel`, 
+			`route`, 
+			`remark`, 
+			`state`
+		)
+		values
+		(
+			#{deptId}, 
+			#{pid}, 
+			#{createusername}, 
+			#{createuser}, 
+			#{carnum}, 
+			#{tonnage}, 
+			#{trancost}, 
+			#{carname}, 
+			#{cartel}, 
+			#{driver}, 
+			#{idcard}, 
+			#{tel}, 
+			#{route}, 
+			#{remark}, 
+			#{state}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.gc.domain.OrderItemDO">
+		update gc_order_item 
+		<set>
+			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="pid != null">`pid` = #{pid}, </if>
+			<if test="createusername != null">`createusername` = #{createusername}, </if>
+			<if test="createuser != null">`createuser` = #{createuser}, </if>
+			<if test="carnum != null">`carnum` = #{carnum}, </if>
+			<if test="tonnage != null">`tonnage` = #{tonnage}, </if>
+			<if test="trancost != null">`trancost` = #{trancost}, </if>
+			<if test="carname != null">`carname` = #{carname}, </if>
+			<if test="cartel != null">`cartel` = #{cartel}, </if>
+			<if test="driver != null">`driver` = #{driver}, </if>
+			<if test="idcard != null">`idcard` = #{idcard}, </if>
+			<if test="tel != null">`tel` = #{tel}, </if>
+			<if test="route != null">`route` = #{route}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="state != null">`state` = #{state}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from gc_order_item where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from gc_order_item where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

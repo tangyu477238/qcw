@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.gc.dao.OrderDao">
+
+	<select id="get" resultType="com.bootdo.gc.domain.OrderDO">
+		select
+		       `id`,`dept_id`,`createusername`,`createuser`,`bizdate`,`forwunit`,`steelnum`,`specs`,huidan,
+		       `tonnage`,jsprice,s.tonnage-IFNULL(t.zztonnage,0) as `sytonnage`,`addr`,station,
+		       `fromstation`,`orderuser`,`state`,biztime
+		from gc_order s
+		  left join (
+			select
+				si.pid,SUM(tonnage) as zztonnage
+			from gc_order_item si
+			group by si.pid
+		  ) t on t.pid = s.id
+		where id = #{value}
+	</select>
+
+
+
+	<select id="tlist" resultType="java.util.HashMap" >
+		select
+		s.`id`,s.`dept_id` as deptId,s.`createusername`,s.`createuser`,s.`bizdate`,s.`forwunit`,
+		       s.`steelnum`,s.`specs`,s.tonnage,s.jsprice,s.`addr`,s.station,
+		       s.`fromstation`,s.`orderuser`,s.`state`,s.huidan,s.biztime,s.orderremark,
+		       t.carnum,t.tonnage  as  zztonnage,t.trancost,
+		       t.carname,t.cartel,t.driver,t.idcard,t.tel as drivertel,t.route,t.remark,t.id as mxid
+		from gc_order s
+		left join gc_order_item t on t.pid = s.id
+		where 1=1
+
+
+
+		<if test="id != null and id != ''"> and t.id = #{id} </if>
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+		<if test="createusername != null and createusername != ''"> and s.createusername = #{createusername} </if>
+		<if test="bizdate != null and bizdate != ''"> and s.bizdate = #{bizdate} </if>
+
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+
+
+		<if test="forwunit != null and forwunit != ''"> and s.forwunit = #{forwunit} </if>
+		<if test="steelnum != null and steelnum != ''"> and s.steelnum = #{steelnum} </if>
+		<if test="specs != null and specs != ''"> and s.specs = #{specs} </if>
+		<if test="tonnage != null and tonnage != ''"> and s.tonnage = #{tonnage} </if>
+		<if test="sytonnage != null and sytonnage != ''"> and s.sytonnage = #{sytonnage} </if>
+		<if test="addr != null and addr != ''"> and s.addr = #{addr} </if>
+		<if test="station != null and station != ''"> and s.station = #{station} </if>
+		<if test="fromstation != null and fromstation != ''"> and s.fromstation = #{fromstation} </if>
+		<if test="state != null and state != ''"> and s.state = #{state} </if>
+
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+
+
+
+
+
+
+
+	<select id="list" resultType="com.bootdo.gc.domain.OrderDO">
+		select
+		       `id`,`dept_id`,`createusername`,`createuser`,biztime,`bizdate`,`forwunit`,`steelnum`,huidan,`specs`,tonnage,jsprice,
+		       s.tonnage-IFNULL(t.zztonnage,0) as `sytonnage`,`addr`,station,`fromstation`,`orderuser`,`state`
+		from gc_order s
+		left join (
+		  select
+		         si.pid,SUM(tonnage) as zztonnage
+		  from gc_order_item si
+		  group by si.pid
+		) t on t.pid = s.id
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+		  		  <if test="createusername != null and createusername != ''"> and createusername = #{createusername} </if>
+		  		  <if test="createuser != null and createuser != ''"> and createuser = #{createuser} </if>
+		  		  <if test="bizdate != null and bizdate != ''"> and bizdate = #{bizdate} </if>
+		  		  <if test="forwunit != null and forwunit != ''"> and forwunit = #{forwunit} </if>
+		  		  <if test="steelnum != null and steelnum != ''"> and steelnum = #{steelnum} </if>
+		  		  <if test="specs != null and specs != ''"> and specs = #{specs} </if>
+		  		  <if test="tonnage != null and tonnage != ''"> and tonnage = #{tonnage} </if>
+		  		  <if test="sytonnage != null and sytonnage != ''"> and sytonnage = #{sytonnage} </if>
+		  		  <if test="addr != null and addr != ''"> and addr = #{addr} </if>
+		  		  <if test="station != null and station != ''"> and station = #{station} </if>
+		  		  <if test="fromstation != null and fromstation != ''"> and fromstation = #{fromstation} </if>
+		  		  <if test="orderuser != null and orderuser != ''"> and orderuser = #{orderuser} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+
+
+
+
+ 	<select id="count" resultType="int">
+		select count(*) from gc_order s
+		where 1=1
+
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+		<if test="createusername != null and createusername != ''"> and s.createusername = #{createusername} </if>
+		<if test="bizdate != null and bizdate != ''"> and s.bizdate = #{bizdate} </if>
+
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+
+		<if test="forwunit != null and forwunit != ''"> and s.forwunit = #{forwunit} </if>
+		<if test="steelnum != null and steelnum != ''"> and s.steelnum = #{steelnum} </if>
+		<if test="specs != null and specs != ''"> and s.specs = #{specs} </if>
+		<if test="tonnage != null and tonnage != ''"> and s.tonnage = #{tonnage} </if>
+		<if test="sytonnage != null and sytonnage != ''"> and s.sytonnage = #{sytonnage} </if>
+		<if test="addr != null and addr != ''"> and s.addr = #{addr} </if>
+		<if test="station != null and station != ''"> and s.station = #{station} </if>
+		<if test="fromstation != null and fromstation != ''"> and s.fromstation = #{fromstation} </if>
+		<if test="state != null and state != ''"> and s.state = #{state} </if>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.gc.domain.OrderDO" useGeneratedKeys="true" keyProperty="id">
+		insert into gc_order
+		(
+			`dept_id`, 
+			`createusername`, 
+			`createuser`, 
+			`bizdate`, 
+			`forwunit`, 
+			`steelnum`, 
+			`specs`, 
+			`tonnage`,
+			jsprice,
+			`sytonnage`, 
+			`addr`, 
+			station,
+			`fromstation`, 
+			`orderuser`,huidan,biztime
+		)
+		values
+		(
+			#{deptId}, 
+			#{createusername}, 
+			#{createuser}, 
+			#{bizdate}, 
+			#{forwunit}, 
+			#{steelnum}, 
+			#{specs}, 
+			#{tonnage},
+			#{jsprice},
+
+			#{sytonnage}, 
+			#{addr}, 
+			#{station},
+			#{fromstation}, 
+			#{orderuser},
+		 	#{huidan},
+			#{biztime}
+		)
+	</insert>
+
+
+	<update id="saveRemark" >
+		update gc_order set orderremark = #{orderremark}
+		where id = #{id}
+	</update>
+
+
+	<update id="update" parameterType="com.bootdo.gc.domain.OrderDO">
+		update gc_order 
+		<set>
+			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="createusername != null">`createusername` = #{createusername}, </if>
+			<if test="createuser != null">`createuser` = #{createuser}, </if>
+			<if test="bizdate != null">`bizdate` = #{bizdate}, </if>
+			<if test="forwunit != null">`forwunit` = #{forwunit}, </if>
+			<if test="steelnum != null">`steelnum` = #{steelnum}, </if>
+			<if test="specs != null">`specs` = #{specs}, </if>
+			<if test="tonnage != null">`tonnage` = #{tonnage}, </if>
+			<if test="jsprice != null">`jsprice` = #{jsprice}, </if>
+
+			<if test="sytonnage != null">`sytonnage` = #{sytonnage}, </if>
+			<if test="addr != null">`addr` = #{addr}, </if>
+			<if test="station != null">`station` = #{station}, </if>
+			<if test="fromstation != null">`fromstation` = #{fromstation}, </if>
+			<if test="orderuser != null">`orderuser` = #{orderuser}, </if>
+			<if test="huidan != null">`huidan` = #{huidan}, </if>
+
+			<if test="state != null">`state` = #{state}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from gc_order where id = #{value}
+	</delete>
+
+
+	<update id="wancheng" >
+		update gc_order set state = 1
+
+		where id = #{id}
+	</update>
+
+
+	
+	<delete id="batchRemove">
+		delete from gc_order where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
