@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<style>
+	.common-search-form{
+		margin-bottom:10px;
+		padding:20px 20px 0px!important;
+	}
+	.form-control{
+		border-radius: 4px!important;
+	}
+	.form-horizontal .control-label{
+		text-align: center;
+	}
+</style>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content ">
+
+
+
+
+
+	<div class="portlet light common-search-form">
+		<div class="portlet-body">
+			<form class="form-horizontal" action="#" id="searchUserFormId">
+				<input type="hidden" id="deptId" name="deptId" th:value = "${deptId}">
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-md-2">业务</label>
+							<div class="col-md-5 ">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="startDate" name="startDate" placeholder="开始日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   size="13"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+							<div class="col-md-5 ">
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="endDate" name="endDate" placeholder="结束日期"
+									   size="13"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+
+							<input type="text" class="form-control" name="inforfee" size="15"
+								   id="inforfee" placeholder="付款单位">
+
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+
+							<input id="carnum" name="carnum" type="text" class="form-control" size="10"
+								   placeholder="车牌号">
+
+						</div>
+					</div>
+
+
+
+
+
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<!--<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>-->
+							<!--<button  type="button" class="btn  btn-success" onclick="excel()">-->
+								<!--导出-->
+							<!--</button>-->
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-md-2">对账</label>
+							<div class="col-md-5 ">
+
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="tstartDate" name="tstartDate" placeholder="开始日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   size="13"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+							<div class="col-md-5 ">
+								<input type="text" class="laydate-icon layer-date form-control"
+									   id="tendDate" name="tendDate" placeholder="结束日期"
+									   size="13"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+									   style="background-color: #fff;" readonly="readonly"/>
+							</div>
+
+
+
+						</div>
+					</div>
+
+
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<input id="arrivstation" name="arrivstation" type="text" class="form-control" size="10"
+								   placeholder="到站">
+						</div>
+					</div>
+
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<button type="button" onclick="reLoad()" class="btn btn-primary">查询</button>
+							<button type="button" class="btn  btn-primary" onclick="excel()">导出</button>
+							<!--<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>-->
+
+							<!--<button id="import1" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary">-->
+								<!--<span class="glyphicon glyphicon glyphicon-import">结算导入</span>-->
+							<!--</button>-->
+							<!--<button id="import2" shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-warning">-->
+								<!--<span class="glyphicon glyphicon glyphicon-import">收款导入</span>-->
+							<!--</button>-->
+
+
+
+
+
+
+
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+				<table id="exampleTable" data-mobile-responsive="true">
+				</table>
+
+			</form>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+
+
+
+<!--导入modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="importModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">导入excel</h4>
+			</div>
+			<div class="modal-body">
+				<div>
+					<!--<form action="/user/importExcel" method="POST" enctype="multipart/form-data" target="nm_iframe" >
+                        <input type="file" name="file"/>
+                    </form>
+                    <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>-->
+					<input type="file" name="file" id="excelImp">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<a onclick="importConfirm()" class="btn btn-primary" data-dismiss="modal">导入</a>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script type="text/javascript">
+    var s_edit_h = 'hidden';
+</script>
+
+<div shiro:hasPermission="biz:kehu:pms">
+	<script type="text/javascript">
+        s_edit_h = '';
+	</script>
+</div>
+
+<div th:include="gc/include :: footer"></div>
+
+
+
+
+<script type="text/javascript" >
+
+    var url = '/gc/sijiItem/importExcel';
+
+    // 导入
+    $('#import1').click(function () {
+        url = '/gc/sijiItem/importExcel';
+        $('#importModal').modal('show');
+    });
+
+
+    $('#import2').click(function () {
+        url = '/gc/sijiItem/importExcel2';
+        $('#importModal').modal('show');
+    });
+
+
+    // 确认导入
+    function importConfirm() {
+        // $('form').submit();
+        var fileObj = document.getElementById('excelImp').files[0];
+        if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+
+            parent.layer.msg("请选择excel文件");
+            return;
+        }
+        var formFile = new FormData();
+        formFile.append('file', fileObj);
+
+
+
+
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: formFile,
+            processData:false,
+            contentType:false,
+            // async: false,
+            success:function(data) {
+
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    reLoad();
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            },
+            error: function (e) {
+                parent.layer.msg("导入失败，请联系管理员");
+
+            }
+        })
+    }
+</script>
+
+
+
+
+	<script type="text/javascript" >
+
+        var prefix = "/gc/sijiItem"
+        $(function() {
+
+            $("#startDate").val(getNowFirstDate());
+            $("#endDate").val(getNowFormatDate());
+
+            load();
+        });
+
+
+
+        function piliang() {
+            var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+            if (rows.length == 0) {
+                layer.msg("请选择要对账的数据");
+                return;
+            }
+
+            var ids ='' ;
+
+            // 遍历所有选择的行数据，取每条数据对应的ID
+            $.each(rows, function(i, row) {
+                ids =ids + row['id']+',';
+            });
+
+            layer.open({
+                type : 2,
+                title : '编辑',
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : prefix + '/editPiliang/' + ids // iframe的url
+            });
+
+
+
+
+        }
+
+
+
+
+        function excel() {
+            var deptId =  $('#deptId').val()
+
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            var carnum = $('#carnum').val();
+            var inforfee = $('#inforfee').val();
+            var arrivstation = $('#arrivstation').val();
+            window.open("/gc/siji/export?startDate="+startDate+"&endDate="+endDate
+                +"&carnum="+carnum+"&inforfee="+inforfee+"&arrivstation="+arrivstation+"&deptId="+deptId);
+
+        }
+
+
+
+        //获取当前时间，格式YYYY-MM-DD
+        function getNowFirstDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + '01';
+            return currentdate;
+        }
+
+
+        //获取当前时间，格式YYYY-MM-DD
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+
+        function load() {
+            $('#exampleTable')
+                .bootstrapTable(
+                    {
+                        method : 'get', // 服务器数据的请求方式 get or post
+                        url : prefix + "/daiduizhanglist", // 服务器数据的加载地址
+                        //	showRefresh : true,
+                        //	showToggle : true,
+                        //	showColumns : true,
+                        iconSize : 'outline',
+                        toolbar : '#exampleToolbar',
+                        striped : true, // 设置为true会有隔行变色效果
+                        dataType : "json", // 服务器返回的数据类型
+                        pagination : true, // 设置为true会在底部显示分页条
+                        // queryParamsType : "limit",
+                        // //设置为limit则会发送符合RESTFull格式的参数
+                        singleSelect : false, // 设置为true将禁止多选
+                        // contentType : "application/x-www-form-urlencoded",
+                        // //发送到服务器的数据编码类型
+                        pageSize : 100, // 如果设置了分页，每页数据条数
+                        pageNumber : 1, // 如果设置了分布，首页页码
+
+                        showColumns : false, // 是否显示内容下拉框（选择显示的列）
+						showFooter : true,
+
+                        sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
+                        queryParams : function(params) {
+                            return {
+                                //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+                                limit: params.limit,
+                                offset:params.offset,
+                                startDate:$('#startDate').val(),
+                                endDate:$('#endDate').val(),
+                                tstartDate:$('#tstartDate').val(),
+                                tendDate:$('#tendDate').val(),
+                                carnum:$('#carnum').val(),
+                                inforfee:$('#inforfee').val(),
+                                arrivstation:$('#arrivstation').val(),
+                                deptId:$('#deptId').val()
+
+                                // name:$('#searchName').val(),
+                                // username:$('#searchName').val()
+                            };
+                        },
+                        // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
+                        // queryParamsType = 'limit' ,返回参数必须包含
+                        // limit, offset, search, sort, order 否则, 需要包含:
+                        // pageSize, pageNumber, searchText, sortName,
+                        // sortOrder.
+                        // 返回false将会终止请求
+                        columns : [
+                            {
+                                checkbox : true
+                            },
+                            {
+                                field : 'id',
+                                title : 'id',
+                                align : 'center'
+                            },					{
+                                field : 'orderNo',
+                                title : '订单号',
+                                align : 'center',
+                                footerFormatter: function (value) {
+
+                                    return '合计';
+                                }
+                            },
+                            {
+                                field : 'bizdate',
+                                title : '业务发生日期',
+                                align : 'center'
+                            },
+                            {
+                                field : 'forwunit',
+                                title : '发货单位' ,
+                                align : 'center'
+                            },
+                            {
+                                field : 'carnum',
+                                title : '车牌号码',
+                                align : 'center'
+                            },
+                            {
+                                field : 'arrivstation',
+                                title : '&nbsp;&nbsp;&nbsp;&nbsp;到&nbsp;&nbsp;站&nbsp;&nbsp;&nbsp;&nbsp;',
+                                align : 'center'
+                            },
+                            {
+                                field : 'steelnum',
+                                title : '钢号',
+                                align : 'center'
+                            },
+                            {
+                                field : 'specs',
+                                title : '规格',
+                                align : 'center'
+                            },
+                            {
+                                field : 'packnum',
+                                title : '件数',
+                                align : 'center'
+                            },
+                            {
+                                field : 'zhinum',
+                                title : '支数',
+                                align : 'center'
+                            },
+                            {
+                                field : 'tonnage',
+                                title : '钢材吨数',
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].tonnage!='' && value[i].tonnage!=null){
+                                            amount += parseFloat(value[i].tonnage);
+                                        }
+                                    }
+                                    return amount.toFixed(3);
+                                }
+                            },
+                            {
+                                field : 'baseprice',
+                                title : '基价',
+                                align : 'center'
+                            },
+                            {
+                                field : 'coefficient',
+                                title : '系数',
+                                align : 'center'
+                            },
+                            {
+                                field : 'tranrate',
+                                title : '运率',
+                                align : 'center'
+                            },
+                            {
+                                field : 'trancost',
+                                title : '钢材运费',
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].trancost!='' && value[i].trancost!=null){
+                                            amount += parseFloat(value[i].trancost);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
+                            },
+                            {
+                                field : 'remark',
+                                title : '备注' ,
+                                align : 'center',
+                                width: '10%'
+                            },
+                            {
+                                field : 'scustompay',
+                                title : '业务员' ,
+                                align : 'center'
+                            },
+                            {
+                                field : 'inforfee',
+                                title : '付款单位' ,
+                                align : 'center'
+                            },
+                            {
+                                field : 'billdate',
+                                title : '对账日期' ,
+                                align : 'center'
+                            },
+                            {
+                                field : 'kouling',
+                                title : '扣零' ,
+                                align : 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].kouling!='' && value[i].kouling!=null){
+                                            amount += parseFloat(value[i].kouling);
+                                        }
+                                    }
+                                    return amount.toFixed(2);
+                                }
+                            },
+                            {
+                                field : 'aminvoice',
+                                title : '结算金额' ,
+                                align : 'center',
+								footerFormatter: function (value) {
+									var amount = 0;
+									for (var i in value) {
+									    if (value[i].aminvoice!='' && value[i].aminvoice!=null){
+                                            amount += parseFloat(value[i].aminvoice);
+										}
+									}
+									return amount.toFixed(2);
+                                }
+                            }]
+                    });
+        }
+        function reLoad() {
+            $('#exampleTable').bootstrapTable('refresh');
+        }
+
+		var showflag = 'showColumn';
+        function showCol() {
+            if (showflag=='showColumn'){
+                showflag = 'hideColumn';
+                $("#showBt").attr('class', "btn btn-success");
+                $("#showBt").html("展示");
+			} else {
+                showflag = 'showColumn';
+                $("#showBt").attr('class', "btn btn-warning");
+                $("#showBt").html("隐藏");
+			}
+            $('#exampleTable').bootstrapTable(showflag, 'orderNo');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'steelnum');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'specs');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'packnum');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'zhinum');//隐藏/展示
+            $('#exampleTable').bootstrapTable(showflag, 'scustompay');//隐藏/展示
+        }
+
+
+        function add() {
+            layer.open({
+                type : 2,
+                title : '增加',
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : prefix + '/add' // iframe的url
+            });
+        }
+
+        function edit(id) {
+
+
+			layer.open({
+                type : 2,
+                title : '编辑',
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : prefix + '/editItem/' + id // iframe的url
+            });
+
+
+
+        }
+        function remove(id) {
+            layer.confirm('确定要删除选中的记录？', {
+                btn : [ '确定', '取消' ]
+            }, function() {
+                $.ajax({
+                    url : prefix+"/remove",
+                    type : "post",
+                    data : {
+                        'id' : id
+                    },
+                    success : function(r) {
+                        if (r.code==0) {
+                            layer.msg(r.msg);
+                            reLoad();
+                        }else{
+                            layer.msg(r.msg);
+                        }
+                    }
+                });
+            })
+        }
+
+        function resetPwd(id) {
+        }
+        function batchRemove() {
+            var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+            if (rows.length == 0) {
+                layer.msg("请选择要删除的数据");
+                return;
+            }
+            layer.confirm("确认要删除选中的'" + rows.length + "'条数据吗?", {
+                btn : [ '确定', '取消' ]
+                // 按钮
+            }, function() {
+                var ids = new Array();
+                // 遍历所有选择的行数据，取每条数据对应的ID
+                $.each(rows, function(i, row) {
+                    ids[i] = row['id'];
+                });
+                $.ajax({
+                    type : 'POST',
+                    data : {
+                        "ids" : ids
+                    },
+                    url : prefix + '/batchRemove',
+                    success : function(r) {
+                        if (r.code == 0) {
+                            layer.msg(r.msg);
+                            reLoad();
+                        } else {
+                            layer.msg(r.msg);
+                        }
+                    }
+                });
+            }, function() {
+
+            });
+        }
+
+
+
+
+
+
+
+        function updatePrice() {
+            var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+            if (rows.length == 0) {
+                layer.msg("请选择要修改价格的数据");
+                return;
+            }
+
+
+            var ids = new Array();
+            // 遍历所有选择的行数据，取每条数据对应的ID
+            $.each(rows, function(i, row) {
+                ids[i] = row['id'];
+            });
+
+            var arrivstation = $('#arrivstation').val();
+            var inforfee = $('#inforfee').val();
+
+            var perContent = layer.open({
+                type : 2,
+                title : '批量改价',
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : '/gc/siji/updatePrice?ids='+ids + '&arrivstation='+ arrivstation +'&inforfee='+inforfee // iframe的url
+            });
+
+            //layer.full(perContent);
+
+        }
+
+
+
+
+	</script>
+
+
+
+
+
+
+</body>
+</html>

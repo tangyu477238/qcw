@@ -177,6 +177,13 @@ function load() {
                         rowspan:2
                     },
                     {
+                        field : 'settletonnage',
+                        title : '结算吨位',
+                        align: 'center',
+                        colspan:1,
+                        rowspan:2
+                    },
+                    {
                         field : 'transcost',
                         title : '运价',
                         align: 'center',

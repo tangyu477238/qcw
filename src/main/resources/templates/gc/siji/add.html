@@ -89,17 +89,14 @@
 
 
 
-							<div class="form-group">
+							<!--<div class="form-group">-->
 
-								<label class="col-sm-1 control-label">备注：</label>
-								<div class="col-sm-9">
-									<textarea id="remark" name="remark" class="form-control" ></textarea>
-								</div>
-
-
-
-
-							</div>
+								<!--<label class="col-sm-1 control-label">备注：</label>-->
+								<!--<div class="col-sm-9">-->
+									<!--<textarea id="remark" name="remark" class="form-control" ></textarea>-->
+								<!--</div>-->
+								<!---->
+							<!--</div>-->
 
 
 
@@ -211,6 +208,7 @@
 											<th> 系数 </th>
 											<th> 运率 </th>
 											<th> 运费 </th>
+											<th> 备注 </th>
 											<th> 编辑/删除 </th>
 
 										</tr>
@@ -301,8 +299,9 @@
 						<input type="number" id="coefficient" name="coefficient"	placeholder="请输入系数..." size="20"/></p>
 					<!--<p>运&nbsp;&nbsp;率&nbsp;&nbsp;:&nbsp;&nbsp;-->
 						<!--<input type="number" id="tranrate" name="tranrate"  size="20" readonly/></p>-->
-					<!--<p>运&nbsp;&nbsp;费&nbsp;&nbsp;:&nbsp;&nbsp;-->
-						<!--<input type="number" id="trancost"  name="trancost"  size="20" readonly/></p>-->
+
+					<p>备&nbsp;&nbsp;注&nbsp;&nbsp;:&nbsp;&nbsp;
+						<input type="text" id="remark" name="remark"	placeholder="请输入..." size="20"/></p>
 
 
 				</div>
@@ -332,13 +331,148 @@
 
 
 
-	<div th:include="gc/include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/gc/siji/add.js?v=1188811112">
-	</script>
+<div th:include="gc/include::footer"></div>
 
 
 
-	<script type="text/javascript">
+
+<script type="text/javascript">
+
+
+$().ready(function() {
+	validateRule();
+});
+
+$.validator.setDefaults({
+	submitHandler : function() {
+		save();
+	}
+});
+function save() {
+	$.ajax({
+		cache : true,
+		type : "POST",
+		url : "/gc/siji/save",
+		data : $('#signupForm').serialize(),// 你的formid
+		async : false,
+		error : function(request) {
+			parent.layer.alert("Connection error");
+		},
+		success : function(data) {
+			if (data.code == 0) {
+				parent.layer.msg("操作成功");
+				parent.reLoad();
+				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+				parent.layer.close(index);
+
+			} else {
+				parent.layer.alert(data.msg)
+			}
+
+		}
+	});
+
+}
+function validateRule() {
+	var icon = "<i class='fa fa-times-circle'></i> ";
+	$("#signupForm").validate({
+		rules : {
+			name : {
+				required : true
+			}
+		},
+		messages : {
+			name : {
+				required : icon + "请输入姓名"
+			}
+		}
+	})
+
+
+
+	$("#pid").val(uuid());
+	$("#bizdate").val(addDay(getNowFormatDate(),-1));
+}
+
+
+
+
+
+function uuid() {
+	return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+		(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	)
+}
+
+function addDay(datetime, days) {
+	var old_time = new Date(datetime.replace(/-/g, "/")); //替换字符，js不认2013-01-31,只认2013/01/31
+	var fd = new Date(old_time.valueOf() + days * 24 * 60 * 60 * 1000); //日期加上指定的天数
+	var new_time = fd.getFullYear() + "-";
+	var month = fd.getMonth() + 1;
+	if (month >= 10) {
+		new_time += month + "-";
+	} else {
+//在小于10的月份上补0
+		new_time += "0" + month + "-";
+	}
+	if (fd.getDate() >= 10) {
+		new_time += fd.getDate();
+	} else {
+//在小于10的日期上补0
+		new_time += "0" + fd.getDate();
+	}
+	return new_time; //输出格式：2013-01-02
+}
+
+//获取当前时间，格式YYYY-MM-DD
+function getNowFormatDate() {
+	var date = new Date();
+	var seperator1 = "-";
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var strDate = date.getDate();
+	if (month >= 1 && month <= 9) {
+		month = "0" + month;
+	}
+	if (strDate >= 0 && strDate <= 9) {
+		strDate = "0" + strDate;
+	}
+	var currentdate = year + seperator1 + month + seperator1 + strDate;
+	return currentdate;
+}
+
+
+
+
+function deleteItem(id) {
+	layer.confirm('确定要删除选中的记录？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			url : "/gc/sijiItem/remove",
+			type : "post",
+			data : {
+				'id' : id
+			},
+			success : function(r) {
+				if (r.code==0) {
+					layer.msg(r.msg);
+					showTable();
+				}else{
+					layer.msg(r.msg);
+				}
+			}
+		});
+	})
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -355,7 +489,8 @@ function addeasypoi() {
 		"zhinum":$("#zhinum").val(),
 		"tonnage":$("#tonnage").val(),
 		"baseprice":$("#baseprice").val(),
-		"coefficient":$("#coefficient").val()
+		"coefficient":$("#coefficient").val(),
+        "remark":$("#remark").val()
 	};
 	if($("#steelnum").val().trim() == ""
 		|| $("#specs").val().trim() == ""){
@@ -373,8 +508,10 @@ function addeasypoi() {
 
         $("#baseprice").val('');
         $("#coefficient").val('');
+        $("#remark").val('');
         $("#tranrate").val('');
         $("#trancost").val('');
+
 
 
 
@@ -421,8 +558,10 @@ function showTable() {
                 td = td.replace('[tonnage]',siItem.tonnage);
                 td = td.replace('[baseprice]',siItem.baseprice);
                 td = td.replace('[coefficient]',siItem.coefficient);
+
                 td = td.replace('[tranrate]',siItem.tranrate);
                 td = td.replace('[trancost]',siItem.trancost);
+                td = td.replace('[remark]',siItem.remark);
 
                 td = td.replace('[siItem]',siItem);
                 td = td.replace('[id]',siItem.id);
@@ -474,8 +613,11 @@ function modifystudent(id) {
 
             $("#baseprice").val(siItem.baseprice);
             $("#coefficient").val(siItem.coefficient);
+
+
             $("#tranrate").val(siItem.tranrate);
             $("#trancost").val(siItem.trancost);
+            $("#remark").val(siItem.remark);
 
             $('#myModal').modal('show');
 
@@ -503,9 +645,11 @@ var tdtemplate =
     '<td>' + '[tonnage]' + '</td>' +
     '<td>' + '[baseprice]' + '</td>' +
     '<td>' + '[coefficient]' + '</td>' +
+
+
     '<td>' + '[tranrate]' + '</td>' +
     '<td>' + '[trancost]' + '</td>' +
-
+    '<td>' + '[remark]' + '</td>' +
     '<td>' +
 	'<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
     '<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +
@@ -528,7 +672,9 @@ var totaltemplate =
     '<td>' + '' + '</td>' +
     '<td>' + '' + '</td>' +
     '<td>' + '' + '</td>' +
+
     '<td>' + '[trancost]' + '</td>' +
+    '<td>' + '' + '</td>' +
     '<td>' +
     // '<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
     // '<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +

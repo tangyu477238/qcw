@@ -87,14 +87,14 @@
 
 
 
-							<div class="form-group">
+							<!--<div class="form-group">-->
 
-								<label class="col-sm-1 control-label">备注：</label>
-								<div class="col-sm-9">
-									<textarea id="remark"  th:value="${siji.remark}" name="remark" class="form-control" ></textarea>
-								</div>
+								<!--<label class="col-sm-1 control-label">备注：</label>-->
+								<!--<div class="col-sm-9">-->
+									<!--<textarea id="remark"  th:value="${siji.remark}" name="remark" class="form-control" ></textarea>-->
+								<!--</div>-->
 
-							</div>
+							<!--</div>-->
 
 
 
@@ -161,6 +161,7 @@
 											<th> 系数 </th>
 											<th> 运率 </th>
 											<th> 运费 </th>
+											<th> 备注 </th>
 											<th> 编辑/删除 </th>
 
 										</tr>
@@ -240,6 +241,10 @@
 					<!--<p>运&nbsp;&nbsp;费&nbsp;&nbsp;:&nbsp;&nbsp;-->
 					<!--<input type="number" id="trancost"  name="trancost"  size="20" readonly/></p>-->
 
+					<p><span id="t4">备&nbsp;&nbsp;注&nbsp;&nbsp;:&nbsp;&nbsp;</span>
+						<input type="text" id="remark" name="remark"	placeholder="请输入..." size="20"/></p>
+
+
 
 				</div>
 				<div class="modal-footer">
@@ -292,7 +297,8 @@ function addeasypoi() {
         "zhinum":$("#zhinum").val(),
         "tonnage":$("#tonnage").val(),
         "baseprice":$("#baseprice").val(),
-        "coefficient":$("#coefficient").val()
+        "coefficient":$("#coefficient").val(),
+        "remark":$("#remark").val()
     };
     if($("#steelnum").val().trim() == ""
         || $("#specs").val().trim() == ""){
@@ -312,6 +318,7 @@ function addeasypoi() {
         $("#coefficient").val('');
         $("#tranrate").val('');
         $("#trancost").val('');
+        $("#remark").val('');
 
         $.post(url,data,function(r){
             if (r.code==0) {
@@ -353,6 +360,7 @@ function modifystudent(id) {
             $("#coefficient").val(siItem.coefficient);
             $("#tranrate").val(siItem.tranrate);
             $("#trancost").val(siItem.trancost);
+            $("#remark").val(siItem.remark);
 
             $('#myModal').modal('show');
 
@@ -434,6 +442,8 @@ function showTable() {
 				td = td.replace('[tranrate]',siItem.tranrate);
 				td = td.replace('[trancost]',siItem.trancost);
 
+                td = td.replace('[remark]',siItem.remark);
+
 				td = td.replace('[siItem]',siItem);
 				td = td.replace('[id]',siItem.id);
 
@@ -485,6 +495,7 @@ var tdtemplate =
 	'<td>' + '[coefficient]' + '</td>' +
 	'<td>' + '[tranrate]' + '</td>' +
 	'<td>' + '[trancost]' + '</td>' +
+    '<td>' + '[remark]' + '</td>' +
 
 	'<td>' +
 	'<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
@@ -506,6 +517,7 @@ var totaltemplate =
     '<td>' + '' + '</td>' +
     '<td>' + '' + '</td>' +
     '<td>' + '[trancost]' + '</td>' +
+    '<td>' + '' + '</td>' +
     '<td>' +
     // '<button type="button" class="btn btn-primary" onclick = modifystudent(\'' + '[id]' + '\')>修改</button>&nbsp;&nbsp;' +
     // '<button type="button" class="btn btn-primary" onclick = deleteItem(\'' + '[id]' + '\')>删除</button>' +

@@ -54,16 +54,18 @@
 							</div>
 							<div class="form-group">
 
+								<label class="col-sm-2 control-label">调整吨位：</label>
+								<div class="col-sm-3">
+									<input id="adjusttonnage" th:value = "${kehu.adjusttonnage}"  name="adjusttonnage" class="form-control" type="text" onkeyup="getYunjia()" required="required">
+								</div>
+
 
 								<label class="col-sm-2 control-label">结算吨位：</label>
 								<div class="col-sm-3">
 									<input id="settletonnage" th:value = "${kehu.settletonnage}" name="settletonnage" class="form-control" type="text" readonly>
 								</div>
 
-								<label class="col-sm-2 control-label">调整吨位：</label>
-								<div class="col-sm-3">
-									<input id="adjusttonnage" th:value = "${kehu.adjusttonnage}"  name="adjusttonnage" class="form-control" type="text" onkeyup="getYunjia()">
-								</div>
+
 
 							</div>
 
@@ -71,12 +73,12 @@
 
 								<label class="col-sm-2 control-label">运价：</label>
 								<div class="col-sm-3">
-									<input id="transcost" th:value = "${kehu.transcost}" name="transcost" class="form-control" type="text" onkeyup="getYunjia()">
+									<input id="transcost" th:value = "${kehu.transcost}" name="transcost" class="form-control" type="text" onkeyup="getYunjia()" required="required">
 								</div>
 
 								<label class="col-sm-2 control-label">信息费：</label>
 								<div class="col-sm-3">
-									<input id="inforfee"  th:value = "${kehu.inforfee}" name="inforfee" class="form-control" type="text" onkeyup="getYunjia()">
+									<input id="inforfee"  th:value = "${kehu.inforfee}" name="inforfee" class="form-control" type="text" onkeyup="getYunjia()" required="required">
 								</div>
 
 							</div>
@@ -434,11 +436,30 @@
 
 
 	function getYunjia() {
-		var settletonnage = $("#settletonnage").val();//结算吨位
-		var adjusttonnage = $("#adjusttonnage").val();//调整吨位
-		var transcost = $("#transcost").val();//运价
-		var inforfee = $("#inforfee").val();//信息费
-		var transfee = ((settletonnage-adjusttonnage)*transcost)-inforfee; //运费
+
+        var tonnage = $("#tonnage").val();//吨位
+        var adjusttonnage = $("#adjusttonnage").val();//调整吨位
+        if (adjusttonnage==''){
+            adjusttonnage = 0;
+            //$("#adjusttonnage").val(adjusttonnage);
+        }
+
+
+        var settletonnage = (tonnage-adjusttonnage).toFixed(3);//结算吨位
+        $("#settletonnage").val(settletonnage);
+
+
+        var transcost = $("#transcost").val();//运价
+        if (transcost==''){
+            transcost = 0;
+            //$("#transcost").val(transcost);
+        }
+        var inforfee = $("#inforfee").val();//信息费
+        if (inforfee==''){
+            inforfee = 0;
+            //$("#inforfee").val(inforfee);
+        }
+		var transfee = (settletonnage*transcost)-inforfee; //运费
 		$("#transfee").val(transfee.toFixed(2));
 
 
