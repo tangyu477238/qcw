@@ -37,12 +37,15 @@ public class KehuDO implements Serializable {
 	//吨位
 	@Excel(name = "吨位", orderNum = "5",isImportField = "tonnage" , type=10 )
 	private BigDecimal tonnage;
-	//结算吨位
-	@Excel(name = "结算吨位", orderNum = "6",isImportField = "settletonnage", type=10 )
-	private BigDecimal settletonnage;
+
 	//调整吨位
-	@Excel(name = "调整吨位", orderNum = "7",isImportField = "adjusttonnage" , type=10 )
+	@Excel(name = "调整吨位", orderNum = "6",isImportField = "adjusttonnage" , type=10 )
 	private BigDecimal adjusttonnage;
+
+	//结算吨位
+	@Excel(name = "结算吨位", orderNum = "7",isImportField = "settletonnage", type=10 )
+	private BigDecimal settletonnage;
+
 	//运价
 	@Excel(name = "运价", orderNum = "8",isImportField = "transcost" , type=10 )
 	private BigDecimal transcost;
@@ -100,27 +103,29 @@ public class KehuDO implements Serializable {
 	private String fulpaytwodate;
 
 
+	//手续费
+	@Excel(name = "手续费", orderNum = "19", type=10 )
+	private BigDecimal shoushufei;
+
 
 	//余额
-	@Excel(name = "余额", orderNum = "19",isImportField = "acbalance", type=10 )
+	@Excel(name = "余额", orderNum = "20",isImportField = "acbalance", type=10 )
 	private BigDecimal acbalance;
 	//回单
-	@Excel(name = "回单", orderNum = "20",isImportField = "receipt")
+	@Excel(name = "回单", orderNum = "21",isImportField = "receipt")
 	private String receipt;
 	//回单日期
-	@Excel(name = "回单日期", orderNum = "21",isImportField = "receiptdate")
+	@Excel(name = "回单日期", orderNum = "22",isImportField = "receiptdate")
 	private String receiptdate;
 	//承运人
-	@Excel(name = "承运人", orderNum = "22",isImportField = "carrier")
+	@Excel(name = "承运人", orderNum = "23",isImportField = "carrier")
 	private String carrier;
 	//备注
-	@Excel(name = "备注", orderNum = "23",isImportField = "remark")
+	@Excel(name = "备注", orderNum = "24",isImportField = "remark")
 	private String remark;
 
 
-	//手续费
-	@Excel(name = "手续费", orderNum = "24", type=10 )
-	private BigDecimal shoushufei;
+
 
 	private String shoushufeidate;
 

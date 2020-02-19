@@ -11,7 +11,9 @@ import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
 import cn.afterturn.easypoi.util.PoiPublicUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
+import com.bootdo.system.domain.UserDO;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +41,11 @@ import org.springframework.web.multipart.MultipartFile;
  
 @Controller
 @RequestMapping("/gc/jiesuan")
-public class JiesuanController {
+public class JiesuanController extends BaseController {
 	@Autowired
 	private JiesuanService jiesuanService;
 	
 	@GetMapping()
-
 	String Jiesuan(){
 	    return "gc/jiesuan/jiesuan";
 	}
@@ -98,11 +99,13 @@ public class JiesuanController {
 
 	public R saveItem(JiesuanDO jiesuan ){
 
-//		JiesuanDO js = jiesuanService.getItem(jiesuan.getPayer());
-//		if (js == null) {
-//			jiesuanService.save(jiesuan);
-//		}
 
+		if (jiesuan.getAmount() == null) {
+			return R.error();
+		}
+		UserDO userDo = getUser();
+		jiesuan.setUpdatedName(userDo.getName());
+		jiesuan.setDeptId(userDo.getDeptId());
 		if(jiesuanService.save(jiesuan)>0){
 			return R.ok();
 		}

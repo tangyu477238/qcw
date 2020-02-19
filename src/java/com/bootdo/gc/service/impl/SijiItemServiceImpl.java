@@ -85,6 +85,11 @@ public class SijiItemServiceImpl implements SijiItemService {
 		return sijiItemDao.querySijiListCount(map);
 	}
 
+	@Override
+	public int daiduizhanglistCount(Map<String, Object> map){
+		return sijiItemDao.daiduizhanglistCount(map);
+	}
+
 
 
 	
@@ -107,30 +112,47 @@ public class SijiItemServiceImpl implements SijiItemService {
 		int flag = sijiItemDao.save(sijiItem);
 
 
-//		kehuDO.setForwunit(siji.getForwunit());
-//		kehuDO.setStation(siji.getArrivstation());
-//		kehuDO.setBizdate(siji.getBizdate());
+		updateKehu(kehuDO,sijiItem.getPid());
+
+
+
+
+		return flag;
+	}
+
+
+	public void updateKehu(KehuDO kehuDO,String pid){
 
 		kehuDO.setTonnage(new BigDecimal(0));
 		Map map = new HashMap();
-		map.put("pid", sijiItem.getPid());
+		map.put("pid", pid);
 		List<SijiItemDO> list = sijiItemService.list(map);
 		for (SijiItemDO sijiItemDO : list){
 			kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
 		}
-		if (kehuDO.getTonnage()!=null){
-			kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
+
+		BigDecimal ad = new BigDecimal(0);
+		if(kehuDO.getAdjusttonnage()!=null){
+			ad = kehuDO.getAdjusttonnage();
 		}
 
-		BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
-		BigDecimal t2 = t1.multiply(kehuDO.getTranscost()).subtract(kehuDO.getInforfee());
+		if (kehuDO.getTonnage()!=null){
+			kehuDO.setTonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //吨位保留一位小数
+			kehuDO.setSettletonnage(kehuDO.getTonnage().subtract(ad)); //结算吨位=吨位-调吨
+		}
+
+		BigDecimal t1 = kehuDO.getSettletonnage().multiply(kehuDO.getTranscost()); //结算吨位*运价
+		BigDecimal t2 = t1.subtract(kehuDO.getInforfee()); //（结算吨位*运价）-信息费
 		kehuDO.setTransfee(t2); //运费
 
+		if (kehuDO.getFulltrans()==null){
+			kehuDO.setFulltrans(new BigDecimal(0));
+		}
+		if (kehuDO.getBankcard()==null){
+			kehuDO.setBankcard(new BigDecimal(0));
+		}
 		kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
 		kehuDao.update(kehuDO); //信息更新
-
-
-		return flag;
 	}
 
 
@@ -160,28 +182,8 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 		int flag = sijiItemDao.update(sijiItem);
 
-		try {
-			kehuDO.setTonnage(new BigDecimal(0));
-			Map map = new HashMap();
-			map.put("pid", sijiItem.getPid());
-			List<SijiItemDO> list = sijiItemService.list(map);
-			for (SijiItemDO sijiItemDO : list) {
-				kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
-			}
-			if (kehuDO.getTonnage() != null) {
-				kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
-			}
 
-			BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
-			BigDecimal t2 = t1.multiply(kehuDO.getTranscost()).subtract(kehuDO.getInforfee());
-			kehuDO.setTransfee(t2); //运费
-
-			kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
-			kehuDao.update(kehuDO); //信息更新
-
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+		updateKehu(kehuDO,sijiItem.getPid());
 
 		return flag;
 	}
@@ -207,28 +209,8 @@ public class SijiItemServiceImpl implements SijiItemService {
 		int flag = sijiItemDao.remove(id);
 
 
-         try {
-             kehuDO.setTonnage(new BigDecimal(0));
-             Map map = new HashMap();
-             map.put("pid", sijiItem.getPid());
-             List<SijiItemDO> list = sijiItemService.list(map);
-             for (SijiItemDO sijiItemDO : list) {
-                 kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
-             }
-             if (kehuDO.getTonnage() != null) {
-                 kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
-             }
+		updateKehu(kehuDO,sijiItem.getPid());
 
-             BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
-             BigDecimal t2 = t1.multiply(kehuDO.getTranscost()).subtract(kehuDO.getInforfee());
-             kehuDO.setTransfee(t2); //运费
-
-             kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
-             kehuDao.update(kehuDO); //信息更新
-
-         }catch (Exception e){
-             e.printStackTrace();
-         }
 		return flag;
 
 
@@ -264,6 +246,32 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 		return list;
 	}
+
+
+	@Override
+	public List<Map> daiduizhanglist(Map<String, Object> map) {
+		List<Map> list = sijiItemDao.daiduizhanglist(map);
+
+		for (Map emap : list){
+			Map param = new HashMap();
+			param.put("pid",emap.get("pid"));
+			List<SijiItemAminvoiceDO> aminvoicelist =
+					sijiItemAminvoiceService.getLastAminvoice(param);
+			if (aminvoicelist!=null && !aminvoicelist.isEmpty()){
+				emap.put("yue",aminvoicelist.get(0).getYue());
+			} else {
+				emap.put("yue",emap.get("trancost"));
+			}
+		}
+
+
+
+		return list;
+	}
+
+
+
+
 
 
 

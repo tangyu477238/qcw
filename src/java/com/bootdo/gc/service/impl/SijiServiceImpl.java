@@ -101,15 +101,14 @@ public class SijiServiceImpl  implements SijiService {
 		for (SijiItemDO sijiItemDO : list){
 			kehuDO.setTonnage(kehuDO.getTonnage().add(sijiItemDO.getTonnage())); //吨位
 		}
-		if (kehuDO.getTonnage()!=null){
-			kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
-		}
-		if (kehuDO.getSettletonnage()==null){
-			kehuDO.setSettletonnage(new BigDecimal(0));
-		}
 
 		if (kehuDO.getAdjusttonnage()==null){
 			kehuDO.setAdjusttonnage(new BigDecimal(0));
+		}
+
+		if (kehuDO.getTonnage()!=null){
+			kehuDO.setTonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //吨位保留一位小数
+			kehuDO.setSettletonnage(kehuDO.getTonnage().subtract(kehuDO.getAdjusttonnage())); //结算吨位=吨位-调吨
 		}
 
 		if (kehuDO.getTranscost()==null){
@@ -130,7 +129,7 @@ public class SijiServiceImpl  implements SijiService {
 			kehuDO.setBankcard(new BigDecimal(0));
 		}
 
-		BigDecimal t1 = kehuDO.getSettletonnage().subtract(kehuDO.getAdjusttonnage());
+		BigDecimal t1 = kehuDO.getSettletonnage();
 		BigDecimal t2 = t1.multiply(kehuDO.getTranscost());
 		BigDecimal t3 = t2.subtract(kehuDO.getInforfee());
 		kehuDO.setTransfee(t3); //运费

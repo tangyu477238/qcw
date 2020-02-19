@@ -27,12 +27,39 @@ import java.util.Map;
  * @email tangzhiyu@vld-tech.com
  * @date 2019-06-02 12:28:23
  */
- 
+
 @Controller
 @RequestMapping("/gc/sijiItem")
 public class SijiItemController extends BaseController {
 	@Autowired
 	private SijiItemService sijiItemService;
+
+
+
+	//发货明细表(待对账)
+	@GetMapping("/daiduizhang")
+	String daiduizhang(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		return "gc/siji/sijiItemDaiduizhang";
+	}
+
+
+	//发货明细表(待对账)
+	@ResponseBody
+	@GetMapping("/daiduizhanglist")
+	public PageUtils daiduizhanglist(@RequestParam Map<String, Object> params){
+		//查询列表数据
+
+		Query query = new Query(params);
+		List<Map> sijiItemList = sijiItemService.daiduizhanglist(query);
+
+		int total = sijiItemService.daiduizhanglistCount(query);
+		PageUtils pageUtils = new PageUtils(sijiItemList, total);
+		return pageUtils;
+	}
+
+
+
 
 	//发货明细表
 	@GetMapping()

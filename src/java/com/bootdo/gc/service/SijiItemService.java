@@ -48,4 +48,8 @@ public interface SijiItemService {
 	void updatePiliang(Map<String, Object> map);
 
 
+	List<Map> daiduizhanglist(Map<String, Object> map);
+
+	int daiduizhanglistCount(Map<String, Object> map);
+
 }

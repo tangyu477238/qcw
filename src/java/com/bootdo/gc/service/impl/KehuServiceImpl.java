@@ -71,6 +71,9 @@ public class KehuServiceImpl implements KehuService {
 			if (kehuDO.getTonnage()!=null){
 				kehuDO.setSettletonnage(kehuDO.getTonnage().setScale(1, BigDecimal.ROUND_DOWN)); //结算吨位
 			}
+
+			kehuDO.setTonnage(kehuDO.getSettletonnage()); //吨位
+
 			//kehuDO.setAdjusttonnage(sijiDO.getTonnage()); //调整吨位
 		} catch (Exception e){
 
