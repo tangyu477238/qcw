@@ -28,7 +28,7 @@
 			s.`carnum`,
 
 			s.`arrivstation`,
-			s.`remark`,
+			si.`remark`,
 			s.`inforfee`,
 
 
@@ -128,7 +128,8 @@
 			`baseprice`, 
 			`coefficient`, 
 			`tranrate`, 
-			`trancost`, 
+			`trancost`,
+			`remark`,
 			`arrivstation`, 
 			`payer`,
 		 	kouling,
@@ -145,7 +146,8 @@
 			#{baseprice}, 
 			#{coefficient}, 
 			#{tranrate}, 
-			#{trancost}, 
+			#{trancost},
+			#{remark},
 			#{arrivstation}, 
 			#{payer},
 		 	#{kouling},
@@ -171,6 +173,8 @@
 			<if test="coefficient != null">`coefficient` = #{coefficient}, </if>
 			<if test="tranrate != null">`tranrate` = #{tranrate}, </if>
 			<if test="trancost != null">`trancost` = #{trancost}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+
 			<if test="arrivstation != null">`arrivstation` = #{arrivstation}, </if>
 
 
@@ -220,6 +224,157 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<select id="daiduizhanglistCount" resultType="int">
+		SELECT
+		count(*)
+		FROM
+		gc_siji s
+		INNER JOIN gc_siji_item si ON si.pid = s.pid
+		where (si.billdate ='' or si.billdate is null )
+
+
+
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+		<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+		<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+		<if test="inforfee != null and inforfee != ''">
+			<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
+		</if>
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+		<if test="arrivstation != null and arrivstation != ''">
+			<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+		</if>
+
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+
+
+
+	</select>
+
+
+
+
+
+
+
+	<select  id="daiduizhanglist" resultType="java.util.HashMap" >
+		<![CDATA[
+
+		SELECT
+		    s.`bizdate`,
+			s.`forwunit`,
+			s.`carnum`,
+
+			s.`arrivstation`,
+		    si.`remark`,
+		    s.`inforfee`,
+		    s.`custompay` as scustompay,
+
+
+			si.`id`,
+			si.`pid`,
+			si.`steelnum`,
+			si.`specs`,
+			si.`packnum`,
+		    si.`zhinum`,
+			si.`tonnage`,
+			si.`baseprice`,
+			si.`coefficient`,
+			si.`tranrate`,
+			si.`trancost`,
+
+
+		    si.`billdate`,
+		    si.`aminvoice`,
+		    si.aminvoicedate,
+			si.`issueoffice`,
+		    si.`issueofficedate`,
+
+
+			si.`custompay`,
+			si.`taxdatepay`,
+		    si.`paydate`,
+			si.`payer`,
+		 	si.kouling,
+		 	si.takeamount,
+		    si.inputdate,
+		    si.yue,
+
+		    si.shuilv,
+		    si.shuie,
+			s.order_no as orderNo
+
+		FROM
+			gc_siji s
+				INNER JOIN gc_siji_item si ON si.pid = s.pid
+			where 1=1
+		]]>
+
+
+
+
+
+		<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+		<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>
+		<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>
+
+		<if test="inforfee != null and inforfee != ''">
+			<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
+		</if>
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+		<if test="arrivstation != null and arrivstation != ''">
+			<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+		</if>
+
+		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+
+
+
+
+		order by s.bizdate desc,si.id asc
+
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<select  id="querySijiList" resultType="java.util.HashMap" >
 		<![CDATA[
 
@@ -229,7 +384,7 @@
 			s.`carnum`,
 
 			s.`arrivstation`,
-		    s.`remark`,
+		    si.`remark`,
 		    s.`inforfee`,
 		    s.`custompay` as scustompay,
 
