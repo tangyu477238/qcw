@@ -142,6 +142,10 @@ public class SijiItemServiceImpl implements SijiItemService {
 		}
 
 		BigDecimal t1 = kehuDO.getSettletonnage().multiply(kehuDO.getTranscost()); //结算吨位*运价
+
+		if (kehuDO.getInforfee()==null){
+			kehuDO.setInforfee(new BigDecimal(0));
+		}
 		BigDecimal t2 = t1.subtract(kehuDO.getInforfee()); //（结算吨位*运价）-信息费
 		kehuDO.setTransfee(t2); //运费
 
@@ -333,8 +337,50 @@ public class SijiItemServiceImpl implements SijiItemService {
 			sijiItemDO.setAminvoice(sijiItemDO.getTrancost()); //运费等于结算金额
 			sijiItemDO.setKouling(new BigDecimal(0));
 			sijiItemDO.setBilldate(map.get("billdate").toString());
-			int flag = sijiItemDao.update(sijiItemDO);
+			sijiItemDao.update(sijiItemDO);
 		}
+
+
+
+		if (map.get("kouling")!=null
+				&& !"".equals(map.get("kouling").toString())
+				&& Double.parseDouble(map.get("kouling").toString())!=0){
+			SijiItemDO sijiItemDO =  sijiItemDao.get(new Long(map.get("minId").toString()));
+			sijiItemDO.setKouling(new BigDecimal(map.get("kouling").toString()));
+			sijiItemDO.setAminvoice(sijiItemDO.getTrancost().subtract(sijiItemDO.getKouling())); //运费等于结算金额
+			sijiItemDO.setBilldate(map.get("billdate").toString());
+			sijiItemDao.update(sijiItemDO);
+
+		}
+
+
+
+
+
+	}
+
+	@Override
+	public Map<String, Object>  editPiliang(String idstr) {
+
+		String ids [] = idstr.split(",");
+		BigDecimal amount = new BigDecimal(0);
+		BigDecimal dunwei = new BigDecimal(0);
+//		Long minId = null;
+		Long currId ;
+		for (String id : ids){
+			currId = new Long(id);
+			SijiItemDO sijiItemDO =  sijiItemDao.get(currId);
+			amount = amount.add(sijiItemDO.getTrancost()); //运费
+			dunwei = dunwei.add(sijiItemDO.getTonnage());
+//			if (minId == null || minId > currId){
+//				minId = currId;
+//			}
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("dunwei", dunwei);
+		map.put("amount", amount);
+		map.put("minId", ids[ids.length-1]);
+		return map;
 	}
 
 

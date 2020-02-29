@@ -86,10 +86,19 @@
 
 		SELECT id,name from gc_custom
 		where  stype = #{stype} and dept_id = #{deptId}
-		order by name
+		order by shuilv  desc
 
 		]]>
 
 
 	</select>
+
+
+
+	<update id="updateCustomLv" parameterType="com.bootdo.gc.domain.CustomDO">
+		update gc_custom  set `shuilv` = #{shuilv}
+		where stype = #{stype} and dept_id = #{deptId} and `name` = #{name}
+	</update>
+
+
 </mapper>

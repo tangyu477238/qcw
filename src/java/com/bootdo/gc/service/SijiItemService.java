@@ -47,6 +47,9 @@ public interface SijiItemService {
 
 	void updatePiliang(Map<String, Object> map);
 
+	Map<String, Object> editPiliang(String ids);
+
+
 
 	List<Map> daiduizhanglist(Map<String, Object> map);
 

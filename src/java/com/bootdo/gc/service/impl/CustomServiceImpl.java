@@ -47,7 +47,11 @@ public class CustomServiceImpl implements CustomService {
 	public int update(CustomDO custom){
 		return customDao.update(custom);
 	}
-	
+	@Override
+	public int updateCustomLv(CustomDO custom){
+		return customDao.updateCustomLv(custom);
+	}
+
 	@Override
 	public int remove(Long id){
 		return customDao.remove(id);

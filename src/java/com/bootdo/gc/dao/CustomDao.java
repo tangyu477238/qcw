@@ -25,7 +25,10 @@ public interface CustomDao {
 	int save(CustomDO custom);
 	
 	int update(CustomDO custom);
-	
+
+	int updateCustomLv(CustomDO custom);
+
+
 	int remove(Long id);
 	
 	int batchRemove(Long[] ids);

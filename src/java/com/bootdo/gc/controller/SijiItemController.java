@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -118,6 +119,14 @@ public class SijiItemController extends BaseController {
 	@GetMapping("/editPiliang/{ids}")
 	String editPiliang(@PathVariable("ids") String ids,Model model){
 		model.addAttribute("ids", ids);
+
+		Map<String, Object> params = sijiItemService.editPiliang(ids);
+		model.addAttribute("dunwei", params.get("dunwei"));
+		model.addAttribute("amount", params.get("amount"));
+		model.addAttribute("minId", params.get("minId"));
+
+
+
 		return "gc/siji/editPiliangItem";
 	}
 

@@ -2,10 +2,8 @@ package com.bootdo.gc.service.impl;
 
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
-import com.bootdo.gc.domain.KehuDO;
-import com.bootdo.gc.domain.LirunDO;
-import com.bootdo.gc.domain.SijiDO;
-import com.bootdo.gc.domain.SijiItemDO;
+import com.bootdo.gc.domain.*;
+import com.bootdo.gc.service.CustomService;
 import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,8 @@ public class SijiServiceImpl  implements SijiService {
 	@Autowired
 	private KehuDao kehuDao;
 
+	@Autowired
+	private CustomService customService;
 
 
 
@@ -73,6 +73,24 @@ public class SijiServiceImpl  implements SijiService {
 
 	@Override
 	public int save(SijiDO siji){
+
+
+		CustomDO custom = new CustomDO();
+		custom.setDeptId(siji.getDeptId());
+		custom.setShuilv(new BigDecimal(siji.getOrderNo()));
+
+		custom.setStype("fhdw");
+		custom.setName(siji.getForwunit());
+		customService.updateCustomLv(custom);
+
+		custom.setStype("fkdw");
+		custom.setName(siji.getInforfee());
+		customService.updateCustomLv(custom);
+
+		custom.setStype("station");
+		custom.setName(siji.getArrivstation());
+		customService.updateCustomLv(custom);
+
 		return sijiDao.save(siji);
 	}
 	

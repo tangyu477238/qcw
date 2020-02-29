@@ -347,7 +347,7 @@
 							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<!--<button type="submit" class="btn btn-primary" onclick="queryMx()">核对发货明细</button>-->
-									<button type="submit" class="btn btn-primary" onclick="update()">提交</button>
+									<button type="button" class="btn btn-primary" onclick="update()">提交</button>
 								</div>
 							</div>
 						</form>
@@ -401,6 +401,13 @@
         var colmethod = $("#colmethod").val();
         if (colmethod=='' && inforfee=='') {
             parent.layer.msg("信息费和收取方式不能都不填！");
+            return ;
+        }
+
+        var shoushufei = $("#shoushufei").val();
+        var fulltrans = $("#fulltrans").val();
+        if ((shoushufei!='' && shoushufei!=0) && (fulltrans=='' || fulltrans==0) ) {
+            parent.layer.msg("填写手续费必须得有付款数据！");
             return ;
         }
 
