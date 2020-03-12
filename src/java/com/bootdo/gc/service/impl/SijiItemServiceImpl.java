@@ -155,7 +155,10 @@ public class SijiItemServiceImpl implements SijiItemService {
 		if (kehuDO.getBankcard()==null){
 			kehuDO.setBankcard(new BigDecimal(0));
 		}
-		kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
+		if (kehuDO.getShoushufei()==null){
+			kehuDO.setShoushufei(new BigDecimal(0));
+		}
+		kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()).subtract(kehuDO.getShoushufei()));
 		kehuDao.update(kehuDO); //信息更新
 	}
 

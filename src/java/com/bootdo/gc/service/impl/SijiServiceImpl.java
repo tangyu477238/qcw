@@ -146,13 +146,16 @@ public class SijiServiceImpl  implements SijiService {
 		if (kehuDO.getBankcard()==null){
 			kehuDO.setBankcard(new BigDecimal(0));
 		}
+		if (kehuDO.getShoushufei()==null){
+			kehuDO.setShoushufei(new BigDecimal(0));
+		}
 
 		BigDecimal t1 = kehuDO.getSettletonnage();
 		BigDecimal t2 = t1.multiply(kehuDO.getTranscost());
 		BigDecimal t3 = t2.subtract(kehuDO.getInforfee());
 		kehuDO.setTransfee(t3); //运费
 
-		kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()));
+		kehuDO.setAcbalance(kehuDO.getTransfee().subtract(kehuDO.getFulltrans()).subtract(kehuDO.getBankcard()).subtract(kehuDO.getShoushufei()));
 		kehuDao.update(kehuDO); //信息更新
 
 
