@@ -236,7 +236,7 @@
 
 								<label class="col-sm-2 control-label">手续费：</label>
 								<div class="col-sm-3">
-									<input id="shoushufei" onkeyup="showShoushufei()" th:value = "${kehu.shoushufei}" name="shoushufei" class="form-control" type="text" >
+									<input id="shoushufei" onkeyup="showShoushufei()"  th:value = "${kehu.shoushufei}" name="shoushufei" class="form-control" type="text" >
 									<input id="shoushufeidate" th:value = "${kehu.shoushufeidate}" name="shoushufeidate" type="hidden" >
 								</div>
 
@@ -375,13 +375,15 @@
 	function initShoushufei() {
         var shoushufei = $("#shoushufei").val();
         var shoushufeidate = $("#shoushufeidate").val();
-        if (shoushufei!=null&&shoushufei!=''){
+        if (shoushufei!=null && shoushufei!='' && shoushufei!=0){
             if (shoushufeidate==null||shoushufeidate==''){
                 $("#shoushufeidate").val(getNowFormatDate());
             } else if (shoushufeidate!=getNowFormatDate()) {
                 $("#shoushufei").attr("readonly",true);
             }
-        }
+        } else {
+            $("#shoushufeidate").val('');
+		}
     }
 
 
@@ -397,7 +399,10 @@
 
 
 	function update() {
-        var inforfee = $("#inforfee").val();
+
+	    showShoushufei();
+
+	    var inforfee = $("#inforfee").val();
         var colmethod = $("#colmethod").val();
         if (colmethod=='' && inforfee=='') {
             parent.layer.msg("信息费和收取方式不能都不填！");
