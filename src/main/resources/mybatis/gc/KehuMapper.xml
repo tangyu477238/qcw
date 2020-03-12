@@ -206,8 +206,8 @@
 
 			<if test="deptId != null">`dept_id` = #{deptId}, </if>
 			<if test="updatedName != null">`updated_name` = #{updatedName}, </if>
-			<if test="shoushufei != null">`shoushufei` = #{shoushufei}, </if>
-			<if test="shoushufeidate != null">`shoushufeidate` = #{shoushufeidate}, </if>
+			`shoushufei` = #{shoushufei},
+			`shoushufeidate` = #{shoushufeidate}, 
 
 			<if test="remark != null">`remark` = #{remark},</if>
 			<if test="bizdate != null">`bizdate` = #{bizdate} </if>
