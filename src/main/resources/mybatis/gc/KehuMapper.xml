@@ -447,4 +447,130 @@
 
 	</select>
 
+
+
+
+
+
+
+
+	<select id="getFukan" resultType="com.bootdo.gc.domain.FukuanDo">
+		select
+		s.fulpaydate,s.bizdate,s.carnum,s.station,s.acbalance,'一' as cishu,s.fulltrans,s.pay_type,s.carrier,s.riskcues
+		from gc_kehu s
+		where s.fulpaydate is not null and s.fulpaydate !='' and s.dept_id = #{deptId}
+
+		<if test="startDate != null and startDate != ''"> and s.fulpaydate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.fulpaydate &lt;= #{endDate} </if>
+
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+
+		<if test="station != null and station != ''">
+			<![CDATA[ and s.station like CONCAT('%',#{station},'%') ]]>
+		</if>
+
+		<!--<if test="tstartDate != null and tstartDate != ''"> and s.receiptdate &gt;= #{tstartDate} </if>-->
+		<!--<if test="tendDate != null and tendDate != ''"> and s.receiptdate &lt;= #{tendDate} </if>-->
+
+		<if test="carrier != null and carrier != ''">
+			<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
+		</if>
+
+
+
+		union all
+
+		select
+		s.bankpaydate,s.bizdate,s.carnum,s.station,s.acbalance,'二' as cishu,s.bankcard,s.forwunit,s.carrier,s.riskcues
+		from gc_kehu s
+		where s.bankpaydate is not null and s.bankpaydate !='' and s.dept_id = #{deptId}
+
+
+		<if test="startDate != null and startDate != ''"> and s.bankpaydate &gt;= #{startDate} </if>
+		<if test="endDate != null and endDate != ''"> and s.bankpaydate &lt;= #{endDate} </if>
+
+		<if test="carnum != null and carnum != ''">
+			<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+		</if>
+
+		<if test="station != null and station != ''">
+			<![CDATA[ and s.station like CONCAT('%',#{station},'%') ]]>
+		</if>
+
+		<!--<if test="tstartDate != null and tstartDate != ''"> and s.receiptdate &gt;= #{tstartDate} </if>-->
+		<!--<if test="tendDate != null and tendDate != ''"> and s.receiptdate &lt;= #{tendDate} </if>-->
+
+		<if test="carrier != null and carrier != ''">
+			<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
+		</if>
+
+		order by fulpaydate ,carrier,riskcues desc
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+
+	<select id="fukuanCount" resultType="int">
+
+		select count(1) from (
+			select
+			s.fulpaydate,s.bizdate,s.carnum,s.station,s.acbalance,'一' as cishu,s.fulltrans,s.pay_type as payType,s.carrier,s.riskcues
+			from gc_kehu s
+			where s.fulpaydate is not null and s.fulpaydate !='' and s.dept_id = #{deptId}
+
+			<if test="startDate != null and startDate != ''"> and s.fulpaydate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.fulpaydate &lt;= #{endDate} </if>
+
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+
+			<if test="station != null and station != ''">
+				<![CDATA[ and s.station like CONCAT('%',#{station},'%') ]]>
+			</if>
+
+			<!--<if test="tstartDate != null and tstartDate != ''"> and s.receiptdate &gt;= #{tstartDate} </if>-->
+			<!--<if test="tendDate != null and tendDate != ''"> and s.receiptdate &lt;= #{tendDate} </if>-->
+
+			<if test="carrier != null and carrier != ''">
+				<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
+			</if>
+
+
+
+			union all
+
+			select
+			s.bankpaydate,s.bizdate,s.carnum,s.station,s.acbalance,'二' as cishu,s.bankcard,s.forwunit,s.carrier,s.riskcues
+			from gc_kehu s
+			where s.bankpaydate is not null and s.bankpaydate !='' and s.dept_id = #{deptId}
+
+
+			<if test="startDate != null and startDate != ''"> and s.bankpaydate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bankpaydate &lt;= #{endDate} </if>
+
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+
+			<if test="station != null and station != ''">
+				<![CDATA[ and s.station like CONCAT('%',#{station},'%') ]]>
+			</if>
+
+			<!--<if test="tstartDate != null and tstartDate != ''"> and s.receiptdate &gt;= #{tstartDate} </if>-->
+			<!--<if test="tendDate != null and tendDate != ''"> and s.receiptdate &lt;= #{tendDate} </if>-->
+
+			<if test="carrier != null and carrier != ''">
+				<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
+			</if>
+
+		) t
+
+	</select>
+
 </mapper>

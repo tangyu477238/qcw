@@ -292,10 +292,10 @@
 		<where>
 
 
-			<!--<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>-->
-			<!--<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>-->
-			<!--<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>-->
-			<!--<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>-->
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.inputdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.inputdate &lt;= #{tendDate} </if>
 
 			<if test="inforfee != null and inforfee != ''">
 				<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
@@ -336,10 +336,10 @@
 		<where>
 
 
-			<!--<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>-->
-			<!--<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>-->
-			<!--<if test="tstartDate != null and tstartDate != ''"> and si.billdate &gt;= #{tstartDate} </if>-->
-			<!--<if test="tendDate != null and tendDate != ''"> and si.billdate &lt;= #{tendDate} </if>-->
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.inputdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.inputdate &lt;= #{tendDate} </if>
 
 			<if test="inforfee != null and inforfee != ''">
 				<![CDATA[ and s.inforfee like CONCAT('%',#{inforfee},'%') ]]>
@@ -366,15 +366,91 @@
 
 
 
-	<select id="getLastAminvoice" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
-		SELECT
-			s.yue
-		FROM
-			gc_siji_item_invoice s
+	<select id="getInvoiceList" resultType="com.bootdo.gc.domain.SijiItemInvoiceDO">
 
-		where s.pid = #{pid} and s.state = 1
-		<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
-		order by id desc
+		<![CDATA[
+
+		SELECT
+		    s.`bizdate`,
+			s.`forwunit`,
+			s.`carnum`,
+
+			s.`arrivstation`,
+		    s.`remark`,
+		    s.`inforfee`,
+		    s.`custompay` as scustompay,
+
+
+			si.`id`,
+			si.`pid`,
+			si.`steelnum`,
+			si.`specs`,
+			si.`packnum`,
+		    si.`zhinum`,
+			si.`tonnage`,
+			si.`baseprice`,
+			si.`coefficient`,
+			si.`tranrate`,
+			si.`trancost`,
+
+
+		    si.`billdate`,
+		    si.`aminvoice`,
+		    si.aminvoicedate,
+			i.`issueoffice`,
+		    i.`issueofficedate`,
+
+
+			si.`custompay`,
+			si.`taxdatepay`,
+			si.`payer`,
+		 	si.kouling,
+		 	si.takeamount,
+		    si.inputdate,
+		    si.yue,
+
+		    si.shuilv,
+		    si.shuie,
+			s.order_no as orderNo
+
+		FROM gc_siji s
+		inner join gc_siji_item_aminvoice i on i.pid = s.pid
+		INNER JOIN gc_siji_item_invoice si ON si.pid = i.id
+
+		]]>
+
+
+		<where>
+
+
+			<if test="startDate != null and startDate != ''"> and s.bizdate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bizdate &lt;= #{endDate} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and si.inputdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and si.inputdate &lt;= #{tendDate} </if>
+
+			<if test="inforfee != null and inforfee != ''">
+				<![CDATA[ and s.`inforfee` like CONCAT('%',#{inforfee},'%') ]]>
+			</if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="arrivstation != null and arrivstation != ''">
+				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
+			</if>
+
+			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
+
+
+		</where>
+
+
+
+		order by si.id desc
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+
 	</select>
 
 
