@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.bootdo.gc.domain.YingshoukuanDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -50,6 +51,10 @@ public interface SijiDao {
 
 
 	List<Map> queryTotal(Map map);
+
+	List<YingshoukuanDO> excelTotal(Map map);
+
+
 
 	List<LirunDO> queryLirun(Map map);
 

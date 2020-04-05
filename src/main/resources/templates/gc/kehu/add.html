@@ -227,26 +227,6 @@
 
 
 
-						<!--<div class="form-group">-->
-							<!--<label class="col-sm-2 control-label">运满满二次付款：</label>-->
-							<!--<div class="col-sm-3">-->
-								<!--<input id="fultranstwo" value = "0" onkeyup="getYunjia()" name="fultranstwo" class="form-control" type="text">-->
-							<!--</div>-->
-
-							<!--<label class="col-sm-2 control-label">运满满二次付款日期：</label>-->
-							<!--<div class="col-sm-3">-->
-
-								<!--<input type="text" class="laydate-icon layer-date form-control"-->
-									   <!--id="fulpaytwodate" name="fulpaytwodate" placeholder="日期"-->
-									   <!--onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>-->
-							<!--</div>-->
-						<!--</div>-->
-
-
-
-
-
-
 						<div class="form-group">
 							<label class="col-sm-2 control-label">手续费：</label>
 							<div class="col-sm-3">
@@ -267,15 +247,23 @@
 
 						<div class="form-group">
 
-							<label class="col-sm-2 control-label">风险提示：</label>
+
+							<label class="col-sm-2 control-label">收款人：</label>
 							<div class="col-sm-3">
-								<input id="riskcues" name="riskcues" class="form-control" type="text">
-							</div>
-							<label class="col-sm-2 control-label">承运人：</label>
-							<div class="col-sm-3">
-								<input id="carrier" name="carrier" class="form-control" type="text">
+								<!--<input id="carrier" name="carrier" class="form-control" type="text">-->
+
+								<select data-placeholder="--请选择--" name="carrier" id="carrier"
+										class="selectpicker form-control" data-live-search="true">
+									<option th:each="payee : ${payeelist}" th:value="${payee.name}" th:text="${payee.name}"  ></option>
+								</select>
+
 							</div>
 
+
+							<label class="col-sm-2 control-label">账号：</label>
+							<div class="col-sm-3">
+								<input id="riskcues" name="riskcues" class="form-control" type="text" readonly="readonly">
+							</div>
 
 
 						</div>
@@ -317,7 +305,23 @@
     });
 
 
+    $("#carrier").val(null).trigger("change");
+    $("#carrier").on("change",function () {
+        var name = $(this).val();
 
+
+
+        $.ajax({
+            url : "/gc/payee/getPayee?name="+name,
+            type : "GET",
+            data : {
+            },
+            success : function(data) {
+                $("#riskcues").val(data.payee.account);
+            }
+        });
+
+    });
 
 
     function save() {

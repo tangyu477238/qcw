@@ -34,8 +34,6 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 	private SijiItemService sijiItemService;
 
 
-	@Autowired
-	private SijiService sijiService;
 
 
 
@@ -45,8 +43,8 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 	}
 
 	@Override
-	public List<SijiItemInvoiceDO> getLastAminvoice(Map<String, Object> map){
-		return SijiItemInvoiceDao.getLastAminvoice(map);
+	public List<SijiItemInvoiceDO> getInvoiceList(Map<String, Object> map){
+		return SijiItemInvoiceDao.getInvoiceList(map);
 	}
 
 
@@ -294,14 +292,6 @@ public class SijiItemInvoiceServiceImpl implements SijiItemInvoiceService {
 		List<SijiItemInvoiceDO> list = SijiItemInvoiceDao.getBilldateList(map);
 		if (!list.isEmpty()){
 			SijiItemInvoiceDO = list.get(0);
-
-//			List<SijiItemInvoiceDO>  yuelist = getLastAminvoice(map); //有余额取余额，没有取结算金额
-//			if (!yuelist.isEmpty()){
-//				SijiItemInvoiceDO.setYue(yuelist.get(0).getYue());
-//			} else {
-//				SijiItemInvoiceDO.setYue(SijiItemInvoiceDO.getAminvoice());
-//			}
-
 		}
 		return SijiItemInvoiceDO;
 	}

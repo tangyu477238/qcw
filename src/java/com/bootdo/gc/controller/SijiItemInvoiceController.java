@@ -1,6 +1,7 @@
 package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.utils.ExcelUtil;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +30,7 @@ import java.util.Map;
 @RequestMapping("/gc/sijiItemInvoice")
 public class SijiItemInvoiceController extends BaseController {
 	@Autowired
-	private SijiItemInvoiceService sijiItemService;
+	private SijiItemInvoiceService sijiItemInvoiceService;
 
 	@Autowired
 	private CustomService customService;
@@ -44,18 +47,33 @@ public class SijiItemInvoiceController extends BaseController {
 
 
 
-	//展示发货明细数据
+	//展示已结算数据
 	@ResponseBody
 	@GetMapping("/list")
 	public PageUtils querySijiList(@RequestParam Map<String, Object> params){
 		//查询列表数据
 
 		Query query = new Query(params);
-		List<Map> sijiItemList = sijiItemService.querySijiList(query);
+		List<SijiItemInvoiceDO> sijiItemList = sijiItemInvoiceService.getInvoiceList(query);
 
-		int total = sijiItemService.querySijiListCount(query);
+		int total = sijiItemInvoiceService.querySijiListCount(query);
 		PageUtils pageUtils = new PageUtils(sijiItemList, total);
 		return pageUtils;
+	}
+
+
+
+	// 导出已结算数据
+	@RequestMapping("/export")
+	public void export(HttpServletResponse res,
+							  @RequestParam Map<String, Object> params) throws IOException {
+
+		List<SijiItemInvoiceDO> sijiItemList = sijiItemInvoiceService.getInvoiceList(params);
+
+		ExcelUtil.exportExcel(sijiItemList,null,
+				"已结算数据明细",SijiItemInvoiceDO.class,"已结算数据明细.xls",res);
+
+
 	}
 
 
@@ -68,9 +86,9 @@ public class SijiItemInvoiceController extends BaseController {
 		//查询列表数据
 
 		Query query = new Query(params);
-		List<SijiItemInvoiceDO> sijiItemList = sijiItemService.getBilldateList(query);
+		List<SijiItemInvoiceDO> sijiItemList = sijiItemInvoiceService.getBilldateList(query);
 
-		int total = sijiItemService.querySijiListCount(query);
+		int total = sijiItemInvoiceService.querySijiListCount(query);
 		PageUtils pageUtils = new PageUtils(sijiItemList, total);
 		return pageUtils;
 	}
@@ -88,7 +106,7 @@ public class SijiItemInvoiceController extends BaseController {
 	 */
 	@GetMapping("/editItem")
 	String editItem(@RequestParam Map<String, Object> params, Model model){
-		SijiItemInvoiceDO siji = sijiItemService.getAminvoicefoById(params.get("id").toString());
+		SijiItemInvoiceDO siji = sijiItemInvoiceService.getAminvoicefoById(params.get("id").toString());
 		model.addAttribute("siji", siji);
 
 		params.put("stype", "skfs");
@@ -108,7 +126,7 @@ public class SijiItemInvoiceController extends BaseController {
 	@RequestMapping("/updateItem")
 	public R updateItem(SijiItemInvoiceDO siji){
 
-		sijiItemService.updateItem(siji);
+		sijiItemInvoiceService.updateItem(siji);
 
 		return R.ok();
 	}
@@ -147,7 +165,7 @@ public class SijiItemInvoiceController extends BaseController {
 		String ids [] = id.split(",");
 		params.put("array", ids);
 
-		sijiItemService.getInvoicedateArray(params);
+		sijiItemInvoiceService.getInvoicedateArray(params);
 
 		return R.ok();
 	}
@@ -164,7 +182,7 @@ public class SijiItemInvoiceController extends BaseController {
 	@ResponseBody
 	public R remove(Long id){
 
-		int flag = sijiItemService.remove(id);
+		int flag = sijiItemInvoiceService.remove(id);
 
 		if(flag>0){
 			return R.ok();
@@ -180,7 +198,7 @@ public class SijiItemInvoiceController extends BaseController {
 	@PostMapping( "/removeAdmin")
 	@ResponseBody
 	public R removeAdmin(Long id){
-		if(sijiItemService.removeAdmin(id)>0){
+		if(sijiItemInvoiceService.removeAdmin(id)>0){
 			return R.ok();
 		}
 		return R.errorMsg("操作失败！录入日期可能非当天");

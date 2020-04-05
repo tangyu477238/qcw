@@ -477,7 +477,14 @@
                             },
                             {
                                 field : 'carrier',
-                                title : '承运人',
+                                title : '收款人',
+                                align: 'center',
+                                colspan:1,
+                                rowspan:2
+                            },
+                            {
+                                field : 'riskcues',
+                                title : '收款账号',
                                 align: 'center',
                                 colspan:1,
                                 rowspan:2
@@ -568,7 +575,7 @@
             maxmin : true,
             shadeClose : false, // 点击遮罩关闭层
             area : [ '800px', '520px' ],
-            content : prefix + '/add' // iframe的url
+            content : prefix + '/add?deptId='+$('#deptId').val() // iframe的url
         });
 
 
@@ -582,7 +589,7 @@
             maxmin : true,
             shadeClose : false, // 点击遮罩关闭层
             area : [ '800px', '520px' ],
-            content : prefix + '/edit/' + id // iframe的url
+            content : prefix + '/edit?id=' + id +'&deptId='+$('#deptId').val()  // iframe的url
         });
 
         layer.full(perContent);

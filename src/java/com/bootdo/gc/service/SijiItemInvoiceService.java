@@ -46,7 +46,7 @@ public interface SijiItemInvoiceService {
 	void importExcel(List<SijiItemImp1> imp1s);
 	void importExcel2(List<SijiItemImp2> imp2s);
 
-	List<SijiItemInvoiceDO> getLastAminvoice(Map<String, Object> map);
+	List<SijiItemInvoiceDO> getInvoiceList(Map<String, Object> map);
 
 	List<SijiItemInvoiceDO> getBilldateList(Map<String, Object> map);
 

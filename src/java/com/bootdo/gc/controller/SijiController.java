@@ -1,13 +1,19 @@
 package com.bootdo.gc.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
 import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.domain.SijiItemInvoiceDO;
+import com.bootdo.gc.domain.YingshoukuanDO;
 import com.bootdo.gc.service.CustomService;
 import com.bootdo.gc.service.SequenceService;
 import com.bootdo.gc.service.SijiService;
 import com.bootdo.system.domain.UserDO;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,12 +22,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 
@@ -250,6 +258,23 @@ public class SijiController extends BaseController {
 		map.put("inputdate",inputdate);
 		return sijiService.queryTotal(map);
 	}
+
+	// 导出应收款统计
+	@RequestMapping("/excelTotal")
+	public void excelTotal(HttpServletResponse res,
+					   @RequestParam Map<String, Object> params) throws IOException {
+
+		List<YingshoukuanDO> totallist = sijiService.excelTotal(params);
+
+		ExcelUtil.exportExcel(totallist,null,
+				"应收款统计表",YingshoukuanDO.class,"应收款统计.xls",res);
+
+
+	}
+
+
+
+
 
 
 	@GetMapping("/queryLirunPage")

@@ -1,5 +1,6 @@
 package com.bootdo.gc.dao;
 
+import com.bootdo.gc.domain.FukuanDo;
 import com.bootdo.gc.domain.KehuDO;
 
 import java.util.List;
@@ -39,5 +40,8 @@ public interface KehuDao {
 	Map queryKehu1(Map map);
 
 
+	List<FukuanDo> getFukan(Map params);
+
+	int fukuanCount(Map<String,Object> map);
 
 }

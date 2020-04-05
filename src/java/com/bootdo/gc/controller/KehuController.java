@@ -8,7 +8,10 @@ import java.util.UUID;
 
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
+import com.bootdo.gc.domain.FukuanDo;
+import com.bootdo.gc.domain.PayeeDO;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.service.PayeeService;
 import com.bootdo.system.domain.UserDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +43,15 @@ import javax.servlet.http.HttpServletResponse;
 public class KehuController extends BaseController {
 	@Autowired
 	private KehuService kehuService;
-	
+
+
+
+	@Autowired
+	private PayeeService payeeService;
+
+
+
+
 	@GetMapping()
 
 	String Kehu(Long deptId,Model model){
@@ -64,15 +75,24 @@ public class KehuController extends BaseController {
 	
 	@GetMapping("/add")
 
-	String add(){
-	    return "gc/kehu/add";
+	String add(@RequestParam Map<String, Object> params, Model model){
+		model.addAttribute("deptId", params.get("deptId"));
+		List<PayeeDO> payeelist = payeeService.list(params);
+		model.addAttribute("payeelist", payeelist);
+		return "gc/kehu/add";
 	}
 
-	@GetMapping("/edit/{id}")
+	@GetMapping("/edit")
 
-	String edit(@PathVariable("id") Long id,Model model){
+	String edit(@RequestParam Map<String, Object> params, Model model){
+
+		Long id = Long.parseLong(params.get("id").toString());
 		KehuDO kehu = kehuService.get(id);
 		model.addAttribute("kehu", kehu);
+		params.remove("id");
+		model.addAttribute("deptId", params.get("deptId"));
+		List<PayeeDO> payeelist = payeeService.list(params);
+		model.addAttribute("payeelist", payeelist);
 	    return "gc/kehu/edit";
 	}
 
@@ -207,6 +227,41 @@ public class KehuController extends BaseController {
 	}
 
 
+	@GetMapping("/fukuan")
+	String fukuan(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		return "gc/kehu/fukuan";
+	}
+
+
+
+	@ResponseBody
+	@GetMapping("/getFukuan")
+	public PageUtils getFukuan(@RequestParam Map<String, Object> params){
+
+		//查询列表数据
+		Query query = new Query(params);
+		List<FukuanDo> fukuanlist = kehuService.getFukuan(query);
+		int total = kehuService.fukuanCount(query);
+		PageUtils pageUtils = new PageUtils(fukuanlist, total);
+		return pageUtils;
+	}
+
+
+	// 导出全部数据
+	@RequestMapping("/exportFukuan")
+	public void exportFukuan(HttpServletResponse res,
+							  @RequestParam Map<String, Object> params) throws IOException {
+
+//		params.put("order","asc");
+//		params.put("sort","id");
+		List<FukuanDo> fukuanlist = kehuService.getFukuan(params);
+//
+		ExcelUtil.exportExcel(fukuanlist,"当天付款明细",
+				"当天付款明细",FukuanDo.class,"当天付款明细.xls",res);
+
+
+	}
 
 	
 }

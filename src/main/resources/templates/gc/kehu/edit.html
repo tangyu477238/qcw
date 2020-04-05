@@ -12,8 +12,7 @@
 
 							<input id="id" name="id" th:value="${kehu.id}"  type="hidden">
 							<input id="kpid" name="kpid" th:value="${kehu.kpid}"  type="hidden">
-
-
+							<input id="deptId" name="deptId" th:value="${kehu.deptId}"  type="hidden">
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">日期：</label>
@@ -254,17 +253,24 @@
 
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">风险提示：</label>
+
+
+								<label class="col-sm-2 control-label">收款人：</label>
 								<div class="col-sm-3">
-									<input id="riskcues" th:value = "${kehu.riskcues}" name="riskcues" class="form-control" type="text">
+									<!--<input id="carrier" th:value = "${kehu.carrier}" name="carrier" class="form-control" type="text">-->
+
+									<select data-placeholder="--请选择--" name="carrier" id="carrier"
+											class="selectpicker form-control" data-live-search="true">
+										<option th:each="payee : ${payeelist}" th:value="${payee.name}" th:text="${payee.name}"
+												th:selected="${payee.name eq kehu.carrier}"></option>
+									</select>
+
 								</div>
 
-								<label class="col-sm-2 control-label">承运人：</label>
+								<label class="col-sm-2 control-label">账号：</label>
 								<div class="col-sm-3">
-									<input id="carrier" th:value = "${kehu.carrier}" name="carrier" class="form-control" type="text">
+									<input id="riskcues" th:value = "${kehu.riskcues}" name="riskcues" class="form-control" type="text" readonly="readonly">
 								</div>
-
-
 							</div>
 
 
@@ -370,7 +376,33 @@
 		setPayDateRead(1);
 		showTable();
         initShoushufei();
+
+        var pg = $("#riskcues").val();
+        if (pg==''){
+            $("#carrier").val(null);
+        }
 	});
+
+
+
+    $("#carrier").on("change",function () {
+        var name = $(this).val();
+        var deptId = $("#deptId").val();
+
+
+        $.ajax({
+            url : "/gc/payee/getPayee?name="+name+'&deptId='+deptId,
+            type : "GET",
+            data : {
+            },
+            success : function(data) {
+                $("#riskcues").val(data.payee.account);
+            }
+        });
+
+    });
+
+
 
 	function initShoushufei() {
         var shoushufei = $("#shoushufei").val();
@@ -417,7 +449,16 @@
         }
 
 
-		$.ajax({
+        var bankpaydate = $("#bankpaydate").val();
+        var acbalance = $("#acbalance").val();
+        if (bankpaydate!='' && acbalance!= 0) {
+            parent.layer.msg("二次付款，必须余额清零！");
+            return ;
+        }
+
+
+
+        $.ajax({
 			cache : true,
 			type : "POST",
 			url : "/gc/kehu/update",

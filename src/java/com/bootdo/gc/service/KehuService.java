@@ -1,5 +1,6 @@
 package com.bootdo.gc.service;
 
+import com.bootdo.gc.domain.FukuanDo;
 import com.bootdo.gc.domain.KehuDO;
 
 import java.util.List;
@@ -34,4 +35,8 @@ public interface KehuService {
 	List<Map> queryKehu(Map map);
 
 	List<Map> queryKehu1(Map map);
+
+	List<FukuanDo> getFukuan(Map params);
+
+	int fukuanCount(Map<String,Object> map);
 }

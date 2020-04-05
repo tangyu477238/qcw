@@ -75,9 +75,7 @@
 					<div class="col-md-2">
 						<div class="form-group">
 							<!--<button type="button" onclick="reLoad()" class="btn btn-primary queryButton">查询</button>-->
-							<!--<button  type="button" class="btn  btn-success" onclick="excel()">-->
-								<!--导出-->
-							<!--</button>-->
+
 						</div>
 					</div>
 
@@ -124,7 +122,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<button type="button" onclick="reLoad()" class="btn btn-primary">查询</button>
-							<!--<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>-->
+							<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>
 							<!--<button id="showBt" type="button" class="btn btn-warning" onclick="showCol()" >隐藏</button>-->
 
 
@@ -274,17 +272,22 @@
 
 
         function excel() {
-            var deptId =  $('#deptId').val()
 
+
+
+            var deptId =  $('#deptId').val()
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
+
             var carnum = $('#carnum').val();
             var inforfee = $('#inforfee').val();
             var arrivstation = $('#arrivstation').val();
 
             var tstartDate = $('#tstartDate').val();
             var tendDate = $('#tendDate').val();
-            window.open("/gc/siji/export?startDate="+startDate+"&endDate="+endDate
+
+
+            window.open("/gc/sijiItemInvoice/export?startDate="+startDate+"&endDate="+endDate
                 +"&carnum="+carnum+"&inforfee="+inforfee+"&arrivstation="+arrivstation
 				+"&deptId="+deptId+"&tstartDate="+tstartDate+"&tendDate="+tendDate);
 

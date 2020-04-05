@@ -42,6 +42,9 @@
 							<div class="col-md-1 ">
 								<button type="button" onclick="showTable()" class="btn btn-primary queryButton">查询</button>
 							</div>
+							<div class="col-md-1 ">
+								<button type="button" onclick="excel()" class="btn btn-primary queryButton">导出</button>
+							</div>
 						</div>
 					</div>
 
@@ -199,6 +202,26 @@
 
         showTable();
     });
+
+
+
+
+
+
+
+    function excel() {
+
+
+        var inforfee = $("#inforfee").val();
+        var deptId = $("#deptId").val();
+        var inputdate = $("#inputdate").val();
+
+        window.open("/gc/siji/excelTotal?deptId="+deptId+"&inforfee="+inforfee+"&inputdate="+inputdate);
+
+    }
+
+
+
 
     function addDetail(inforfee) {
 

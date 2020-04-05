@@ -48,7 +48,7 @@ public interface SijiItemInvoiceDao {
 	int heDui(Long id);
 
 
-	List<SijiItemInvoiceDO> getLastAminvoice(Map<String, Object> map);
+	List<SijiItemInvoiceDO> getInvoiceList(Map<String, Object> map);
 
 	List<SijiItemInvoiceDO> getBilldateList(Map<String, Object> map);
 

@@ -2,6 +2,7 @@ package com.bootdo.gc.service.impl;
 
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
+import com.bootdo.gc.domain.FukuanDo;
 import com.bootdo.gc.domain.KehuDO;
 import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.domain.SijiItemDO;
@@ -148,5 +149,15 @@ public class KehuServiceImpl implements KehuService {
 		}
 		return  list;
 	}
-	
+
+	@Override
+	public List<FukuanDo> getFukuan(Map params) {
+
+		return kehuDao.getFukan(params);
+	}
+
+	@Override
+	public int fukuanCount(Map<String, Object> map) {
+		return kehuDao.fukuanCount(map);
+	}
 }

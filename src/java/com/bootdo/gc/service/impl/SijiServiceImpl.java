@@ -215,6 +215,14 @@ public class SijiServiceImpl  implements SijiService {
 	}
 
 	@Override
+	public List<YingshoukuanDO> excelTotal(Map map) {
+
+
+		return sijiDao.excelTotal(map);
+	}
+
+
+	@Override
 	public List<LirunDO> queryLirun(Map map) {
 
 

@@ -35,6 +35,14 @@ public class SijiItemAminvoiceController extends BaseController {
 	private SijiItemAminvoiceService sijiItemService;
 
 
+	//跳转待收款明细表
+	@GetMapping()
+	String sijiItemAminvoice(Long deptId,Model model){
+		model.addAttribute("deptId", deptId);
+		return "gc/siji/sijiItemAminvoice";
+	}
+
+
 	//跳转----对账明细列表
 	@GetMapping("sijiItemDuizhang")
 	String sijiItemDuizhang(Long deptId,Model model){
@@ -84,12 +92,7 @@ public class SijiItemAminvoiceController extends BaseController {
 	}
 
 
-	//跳转待收款明细表
-	@GetMapping()
-	String sijiItemAminvoice(Long deptId,Model model){
-		model.addAttribute("deptId", deptId);
-		return "gc/siji/sijiItemAminvoice";
-	}
+
 
 
 

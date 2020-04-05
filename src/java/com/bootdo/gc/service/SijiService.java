@@ -2,6 +2,7 @@ package com.bootdo.gc.service;
 
 import com.bootdo.gc.domain.LirunDO;
 import com.bootdo.gc.domain.SijiDO;
+import com.bootdo.gc.domain.YingshoukuanDO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,6 +45,11 @@ public interface SijiService  {
 
 
 	List<Map> queryTotal(Map map);
+
+	List<YingshoukuanDO> excelTotal(Map map);
+
+
+
 
 	List<LirunDO> queryLirun(Map map);
 
