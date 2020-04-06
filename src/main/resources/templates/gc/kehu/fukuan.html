@@ -266,20 +266,50 @@
                                 title : '&nbsp;&nbsp;&nbsp;&nbsp;到&nbsp;&nbsp;站&nbsp;&nbsp;&nbsp;&nbsp;',
                                 align: 'center',
                             },
+
                             {
-                                field : 'acbalance',
-                                title : '&nbsp;&nbsp;余&nbsp;&nbsp;额&nbsp;&nbsp;',
+                                field : 'settletonnage',
+                                title : '&nbsp;&nbsp;吨&nbsp;&nbsp;位&nbsp;&nbsp;',
                                 align: 'center',
                                 footerFormatter: function (value) {
                                     var amount = 0;
                                     for (var i in value) {
-                                        if (value[i].acbalance!='' && value[i].acbalance!=null){
-                                            amount += parseFloat(value[i].acbalance);
+                                        if (value[i].settletonnage!='' && value[i].settletonnage!=null){
+                                            amount += parseFloat(value[i].settletonnage);
                                         }
                                     }
                                     return amount.toFixed(3);
                                 }
                             },
+                            {
+                                field : 'transcost',
+                                title : '&nbsp;&nbsp;价&nbsp;&nbsp;格&nbsp;&nbsp;',
+                                align: 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].transcost!='' && value[i].transcost!=null){
+                                            amount += parseFloat(value[i].transcost);
+                                        }
+                                    }
+                                    return amount.toFixed(3);
+                                }
+                            },
+                            {
+                                field : 'transfee',
+                                title : '&nbsp;&nbsp;金&nbsp;&nbsp;额&nbsp;&nbsp;',
+                                align: 'center',
+                                footerFormatter: function (value) {
+                                    var amount = 0;
+                                    for (var i in value) {
+                                        if (value[i].transfee!='' && value[i].transfee!=null){
+                                            amount += parseFloat(value[i].transfee);
+                                        }
+                                    }
+                                    return amount.toFixed(3);
+                                }
+                            },
+
                             {
                                 field : 'cishu',
                                 title : '付款次数',

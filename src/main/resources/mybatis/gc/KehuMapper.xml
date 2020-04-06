@@ -456,7 +456,7 @@
 
 	<select id="getFukan" resultType="com.bootdo.gc.domain.FukuanDo">
 		select
-		s.fulpaydate,s.bizdate,s.carnum,s.station,s.acbalance,'一' as cishu,s.fulltrans,s.pay_type,s.carrier,s.riskcues
+		s.fulpaydate,s.bizdate,s.carnum,s.station,s.settletonnage,s.transcost,s.transfee,'一' as cishu,s.fulltrans,s.pay_type,s.carrier,s.riskcues
 		from gc_kehu s
 		where s.fulpaydate is not null and s.fulpaydate !='' and s.dept_id = #{deptId}
 
@@ -483,7 +483,7 @@
 		union all
 
 		select
-		s.bankpaydate,s.bizdate,s.carnum,s.station,s.acbalance,'二' as cishu,s.bankcard,s.forwunit,s.carrier,s.riskcues
+		s.bankpaydate,s.bizdate,s.carnum,s.station,s.settletonnage,s.transcost,s.transfee,'二' as cishu,s.bankcard,s.forwunit,s.carrier,s.riskcues
 		from gc_kehu s
 		where s.bankpaydate is not null and s.bankpaydate !='' and s.dept_id = #{deptId}
 

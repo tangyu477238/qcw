@@ -353,7 +353,7 @@
 							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<!--<button type="submit" class="btn btn-primary" onclick="queryMx()">核对发货明细</button>-->
-									<button type="button" class="btn btn-primary" onclick="update()">提交</button>
+									<button type="button"  class="btn btn-primary" onclick="update()">提交</button>
 								</div>
 							</div>
 						</form>
@@ -377,10 +377,13 @@
 		showTable();
         initShoushufei();
 
+        //如果已经选择过了收款人
         var pg = $("#riskcues").val();
         if (pg==''){
             $("#carrier").val(null);
-        }
+        } else {
+
+		}
 	});
 
 
@@ -451,13 +454,19 @@
 
         var bankpaydate = $("#bankpaydate").val();
         var acbalance = $("#acbalance").val();
+
+        if (acbalance < 0) {
+            parent.layer.msg("付款金额+手续费不能大于运费！");
+            return ;
+        }
+
         if (bankpaydate!='' && acbalance!= 0) {
             parent.layer.msg("二次付款，必须余额清零！");
             return ;
         }
 
 
-
+        //$("#role").removeAttr("disabled");
         $.ajax({
 			cache : true,
 			type : "POST",
@@ -540,8 +549,10 @@
 			if ((fulpaydate==getNowFormatDate()||fulpaydate=='')) {
 				$("#fulpaydate").val(getNowFormatDate());
 				$("#fulltrans").attr("readonly",false);
+                $("#carrier").attr("disabled",false);
 			} else {
 				$("#payType").attr("disabled",true);
+                $("#carrier").attr("disabled",true);
 			}
 		} else {
 			$("#fulltrans").attr("readonly",true);
