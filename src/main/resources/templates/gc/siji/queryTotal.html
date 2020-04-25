@@ -336,7 +336,8 @@
                     td = td.replace('[tiaozheng]',siItem.tiaozheng);
                     td = td.replace('[totalAmount]',siItem.totalAmount);
 
-                    td = td.replace('[modify]','<button type="button" class="btn btn-primary" onclick = addDetail(\'' + siItem.inforfee + '\')>调整</button>');
+                    td = td.replace('[modify]','');
+                    // td = td.replace('[modify]','<button type="button" class="btn btn-primary" onclick = addDetail(\'' + siItem.inforfee + '\')>调整</button>');
 
                     $("#tdata").append(td);
                 }

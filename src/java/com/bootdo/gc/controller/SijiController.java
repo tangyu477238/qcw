@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +39,7 @@ import java.util.*;
  * @email tangzhiyu@vld-tech.com
  * @date 2019-05-25 10:38:02
  */
- 
+
 @Controller
 @RequestMapping("/gc/siji")
 public class SijiController extends BaseController {
@@ -261,20 +262,76 @@ public class SijiController extends BaseController {
 
 	// 导出应收款统计
 	@RequestMapping("/excelTotal")
-	public void excelTotal(HttpServletResponse res,
-					   @RequestParam Map<String, Object> params) throws IOException {
+	public void excelTotal(HttpServletRequest request,
+						   HttpServletResponse response,
+						   @RequestParam Map<String, Object> params) throws IOException {
 
-		List<YingshoukuanDO> totallist = sijiService.excelTotal(params);
+		List<Map> maps = sijiService.excelTotal(params);
 
-		ExcelUtil.exportExcel(totallist,null,
-				"应收款统计表",YingshoukuanDO.class,"应收款统计.xls",res);
 
+
+//		ExcelUtil.exportExcel(totallist,null,
+//				"应收款统计表",YingshoukuanDO.class,"应收款统计.xls",res);
+
+		if(maps!=null && maps.size()>0){
+			String Title = "应收款统计";
+
+
+//			String [] arry1 = {"A","B","C","D","E"};
+//			String [] arry2 = {"F","G","H","I","J"};
+//			int arryLen1=arry1.length;//获取第一个数组长度
+//			int arryLen2=arry2.length;//获取第二个数组长度
+//
+//			arry1= Arrays.copyOf(arry1,arryLen1+ arryLen2);//把第一个数组扩大
+//			System.arraycopy(arry2, 0, arry1, arryLen1,arryLen2 );//将两个数组进行合并
+//			System.out.println(Arrays.toString(arry1));//输出合并后的数组
+
+			String[]str1=new String[]{"付款单位"};
+			String[]str2=new String[12];
+			for (int i = 0; i<12; i++){
+				str2[11-i] = DateUtils.getNowMonth(-i);
+			}
+			String [] str3 = new String[]{"当日开票","当日回款","调整金额","余额"};  //设置表格表头字段
+
+			String[] totalArr = mergeArray2(str1, str2);
+			String[] title = mergeArray2(totalArr, str3);
+
+
+			String [] properties = new String[]{"inforfee","bizMonth11","bizMonth10","bizMonth9"
+					,"bizMonth8","bizMonth7","bizMonth6","bizMonth5","bizMonth4","bizMonth3"
+					,"bizMonth2","bizMonth1","bizMonth0","dayTakeamount","dayInvoamount"
+					,"tiaozheng","totalAmount"};  // 查询对应的字段
+			com.bootdo.common.utils.ExcelExportUtil excelExport2 = new com.bootdo.common.utils.ExcelExportUtil();
+			excelExport2.setTitle(Title);
+			excelExport2.setHeardList(title);
+			excelExport2.setHeardKey(properties);
+			excelExport2.setData(maps);
+			excelExport2.exportExport(request, response);
+		}
 
 	}
 
 
 
-
+	/***
+	 * merge two array
+	 * @param arr1
+	 * @param arr2
+	 * @return
+	 */
+	public static String[] mergeArray2(String[]arr1,String[]arr2){
+		int length1=arr1.length;
+		int length2=arr2.length;
+		int totalLength=length1+length2;
+		String[]totalArr=new String[totalLength];
+		for(int i=0;i<length1;i++){
+			totalArr[i]=arr1[i];
+		}
+		for(int i=0;i<length2;i++){
+			totalArr[i+length1]=arr2[i];
+		}
+		return totalArr;
+	}
 
 
 	@GetMapping("/queryLirunPage")

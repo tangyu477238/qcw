@@ -365,7 +365,7 @@
 
 
 	<!--应收款统计 导出-->
-	<select  id="excelTotal" resultType="com.bootdo.gc.domain.YingshoukuanDO" >
+	<select  id="excelTotal" resultType="java.util.Map" >
 		<![CDATA[
 
 

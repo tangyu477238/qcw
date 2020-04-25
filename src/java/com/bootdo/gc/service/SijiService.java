@@ -46,7 +46,7 @@ public interface SijiService  {
 
 	List<Map> queryTotal(Map map);
 
-	List<YingshoukuanDO> excelTotal(Map map);
+	List<Map> excelTotal(Map map);
 
 
 

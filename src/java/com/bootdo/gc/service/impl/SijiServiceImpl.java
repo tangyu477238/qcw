@@ -215,7 +215,7 @@ public class SijiServiceImpl  implements SijiService {
 	}
 
 	@Override
-	public List<YingshoukuanDO> excelTotal(Map map) {
+	public List<Map> excelTotal(Map map) {
 
 
 		return sijiDao.excelTotal(map);
