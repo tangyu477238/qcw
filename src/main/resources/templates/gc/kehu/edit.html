@@ -446,9 +446,13 @@
 
         var shoushufei = $("#shoushufei").val();
         var fulltrans = $("#fulltrans").val();
-        if ((shoushufei!='' && shoushufei!=0) && (fulltrans=='' || fulltrans==0) ) {
-            parent.layer.msg("填写手续费必须得有付款数据！");
-            return ;
+        var bankcard = $("#bankcard").val();
+
+        if ((shoushufei!='' && shoushufei!=0) && (fulltrans=='' || fulltrans==0) && (bankcard=='' || bankcard==0)  ) {
+
+			parent.layer.msg("填写手续费必须得有付款数据！");
+			return;
+
         }
 
 
