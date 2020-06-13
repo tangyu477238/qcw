@@ -2,6 +2,7 @@ package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
+import com.bootdo.gc.dao.SijiItemAminvoiceDao;
 import com.bootdo.gc.domain.SijiDO;
 import com.bootdo.gc.domain.SijiItemAminvoiceDO;
 import com.bootdo.gc.domain.SijiItemImp1;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,10 @@ import java.util.Map;
 public class SijiItemAminvoiceController extends BaseController {
 	@Autowired
 	private SijiItemAminvoiceService sijiItemService;
+
+
+	@Autowired
+	private SijiItemAminvoiceDao sijiItemAminvoiceDao;
 
 
 	//跳转待收款明细表
@@ -145,6 +151,16 @@ public class SijiItemAminvoiceController extends BaseController {
 		List<Map<String, Object>> issueofficeList = sijiItemService.getIssueoffice(params);
 		model.addAttribute("issueofficeList", issueofficeList);
 
+
+		String id = params.get("ids").toString();
+		String ids [] = id.split(",");
+		params.put("array", ids);
+		List<SijiItemAminvoiceDO> list = sijiItemAminvoiceDao.getBilldateArray(params);
+		BigDecimal kpje = new BigDecimal(0);
+		for (SijiItemAminvoiceDO sijiItemAminvoiceDO : list){
+			kpje = kpje.add(sijiItemAminvoiceDO.getYue());
+		}
+		model.addAttribute("kpje", kpje);
 		return "gc/siji/editPiliangBill";
 	}
 

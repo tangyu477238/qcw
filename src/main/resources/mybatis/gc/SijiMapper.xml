@@ -257,7 +257,7 @@
 	<select id="getExcelList" resultType="com.bootdo.gc.domain.SijiDO">
 		select
 		i.`id`,f.`bizdate`,f.`forwunit`,f.`carnum`,
-		f.`arrivstation`,f.`remark`,f.`inforfee`,
+		f.`arrivstation`,i.`remark`,f.`inforfee`,
 		f.`payer`,f.order_no,f.pid,f.custompay as scustompay,
 
 		i.`steelnum`,i.`specs`,i.`packnum`,i.`zhinum`,
@@ -293,7 +293,7 @@
 			</if>
 		</where>
 
-		order by f.order_no asc,i.id asc
+		order by f.bizdate asc,f.order_no asc,i.id asc
 
 	</select>
 

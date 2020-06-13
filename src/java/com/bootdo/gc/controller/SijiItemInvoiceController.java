@@ -1,10 +1,8 @@
 package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
-import com.bootdo.common.utils.ExcelUtil;
-import com.bootdo.common.utils.PageUtils;
-import com.bootdo.common.utils.Query;
-import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.*;
+import com.bootdo.gc.dao.SijiItemInvoiceDao;
 import com.bootdo.gc.domain.SijiItemInvoiceDO;
 import com.bootdo.gc.service.CustomService;
 import com.bootdo.gc.service.SijiItemInvoiceService;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +34,10 @@ public class SijiItemInvoiceController extends BaseController {
 
 	@Autowired
 	private CustomService customService;
+
+	@Autowired
+	private SijiItemInvoiceDao sijiItemInvoiceDao;
+
 
 
 
@@ -148,6 +152,27 @@ public class SijiItemInvoiceController extends BaseController {
 		params.put("stype", "skfs");
 		List<Map<String, Object>> issueofficeList = customService.getCustomList(params);
 		model.addAttribute("issueofficeList", issueofficeList);
+
+
+
+		BigDecimal jsje= new BigDecimal(0);
+		String id = params.get("ids").toString();
+		String ids [] = id.split(",");
+		params.put("array", ids);
+		List<Map> list = sijiItemInvoiceDao.querySijiArray(params);
+		Map papms = new HashMap();
+		for (Map itemMap : list){
+
+			papms.put("id", itemMap.get("id"));
+			SijiItemInvoiceDO sijiItemInvoiceDO = new SijiItemInvoiceDO();
+			List<SijiItemInvoiceDO> invoiceList = sijiItemInvoiceDao.getAminvoicefoById(papms);
+			if (!invoiceList.isEmpty()){
+				sijiItemInvoiceDO = invoiceList.get(0);
+			}
+			jsje = jsje.add(sijiItemInvoiceDO.getYue());
+
+		}
+		model.addAttribute("jsje", jsje);
 
 		return "gc/siji/editPiliangAminvoice";
 	}
