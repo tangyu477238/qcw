@@ -56,6 +56,8 @@ public class KehuController extends BaseController {
 
 	String Kehu(Long deptId,Model model){
 		model.addAttribute("deptId", deptId);
+		UserDO userDo = getUser();
+		model.addAttribute("createuser", userDo.getUserId());
 		return "gc/kehu/kehu";
 	}
 	
@@ -143,6 +145,21 @@ public class KehuController extends BaseController {
 		}
 		return R.errorMsg("单据已回单，不可删除！");
 	}
+
+
+	/**
+	 * adminRemove
+	 */
+	@PostMapping( "/adminRemove")
+	@ResponseBody
+	public R adminRemove(Long id){
+		if(kehuService.adminRemove(id)>0){
+			return R.ok();
+		}
+		return R.errorMsg("删除失败！");
+	}
+
+
 	
 	/**
 	 * 删除

@@ -117,6 +117,12 @@ public class KehuServiceImpl implements KehuService {
 			return kehuDao.remove(id);
 		}
 	}
+
+	@Override
+	public int adminRemove(Long id){
+		return kehuDao.remove(id);
+	}
+
 	
 	@Override
 	public int batchRemove(Long[] ids){

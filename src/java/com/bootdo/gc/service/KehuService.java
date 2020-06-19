@@ -29,6 +29,8 @@ public interface KehuService {
 	int update(KehuDO kehu);
 	
 	int remove(Long id);
+
+	int adminRemove(Long id);
 	
 	int batchRemove(Long[] ids);
 
