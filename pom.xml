@@ -6,7 +6,7 @@
     <groupId>com.qcw</groupId>
     <artifactId>qcw</artifactId>
     <version>2.0.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>ROOT</name>
     <description>project for Spring Boot</description>
@@ -17,7 +17,6 @@
         <version>2.0.3.RELEASE</version>
         <relativePath/>
     </parent>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -244,7 +243,6 @@
 
 
 
-
         <!-- easypoi -->
         <dependency>
             <groupId>cn.afterturn</groupId>
@@ -263,6 +261,7 @@
         </dependency>
 
 
+
         <!-- xss过滤组件 -->
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -271,23 +270,23 @@
         </dependency>
 
         <!--war包部署需要-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--&lt;!&ndash; 移除嵌入式tomcat插件 &ndash;&gt;-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>javax.servlet</groupId>-->
-        <!--<artifactId>javax.servlet-api</artifactId>-->
-        <!--<version>3.1.0</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 移除嵌入式tomcat插件 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
 
 
     </dependencies>
@@ -299,10 +298,13 @@
                 <configuration>
                     <executable>true</executable>
                     <finalName>ROOT</finalName>
+                    <mainClass>com.bootdo.WebApplication</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
+
     <!--<repositories>-->
     <!--<repository>-->
     <!--<id>public</id>-->
