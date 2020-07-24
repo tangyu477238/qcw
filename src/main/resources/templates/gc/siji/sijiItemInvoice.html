@@ -517,11 +517,44 @@
                                         + row.id
                                         + '\')"><i class="fa fa-remove"></i></a> ';
 
-                                    return e ;
+									var f = '<a class="btn btn-warning btn-sm  href="#" title="管理员删除"  mce_href="#" onclick="adminRemove(\''
+											+ row.id
+											+ '\')">管理员删除</a> ';
+
+									var x = '';
+									var createuser = [[${createuser}]];
+									if (createuser!=1) {
+										x = e ;
+									} else {
+										x = f;
+									}
+									return x ;
                                 }
                             }]
                     });
         }
+		function adminRemove(id) {
+			layer.confirm('确定要删除选中的记录？', {
+				btn : [ '确定', '取消' ]
+			}, function() {
+				$.ajax({
+					url : prefix+"/adminRemove",
+					type : "post",
+					data : {
+						'id' : id
+					},
+					success : function(r) {
+						if (r.code==0) {
+							layer.msg(r.msg);
+							reLoad();
+						}else{
+							layer.msg(r.msg);
+						}
+					}
+				});
+			})
+		}
+
         function reLoad() {
             $('#exampleTable').bootstrapTable('refresh');
         }

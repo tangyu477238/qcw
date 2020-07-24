@@ -204,6 +204,10 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 
 	@Override
 	public int removeAdmin(Long id){
+		SijiItemAminvoiceDO sijiItemAminvoiceDo = SijiItemAminvoiceDao.get(id);
+		if (sijiItemAminvoiceDo.getState()!=1){
+			return -1 ;
+		}
 
 		List<Map<String, Object>> invoiceList = SijiItemAminvoiceDao.getInvoiceList(id);
 		if (invoiceList != null && !invoiceList.isEmpty()) {
@@ -217,8 +221,6 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 
 		int flag = SijiItemAminvoiceDao.remove(id);
 
-
-
 		return flag;
 
 	}
@@ -230,10 +232,6 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 		if (!DateUtils.getNowDate().equals(sijiItemAminvoiceDo.getInputdate())){
 			return -2 ;
 		}
-		if (sijiItemAminvoiceDo.getState()!=1){
-			return -1 ;
-		}
-
 		int flag = this.removeAdmin(id);
 
 		return flag;

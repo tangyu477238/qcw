@@ -6,6 +6,7 @@ import com.bootdo.gc.dao.SijiDao;
 import com.bootdo.gc.domain.*;
 import com.bootdo.gc.service.SijiItemAminvoiceService;
 import com.bootdo.gc.service.SijiService;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import com.bootdo.gc.dao.SijiItemDao;
 import com.bootdo.gc.service.SijiItemService;
 
 
-
+@Slf4j
 @Service
 public class SijiItemServiceImpl implements SijiItemService {
 
@@ -179,6 +180,15 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
 
+
+		log.info("------------是否对账---------");
+		SijiItemDO dz = sijiItemDao.get(sijiItem.getId());
+		if (dz.getBilldate()!=null&&!"".equals(dz.getBilldate())){
+			return 0;
+		}
+
+
+
 		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
 		if (kehuDO==null){
 			return sijiItemDao.update(sijiItem);
@@ -186,7 +196,6 @@ public class SijiItemServiceImpl implements SijiItemService {
 //		if ("有".equals(kehuDO.getReceipt())||"预有".equals(kehuDO.getReceipt())){
 //			return 0;
 //		}
-
 		int flag = sijiItemDao.update(sijiItem);
 
 
@@ -202,8 +211,13 @@ public class SijiItemServiceImpl implements SijiItemService {
 		if (sijiItem==null){
 			return sijiItemDao.remove(id);
 		}
-		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
+		log.info("------------是否对账---------");
+		if (sijiItem.getBilldate()!=null&&!"".equals(sijiItem.getBilldate())){
+			return 0;
+		}
 
+
+		SijiDO sijiDO = sijiDao.getPid(sijiItem.getPid());
 		KehuDO kehuDO = kehuDao.getOrder(sijiDO.getOrderNo());
         if (kehuDO==null){
             return sijiItemDao.remove(id);

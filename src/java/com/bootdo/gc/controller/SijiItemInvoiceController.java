@@ -44,6 +44,7 @@ public class SijiItemInvoiceController extends BaseController {
 	//跳转结算明细表
 	@GetMapping()
 	String SijiItemInvoice(Long deptId,Model model){
+		model.addAttribute("createuser", getUserId());
 		model.addAttribute("deptId", deptId);
 		return "gc/siji/sijiItemInvoice";
 	}
@@ -208,7 +209,6 @@ public class SijiItemInvoiceController extends BaseController {
 	public R remove(Long id){
 
 		int flag = sijiItemInvoiceService.remove(id);
-
 		if(flag>0){
 			return R.ok();
 		} else if (flag == -1){
@@ -220,13 +220,16 @@ public class SijiItemInvoiceController extends BaseController {
 	}
 
 
-	@PostMapping( "/removeAdmin")
+	@PostMapping( "/adminRemove")
 	@ResponseBody
 	public R removeAdmin(Long id){
-		if(sijiItemInvoiceService.removeAdmin(id)>0){
+		int flag = sijiItemInvoiceService.removeAdmin(id);
+		if(flag>0){
 			return R.ok();
+		} else if (flag == -1){
+			return R.errorMsg("操作失败！此单非最后一次录入的订单！");
 		}
-		return R.errorMsg("操作失败！录入日期可能非当天");
+		return R.errorMsg("操作失败！");
 	}
 
 

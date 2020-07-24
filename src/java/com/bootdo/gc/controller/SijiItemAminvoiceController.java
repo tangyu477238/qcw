@@ -44,6 +44,7 @@ public class SijiItemAminvoiceController extends BaseController {
 	//跳转待收款明细表
 	@GetMapping()
 	String sijiItemAminvoice(Long deptId,Model model){
+		model.addAttribute("createuser", getUserId());
 		model.addAttribute("deptId", deptId);
 		return "gc/siji/sijiItemAminvoice";
 	}
@@ -94,6 +95,7 @@ public class SijiItemAminvoiceController extends BaseController {
 	@GetMapping("/bill")
 	String sijiItemBill(Long deptId,Model model){
 		model.addAttribute("deptId", deptId);
+		model.addAttribute("createuser", getUserId());
 		return "gc/siji/sijiItemBill";
 	}
 
@@ -262,13 +264,16 @@ public class SijiItemAminvoiceController extends BaseController {
 	/**
 	 * //结算明细单----->删除
 	 */
-	@PostMapping( "/removeAdmin")
+	@PostMapping( "/adminRemove")
 	@ResponseBody
 	public R removeAdmin( Long id){
-		if(sijiItemService.remove(id)>0){
+		int flag = sijiItemService.removeAdmin(id);
+		if(flag>0){
 			return R.ok();
+		} else if (flag == -1){
+			return R.errorMsg("操作失败！此单非最后一次录入的订单！");
 		}
-		return R.errorMsg("操作失败！录入日期可能非当天或已产生回款！");
+		return R.errorMsg("操作失败！此单已产生回款！");
 	}
 
 

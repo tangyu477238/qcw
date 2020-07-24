@@ -211,7 +211,7 @@ public class SijiItemController extends BaseController {
 		if(flag>0){
 			return R.ok();
 		} else {
-			return R.errorMsg("操作失败,付款已回单！");
+			return R.errorMsg("操作失败,付款已回单或已对账！");
 		}
 
 	}
@@ -250,7 +250,7 @@ public class SijiItemController extends BaseController {
 		if(sijiItemService.remove(id)>0){
 			return R.ok();
 		}
-		return R.errorMsg("操作失败,付款已回单！");
+		return R.errorMsg("操作失败,付款已回单或已对账！");
 	}
 
 
