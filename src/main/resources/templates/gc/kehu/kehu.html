@@ -654,12 +654,16 @@
 
         var startDate = $('#startDate').val();
         var endDate = $('#endDate').val();
+		var tstartDate = $('#tstartDate').val();
+		var tendDate = $('#tendDate').val();
+
+
         var carnum = $('#carnum').val();
         var carrier = $('#carrier').val();
         var receipt = $('#receipt').val();
         var deptId = $('#deptId').val();
         var station = $('#station').val();
-        window.open(prefix+"/export?startDate="+startDate+"&endDate="+endDate
+        window.open(prefix+"/export?startDate="+startDate+"&endDate="+endDate+"&tstartDate="+tstartDate+"&tendDate="+tendDate
             +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt+"&deptId="+deptId+"&station="+station);
 
     }
