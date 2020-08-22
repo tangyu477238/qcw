@@ -1,6 +1,7 @@
 package com.bootdo.gc.service;
 
 import com.bootdo.gc.domain.SijiItemAminvoiceDO;
+import com.bootdo.gc.domain.SijiItemAminvoiceVO;
 import com.bootdo.gc.domain.SijiItemImp1;
 import com.bootdo.gc.domain.SijiItemImp2;
 
@@ -41,7 +42,7 @@ public interface SijiItemAminvoiceService {
 
 	int batchRemove(Long[] ids);
 
-	List<Map> querySijiList(Map<String, Object> map);
+	List<SijiItemAminvoiceVO> querySijiList(Map<String, Object> map);
 
 	int querySijiListCount(Map<String, Object> map);
 

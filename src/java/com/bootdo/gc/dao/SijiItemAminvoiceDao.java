@@ -1,6 +1,7 @@
 package com.bootdo.gc.dao;
 
 import com.bootdo.gc.domain.SijiItemAminvoiceDO;
+import com.bootdo.gc.domain.SijiItemAminvoiceVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public interface SijiItemAminvoiceDao {
 
 
 
-	List<Map> querySijiList(Map<String, Object> map);
+	List<SijiItemAminvoiceVO> querySijiList(Map<String, Object> map);
 
 	int querySijiListCount(Map<String, Object> map);
 

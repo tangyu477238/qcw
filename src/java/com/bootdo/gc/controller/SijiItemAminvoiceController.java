@@ -3,10 +3,7 @@ package com.bootdo.gc.controller;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.utils.*;
 import com.bootdo.gc.dao.SijiItemAminvoiceDao;
-import com.bootdo.gc.domain.SijiDO;
-import com.bootdo.gc.domain.SijiItemAminvoiceDO;
-import com.bootdo.gc.domain.SijiItemImp1;
-import com.bootdo.gc.domain.SijiItemImp2;
+import com.bootdo.gc.domain.*;
 import com.bootdo.gc.service.SijiItemAminvoiceService;
 import com.bootdo.gc.service.SijiItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +99,18 @@ public class SijiItemAminvoiceController extends BaseController {
 
 
 
+	// 导出待结算数据
+	@RequestMapping("/exportDaijiesuan")
+	public void exportDaijiesuan(HttpServletResponse res,
+							   @RequestParam Map<String, Object> params) throws IOException {
 
+		List<SijiItemAminvoiceVO> sijiItemList = sijiItemService.querySijiList(params);
+
+		ExcelUtil.exportExcel(sijiItemList,null,
+				"结算列表",SijiItemAminvoiceVO.class,"结算列表.xls",res);
+
+
+	}
 
 
 
@@ -113,7 +121,7 @@ public class SijiItemAminvoiceController extends BaseController {
 		//查询列表数据
 
 		Query query = new Query(params);
-		List<Map> sijiItemList = sijiItemService.querySijiList(query);
+		List<SijiItemAminvoiceVO> sijiItemList = sijiItemService.querySijiList(query);
 
 		int total = sijiItemService.querySijiListCount(query);
 		PageUtils pageUtils = new PageUtils(sijiItemList, total);

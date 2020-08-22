@@ -249,7 +249,7 @@ public class SijiItemAminvoiceServiceImpl implements SijiItemAminvoiceService {
 	}
 
 	@Override
-	public List<Map> querySijiList(Map<String, Object> map) {
+	public List<SijiItemAminvoiceVO> querySijiList(Map<String, Object> map) {
 
 		return SijiItemAminvoiceDao.querySijiList(map);
 	}

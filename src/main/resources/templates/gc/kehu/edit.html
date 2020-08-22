@@ -525,8 +525,8 @@
             inforfee = 0;
             //$("#inforfee").val(inforfee);
         }
-		var transfee = (settletonnage*transcost)-inforfee; //运费
-		$("#transfee").val(transfee.toFixed(2));
+		var transfee = ((settletonnage*transcost)-inforfee).toFixed(2); //运费
+		$("#transfee").val(transfee);
 
 
 		var fulltrans = $("#fulltrans").val();//运满满

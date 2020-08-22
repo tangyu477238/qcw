@@ -240,7 +240,7 @@
 
 
     <!--待结算数据-->
-	<select  id="querySijiList" resultType="java.util.HashMap" >
+	<select  id="querySijiList" resultType="com.bootdo.gc.domain.SijiItemAminvoiceVO" >
 		<![CDATA[
 
 select * from (
