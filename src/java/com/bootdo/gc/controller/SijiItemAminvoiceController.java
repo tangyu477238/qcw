@@ -1,21 +1,25 @@
 package com.bootdo.gc.controller;
 
 import com.bootdo.common.controller.BaseController;
-import com.bootdo.common.utils.*;
+import com.bootdo.common.utils.ExcelUtil;
+import com.bootdo.common.utils.PageUtils;
+import com.bootdo.common.utils.Query;
+import com.bootdo.common.utils.R;
 import com.bootdo.gc.dao.SijiItemAminvoiceDao;
-import com.bootdo.gc.domain.*;
+import com.bootdo.gc.domain.SijiItemAminvoiceDO;
+import com.bootdo.gc.domain.SijiItemAminvoiceVO;
+import com.bootdo.gc.domain.SijiItemAminvoiceVO1;
 import com.bootdo.gc.service.SijiItemAminvoiceService;
-import com.bootdo.gc.service.SijiItemService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -97,6 +101,43 @@ public class SijiItemAminvoiceController extends BaseController {
 	}
 
 
+	//获取已交单数据清单
+	@ResponseBody
+	@GetMapping("/getBilldateList")
+	public PageUtils getBilldateList(@RequestParam Map<String, Object> params){
+		//查询列表数据
+
+		Query query = new Query(params);
+		List<SijiItemAminvoiceDO> sijiItemList = sijiItemService.getBilldateList(params);
+
+		int total = 1;
+		PageUtils pageUtils = new PageUtils(sijiItemList, total);
+		return pageUtils;
+	}
+
+
+	// 导出交单明细表
+	@RequestMapping("/exportBill")
+	public void exportBill(HttpServletResponse res,
+								 @RequestParam Map<String, Object> params) throws IOException {
+
+		List<SijiItemAminvoiceDO> sijiItemList = sijiItemService.getBilldateList(params);
+		List<SijiItemAminvoiceVO1> list = new ArrayList();
+		for (SijiItemAminvoiceDO sijiItemAminvoiceDO : sijiItemList){
+			SijiItemAminvoiceVO1 sijiItemAminvoiceVO1 = new SijiItemAminvoiceVO1();
+			BeanUtils.copyProperties(sijiItemAminvoiceDO,sijiItemAminvoiceVO1);
+			list.add(sijiItemAminvoiceVO1);
+		}
+
+		ExcelUtil.exportExcel(list,null,
+				"交单明细表",SijiItemAminvoiceVO1.class,"交单明细表.xls",res);
+
+
+	}
+
+
+
+
 
 
 	// 导出待结算数据
@@ -130,20 +171,6 @@ public class SijiItemAminvoiceController extends BaseController {
 
 
 
-
-	//获取已交单数据清单
-	@ResponseBody
-	@GetMapping("/getBilldateList")
-	public PageUtils getBilldateList(@RequestParam Map<String, Object> params){
-		//查询列表数据
-
-		Query query = new Query(params);
-		List<SijiItemAminvoiceDO> sijiItemList = sijiItemService.getBilldateList(params);
-
-		int total = 1;
-		PageUtils pageUtils = new PageUtils(sijiItemList, total);
-		return pageUtils;
-	}
 
 
 	/**
