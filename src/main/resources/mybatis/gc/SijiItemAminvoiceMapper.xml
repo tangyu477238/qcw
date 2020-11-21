@@ -287,7 +287,7 @@ select * from (
 
 		    si.shuilv,
 		    si.shuie,
-			s.order_no as orderNo,IFNULL(i.yue,si.takeamount)  as syue
+			s.order_no as orderNo,IFNULL(i.yue,IFNULL(si.takeamount,-1))  as syue
 
 		FROM
 			gc_siji s
