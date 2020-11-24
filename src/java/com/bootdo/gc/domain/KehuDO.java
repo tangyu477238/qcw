@@ -27,6 +27,8 @@ public class KehuDO implements Serializable {
 	//日期
 	@Excel(name = "日期", orderNum = "2",isImportField = "bizdate")
 	private String bizdate;
+	@Excel(name = "付款单位", orderNum = "2",isImportField = "payer")
+	private String payer;
 
 	//车号
 	@Excel(name = "车号", orderNum = "3",isImportField = "carnum")
