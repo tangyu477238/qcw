@@ -58,7 +58,7 @@ public class KehuServiceImpl implements KehuService {
 		kehuDO.setForwunit(sijiDO.getForwunit());
 		kehuDO.setStation(sijiDO.getArrivstation());
 		kehuDO.setKpid(sijiDO.getPid());
-
+		kehuDO.setPayer(sijiDO.getInforfee());
 		Map map = new HashMap();
 		map.put("pid",sijiDO.getPid());
 		kehuDO.setTonnage(new BigDecimal(0));

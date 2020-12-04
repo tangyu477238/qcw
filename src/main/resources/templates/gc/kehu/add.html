@@ -16,6 +16,12 @@
 									<input id="orderNo" name="orderNo" class="form-control"
 										   type="text" onblur="getOrder(this.value)" required="required"/>
 								</div>
+
+
+								<label class="col-sm-2 control-label">付款单位：</label>
+								<div class="col-sm-3">
+									<input id="payer" name="payer" class="form-control" type="text"  readonly="readonly" required="required"/>
+								</div>
 						</div>
 
 
@@ -397,7 +403,7 @@
                 $("#carnum").val(r.carnum);
                 $("#bizdate").val(r.bizdate);
                 $("#station").val(r.station);
-
+				$("#payer").val(r.payer);
                 $("#tonnage").val(r.tonnage);//吨位
                 $("#settletonnage").val(r.settletonnage);//结算吨位
                 //$("#adjusttonnage").val(r.adjusttonnage);//调整吨位

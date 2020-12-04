@@ -8,7 +8,7 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-		       ,`remark` ,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate
+		       ,`remark` ,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate,payer
 
 		from gc_kehu where id = #{value}
 	</select>
@@ -18,41 +18,41 @@
 		       `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 		       `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`,`remark`
-		,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate
+		,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate,payer
 		from gc_kehu
         <where>  
 
 
-		  		  <if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
-			      <if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
+		  	<if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
+		  	<if test="endDate != null and endDate != ''"> and bizdate &lt;= #{endDate} </if>
 
-		  		  <if test="carnum != null and carnum != ''">
-					  <![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
-				  </if>
+		 	 <if test="carnum != null and carnum != ''">
+			  <![CDATA[ and carnum like CONCAT('%',#{carnum},'%') ]]>
+		  	</if>
 
-		  		  <if test="station != null and station != ''">
-					  <![CDATA[ and station like CONCAT('%',#{station},'%') ]]>
-				  </if>
-
-
-				  <if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
-				  <if test="receipt == '有或预有'"> and receipt in('有','预有') </if>
+		  	<if test="station != null and station != ''">
+			  <![CDATA[ and station like CONCAT('%',#{station},'%') ]]>
+		  	</if>
 
 
+			<if test='receipt == "有"'>and receipt in('有')</if>
+			<if test='receipt == "预有"'>and receipt in('预有')</if>
+			<if test='receipt == "有或预有"'>and receipt in('有','预有')</if>
+			<if test='receipt == "无"'>and (receipt is null or receipt = '') </if>
 
-				<if test="tstartDate != null and tstartDate != ''"> and receiptdate &gt;= #{tstartDate} </if>
-				<if test="tendDate != null and tendDate != ''"> and receiptdate &lt;= #{tendDate} </if>
-
-
-
-			  	<if test="carrier != null and carrier != ''">
-				  	<![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
-			  	</if>
-
-				<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+			<if test="tstartDate != null and tstartDate != ''"> and receiptdate &gt;= #{tstartDate} </if>
+			<if test="tendDate != null and tendDate != ''"> and receiptdate &lt;= #{tendDate} </if>
 
 
-		  		</where>
+
+			<if test="carrier != null and carrier != ''">
+				<![CDATA[ and carrier like CONCAT('%',#{carrier},'%') ]]>
+			</if>
+
+			<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
+
+
+		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -83,8 +83,10 @@
 			</if>
 
 
-			<if test="receipt != null and receipt != '' and receipt != '有或预有'"> and receipt = #{receipt} </if>
-			<if test="receipt == '有或预有'"> and receipt in('有','预有') </if>
+			<if test='receipt == "有"'>and receipt in('有')</if>
+			<if test='receipt == "预有"'>and receipt in('预有')</if>
+			<if test='receipt == "有或预有"'>and receipt in('有','预有')</if>
+			<if test='receipt == "无"'>and (receipt is null or receipt = '') </if>
 
 
 
@@ -134,7 +136,7 @@
 			`remark`,
 		 	 order_no,pay_type,kpid,
 		 	 dept_id,updated_name,
-		 	 shoushufei,shoushufeidate
+		 	 shoushufei,shoushufeidate,payer
 		)
 		values
 		(
@@ -168,7 +170,7 @@
 		 	#{kpid},
 			#{deptId},
 			#{updatedName},
-		 	#{shoushufei},#{shoushufeidate}
+		 	#{shoushufei},#{shoushufeidate},#{payer}
 		)
 	</insert>
 	 
@@ -210,6 +212,7 @@
 			`shoushufeidate` = #{shoushufeidate}, 
 
 			<if test="remark != null">`remark` = #{remark},</if>
+			<if test="payer != null">`payer` = #{payer},</if>
 			<if test="bizdate != null">`bizdate` = #{bizdate} </if>
 		</set>
 		where id = #{id}
@@ -234,7 +237,7 @@
 			   `adjusttonnage`,`transcost`,`inforfee`,`colmethod`,`transfee`,`riskcues`,
 			   `fulltrans`,`fulpaydate`,`bankcard`,`bankpaydate`,`bankcardtwo`,`bankpaytwodate`,
 			   `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`
-				,`remark` ,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate
+				,`remark` ,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate,payer
 
 		from gc_kehu
 		where order_no = #{orderNo}
