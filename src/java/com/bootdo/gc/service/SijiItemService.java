@@ -46,6 +46,7 @@ public interface SijiItemService {
 	void importExcel2(List<SijiItemImp2> imp2s);
 
 	void updatePiliang(Map<String, Object> map);
+	void updatePiliangSteel(Map<String, Object> map);
 
 	Map<String, Object> editPiliang(String ids);
 

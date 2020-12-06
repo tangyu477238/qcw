@@ -145,6 +145,9 @@
                                 批量对账
                             </button>
 
+							<button  shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary" onclick="piliangSteelPage()">
+								批量修改钢号规格
+							</button>
 
 
 
@@ -309,12 +312,31 @@
                 area : [ '800px', '520px' ],
                 content : prefix + '/editPiliang/' + ids // iframe的url
             });
-
-
-
-
         }
 
+		function piliangSteelPage() {
+			var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+			if (rows.length == 0) {
+				layer.msg("请选择要修改的数据");
+				return;
+			}
+
+			var ids ='' ;
+
+			// 遍历所有选择的行数据，取每条数据对应的ID
+			$.each(rows, function(i, row) {
+				ids =ids + row['id']+',';
+			});
+
+			layer.open({
+				type : 2,
+				title : '编辑',
+				maxmin : true,
+				shadeClose : false, // 点击遮罩关闭层
+				area : [ '800px', '520px' ],
+				content : prefix + '/piliangSteelPage/' + ids // iframe的url
+			});
+		}
 
 
 
@@ -387,7 +409,7 @@
                         singleSelect : false, // 设置为true将禁止多选
                         // contentType : "application/x-www-form-urlencoded",
                         // //发送到服务器的数据编码类型
-                        pageSize : 100, // 如果设置了分页，每页数据条数
+                        pageSize : 200, // 如果设置了分页，每页数据条数
                         pageNumber : 1, // 如果设置了分布，首页页码
 
                         showColumns : false, // 是否显示内容下拉框（选择显示的列）

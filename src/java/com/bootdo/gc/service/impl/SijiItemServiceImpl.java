@@ -3,11 +3,13 @@ package com.bootdo.gc.service.impl;
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.gc.dao.KehuDao;
 import com.bootdo.gc.dao.SijiDao;
+import com.bootdo.gc.dao.SijiItemDao;
 import com.bootdo.gc.domain.*;
 import com.bootdo.gc.service.SijiItemAminvoiceService;
+import com.bootdo.gc.service.SijiItemService;
 import com.bootdo.gc.service.SijiService;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTimeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.bootdo.gc.dao.SijiItemDao;
-import com.bootdo.gc.service.SijiItemService;
 
 
 @Slf4j
@@ -375,6 +374,25 @@ public class SijiItemServiceImpl implements SijiItemService {
 
 
 	}
+
+
+	@Override
+	public void updatePiliangSteel(Map<String, Object> map) {
+		String ids [] = (String[]) map.get("array");
+		for (String id : ids){
+			SijiItemDO sijiItemDO =  sijiItemDao.get(new Long(id));
+			if (StringUtils.isNotBlank(map.get("steelnum").toString())){
+				sijiItemDO.setSteelnum(map.get("steelnum").toString());
+			}
+			if (StringUtils.isNotBlank(map.get("specs").toString())){
+				sijiItemDO.setSpecs(map.get("specs").toString());
+			}
+			sijiItemDao.update(sijiItemDO);
+		}
+	}
+
+
+
 
 	@Override
 	public Map<String, Object>  editPiliang(String idstr) {

@@ -80,7 +80,7 @@ public class SijiItemController extends BaseController {
 
 
 
-	//发货明细表
+	//对账明细表
 	@ResponseBody
 	@GetMapping("/list")
 	public PageUtils querySijiList(@RequestParam Map<String, Object> params){
@@ -96,7 +96,7 @@ public class SijiItemController extends BaseController {
 
 
 	/**
-	 * 发货明细表 ---->跳转编辑
+	 * 对账明细表 ---->跳转编辑
 	 * @param id
 	 * @param model
 	 * @return
@@ -111,7 +111,7 @@ public class SijiItemController extends BaseController {
 
 
 	/**
-	 * 发货明细表 ---->跳转批量对账
+	 * 对账明细表 ---->跳转批量对账
 	 * @param ids
 	 * @param model
 	 * @return
@@ -149,6 +149,43 @@ public class SijiItemController extends BaseController {
     }
 
 
+
+
+	/**
+	 * 对账明细表 ---->跳转批量修改规格钢号
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/piliangSteelPage/{ids}")
+	String piliangSteelPage(@PathVariable("ids") String ids,Model model){
+		model.addAttribute("ids", ids);
+
+		Map<String, Object> params = sijiItemService.editPiliang(ids);
+		model.addAttribute("dunwei", params.get("dunwei"));
+		model.addAttribute("amount", params.get("amount"));
+		model.addAttribute("minId", params.get("minId"));
+
+
+
+		return "gc/siji/editPiliangSteel";
+	}
+
+	/**
+	 * 批量修改规格,钢号-->跳转保存
+	 */
+	@ResponseBody
+	@RequestMapping("/updatePiliangSteel")
+	public R updatePiliangSteel(@RequestParam Map<String, Object> params){
+
+		String id = params.get("ids").toString();
+		String ids [] = id.split(",");
+		params.put("array", ids);
+
+		sijiItemService.updatePiliangSteel(params);
+
+		return R.ok();
+	}
 
 
 
