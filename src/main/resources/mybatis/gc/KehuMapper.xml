@@ -38,7 +38,7 @@
 			<if test='receipt == "有"'>and receipt in('有')</if>
 			<if test='receipt == "预有"'>and receipt in('预有')</if>
 			<if test='receipt == "有或预有"'>and receipt in('有','预有')</if>
-			<if test='receipt == "无"'>and (receipt is null or receipt = '') </if>
+			<if test='receipt == "无"'>and (receipt is null or receipt = '' or receipt = '无') </if>
 
 			<if test="tstartDate != null and tstartDate != ''"> and receiptdate &gt;= #{tstartDate} </if>
 			<if test="tendDate != null and tendDate != ''"> and receiptdate &lt;= #{tendDate} </if>
@@ -86,7 +86,7 @@
 			<if test='receipt == "有"'>and receipt in('有')</if>
 			<if test='receipt == "预有"'>and receipt in('预有')</if>
 			<if test='receipt == "有或预有"'>and receipt in('有','预有')</if>
-			<if test='receipt == "无"'>and (receipt is null or receipt = '') </if>
+			<if test='receipt == "无"'>and (receipt is null or receipt = '' or receipt = '无') </if>
 
 
 
