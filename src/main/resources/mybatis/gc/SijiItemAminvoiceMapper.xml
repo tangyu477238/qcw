@@ -314,7 +314,9 @@ select * from (
 			<if test="arrivstation != null and arrivstation != ''">
 				<![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
 			</if>
-
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
 			<if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
 
@@ -362,7 +364,9 @@ select * from (
             <if test="arrivstation != null and arrivstation != ''">
                 <![CDATA[ and s.arrivstation like CONCAT('%',#{arrivstation},'%') ]]>
             </if>
-
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
             <if test="deptId != null and deptId != ''"> and s.dept_id = #{deptId} </if>
 
 		</where>
