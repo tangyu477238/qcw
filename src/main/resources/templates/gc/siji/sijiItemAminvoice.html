@@ -121,8 +121,16 @@
 						</div>
 					</div>
 
+					<div class="col-md-2">
+						<div class="form-group">
 
-					<div class="col-md-6">
+							<input id="carnum" name="carnum" type="text" class="form-control" size="10"
+								   placeholder="车牌号">
+
+						</div>
+					</div>
+
+					<div class="col-md-4">
 						<div class="form-group">
 							<button type="button" onclick="reLoad()" class="btn btn-primary">查询</button>
 							<button  type="button" class="btn  btn-primary" onclick="excel()">导出</button>
@@ -326,8 +334,10 @@
             var issueoffice = $('#issueoffice').val();
             var inforfee = $('#inforfee').val();
             var arrivstation = $('#arrivstation').val();
+
+			var carnum = $('#carnum').val();
             window.open(prefix +"/exportDaijiesuan?startDate="+startDate+"&endDate="+endDate+"&tstartDate="+tstartDate+"&tendDate="+tendDate
-                +"&issueoffice="+issueoffice+"&inforfee="+inforfee+"&arrivstation="+arrivstation+"&deptId="+deptId);
+                +"&issueoffice="+issueoffice+"&inforfee="+inforfee+"&arrivstation="+arrivstation+"&deptId="+deptId+"&carnum="+carnum);
 
         }
 
@@ -435,8 +445,8 @@
                                 issueoffice:$('#issueoffice').val(),
                                 inforfee:$('#inforfee').val(),
                                 arrivstation:$('#arrivstation').val(),
-                                deptId:$('#deptId').val()
-
+                                deptId:$('#deptId').val(),
+								carnum:$('#carnum').val()
                                 // name:$('#searchName').val(),
                                 // username:$('#searchName').val()
                             };
