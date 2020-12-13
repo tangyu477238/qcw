@@ -42,7 +42,7 @@ public class SijiItemAminvoiceController extends BaseController {
 	private SijiItemAminvoiceDao sijiItemAminvoiceDao;
 
 
-	//跳转待收款明细表
+	//跳转待收款明细表(结算)
 	@GetMapping()
 	String sijiItemAminvoice(Long deptId,Model model){
 		model.addAttribute("createuser", getUserId());
