@@ -251,13 +251,14 @@
 
 		select LEFT(#{startDate},7) as bizMonth,
 			sum(acbalance) as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
-			sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+			sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,sum(qita) as qita,
 			sum(qichu) as qichu,sum(shoushufei) as shoushufei
 		from (
 
 				 -- 当天回款金额(transfee)
 				 select
-					 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,0 as shoushufei
+					 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qita,
+					 0 as qichu,0 as shoushufei
 				 from gc_kehu
 				 where receipt in ('预有','有')
 
@@ -268,7 +269,8 @@
 
 				   -- 当天手续费金额(shoushufei)
 					 select
-					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,sum(shoushufei) as shoushufei
+					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qita,
+					 0 as qichu,sum(shoushufei) as shoushufei
 				 from gc_kehu
 				 where 1=1
 				 and bizdate >= #{startDate}
@@ -278,7 +280,7 @@
 
 				 select
 					 0 as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
-					 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+					 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,sum(qita) as qita,
 					 0 as qichu,0 as shoushufei
 				 from (
 						  -- 第一次付款金额
@@ -290,6 +292,7 @@
 							  sum(case when pay_type = '百通石油' then fulltrans else 0 end) as shiyou,
 							  sum(case when pay_type = '百通石化' then fulltrans else 0 end) as shihua,
 							  sum(case when pay_type = '百通京博' then fulltrans else 0 end) as jingbo,
+							  sum(case when pay_type = '其他' then fulltrans else 0 end) as qita,
 							  0 as qichu
 						  from gc_kehu
 						  where receipt in ('预有','有')
@@ -309,6 +312,7 @@
 							  sum(case when forwunit = '百通石油' then bankcard else 0 end) as shiyou,
 							  sum(case when forwunit = '百通石化' then bankcard else 0 end) as shihua,
 							  sum(case when forwunit = '百通京博' then bankcard else 0 end) as jingbo,
+							  sum(case when forwunit = '其他' then bankcard else 0 end) as qita,
 							  0 as qichu
 						  from gc_kehu
 						  where receipt in ('预有','有')
@@ -324,7 +328,7 @@
 
 					 -- 期初余额（等于当月的所有余额累计）
 				 select
-					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,
+					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qita,
 					 (transfee - fulltrans - bankcard) as qichu,0 as shoushufei
 				 from (
 						  select
@@ -361,13 +365,14 @@
 
 			select
 				sum(acbalance) as acbalance,sum(shoushufei) as shoushufei,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
-				sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+				sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,sum(qita) as qita,
 				sum(qichu) as qichu
 			from (
 
 					 -- 当天回款金额(transfee)
 					 select
-						 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,0 as shoushufei
+						 sum(transfee) as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qita,
+						 0 as qichu,0 as shoushufei
 					 from gc_kehu
 					 where receipt in ('预有','有')
 					  and receiptdate = #{endDate} and dept_id = #{deptId}
@@ -376,7 +381,8 @@
 
 					  -- 当天手续费金额(shoushufei)
 					 select
-						 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qichu,sum(shoushufei) as shoushufei
+						 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qita,
+						 0 as qichu,sum(shoushufei) as shoushufei
 					 from gc_kehu
 					 where receipt in ('预有','有')
 					   and shoushufeidate = #{endDate} and dept_id = #{deptId}
@@ -385,7 +391,7 @@
 
 					 select
 						 0 as acbalance,sum(fulltrans) as fulltrans,sum(bankcard) as bankcard,
-						 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,
+						 sum(xianjin) as xianjin,sum(shiyou) as shiyou,sum(shihua) as shihua,sum(jingbo) as jingbo,sum(qita) as qita,
 						 0 as qichu,0 as shoushufei
 					 from (
 							  -- 第一次付款金额
@@ -397,6 +403,7 @@
 								  sum(case when pay_type = '百通石油' then fulltrans else 0 end) as shiyou,
 								  sum(case when pay_type = '百通石化' then fulltrans else 0 end) as shihua,
 								  sum(case when pay_type = '百通京博' then fulltrans else 0 end) as jingbo,
+								  sum(case when pay_type = '其他' then fulltrans else 0 end) as qita,
 								  0 as qichu
 							  from gc_kehu
 							  where receipt in ('预有','有')
@@ -414,6 +421,7 @@
 								  sum(case when forwunit = '百通石油' then bankcard else 0 end) as shiyou,
 								  sum(case when forwunit = '百通石化' then bankcard else 0 end) as shihua,
 								  sum(case when forwunit = '百通京博' then bankcard else 0 end) as jingbo,
+								  sum(case when forwunit = '其他' then bankcard else 0 end) as qita,
 								  0 as qichu
 							  from gc_kehu
 							  where receipt in ('预有','有')
@@ -428,7 +436,7 @@
 					  -- 期初余额（等于当月的所有余额累计）
 
 					 select
-					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,
+					 0 as acbalance,0 as fulltrans,0 as bankcard,0 as xianjin,0 as shiyou,0 as shihua,0 as jingbo,0 as qita,
 					 (transfee - fulltrans - bankcard-shoushufei) as qichu,0 as shoushufei
 					 from (
 						 select

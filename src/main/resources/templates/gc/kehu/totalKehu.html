@@ -74,6 +74,7 @@
 						<th style="text-align: center"> 百通石油</th>
 						<th style="text-align: center"> 百通石化</th>
 						<th style="text-align: center"> 百通京博</th>
+						<th style="text-align: center"> 其他</th>
 						<th style="text-align: center"> 手续费</th>
 						<th style="text-align: center"> 差额 </th>
 					</tr>
@@ -88,17 +89,16 @@
 
 						<th style="text-align: center"></th>
 						<th style="text-align: center" > 合计:</th>
-						<th style="text-align: center" id="bizMonth0"></th>
-						<th style="text-align: center" id="bizMonth1"></th>
-						<th style="text-align: center" id="bizMonth2"></th>
-						<th style="text-align: center" id="bizMonth3"></th>
-						<th style="text-align: center" id="bizMonth4"></th>
-						<th style="text-align: center" id="bizMonth5"></th>
-
-						<th style="text-align: center" id="bizMonth6"></th>
-						<th style="text-align: center" id="bizMonth7"></th>
-						<th style="text-align: center" id="bizMonth8"></th>
-
+						<th style="text-align: center" id="total0"></th>
+						<th style="text-align: center" id="total1"></th>
+						<th style="text-align: center" id="total2"></th>
+						<th style="text-align: center" id="total3"></th>
+						<th style="text-align: center" id="total4"></th>
+						<th style="text-align: center" id="total5"></th>
+						<th style="text-align: center" id="total6"></th>
+						<th style="text-align: center" id="total7"></th>
+						<th style="text-align: center" id="total8"></th>
+						<th style="text-align: center" id="total9"></th>
 
 					</tr>
 					</thead>
@@ -208,9 +208,9 @@
             success : function(list) {
                 $("#tdata").html("");
 
-                var bizMonth0 = 0;var bizMonth1 = 0;var bizMonth2 = 0;
-                var bizMonth3 = 0;var bizMonth4 = 0;var bizMonth5 = 0;
-                var bizMonth6 = 0;var bizMonth7 = 0; //var bizMonth8 = 0;
+                var total0 = 0;var total1 = 0;var total2 = 0;
+                var total3 = 0;var total4 = 0;var total5 = 0;
+                var total6 = 0;var total7 = 0;var total8 = 0;
 
                 for(var i = 0;i < list.length;i++){
                     var siItem = list[i];
@@ -226,41 +226,44 @@
                     td = td.replace('[shihua]',siItem.shihua.toFixed(2));
 
                     td = td.replace('[jingbo]',siItem.jingbo.toFixed(2));
+					td = td.replace('[qita]',siItem.qita.toFixed(2));
+
                     td = td.replace('[shoushufei]',siItem.shoushufei.toFixed(2));
-                    var total =  siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo - siItem.shoushufei;
+                    var total =  siItem.acbalance - siItem.fulltrans - siItem.bankcard - siItem.xianjin - siItem.shiyou - siItem.shihua - siItem.jingbo - siItem.qita - siItem.shoushufei;
                     td = td.replace('[total]',total.toFixed(2));
                     $("#tdata").append(td);
 
 
-                    bizMonth0 = bizMonth0 + siItem.acbalance;
-                    bizMonth1 = bizMonth1 + siItem.fulltrans;
-                    bizMonth2 = bizMonth2 + siItem.bankcard;
+					total0 = total0 + siItem.acbalance;
+					total1 = total1 + siItem.fulltrans;
+					total2 = total2 + siItem.bankcard;
 
-                    bizMonth3 = bizMonth3 + siItem.xianjin;
-                    bizMonth4 = bizMonth4 + siItem.shiyou;
-                    bizMonth5 = bizMonth5 + siItem.shihua;
+					total3 = total3 + siItem.xianjin;
+					total4 = total4 + siItem.shiyou;
+					total5 = total5 + siItem.shihua;
 
-                    bizMonth6 = bizMonth6 + siItem.jingbo;
-                    bizMonth7 = bizMonth7 + siItem.shoushufei;
+					total6 = total6 + siItem.jingbo;
+					total7 = total7 + siItem.qita;
+					total8 = total8 + siItem.shoushufei;
 
 
                 }
 
-                var bizMonth8 = bizMonth0 - bizMonth1 - bizMonth2 - bizMonth3
-					- bizMonth4 - bizMonth5 - bizMonth6 - bizMonth7 ;
+                var total9 = total0 - total1 - total2 - total3
+					- total4 - total5 - total6 - total7 -total8 ;
 
-                $("#bizMonth0").text(bizMonth0.toFixed(2));
-                $("#bizMonth1").text(bizMonth1.toFixed(2));
-                $("#bizMonth2").text(bizMonth2.toFixed(2));
+                $("#total0").text(total0.toFixed(2));
+                $("#total1").text(total1.toFixed(2));
+                $("#total2").text(total2.toFixed(2));
 
-                $("#bizMonth3").text(bizMonth3.toFixed(2));
-                $("#bizMonth4").text(bizMonth4.toFixed(2));
-                $("#bizMonth5").text(bizMonth5.toFixed(2));
+                $("#total3").text(total3.toFixed(2));
+                $("#total4").text(total4.toFixed(2));
+                $("#total5").text(total5.toFixed(2));
 
-                $("#bizMonth6").text(bizMonth6.toFixed(2));
-                $("#bizMonth7").text(bizMonth7.toFixed(2));
-                $("#bizMonth8").text(bizMonth8.toFixed(2));
-
+                $("#total6").text(total6.toFixed(2));
+                $("#total7").text(total7.toFixed(2));
+                $("#total8").text(total8.toFixed(2));
+				$("#total9").text(total9.toFixed(2));
 
             }
         });
@@ -286,6 +289,7 @@
         '<td style="text-align: center">' + '[shiyou]' + '</td>' +
         '<td style="text-align: center">' + '[shihua]' + '</td>' +
         '<td style="text-align: center">' + '[jingbo]' + '</td>' +
+		'<td style="text-align: center">' + '[qita]' + '</td>' +
         '<td style="text-align: center">' + '[shoushufei]' + '</td>' +
         '<td style="text-align: center">' + '[total]' + '</td>' +
         '</tr>';
