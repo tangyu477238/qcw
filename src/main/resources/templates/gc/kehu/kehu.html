@@ -120,7 +120,12 @@
 						</div>
 					</div>
 
-
+					<div class="col-md-2">
+						<div class="form-group">
+							<input type="text" class="form-control" name="payer" size="10"
+								   id="payer" placeholder="付款单位">
+						</div>
+					</div>
 
 				</div>
 
@@ -275,7 +280,9 @@
                             carnum:$('#carnum').val(),
                             carrier:$('#carrier').val(),
                             receipt:$('#receipt').val(),
-                            deptId:$('#deptId').val()
+                            deptId:$('#deptId').val(),
+							payer:$('#payer').val()
+
                             // username:$('#searchName').val()
                         };
                     },onLoadSuccess:function () {
@@ -669,8 +676,11 @@
         var receipt = $('#receipt').val();
         var deptId = $('#deptId').val();
         var station = $('#station').val();
+
+		var payer = $('#payer').val();
+
         window.open(prefix+"/export?startDate="+startDate+"&endDate="+endDate+"&tstartDate="+tstartDate+"&tendDate="+tendDate
-            +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt+"&deptId="+deptId+"&station="+station);
+            +"&carnum="+carnum+"&carrier="+carrier+"&receipt="+receipt+"&deptId="+deptId+"&station="+station+"&payer="+payer);
 
     }
 

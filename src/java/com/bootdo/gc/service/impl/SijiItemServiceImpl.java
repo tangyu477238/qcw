@@ -391,6 +391,18 @@ public class SijiItemServiceImpl implements SijiItemService {
 		}
 	}
 
+	@Override
+	public void updatePiliangMemo(Map<String, Object> map) {
+		String ids [] = (String[]) map.get("array");
+		for (String id : ids){
+			SijiItemDO sijiItemDO =  sijiItemDao.get(new Long(id));
+			if (StringUtils.isNotBlank(map.get("memo").toString())){
+				sijiItemDO.setRemark(map.get("memo").toString());
+			}
+			sijiItemDao.update(sijiItemDO);
+		}
+	}
+
 
 
 

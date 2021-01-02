@@ -109,7 +109,7 @@ public class SijiServiceImpl  implements SijiService {
 
 		kehuDO.setBizdate(siji.getBizdate());
 		kehuDO.setCarnum(siji.getCarnum());
-//		kehuDO.setForwunit(siji.getForwunit());
+		kehuDO.setPayer(siji.getInforfee());
 		kehuDO.setStation(siji.getArrivstation());
 
 		Map map = new HashMap();

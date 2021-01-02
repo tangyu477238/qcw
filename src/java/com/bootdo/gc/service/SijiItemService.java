@@ -47,6 +47,9 @@ public interface SijiItemService {
 
 	void updatePiliang(Map<String, Object> map);
 	void updatePiliangSteel(Map<String, Object> map);
+	void updatePiliangMemo(Map<String, Object> map);
+
+
 
 	Map<String, Object> editPiliang(String ids);
 

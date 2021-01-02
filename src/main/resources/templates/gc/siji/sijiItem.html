@@ -148,7 +148,9 @@
 							<button  shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary" onclick="piliangSteelPage()">
 								批量修改钢号规格
 							</button>
-
+							<button  shiro:hasPermission="biz:kehu:pms" type="button" class="btn btn-primary" onclick="piliangMemoPage()">
+								批量修改备注
+							</button>
 
 
 						</div>
@@ -338,6 +340,30 @@
 			});
 		}
 
+
+		function piliangMemoPage() {
+			var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+			if (rows.length == 0) {
+				layer.msg("请选择要修改的数据");
+				return;
+			}
+
+			var ids ='' ;
+
+			// 遍历所有选择的行数据，取每条数据对应的ID
+			$.each(rows, function(i, row) {
+				ids =ids + row['id']+',';
+			});
+
+			layer.open({
+				type : 2,
+				title : '编辑',
+				maxmin : true,
+				shadeClose : false, // 点击遮罩关闭层
+				area : [ '800px', '520px' ],
+				content : prefix + '/piliangMemoPage/' + ids // iframe的url
+			});
+		}
 
 
         function excel() {

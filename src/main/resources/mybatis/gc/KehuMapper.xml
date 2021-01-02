@@ -20,7 +20,7 @@
 		       `fultranstwo`,`fulpaytwodate`,`acbalance`,`receipt`,`receiptdate`,`carrier`,`remark`
 		,order_no,pay_type,kpid,dept_id,updated_name,shoushufei,shoushufeidate,payer
 		from gc_kehu
-        <where>  
+        <where>
 
 
 		  	<if test="startDate != null and startDate != ''"> and bizdate &gt;= #{startDate} </if>
@@ -33,7 +33,9 @@
 		  	<if test="station != null and station != ''">
 			  <![CDATA[ and station like CONCAT('%',#{station},'%') ]]>
 		  	</if>
-
+			<if test="payer != null and payer != ''">
+				<![CDATA[ and payer like CONCAT('%',#{payer},'%') ]]>
+			</if>
 
 			<if test='receipt == "有"'>and receipt in('有')</if>
 			<if test='receipt == "预有"'>and receipt in('预有')</if>
@@ -82,6 +84,9 @@
 				<![CDATA[ and station like CONCAT('%',#{station},'%') ]]>
 			</if>
 
+			<if test="payer != null and payer != ''">
+				<![CDATA[ and payer like CONCAT('%',#{payer},'%') ]]>
+			</if>
 
 			<if test='receipt == "有"'>and receipt in('有')</if>
 			<if test='receipt == "预有"'>and receipt in('预有')</if>

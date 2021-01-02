@@ -171,6 +171,9 @@ public class SijiItemController extends BaseController {
 		return "gc/siji/editPiliangSteel";
 	}
 
+
+
+
 	/**
 	 * 批量修改规格,钢号-->跳转保存
 	 */
@@ -188,6 +191,47 @@ public class SijiItemController extends BaseController {
 	}
 
 
+
+
+
+	/**
+	 * 对账明细表 ---->跳转批量修改备注
+	 * @param ids
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/piliangMemoPage/{ids}")
+	String piliangMemoPage(@PathVariable("ids") String ids,Model model){
+		model.addAttribute("ids", ids);
+
+		Map<String, Object> params = sijiItemService.editPiliang(ids);
+		model.addAttribute("dunwei", params.get("dunwei"));
+		model.addAttribute("amount", params.get("amount"));
+		model.addAttribute("minId", params.get("minId"));
+
+
+
+		return "gc/siji/editPiliangMemo";
+	}
+
+
+
+
+	/**
+	 * 批量修改备注-->跳转保存
+	 */
+	@ResponseBody
+	@RequestMapping("/updatePiliangMemo")
+	public R updatePiliangMemo(@RequestParam Map<String, Object> params){
+
+		String id = params.get("ids").toString();
+		String ids [] = id.split(",");
+		params.put("array", ids);
+
+		sijiItemService.updatePiliangMemo(params);
+
+		return R.ok();
+	}
 
 
 	/**

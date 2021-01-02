@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="gc/include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="ids" name="ids" th:value="${ids}"  type="hidden">
+							<input id="minId" name="minId" th:value="${minId}"  type="hidden">
+
+
+<!--							<div class="form-group">-->
+
+
+<!--								<label class="col-sm-2 control-label">总吨位：</label>-->
+<!--								<div class="col-sm-3">-->
+<!--									<input id="dunwei"  name="dunwei" th:value="${dunwei}"  class="form-control" type="text" readonly="readonly">-->
+<!--								</div>-->
+
+<!--								<label class="col-sm-2 control-label">总金额：</label>-->
+<!--								<div class="col-sm-3">-->
+<!--									<input id="amount"  name="amount" th:value="${amount}"  class="form-control" type="text" readonly="readonly">-->
+<!--								</div>-->
+
+
+<!--							</div>-->
+
+
+
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-3">
+									<input id="memo"  name="memo"  class="form-control" type="text" >
+								</div>
+
+
+
+
+							</div>
+
+							<div class="form-group">
+
+
+								<label class="col-sm-12 text-sm-left">温馨提示： 提交后会修改选中的所有订单备注。</label>
+
+							</div>
+
+
+
+							<div class="form-group">
+								<div class="col-sm-12 col-sm-offset-3">
+									<button type="button" class="btn btn-primary" onclick="update()">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+
+
+
+
+
+
+
+<div th:include="gc/include::footer"></div>
+
+
+
+<script type="text/javascript">
+
+    $().ready(function() {
+
+    });
+
+
+
+
+    function update() {
+        var ids = $("#ids").val();
+        var memo = $("#memo").val();
+
+        var minId = $("#minId").val();
+
+        if (memo=='') {
+            parent.layer.msg("不能为空");
+            return ;
+        }
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/gc/sijiItem/updatePiliangMemo",
+            data : {
+                'ids' : ids,
+                'memo' : memo,
+                'minId' : minId
+            },
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                    parent.layer.msg("操作成功");
+                    parent.reLoad();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+    function setAminvoice() {
+
+        var amount = $("#amount").val(); //金额
+        var kouling = $("#kouling").val(); //扣零
+		var jsamount = (amount-kouling).toFixed(2);
+
+        if (jsamount<0){
+            $("#kouling").val(0);
+            parent.layer.msg("扣零不能超过总金额！");
+            return ;
+        }
+        $("#jsamout").val(jsamount); //结算金额
+
+    }
+
+
+
+
+
+    //获取当前时间，格式YYYY-MM-DD
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+
+
+
+</script>
+</body>
+</html>
