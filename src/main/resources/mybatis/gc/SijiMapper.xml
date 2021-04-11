@@ -305,12 +305,12 @@
 		<![CDATA[
 
 		select
-		       t.order_no as orderNo,t.bizdate,t.carnum,t.inforfee,t.arrivstation ,t.js,
-		       IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0) as transfee,shuie as ks
+		       t.order_no as orderNo,t.bizdate,t.carnum,t.inforfee,t.arrivstation,t.forwunit ,t.js,
+		       IFNULL(k.transfee,0)-IFNULL(k.shoushufei,0) as transfee,shuie as ks,IFNULL(k.shoushufei,0) as shoushufei
 				,t.js-IFNULL(k.transfee,0)- shuie as yue,k.tonnage,k.transcost,t.pid,t.issueoffice
 		from (
 				  select
-					s.order_no,s.bizdate,s.carnum,s.arrivstation,
+					s.order_no,s.bizdate,s.carnum,s.arrivstation,s.forwunit,
 					IFNULL(s.inforfee,'') as  inforfee,s.pid,
 					sum(IFNULL(i.aminvoice,IFNULL(i.trancost,0))) as js,sum(IFNULL(i.shuie,0)) as shuie,sia.`issueoffice` as issueoffice
 				  from gc_siji s
@@ -343,7 +343,7 @@
 
 
 				  <![CDATA[
-				  group by s.order_no,s.bizdate,s.carnum,IFNULL(s.inforfee,''),IFNULL(sia.`issueoffice`,''),s.pid,s.arrivstation
+				  group by s.order_no,s.bizdate,s.carnum,IFNULL(s.inforfee,''),IFNULL(sia.`issueoffice`,''),s.pid,s.arrivstation,s.forwunit
 		) t
 		left join gc_kehu k on t.pid = k.kpid
 		order by bizdate

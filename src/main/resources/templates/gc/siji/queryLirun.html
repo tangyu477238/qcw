@@ -410,6 +410,11 @@
                             title : '日期',
                             align : 'center'
                         },
+						{
+							field : 'forwunit',
+							title : '发货单位',
+							align : 'center'
+						},
                         {
                             field : 'carnum',
                             title : '车牌号码',
@@ -487,7 +492,20 @@
                                 }
                                 return amount.toFixed(2);
                             }
-                        },
+                        },{
+							field : 'shoushufei',
+							title : '手续费' ,
+							align : 'center',
+							footerFormatter: function (value) {
+								var amount = 0;
+								for (var i in value) {
+									if (value[i].shoushufei!='' && value[i].shoushufei!=null){
+										amount += parseFloat(value[i].shoushufei);
+									}
+								}
+								return amount.toFixed(2);
+							}
+						},
                         {
                             field : 'ks',
                             title : '扣税' ,
