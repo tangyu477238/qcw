@@ -472,10 +472,28 @@
 
 	<select id="getFukan" resultType="com.bootdo.gc.domain.FukuanDo">
 		select
-		s.fulpaydate,s.bizdate,s.carnum,s.station,s.settletonnage,s.transcost,s.transfee,'一' as cishu,s.fulltrans,s.pay_type,s.carrier,s.riskcues
+		s.fulpaydate,s.bizdate,s.carnum,s.station,s.settletonnage,s.transcost,s.transfee,'一' as cishu,s.fulltrans,s.pay_type,s.carrier,s.riskcues,t.rn
 		from gc_kehu s
-		where s.fulpaydate is not null and s.fulpaydate !='' and s.dept_id = #{deptId}
+		inner join (
+			select
+			s.fulpaydate,s.riskcues,min(s.bizdate) as rn
+			from gc_kehu s
+			where s.fulpaydate is not null and s.fulpaydate !=''
+			<if test="startDate != null and startDate != ''"> and s.fulpaydate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.fulpaydate &lt;= #{endDate} </if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="station != null and station != ''">
+				<![CDATA[ and s.station like CONCAT('%',#{station},'%') ]]>
+			</if>
+			<if test="carrier != null and carrier != ''">
+				<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
+			</if>
+			group by fulpaydate,riskcues
 
+		) t on t.fulpaydate = s.fulpaydate and t.riskcues = s.riskcues
+		where s.fulpaydate is not null and s.fulpaydate !='' and s.dept_id = #{deptId}
 		<if test="startDate != null and startDate != ''"> and s.fulpaydate &gt;= #{startDate} </if>
 		<if test="endDate != null and endDate != ''"> and s.fulpaydate &lt;= #{endDate} </if>
 
@@ -499,11 +517,29 @@
 		union all
 
 		select
-		s.bankpaydate,s.bizdate,s.carnum,s.station,s.settletonnage,s.transcost,s.transfee,'二' as cishu,s.bankcard,s.forwunit,s.carrier,s.riskcues
+		s.bankpaydate,s.bizdate,s.carnum,s.station,s.settletonnage,s.transcost,s.transfee,'二' as cishu,s.bankcard,s.forwunit,s.carrier,s.riskcues,t.rn
 		from gc_kehu s
+		inner join (
+
+			select
+			s.bankpaydate,s.riskcues,min(s.bizdate) as rn
+			from gc_kehu s
+			where s.bankpaydate is not null and s.bankpaydate !=''
+			<if test="startDate != null and startDate != ''"> and s.bankpaydate &gt;= #{startDate} </if>
+			<if test="endDate != null and endDate != ''"> and s.bankpaydate &lt;= #{endDate} </if>
+			<if test="carnum != null and carnum != ''">
+				<![CDATA[ and s.carnum like CONCAT('%',#{carnum},'%') ]]>
+			</if>
+			<if test="station != null and station != ''">
+				<![CDATA[ and s.station like CONCAT('%',#{station},'%') ]]>
+			</if>
+			<if test="carrier != null and carrier != ''">
+				<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
+			</if>
+			group by bankpaydate,riskcues
+
+		) t on t.bankpaydate = s.bankpaydate and t.riskcues = s.riskcues
 		where s.bankpaydate is not null and s.bankpaydate !='' and s.dept_id = #{deptId}
-
-
 		<if test="startDate != null and startDate != ''"> and s.bankpaydate &gt;= #{startDate} </if>
 		<if test="endDate != null and endDate != ''"> and s.bankpaydate &lt;= #{endDate} </if>
 
@@ -522,7 +558,7 @@
 			<![CDATA[ and s.carrier like CONCAT('%',#{carrier},'%') ]]>
 		</if>
 
-		order by fulpaydate ,carrier,riskcues desc
+		order by fulpaydate,rn, riskcues,bizdate
 
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
