@@ -625,4 +625,9 @@
 
 	</select>
 
+
+	<update id="updatePayAccount">
+		update gc_kehu set riskcues=#{account}, carrier=#{name}
+		where riskcues=#{oAccount} and carrier=#{oName}
+	</update>
 </mapper>
