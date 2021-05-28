@@ -41,4 +41,7 @@ public interface KehuService {
 	List<FukuanDo> getFukuan(Map params);
 
 	int fukuanCount(Map<String,Object> map);
+
+	void updatePayAccount(String account,String name,String oAccount,String oName);
+
 }

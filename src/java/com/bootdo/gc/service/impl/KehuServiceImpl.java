@@ -166,4 +166,11 @@ public class KehuServiceImpl implements KehuService {
 	public int fukuanCount(Map<String, Object> map) {
 		return kehuDao.fukuanCount(map);
 	}
+
+	@Override
+	public void updatePayAccount(String account, String name, String oAccount, String oName) {
+		kehuDao.updatePayAccount(account,name,oAccount,oName);
+	}
+
+
 }

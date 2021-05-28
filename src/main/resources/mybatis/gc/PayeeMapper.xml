@@ -4,11 +4,11 @@
 <mapper namespace="com.bootdo.gc.dao.PayeeDao">
 
 	<select id="get" resultType="com.bootdo.gc.domain.PayeeDO">
-		select `id`,`name`,`account`,`dept_id` from gc_payee where id = #{value}
+		select `id`,`name`,`account`,`dept_id`,`create_time` from gc_payee where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.gc.domain.PayeeDO">
-		select `id`,`name`,`account`,`dept_id` from gc_payee
+		select `id`,`name`,`account`,`dept_id`,`create_time` from gc_payee
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and name = #{name} </if>
@@ -43,13 +43,15 @@
 		(
 			`name`, 
 			`account`, 
-			`dept_id`
+			`dept_id`,
+			`create_time`
 		)
 		values
 		(
 			#{name}, 
 			#{account}, 
-			#{deptId}
+			#{deptId},
+			#{createTime}
 		)
 	</insert>
 	 
@@ -59,6 +61,7 @@
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="account != null">`account` = #{account}, </if>
 			<if test="deptId != null">`dept_id` = #{deptId}</if>
+
 		</set>
 		where id = #{id}
 	</update>

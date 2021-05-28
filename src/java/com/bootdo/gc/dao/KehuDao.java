@@ -44,4 +44,6 @@ public interface KehuDao {
 
 	int fukuanCount(Map<String,Object> map);
 
+	void updatePayAccount(String account, String name, String oAccount, String oName);
+
 }
