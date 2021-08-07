@@ -1,5 +1,5 @@
 
-var prefix = "/biz/seatOrder"
+var prefix = "/biz/sellerInfo"
 $(function() {
 	load();
 });
@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+								searchName:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
 						},
@@ -48,107 +48,60 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
+									field : 'sellerId', 
 									title : 'id' 
 								},
+								// 								{
+								// 	field : 'username',
+								// 	title : '账号'
+								// },
+								// 								{
+								// 	field : 'password',
+								// 	title : '密码'
+								// },
+								// 								{
+								// 	field : 'openid',
+								// 	title : '微信openid'
+								// },
+
+							{
+								field : 'cardNo',
+								title : '卡号'
+							},
+							{
+								field : 'cardType',
+								title : '卡类型'
+							},
+
 																{
-									field : 'orderNo', 
-									title : '单号' 
-								},
-																{
-									field : 'bizDate', 
-									title : '乘车日期' 
-								},
-																{
-									field : 'bizTime', 
-									title : '乘车时间' 
-								},
-																{
-									field : 'planId', 
-									title : '计划班次id' 
-								},
-																{
-									field : 'info', 
-									title : '座位信息' 
-								},
-																{
-									field : 'price', 
-									title : '单价' 
-								},
-																{
-									field : 'num', 
-									title : '数量' 
-								},
-																{
-									field : 'amout', 
-									title : '总金额(支付金额)' 
-								},
-																{
-									field : 'createTime', 
-									title : '创建时间' 
-								},
-																{
-									field : 'updateTime', 
-									title : '最迟支付时间' 
-								},
-																{
-									field : 'createUser', 
-									title : '购买人' 
-								},
-																{
-									field : 'state', 
-									title : '状态（0待支付1已支付）' 
-								},
-																{
-									field : 'remark', 
-									title : '备注' 
-								},
-																{
-									field : 'fromStation', 
-									title : '出发站' 
-								},
-																{
-									field : 'toStation', 
-									title : '目的站' 
-								},
-																{
-									field : 'userName', 
-									title : '姓名' 
-								},
-																{
-									field : 'userMobile', 
-									title : '手机号' 
-								},
-																{
-									field : 'routeStation', 
-									title : '上车点' 
-								},
-																{
-									field : 'ckstate', 
-									title : '是否验票' 
-								},
-																{
-									field : 'routeId', 
-									title : '线路id' 
-								},
-																{
-									field : 'lp', 
-									title : '' 
-								},
+									field : 'cardId', 
+									title : '身份证' 
+								},{
+								field : 'name',
+								title : '姓名'
+							},
+								// 								{
+								// 	field : 'mobile',
+								// 	title : '手机号'
+								// },
+							{
+								field : 'createTime',
+								title : '办卡时间'
+							},
+							{
+								field : 'amount',
+								title : '余额'
+							},
+
+
 																{
 									title : '操作',
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
-										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
-												+ row.id
-												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
-												+ row.id
-												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-												+ row.id
-												+ '\')"><i class="fa fa-key"></i></a> ';
+										var e = '';
+										var d = '';
+										var f = '';
 										return e + d ;
 									}
 								} ]
@@ -160,61 +113,66 @@ function reLoad() {
 function add() {
 	layer.open({
 		type : 2,
-		title : '增加',
+		title : '开普通卡',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
 		content : prefix + '/add' // iframe的url
 	});
 }
-function edit(id) {
+function addOld() {
 	layer.open({
 		type : 2,
-		title : '编辑',
+		title : '开老年卡',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '520px' ],
+		content : prefix + '/addOld' // iframe的url
+	});
+}
+function chongZhi() {
+	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	if (rows.length == 0) {
+		layer.msg("请选择要充值的数据");
+		return;
+	}
+	if (rows.length > 1) {
+		layer.msg("请不要选择多条要充值的数据");
+		return;
+	}
+
+	var id;
+	// 遍历所有选择的行数据，取每条数据对应的ID
+	$.each(rows, function(i, row) {
+		id = row['sellerId'];
+	});
+
+	layer.open({
+		type : 2,
+		title : '充值',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-function remove(id) {
-	layer.confirm('确定要删除选中的记录？', {
-		btn : [ '确定', '取消' ]
-	}, function() {
-		$.ajax({
-			url : prefix+"/remove",
-			type : "post",
-			data : {
-				'id' : id
-			},
-			success : function(r) {
-				if (r.code==0) {
-					layer.msg(r.msg);
-					reLoad();
-				}else{
-					layer.msg(r.msg);
-				}
-			}
-		});
-	})
-}
 
-function resetPwd(id) {
-}
+
+
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {
-		layer.msg("请选择要删除的数据");
+		layer.msg("请选择要销卡的数据");
 		return;
 	}
-	layer.confirm("确认要删除选中的'" + rows.length + "'条数据吗?", {
+	layer.confirm("确认要销除选中的'" + rows.length + "'条数据吗?", {
 		btn : [ '确定', '取消' ]
 	// 按钮
 	}, function() {
 		var ids = new Array();
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
-			ids[i] = row['id'];
+			ids[i] = row['sellerId'];
 		});
 		$.ajax({
 			type : 'POST',

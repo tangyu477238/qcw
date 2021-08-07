@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.biz.dao.SellerInfoDao">
+
+	<select id="get" resultType="com.bootdo.biz.domain.SellerInfoDO">
+		select `seller_id`,`username`,`password`,`openid`,`create_time`,`update_time`,`card_id`,`mobile`,`name`,`card_no`,`card_type`,amount
+		from seller_info where seller_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.biz.domain.SellerInfoDO">
+		select `seller_id`,`username`,`password`,`openid`,`create_time`,`update_time`,`card_id`,`mobile`,`name`,`card_no`,`card_type`,amount from seller_info
+        <where>
+		  	 <if test="searchName != null and searchName != ''"> card_no like CONCAT('%',#{searchName},'%')  or name like CONCAT('%',#{searchName},'%')  or mobile like CONCAT('%',#{searchName},'%') </if>
+			 <if test="cardNo != null and cardNo != '' ">`card_no` = #{cardNo}</if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by update_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from seller_info
+		<where>
+			<if test="searchName != null and searchName != ''"> card_no like CONCAT('%',#{searchName},'%')  or name like CONCAT('%',#{searchName},'%')  or mobile like CONCAT('%',#{searchName},'%') </if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.biz.domain.SellerInfoDO">
+		insert into seller_info
+		(
+			`seller_id`, 
+			`username`, 
+			`password`, 
+			`openid`, 
+			`create_time`, 
+			`update_time`, 
+			`card_id`, 
+			`mobile`, 
+			`name`, 
+			`card_no`, 
+			`card_type`,
+			amount
+		)
+		values
+		(
+			#{sellerId}, 
+			#{username}, 
+			#{password}, 
+			#{openid}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{cardId}, 
+			#{mobile}, 
+			#{name}, 
+			#{cardNo}, 
+			#{cardType},
+			#{amount}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.biz.domain.SellerInfoDO">
+		update seller_info 
+		<set>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="openid != null">`openid` = #{openid}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="cardId != null">`card_id` = #{cardId}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
+			<if test="cardType != null">`card_type` = #{cardType},</if>
+			<if test="amount != null">`amount` = #{amount}</if>
+		</set>
+		where seller_id = #{sellerId}
+	</update>
+
+
+	<update id="chongzhi" parameterType="com.bootdo.biz.domain.SellerInfoDO">
+		update seller_info set amount = amount + #{czje}
+		where seller_id = #{sellerId}
+	</update>
+
+	<delete id="remove">
+		delete from seller_info where seller_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from seller_info where seller_id in 
+		<foreach item="sellerId" collection="array" open="(" separator="," close=")">
+			#{sellerId}
+		</foreach>
+	</delete>
+
+</mapper>

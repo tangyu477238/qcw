@@ -3,6 +3,8 @@ package com.bootdo.common.utils;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,13 @@ public class JSONUtils {
 		} else {
 			return null;
 		}
+	}
+
+	public static String toJson(Object object){
+		GsonBuilder gsonBuilder=new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();
+		Gson gson=gsonBuilder.create();
+		return gson.toJson(object);
 	}
 
 	/**

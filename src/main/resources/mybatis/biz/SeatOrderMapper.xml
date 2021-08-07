@@ -4,11 +4,11 @@
 <mapper namespace="com.bootdo.biz.dao.SeatOrderDao">
 
 	<select id="get" resultType="com.bootdo.biz.domain.SeatOrderDO">
-		select `id`,`order_no`,`biz_date`,`biz_time`,`plan_id`,`info`,`price`,`num`,`amout`,`create_time`,`update_time`,`create_user`,`state`,`remark`,`from_station`,`to_station`,`user_name`,`user_mobile`,`route_Station`,`ckstate` from biz_seat_order where id = #{value}
+		select `id`,`order_no`,`biz_date`,`biz_time`,`plan_id`,`info`,`price`,`num`,`amout`,`create_time`,`update_time`,`create_user`,`state`,`remark`,`from_station`,`to_station`,`user_name`,`user_mobile`,`route_Station`,`ckstate`,`route_id`,`lp` from biz_seat_order where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.bootdo.biz.domain.SeatOrderDO">
-		select `id`,`order_no`,`biz_date`,`biz_time`,`plan_id`,`info`,`price`,`num`,`amout`,`create_time`,`update_time`,`create_user`,`state`,`remark`,`from_station`,`to_station`,`user_name`,`user_mobile`,`route_Station`,`ckstate` from biz_seat_order
+		select `id`,`order_no`,`biz_date`,`biz_time`,`plan_id`,`info`,`price`,`num`,`amout`,`create_time`,`update_time`,`create_user`,`state`,`remark`,`from_station`,`to_station`,`user_name`,`user_mobile`,`route_Station`,`ckstate`,`route_id`,`lp` from biz_seat_order
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="orderNo != null and orderNo != ''"> and order_no = #{orderNo} </if>
@@ -30,6 +30,8 @@
 		  		  <if test="userMobile != null and userMobile != ''"> and user_mobile = #{userMobile} </if>
 		  		  <if test="routeStation != null and routeStation != ''"> and route_Station = #{routeStation} </if>
 		  		  <if test="ckstate != null and ckstate != ''"> and ckstate = #{ckstate} </if>
+		  		  <if test="routeId != null and routeId != ''"> and route_id = #{routeId} </if>
+		  		  <if test="lp != null and lp != ''"> and lp = #{lp} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -67,6 +69,8 @@
 		  		  <if test="userMobile != null and userMobile != ''"> and user_mobile = #{userMobile} </if>
 		  		  <if test="routeStation != null and routeStation != ''"> and route_Station = #{routeStation} </if>
 		  		  <if test="ckstate != null and ckstate != ''"> and ckstate = #{ckstate} </if>
+		  		  <if test="routeId != null and routeId != ''"> and route_id = #{routeId} </if>
+		  		  <if test="lp != null and lp != ''"> and lp = #{lp} </if>
 		  		</where>
 	</select>
 	 
@@ -92,7 +96,9 @@
 			`user_name`, 
 			`user_mobile`, 
 			`route_Station`, 
-			`ckstate`
+			`ckstate`, 
+			`route_id`, 
+			`lp`
 		)
 		values
 		(
@@ -115,7 +121,9 @@
 			#{userName}, 
 			#{userMobile}, 
 			#{routeStation}, 
-			#{ckstate}
+			#{ckstate}, 
+			#{routeId}, 
+			#{lp}
 		)
 	</insert>
 	 
@@ -140,7 +148,9 @@
 			<if test="userName != null">`user_name` = #{userName}, </if>
 			<if test="userMobile != null">`user_mobile` = #{userMobile}, </if>
 			<if test="routeStation != null">`route_Station` = #{routeStation}, </if>
-			<if test="ckstate != null">`ckstate` = #{ckstate}</if>
+			<if test="ckstate != null">`ckstate` = #{ckstate}, </if>
+			<if test="routeId != null">`route_id` = #{routeId}, </if>
+			<if test="lp != null">`lp` = #{lp}</if>
 		</set>
 		where id = #{id}
 	</update>

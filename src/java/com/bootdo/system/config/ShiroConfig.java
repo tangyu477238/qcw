@@ -89,6 +89,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/blog", "anon");
         filterChainDefinitionMap.put("/biz/**", "anon");
         filterChainDefinitionMap.put("/blog/open/**", "anon");
+
+        filterChainDefinitionMap.put("/hxz/**", "anon");
+
         filterChainDefinitionMap.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

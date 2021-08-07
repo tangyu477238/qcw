@@ -29,7 +29,7 @@
 								</div>
 							</div>
 														<div class="form-group">	
-								<label class="col-sm-3 control-label">路线：</label>
+								<label class="col-sm-3 control-label">计划班次id：</label>
 								<div class="col-sm-8">
 									<input id="planId" name="planId" th:value="${seatOrder.planId}" class="form-control" type="text">
 								</div>
@@ -119,9 +119,21 @@
 								</div>
 							</div>
 														<div class="form-group">	
-								<label class="col-sm-3 control-label">：</label>
+								<label class="col-sm-3 control-label">是否验票：</label>
 								<div class="col-sm-8">
 									<input id="ckstate" name="ckstate" th:value="${seatOrder.ckstate}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">线路id：</label>
+								<div class="col-sm-8">
+									<input id="routeId" name="routeId" th:value="${seatOrder.routeId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="lp" name="lp" th:value="${seatOrder.lp}" class="form-control" type="text">
 								</div>
 							</div>
 																					<div class="form-group">
